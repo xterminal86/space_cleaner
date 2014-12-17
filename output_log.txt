@@ -1,0 +1,29 @@
+BEGIN LOGGING STDOUT
+********************
+Initializing video system...
+1. driver: direct3d
+----| flags: 14
+Trying to create renderer...
+*** SUCCESS *** Created renderer: "direct3d"
+Video System is ready...
+Loading images...
+PNGLoader::ctor(std::string) 0xAB3448
+[Created texture for assets/ship/ship.png (0x3362A8)]
+----|Format: 372645892
+----|Access: 0
+----|Width:  173
+----|Height: 291
+----|_textures[0] (0xAB3448) = assets/ship/ship.png
+PNGLoader::ctor(std::string) 0xAB3488
+[Created texture for assets/ship/ship.png (0x3363C0)]
+----|Format: 372645892
+----|Access: 0
+----|Width:  173
+----|Height: 291
+----|[PNGLoader::dtor()]: 0xAB3448 (object) 0x3362A8 (texture)
+----|_textures[0] (0xAB3488) = assets/ship/ship.png
+*** SUCCESS *** Done creating textures!
+Closing application...
+Deallocating texture memory...
+----|[PNGLoader::dtor()]: 0xAB3488 (object) 0x3363C0 (texture)
+Closing video system...
