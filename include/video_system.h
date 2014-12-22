@@ -13,11 +13,13 @@ class VideoSystem
     }
     int Init(int w, int h);
     SDL_Renderer* Renderer() { return _renderer; }
+    SDL_DisplayMode& DisplayMode() { return _displayMode; }
   protected:
   private:
     bool _initialized;
     SDL_Renderer* _renderer;
     SDL_Window* _window;
+    SDL_DisplayMode _displayMode;
 
     VideoSystem();
     ~VideoSystem();

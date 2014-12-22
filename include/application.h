@@ -20,7 +20,7 @@ class Application
     TextureManager* _textureManager = &TextureManager::Get();
     InputManager* _inputManager = &InputManager::Get();
 
-    const int _screenWidth = 800;
+    const int _screenWidth = 1280;
     const int _screenHeight = 600;
 
     std::string _imagesFilename = "images.txt";

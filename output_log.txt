@@ -6,24 +6,25 @@ Initializing video system...
 Trying to create renderer...
 *** SUCCESS *** Created renderer: "direct3d"
 Video System is ready...
+Display #0: current display mode is 1440x900px @ 75hz.
 Loading images...
-PNGLoader::ctor(std::string) 0xAB3448
-[Created texture for assets/ship/ship.png (0x3362A8)]
+PNGLoader::ctor(std::string) 0x641450
+[Created texture for assets/ship/ship.png (0x352500)]
 ----|Format: 372645892
 ----|Access: 0
-----|Width:  173
-----|Height: 291
-----|_textures[0] (0xAB3448) = assets/ship/ship.png
-PNGLoader::ctor(std::string) 0xAB3488
-[Created texture for assets/ship/ship.png (0x3363C0)]
+----|Width:  192
+----|Height: 192
+----|_textures[0] (0x641450) = assets/ship/ship.png
+PNGLoader::ctor(std::string) 0x641490
+[Created texture for assets/ship/ship.png (0x357080)]
 ----|Format: 372645892
 ----|Access: 0
-----|Width:  173
-----|Height: 291
-----|[PNGLoader::dtor()]: 0xAB3448 (object) 0x3362A8 (texture)
-----|_textures[0] (0xAB3488) = assets/ship/ship.png
+----|Width:  192
+----|Height: 192
+----|[PNGLoader::dtor()]: 0x641450 (object) 0x352500 (texture)
+----|_textures[0] (0x641490) = assets/ship/ship.png
 *** SUCCESS *** Done creating textures!
 Closing application...
 Deallocating texture memory...
-----|[PNGLoader::dtor()]: 0xAB3488 (object) 0x3363C0 (texture)
+----|[PNGLoader::dtor()]: 0x641490 (object) 0x357080 (texture)
 Closing video system...

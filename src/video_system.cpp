@@ -83,8 +83,27 @@ int VideoSystem::Init(int w, int h)
     }
     Logger::Get().LogPrint("Video System is ready...\n");
     _initialized = true;
+
+    for(int i = 0; i < SDL_GetNumVideoDisplays(); ++i)
+    {
+      int should_be_zero = SDL_GetCurrentDisplayMode(i, &_displayMode);
+      if(should_be_zero != 0)
+      {
+        Logger::Get().LogPrint("!!! ERROR !!! Could not get display mode for video display #%d: %s", i, SDL_GetError());
+        exit(1);
+      }
+      else
+      {
+        Logger::Get().LogPrint("Display #%d: current display mode is %dx%dpx @ %dhz.\n", i, _displayMode.w, _displayMode.h, _displayMode.refresh_rate);
+      }
+    }
+
+    //SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
   }
-  else Logger::Get().LogPrint("(warning) Video system already initialized!\n");
+  else
+  {
+    Logger::Get().LogPrint("(warning) Video system already initialized!\n");
+  }
 
   return 0;
 }
