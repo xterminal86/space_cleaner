@@ -16,7 +16,7 @@ class GameObject
 
     virtual void Update() = 0;
   protected:
-    std::list<std::unique_ptr<Component>> _components;
+    std::vector<std::unique_ptr<Component>> _components;
   private:
 };
 

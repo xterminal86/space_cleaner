@@ -27,33 +27,7 @@ void Application::Start()
   dst.w = TextureManager::Get().GetTextureWrapper(0)->Width();
   dst.h = TextureManager::Get().GetTextureWrapper(0)->Height();
 
-  SDL_Rect colliders[5];
-
-  colliders[0].x = 83;
-  colliders[0].y = 12;
-  colliders[0].w = 26;
-  colliders[0].h = 38;
-
-  colliders[1].x = 59;
-  colliders[1].y = 50;
-  colliders[1].w = 74;
-  colliders[1].h = 24;
-
-  colliders[2].x = 64;
-  colliders[2].y = 74;
-  colliders[2].w = 64;
-  colliders[2].h = 8;
-
-  colliders[3].x = 58;
-  colliders[3].y = 82;
-  colliders[3].w = 76;
-  colliders[3].h = 80;
-
-  colliders[4].x = 19;
-  colliders[4].y = 102;
-  colliders[4].w = 154;
-  colliders[4].h = 40;
-
+  std::vector<SDL_Point>* collider = TextureManager::Get().GetCollider(0);
 
   SDL_Event event;
   while (_running)
@@ -82,7 +56,8 @@ void Application::Start()
     SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
     //SDL_RenderCopy(renderer, TextureManager::Get().GetSDLTexture(0), nullptr, &dst);
     SDL_RenderCopyEx(renderer, TextureManager::Get().GetSDLTexture(0), nullptr, &dst, angle, nullptr, SDL_FLIP_NONE);
-    SDL_RenderDrawRects(renderer, colliders, 5);
+    //SDL_RenderDrawPoints(renderer, points, numPoints);
+    SDL_RenderDrawLines(renderer, collider->data(), collider->size());
     SDL_RenderPresent(renderer);
   }
 }
