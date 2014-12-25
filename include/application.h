@@ -6,6 +6,7 @@
 #include "video_system.h"
 #include "texture_manager.h"
 #include "input_manager.h"
+#include "ship.h"
 
 class Application
 {

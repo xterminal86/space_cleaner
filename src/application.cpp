@@ -20,14 +20,7 @@ void Application::Start()
 
   SDL_Renderer* renderer = VideoSystem::Get().Renderer();
 
-  SDL_Rect dst;
-
-  dst.x = 0;
-  dst.y = 0;
-  dst.w = TextureManager::Get().GetTextureWrapper(0)->Width();
-  dst.h = TextureManager::Get().GetTextureWrapper(0)->Height();
-
-  std::vector<SDL_Point>* collider = TextureManager::Get().GetCollider(0);
+  Ship ship;
 
   SDL_Event event;
   while (_running)
@@ -53,11 +46,10 @@ void Application::Start()
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
-    //SDL_RenderCopy(renderer, TextureManager::Get().GetSDLTexture(0), nullptr, &dst);
-    SDL_RenderCopyEx(renderer, TextureManager::Get().GetSDLTexture(0), nullptr, &dst, angle, nullptr, SDL_FLIP_NONE);
-    //SDL_RenderDrawPoints(renderer, points, numPoints);
-    SDL_RenderDrawLines(renderer, collider->data(), collider->size());
+
+    ship.Rotate(angle);
+    ship.Draw(300, 300, true);
+
     SDL_RenderPresent(renderer);
   }
 }

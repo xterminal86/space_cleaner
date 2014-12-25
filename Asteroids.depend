@@ -814,14 +814,15 @@
 1418898844 source:h:\sources\c++\asteroids.git\main.cpp
 	"application.h"
 
-1419352438 h:\sources\c++\asteroids.git\include\application.h
+1419520263 h:\sources\c++\asteroids.git\include\application.h
 	"globals.h"
 	"logger.h"
 	"video_system.h"
 	"texture_manager.h"
 	"input_manager.h"
+	"ship.h"
 
-1419355216 h:\sources\c++\asteroids.git\include\globals.h
+1419522875 h:\sources\c++\asteroids.git\include\globals.h
 	<string>
 	<map>
 	<memory>
@@ -1160,7 +1161,7 @@
 1419265351 h:\sources\c++\asteroids.git\include\video_system.h
 	"globals.h"
 
-1419356281 h:\sources\c++\asteroids.git\include\texture_manager.h
+1419520005 h:\sources\c++\asteroids.git\include\texture_manager.h
 	"png_loader.h"
 
 1418898844 h:\sources\c++\asteroids.git\include\png_loader.h
@@ -1170,7 +1171,7 @@
 1418898844 h:\sources\c++\asteroids.git\include\input_manager.h
 	"globals.h"
 
-1419355738 source:h:\sources\c++\asteroids.git\src\application.cpp
+1419524878 source:h:\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 
 1418898844 source:h:\sources\c++\asteroids.git\src\component.cpp
@@ -1199,7 +1200,7 @@
 	"globals.h"
 	"sprite.h"
 
-1418898844 h:\sources\c++\asteroids.git\include\sprite.h
+1419522031 h:\sources\c++\asteroids.git\include\sprite.h
 	"globals.h"
 	"png_loader.h"
 	"texture_manager.h"
@@ -1207,12 +1208,19 @@
 1418898844 source:h:\sources\c++\asteroids.git\src\png_loader.cpp
 	"png_loader.h"
 
-1418898844 source:h:\sources\c++\asteroids.git\src\sprite.cpp
+1419523959 source:h:\sources\c++\asteroids.git\src\sprite.cpp
 	"sprite.h"
 
-1419355893 source:h:\sources\c++\asteroids.git\src\texture_manager.cpp
+1419522372 source:h:\sources\c++\asteroids.git\src\texture_manager.cpp
 	"texture_manager.h"
 
 1419265976 source:h:\sources\c++\asteroids.git\src\video_system.cpp
 	"video_system.h"
+
+1419525102 h:\sources\c++\asteroids.git\include\ship.h
+	"globals.h"
+	"sprite.h"
+
+1419523812 source:h:\sources\c++\asteroids.git\src\ship.cpp
+	"ship.h"
 

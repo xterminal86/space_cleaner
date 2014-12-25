@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +23,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -52,6 +54,7 @@
 		<Unit filename="include/logger.h" />
 		<Unit filename="include/map_object.h" />
 		<Unit filename="include/png_loader.h" />
+		<Unit filename="include/ship.h" />
 		<Unit filename="include/sprite.h" />
 		<Unit filename="include/texture_manager.h" />
 		<Unit filename="include/video_system.h" />
@@ -63,6 +66,7 @@
 		<Unit filename="src/logger.cpp" />
 		<Unit filename="src/map_object.cpp" />
 		<Unit filename="src/png_loader.cpp" />
+		<Unit filename="src/ship.cpp" />
 		<Unit filename="src/sprite.cpp" />
 		<Unit filename="src/texture_manager.cpp" />
 		<Unit filename="src/video_system.cpp" />

@@ -1,1 +1,1 @@
-0 assets/ship/ship.png
+assets/ship/ship.png

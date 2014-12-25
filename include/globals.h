@@ -4,15 +4,17 @@
 #include <string>
 #include <map>
 #include <memory>
-//#include <list>
 #include <vector>
 #include <typeinfo>
 #include <typeindex>
+
 #include <stdio.h>
 #include <SDL.h>
 #include <SDL_image.h>
 
 #include "logger.h"
+
+#define PIOVER180   0.01745329251
 
 class MapCoordinate
 {

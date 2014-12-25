@@ -11,11 +11,12 @@ class Sprite
     Sprite();
     virtual ~Sprite();
     int Init(int textureIndex);
-    void Draw(int x, int y);
+    void Draw(int x, int y, double angle, bool drawCollider = false);
     void SetScaleFactor(float scaleFactor) { _scaleFactor = scaleFactor; }
     const PNGLoader* ImageWrapper() { return _imageWrapper; }
     SDL_Rect* SourceRect() { return &_sourceRect; }
     SDL_Rect* DestinationRect() { return &_destRect; }
+    std::vector<SDL_Point>* OriginalCollider() { return _originalCollider; }
   private:
     SDL_Rect _sourceRect;
     SDL_Rect _destRect;
@@ -23,6 +24,7 @@ class Sprite
     int _screenX;
     int _screenY;
     float _scaleFactor;
+    std::vector<SDL_Point>* _originalCollider;
 };
 
 #endif // SPRITE_H
