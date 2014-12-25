@@ -46,6 +46,9 @@ void Ship::Rotate(double angle)
 
   for (int i = 0; i < _localCollider.size(); i++)
   {
+    // By default rotation is assumed around (0; 0). It is located in the top left corner of the image.
+    // Our actual rotation center is image's (w / 2; h / 2). So, first, we move it to (0; 0) (which means, that collider's coordinates are "offseted"),
+    // then rotate collider around it, and then move it back ("offset" collider's coordinates back).
     double nx = _colliderCenter.x + (_shipSprite.OriginalCollider()->at(i).x - _colliderCenter.x) * SDL_cos(angle * PIOVER180) - (_shipSprite.OriginalCollider()->at(i).y - _colliderCenter.y) * SDL_sin(angle * PIOVER180);
     double ny = _colliderCenter.y + (_shipSprite.OriginalCollider()->at(i).x - _colliderCenter.x) * SDL_sin(angle * PIOVER180) + (_shipSprite.OriginalCollider()->at(i).y - _colliderCenter.y) * SDL_cos(angle * PIOVER180);
     _localCollider[i].x = (int)nx;
