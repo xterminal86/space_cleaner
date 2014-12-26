@@ -1,1 +1,5 @@
-assets/ship/ship_small.png
+0 assets/ship/ship_small.png
+1 assets/asteroids/asteroid1.png
+2 assets/asteroids/asteroid2.png
+3 assets/asteroids/asteroid3.png
+4 assets/background.png

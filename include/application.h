@@ -24,10 +24,11 @@ class Application
     const int _screenWidth = 1280;
     const int _screenHeight = 600;
 
-    std::string _imagesFilename = "images.txt";
-    std::string _logFilename = "output_log.txt";
-
     bool _running;
+
+    Sprite _background;
+
+    void LoadBackground();
 };
 
 #endif // APPLICATION_H

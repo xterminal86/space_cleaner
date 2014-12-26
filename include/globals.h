@@ -9,12 +9,22 @@
 #include <typeindex>
 
 #include <stdio.h>
+#include <math.h>
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include "logger.h"
+#define PIOVER180     0.01745329251
 
-#define PIOVER180   0.01745329251
+namespace GlobalStrings
+{
+  static std::string BackgroundRole = "background";
+  static std::string ShipRole = "ship";
+  static std::string AsteroidRole = "asteroid";
+
+  static std::string ImagesFilename = "images.txt";
+  static std::string LogFilename = "output_log.txt";
+  static std::string RelationFilename = "relation.txt";
+}
 
 class MapCoordinate
 {
@@ -30,7 +40,5 @@ public:
   unsigned int Y;
   unsigned int Z;
 };
-
-enum ObjectOrientation { NW = 0, NE };
 
 #endif // GLOBALS_H_INCLUDED

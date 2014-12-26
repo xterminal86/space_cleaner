@@ -3,6 +3,7 @@
 
 #include "globals.h"
 #include "video_system.h"
+#include "logger.h"
 
 class PNGLoader
 {

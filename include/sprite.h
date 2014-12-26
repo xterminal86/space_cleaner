@@ -11,7 +11,7 @@ class Sprite
     Sprite();
     virtual ~Sprite();
     int Init(int textureIndex);
-    void Draw(int x, int y, double angle, bool drawCollider = false);
+    void Draw(int x, int y, double angle = 0.0, bool drawCollider = false);
     void SetScaleFactor(float scaleFactor) { _scaleFactor = scaleFactor; }
     const PNGLoader* ImageWrapper() { return _imageWrapper; }
     SDL_Rect* SourceRect() { return &_sourceRect; }

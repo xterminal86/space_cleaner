@@ -1,4 +1,5 @@
 #include "video_system.h"
+#include "logger.h"
 
 VideoSystem::VideoSystem()
 {
@@ -25,7 +26,7 @@ int VideoSystem::Init(int w, int h)
 
 	  if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	  {
-		  Logger::Get().LogPrint("!!!ERROR!!! SDL could not initialize!\nReason: %s\n", SDL_GetError());
+		  Logger::Get().LogPrint("!!! ERROR !!! SDL could not initialize!\nReason: %s\n", SDL_GetError());
 		  exit(1);
 	  }
 

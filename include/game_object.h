@@ -3,6 +3,7 @@
 
 #include "globals.h"
 #include "component.h"
+#include "logger.h"
 
 class GameObject
 {

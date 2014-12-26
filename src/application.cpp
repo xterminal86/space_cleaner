@@ -2,14 +2,28 @@
 
 Application::Application()
 {
-  _logger->Init(_logFilename);
+  _logger->Init(GlobalStrings::LogFilename);
   _videoSystem->Init(_screenWidth, _screenHeight);
-  _textureManager->Init(_imagesFilename);
+  _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename);
 }
 
 Application::~Application()
 {
   Logger::Get().LogPrint("Closing application...\n");
+}
+
+void Application::LoadBackground()
+{
+  std::map<int, std::string>& db = TextureManager::Get().Relation();
+
+  for (int i = 0; i < db.size(); i++)
+  {
+    if (db[i] == GlobalStrings::BackgroundRole)
+    {
+      _background.Init(i);
+      break;
+    }
+  }
 }
 
 void Application::Start()
@@ -19,6 +33,8 @@ void Application::Start()
   _running = true;
 
   SDL_Renderer* renderer = VideoSystem::Get().Renderer();
+
+  LoadBackground();
 
   Ship ship;
 
@@ -46,6 +62,8 @@ void Application::Start()
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
+
+    _background.Draw(0, 0);
 
     ship.Rotate(angle);
     ship.Draw(300, 300, true);

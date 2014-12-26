@@ -13,7 +13,7 @@ class TextureManager
       static TextureManager instance;
       return instance;
     }
-    int Init(std::string filename);
+    int Init(std::string imagesFilename, std::string relationFilename);
     SDL_Texture* GetSDLTexture(int index)
     {
       if (_textures.count(index)) return _textures[index]->Texture();
@@ -29,12 +29,14 @@ class TextureManager
       if (_colliders.count(textureIndex)) return &_colliders[textureIndex];
       else return nullptr;
     }
+    std::map<int, std::string>& Relation() { return _spritesRelation; }
   protected:
   private:
     bool _initialized;
 
     std::map<int, std::unique_ptr<PNGLoader>> _textures;
     std::map<int, std::vector<SDL_Point>> _colliders;
+    std::map<int, std::string> _spritesRelation;
 
     TextureManager();
     TextureManager(const TextureManager&);
@@ -53,6 +55,7 @@ class TextureManager
     TextureManager& operator=(const TextureManager&);
 
     void LoadCollider(int textureIndex, std::string filename);
+    void BuildDatabase(std::string filename);
 };
 
 #endif // TEXTUREMANAGER_H
