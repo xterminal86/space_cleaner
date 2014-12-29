@@ -10,9 +10,8 @@ class MapObject
     MapObject();
     virtual ~MapObject();
     void Draw();
-    virtual void Init(MapCoordinate coordinate) = 0;
+    virtual void Init() = 0;
   protected:
-    MapCoordinate _mapCoordinate;
     Sprite _imageData;
   private:
 };

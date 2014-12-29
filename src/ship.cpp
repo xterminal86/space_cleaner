@@ -1,8 +1,12 @@
 #include "ship.h"
 
-Ship::Ship()
+Ship::Ship(double posx, double posy)
 {
   _angle = 0.0;
+  _speed = 0.0;
+
+  _position.Set(posx, posy);
+  _direction.Set(0.0, 1.0);
 
   _shipSprite.Init(0);
 
@@ -40,6 +44,17 @@ void Ship::Draw(int x, int y, bool drawCollider)
   }
 }
 
+void Ship::Draw(bool drawCollider)
+{
+  _shipSprite.Draw(_position.X(), _position.Y(), _angle);
+  if (drawCollider)
+  {
+    MoveCollider(_position.X(), _position.Y());
+    SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 0, 255);
+    SDL_RenderDrawLines(VideoSystem::Get().Renderer(), _localCollider.data(), _localCollider.size());
+  }
+}
+
 void Ship::Rotate(double angle)
 {
   _angle = angle;
@@ -53,5 +68,15 @@ void Ship::Rotate(double angle)
     double ny = _colliderCenter.y + (_shipSprite.OriginalCollider()->at(i).x - _colliderCenter.x) * SDL_sin(angle * PIOVER180) + (_shipSprite.OriginalCollider()->at(i).y - _colliderCenter.y) * SDL_cos(angle * PIOVER180);
     _localCollider[i].x = (int)nx;
     _localCollider[i].y = (int)ny;
+  }
+}
+
+void Ship::Accelerate(double dspeed)
+{
+  _speed += dspeed;
+
+  if (_speed < 0.0)
+  {
+    _speed = 0.0;
   }
 }

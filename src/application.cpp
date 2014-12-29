@@ -36,7 +36,10 @@ void Application::Start()
 
   LoadBackground();
 
-  Ship ship;
+  Ship ship(0.0, 0.0);
+
+  int bgx = _screenWidth / 2 - _background.ImageWrapper()->Width() / 2;
+  int bgy = _screenHeight / 2 - _background.ImageWrapper()->Height() / 2;
 
   SDL_Event event;
   while (_running)
@@ -60,13 +63,19 @@ void Application::Start()
       angle++;
     }
 
+    if (InputManager::Get().GetKeyState(SDLK_w) == SDL_KEYDOWN)
+    {
+      ship.Accelerate(0.1);
+    }
+
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    _background.Draw(0, 0);
+    _background.Draw(bgx, bgy);
 
     ship.Rotate(angle);
-    ship.Draw(300, 300, true);
+    //ship.Draw(300, 300, true);
+    ship.Draw(true);
 
     SDL_RenderPresent(renderer);
   }

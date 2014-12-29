@@ -20,19 +20,23 @@ class Vector2
 	}
 	virtual ~Vector2();
 
-	float X() { return _x; }
-	float Y() { return _y; }
+	double X() { return _x; }
+	double Y() { return _y; }
 
 	Vector2 Get() { return Vector2(_x, _y); }
-	void Set(double ax, double ay)
+	void Set(double ax, double ay, bool normalize = false)
 	{
 		_x = ax;
 		_y = ay;
+
+		if (normalize)
+    {
+      Normalize();
+    }
 	}
 	void Set(Vector2 vector)
 	{
-		_x = vector._x;
-		_y = vector._y;
+		Set(vector._x, vector._y);
 	}
 
 	void ToZero()

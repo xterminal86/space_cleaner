@@ -13,6 +13,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include "vector2.h"
+
 #define PIOVER180     0.01745329251
 
 namespace GlobalStrings
@@ -26,19 +28,15 @@ namespace GlobalStrings
   static std::string RelationFilename = "relation.txt";
 }
 
-class MapCoordinate
+namespace Utility
 {
-public:
-  MapCoordinate() { X = -1; Y = -1; Z = -1; }
-  MapCoordinate(int x, int y, int z)
+  static SDL_Point RotateVector(SDL_Point around, SDL_Point what, double angle)
   {
-    X = x;
-    Y = y;
-    Z = z;
+    double nx = around.x + (what.x - around.x) * SDL_cos(angle * PIOVER180) - (what.y - around.y) * SDL_sin(angle * PIOVER180);
+    double ny = around.y + (what.x - around.x) * SDL_sin(angle * PIOVER180) + (what.y - around.y) * SDL_cos(angle * PIOVER180);
+
+    return SDL_Point((int)nx, (int)ny);
   }
-  unsigned int X;
-  unsigned int Y;
-  unsigned int Z;
-};
+}
 
 #endif // GLOBALS_H_INCLUDED
