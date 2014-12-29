@@ -74,8 +74,8 @@ void Application::Start()
     _background.Draw(bgx, bgy);
 
     ship.Rotate(angle);
-    //ship.Draw(300, 300, true);
-    ship.Draw(true);
+
+    ship.Move(300, 300, true);
 
     SDL_RenderPresent(renderer);
   }

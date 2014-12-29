@@ -86,7 +86,7 @@ class Vector2
 	}
 
 	static Vector2 Zero() {	return Vector2(0.0, 0.0); }
-
+  static Vector2 Up() { return Vector2(0.0, 1.0); }
 private:
 	double _x;
 	double _y;

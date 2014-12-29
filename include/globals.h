@@ -30,12 +30,19 @@ namespace GlobalStrings
 
 namespace Utility
 {
-  static SDL_Point RotateVector(SDL_Point around, SDL_Point what, double angle)
-  {
-    double nx = around.x + (what.x - around.x) * SDL_cos(angle * PIOVER180) - (what.y - around.y) * SDL_sin(angle * PIOVER180);
-    double ny = around.y + (what.x - around.x) * SDL_sin(angle * PIOVER180) + (what.y - around.y) * SDL_cos(angle * PIOVER180);
+  // Explanation from previous case:
+  //
+  // By default rotation is assumed around (0; 0). It is located in the top left corner of the image.
+  // Our actual rotation center is image's (w / 2; h / 2). So, first, we move it to (0; 0) (which means, that collider's coordinates are "offseted"),
+  // then rotate collider around it, and then move it back ("offset" collider's coordinates back).
 
-    return SDL_Point((int)nx, (int)ny);
+  template <typename T>
+  static void RotateVector(T around, T what, double angle, T& result)
+  {
+    double nx = around.X() + (what.X() - around.X()) * SDL_cos(angle * PIOVER180) - (what.Y() - around.Y()) * SDL_sin(angle * PIOVER180);
+    double ny = around.Y() + (what.X() - around.X()) * SDL_sin(angle * PIOVER180) + (what.Y() - around.Y()) * SDL_cos(angle * PIOVER180);
+
+    result.Set(nx, ny);
   }
 }
 

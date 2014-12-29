@@ -33,12 +33,18 @@ void Ship::MoveCollider(int x, int y)
   }
 }
 
+void Ship::Move(int x, int y, bool drawCollider)
+{
+  _position.Set(x, y);
+  MoveCollider(x - _colliderCenter.x, y - _colliderCenter.y);
+  Draw(x - _colliderCenter.x, y - _colliderCenter.y, drawCollider);
+}
+
 void Ship::Draw(int x, int y, bool drawCollider)
 {
   _shipSprite.Draw(x, y, _angle);
   if (drawCollider)
   {
-    MoveCollider(x, y);
     SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 0, 255);
     SDL_RenderDrawLines(VideoSystem::Get().Renderer(), _localCollider.data(), _localCollider.size());
   }
@@ -46,28 +52,31 @@ void Ship::Draw(int x, int y, bool drawCollider)
 
 void Ship::Draw(bool drawCollider)
 {
-  _shipSprite.Draw(_position.X(), _position.Y(), _angle);
-  if (drawCollider)
-  {
-    MoveCollider(_position.X(), _position.Y());
-    SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 0, 255);
-    SDL_RenderDrawLines(VideoSystem::Get().Renderer(), _localCollider.data(), _localCollider.size());
-  }
+  Draw((int)_position.X(), (int)_position.Y(), drawCollider);
 }
 
 void Ship::Rotate(double angle)
 {
   _angle = angle;
 
+  // FIXME: Make everything pretty!
+
+  Vector2 center(_colliderCenter.x, _colliderCenter.y);
+  //Utility::RotateVector<Vector2>(center, _direction, angle);
+
   for (int i = 0; i < _localCollider.size(); i++)
   {
-    // By default rotation is assumed around (0; 0). It is located in the top left corner of the image.
-    // Our actual rotation center is image's (w / 2; h / 2). So, first, we move it to (0; 0) (which means, that collider's coordinates are "offseted"),
-    // then rotate collider around it, and then move it back ("offset" collider's coordinates back).
-    double nx = _colliderCenter.x + (_shipSprite.OriginalCollider()->at(i).x - _colliderCenter.x) * SDL_cos(angle * PIOVER180) - (_shipSprite.OriginalCollider()->at(i).y - _colliderCenter.y) * SDL_sin(angle * PIOVER180);
-    double ny = _colliderCenter.y + (_shipSprite.OriginalCollider()->at(i).x - _colliderCenter.x) * SDL_sin(angle * PIOVER180) + (_shipSprite.OriginalCollider()->at(i).y - _colliderCenter.y) * SDL_cos(angle * PIOVER180);
-    _localCollider[i].x = (int)nx;
-    _localCollider[i].y = (int)ny;
+    Vector2 origCollider(_shipSprite.OriginalCollider()->at(i).x, _shipSprite.OriginalCollider()->at(i).y);
+    Vector2 res;
+    Utility::RotateVector(center, origCollider, angle, res);
+
+    _localCollider[i].x = res.X();
+    _localCollider[i].y = res.Y();
+
+//    double nx = _colliderCenter.x + (_shipSprite.OriginalCollider()->at(i).x - _colliderCenter.x) * SDL_cos(angle * PIOVER180) - (_shipSprite.OriginalCollider()->at(i).y - _colliderCenter.y) * SDL_sin(angle * PIOVER180);
+//    double ny = _colliderCenter.y + (_shipSprite.OriginalCollider()->at(i).x - _colliderCenter.x) * SDL_sin(angle * PIOVER180) + (_shipSprite.OriginalCollider()->at(i).y - _colliderCenter.y) * SDL_cos(angle * PIOVER180);
+//    _localCollider[i].x = (int)nx;
+//    _localCollider[i].y = (int)ny;
   }
 }
 

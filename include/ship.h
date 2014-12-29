@@ -16,6 +16,7 @@ class Ship
       return _shipSprite;
     }
     void Accelerate(double dspeed);
+    void Move(int x, int y, bool drawCollider = false);
     void Draw(int x, int y, bool drawCollider = false);
     void Draw(bool drawCollider = false);
     void Rotate(double angle);
