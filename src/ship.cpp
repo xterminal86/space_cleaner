@@ -68,7 +68,7 @@ void Ship::Rotate(double angle)
   {
     Vector2 origCollider(_shipSprite.OriginalCollider()->at(i).x, _shipSprite.OriginalCollider()->at(i).y);
     Vector2 res;
-    Utility::RotateVector(center, origCollider, angle, res);
+    Vector2::RotateVector(center, origCollider, angle, res);
 
     _localCollider[i].x = res.X();
     _localCollider[i].y = res.Y();

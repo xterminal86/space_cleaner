@@ -2,6 +2,7 @@
 #define SHIP_H
 
 #include "globals.h"
+#include "vector2.h"
 #include "sprite.h"
 
 // TODO: think about extending the usage of this class: include support of many ships,
