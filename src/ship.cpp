@@ -6,7 +6,9 @@ Ship::Ship(double posx, double posy)
   _speed = 0.0;
 
   _position.Set(posx, posy);
-  _direction.Set(0.0, 1.0);
+
+  _originalDirection.Set(0.0, 1.0 * _directionResolution);
+  _localDirection.Set(0.0, 1.0 * _directionResolution);
 
   _shipSprite.Init(0);
 
@@ -33,21 +35,27 @@ void Ship::MoveCollider(int x, int y)
   }
 }
 
-void Ship::Move(int x, int y, bool drawCollider)
+void Ship::Move(int x, int y)
 {
   _position.Set(x, y);
-  MoveCollider(x - _colliderCenter.x, y - _colliderCenter.y);
-  Draw(x - _colliderCenter.x, y - _colliderCenter.y, drawCollider);
+}
+
+void Ship::Move(Vector2 newPos)
+{
+  Move(newPos.X(), newPos.Y());
 }
 
 void Ship::Draw(int x, int y, bool drawCollider)
 {
-  _shipSprite.Draw(x, y, _angle);
+  _shipSprite.Draw(x - _colliderCenter.x, y - _colliderCenter.y, _angle);
+
   if (drawCollider)
   {
     SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 0, 255);
     SDL_RenderDrawLines(VideoSystem::Get().Renderer(), _localCollider.data(), _localCollider.size());
   }
+
+  SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(), _position.X() + (int)_localDirection.X(), _position.Y() + (int)_localDirection.Y());
 }
 
 void Ship::Draw(bool drawCollider)
@@ -64,11 +72,12 @@ void Ship::Rotate(double angle)
   Vector2 center(_colliderCenter.x, _colliderCenter.y);
   //Utility::RotateVector<Vector2>(center, _direction, angle);
 
+  Vector2 res;
+
   for (int i = 0; i < _localCollider.size(); i++)
   {
     Vector2 origCollider(_shipSprite.OriginalCollider()->at(i).x, _shipSprite.OriginalCollider()->at(i).y);
-    Vector2 res;
-    Vector2::RotateVector(center, origCollider, angle, res);
+    Vector2::RotateVector(res, center, origCollider, angle);
 
     _localCollider[i].x = res.X();
     _localCollider[i].y = res.Y();
@@ -78,6 +87,12 @@ void Ship::Rotate(double angle)
 //    _localCollider[i].x = (int)nx;
 //    _localCollider[i].y = (int)ny;
   }
+
+  MoveCollider(_position.X() - _colliderCenter.x, _position.Y() - _colliderCenter.y);
+
+  Vector2::RotateVector(res, Vector2::Zero(), _originalDirection, angle);
+  _localDirection = res;
+  //_localDirection.Normalize();
 }
 
 void Ship::Accelerate(double dspeed)

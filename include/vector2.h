@@ -94,7 +94,7 @@ class Vector2
   // Our actual rotation center is image's (w / 2; h / 2). So, first, we move it to (0; 0) (which means, that collider's coordinates are "offseted"),
   // then rotate collider around it, and then move it back ("offset" collider's coordinates back).
 
-  static Vector2 RotateVector(Vector2 around, Vector2 what, double angle, Vector2& result)
+  static Vector2 RotateVector(Vector2& result, Vector2 around, Vector2 what, double angle)
   {
     double nx = around.X() + (what.X() - around.X()) * SDL_cos(angle * PIOVER180) - (what.Y() - around.Y()) * SDL_sin(angle * PIOVER180);
     double ny = around.Y() + (what.X() - around.X()) * SDL_sin(angle * PIOVER180) + (what.Y() - around.Y()) * SDL_cos(angle * PIOVER180);

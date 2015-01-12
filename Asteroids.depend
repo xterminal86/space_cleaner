@@ -822,7 +822,7 @@
 	"input_manager.h"
 	"ship.h"
 
-1419614326 h:\sources\c++\asteroids.git\include\globals.h
+1421074431 h:\sources\c++\asteroids.git\include\globals.h
 	<string>
 	<map>
 	<memory>
@@ -1172,7 +1172,7 @@
 1418898844 h:\sources\c++\asteroids.git\include\input_manager.h
 	"globals.h"
 
-1419613550 source:h:\sources\c++\asteroids.git\src\application.cpp
+1421082065 source:h:\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 
 1418898844 source:h:\sources\c++\asteroids.git\src\component.cpp
@@ -1198,7 +1198,7 @@
 1418898844 source:h:\sources\c++\asteroids.git\src\map_object.cpp
 	"map_object.h"
 
-1418898844 h:\sources\c++\asteroids.git\include\map_object.h
+1421074431 h:\sources\c++\asteroids.git\include\map_object.h
 	"globals.h"
 	"sprite.h"
 
@@ -1220,11 +1220,12 @@
 	"video_system.h"
 	"logger.h"
 
-1419525102 h:\sources\c++\asteroids.git\include\ship.h
+1421082044 h:\sources\c++\asteroids.git\include\ship.h
 	"globals.h"
+	"vector2.h"
 	"sprite.h"
 
-1419526193 source:h:\sources\c++\asteroids.git\src\ship.cpp
+1421082959 source:h:\sources\c++\asteroids.git\src\ship.cpp
 	"ship.h"
 
 1398709957 source:d:\nick\sources\c++\asteroids.git\main.cpp
@@ -1649,4 +1650,10 @@
 
 1419892569 source:d:\nick\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
+
+1421076284 h:\sources\c++\asteroids.git\include\vector2.h
+	"globals.h"
+
+1419613927 source:h:\sources\c++\asteroids.git\src\vector2.cpp
+	"vector2.h"
 
