@@ -85,6 +85,18 @@ class Vector2
 	  return &_triangleProjection;
 	}
 
+  void Invert(bool invertX)
+  {
+    if (invertX)
+    {
+      _x = -_x;
+    }
+    else
+    {
+      _y = -_y;
+    }
+  }
+
 	static Vector2 Zero() {	return Vector2(0.0, 0.0); }
   static Vector2 Up() { return Vector2(0.0, 1.0); }
 

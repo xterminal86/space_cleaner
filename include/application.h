@@ -23,6 +23,8 @@ class Application
 
     const int _screenWidth = 1280;
     const int _screenHeight = 600;
+    const int _rotateSpeed = 2;
+    const double _accelerationSpeed = 0.05;
 
     bool _running;
 

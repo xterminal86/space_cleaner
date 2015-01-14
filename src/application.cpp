@@ -57,22 +57,22 @@ void Application::Start()
 
     if (InputManager::Get().GetKeyState(SDLK_a) == SDL_KEYDOWN)
     {
-      angle--;
+      angle -= _rotateSpeed;
     }
 
     if (InputManager::Get().GetKeyState(SDLK_d) == SDL_KEYDOWN)
     {
-      angle++;
+      angle += _rotateSpeed;
     }
 
     if (InputManager::Get().GetKeyState(SDLK_w) == SDL_KEYDOWN)
     {
-      ship.Accelerate(0.1);
+      ship.Accelerate(_accelerationSpeed);
     }
 
     if (InputManager::Get().GetKeyState(SDLK_s) == SDL_KEYDOWN)
     {
-      ship.Accelerate(-0.1);
+      ship.Accelerate(-_accelerationSpeed);
     }
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -81,6 +81,8 @@ void Application::Start()
     _background.Draw(bgx, bgy);
 
     ship.Rotate(angle);
+    ship.Move();
+
     ship.Draw(true);
 
     SDL_RenderPresent(renderer);

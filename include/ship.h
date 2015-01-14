@@ -19,7 +19,7 @@ class Ship
     void Accelerate(double dspeed);
     void Move(int x, int y);
     void Move(Vector2 newPos);
-    void Draw(int x, int y, bool drawCollider = false);
+    void Move();
     void Draw(bool drawCollider = false);
     void Rotate(double angle);
     Vector2& Direction() { return _localDirection; }
@@ -40,6 +40,7 @@ class Ship
 
     const int _directionResolution = 100;
 
+    void Draw(int x, int y, bool drawCollider = false);
     void MoveCollider(int x, int y);
 };
 

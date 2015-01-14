@@ -7,8 +7,9 @@ Ship::Ship(double posx, double posy)
 
   _position.Set(posx, posy);
 
-  _originalDirection.Set(0.0, 1.0 * _directionResolution);
-  _localDirection.Set(0.0, 1.0 * _directionResolution);
+  // We go up the screen when Y is decreasing.
+  _originalDirection.Set(0.0, -1.0 * _directionResolution);
+  _localDirection.Set(0.0, -1.0 * _directionResolution);
 
   _shipSprite.Init(0);
 
@@ -45,6 +46,11 @@ void Ship::Move(Vector2 newPos)
   Move(newPos.X(), newPos.Y());
 }
 
+void Ship::Move()
+{
+  _position.Set(_position.X() + _localDirection.X() * _speed, _position.Y() + _localDirection.Y() * _speed);
+}
+
 void Ship::Draw(int x, int y, bool drawCollider)
 {
   _shipSprite.Draw(x - _colliderCenter.x, y - _colliderCenter.y, _angle);
@@ -55,7 +61,9 @@ void Ship::Draw(int x, int y, bool drawCollider)
     SDL_RenderDrawLines(VideoSystem::Get().Renderer(), _localCollider.data(), _localCollider.size());
   }
 
-  SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(), _position.X() + (int)_localDirection.X(), _position.Y() + (int)_localDirection.Y());
+  SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(),
+                                                    _position.X() + (int)(_localDirection.X() * _directionResolution),
+                                                    _position.Y() + (int)(_localDirection.Y() * _directionResolution));
 }
 
 void Ship::Draw(bool drawCollider)
@@ -92,7 +100,7 @@ void Ship::Rotate(double angle)
 
   Vector2::RotateVector(res, Vector2::Zero(), _originalDirection, angle);
   _localDirection = res;
-  //_localDirection.Normalize();
+  _localDirection.Normalize();
 }
 
 void Ship::Accelerate(double dspeed)
