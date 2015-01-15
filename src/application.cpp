@@ -70,7 +70,12 @@ void Application::Start()
       ship.Accelerate(_accelerationSpeed);
     }
 
-    if (InputManager::Get().GetKeyState(SDLK_s) == SDL_KEYDOWN)
+//    if (InputManager::Get().GetKeyState(SDLK_s) == SDL_KEYDOWN)
+//    {
+//      ship.Accelerate(-_accelerationSpeed);
+//    }
+
+    if (InputManager::Get().GetKeyState(SDLK_w) == SDL_KEYUP && ship.Speed() > 0.0)
     {
       ship.Accelerate(-_accelerationSpeed);
     }

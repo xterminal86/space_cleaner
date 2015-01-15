@@ -17,7 +17,7 @@ unsigned int InputManager::GetKeyState(SDL_Keycode key)
 
 void InputManager::PollEvents()
 {
-  SDL_PollEvent(&_event);
+  _eventsPending = SDL_PollEvent(&_event);
 
   if (_event.type == SDL_KEYDOWN || _event.type == SDL_KEYUP)
   {

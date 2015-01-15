@@ -75,13 +75,9 @@ void Ship::Rotate(double angle)
 {
   _angle = angle;
 
-  // FIXME: Make everything pretty!
-
   Vector2 center(_colliderCenter.x, _colliderCenter.y);
-  //Utility::RotateVector<Vector2>(center, _direction, angle);
 
   Vector2 res;
-
   for (int i = 0; i < _localCollider.size(); i++)
   {
     Vector2 origCollider(_shipSprite.OriginalCollider()->at(i).x, _shipSprite.OriginalCollider()->at(i).y);
@@ -89,11 +85,6 @@ void Ship::Rotate(double angle)
 
     _localCollider[i].x = res.X();
     _localCollider[i].y = res.Y();
-
-//    double nx = _colliderCenter.x + (_shipSprite.OriginalCollider()->at(i).x - _colliderCenter.x) * SDL_cos(angle * PIOVER180) - (_shipSprite.OriginalCollider()->at(i).y - _colliderCenter.y) * SDL_sin(angle * PIOVER180);
-//    double ny = _colliderCenter.y + (_shipSprite.OriginalCollider()->at(i).x - _colliderCenter.x) * SDL_sin(angle * PIOVER180) + (_shipSprite.OriginalCollider()->at(i).y - _colliderCenter.y) * SDL_cos(angle * PIOVER180);
-//    _localCollider[i].x = (int)nx;
-//    _localCollider[i].y = (int)ny;
   }
 
   MoveCollider(_position.X() - _colliderCenter.x, _position.Y() - _colliderCenter.y);
@@ -110,5 +101,9 @@ void Ship::Accelerate(double dspeed)
   if (_speed < 0.0)
   {
     _speed = 0.0;
+  }
+  else if (_speed > _shipMaxSpeed)
+  {
+    _speed = _shipMaxSpeed;
   }
 }

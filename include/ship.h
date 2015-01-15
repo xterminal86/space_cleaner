@@ -22,6 +22,8 @@ class Ship
     void Move();
     void Draw(bool drawCollider = false);
     void Rotate(double angle);
+
+    double Speed() { return _speed; }
     Vector2& Direction() { return _localDirection; }
   protected:
   private:
@@ -39,6 +41,7 @@ class Ship
     std::vector<SDL_Point> _localCollider;
 
     const int _directionResolution = 100;
+    const double _shipMaxSpeed = 5.0;
 
     void Draw(int x, int y, bool drawCollider = false);
     void MoveCollider(int x, int y);
