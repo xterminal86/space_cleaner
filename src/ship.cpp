@@ -48,7 +48,15 @@ void Ship::Move(Vector2 newPos)
 
 void Ship::Move()
 {
-  _position.Set(_position.X() + _localDirection.X() * _speed, _position.Y() + _localDirection.Y() * _speed);
+  double newX = _position.X() + _localDirection.X() * _speed;
+  double newY = _position.Y() + _localDirection.Y() * _speed;
+
+  if (newX < 0) newX = 0;
+  if (newY < 0) newY = 0;
+  if (newX > VideoSystem::Get().ScreenDimensions().x) newX = VideoSystem::Get().ScreenDimensions().x;
+  if (newY > VideoSystem::Get().ScreenDimensions().y) newY = VideoSystem::Get().ScreenDimensions().y;
+
+  _position.Set(newX, newY);
 }
 
 void Ship::Draw(int x, int y, bool drawCollider)

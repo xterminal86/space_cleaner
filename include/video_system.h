@@ -14,8 +14,10 @@ class VideoSystem
     int Init(int w, int h);
     SDL_Renderer* Renderer() { return _renderer; }
     SDL_DisplayMode& DisplayMode() { return _displayMode; }
+    SDL_Point& ScreenDimensions() { return _screenDimensions; }
   protected:
   private:
+    SDL_Point _screenDimensions;
     bool _initialized;
     SDL_Renderer* _renderer;
     SDL_Window* _window;

@@ -46,6 +46,9 @@ int VideoSystem::Init(int w, int h)
 		  exit(1);
 	  }
 
+    _screenDimensions.x = w;
+    _screenDimensions.y = h;
+
     int numberOfRenderDrivers = SDL_GetNumRenderDrivers();
     bool success = false;
     for (int i = 0; i < numberOfRenderDrivers; i++)
