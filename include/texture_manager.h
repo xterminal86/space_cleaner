@@ -3,8 +3,6 @@
 
 #include "png_loader.h"
 
-// TODO: we need to relate different .png's to certain classes somehow (e.g. ship.png is ship class and so on).
-// Maybe via another .txt file that will describe such correspondence.
 class TextureManager
 {
   public:

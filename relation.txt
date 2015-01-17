@@ -1,5 +1,4 @@
 0 ship
-1 asteroid
+1 bullet
 2 asteroid
-3 asteroid
-4 background
+3 background
