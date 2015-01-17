@@ -28,6 +28,7 @@ class TextureManager
       else return nullptr;
     }
     std::map<int, std::string>& Relation() { return _spritesRelation; }
+    int FindTextureByRole(std::string rolename);
   protected:
   private:
     bool _initialized;

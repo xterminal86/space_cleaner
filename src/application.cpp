@@ -16,15 +16,10 @@ Application::~Application()
 
 void Application::LoadBackground()
 {
-  std::map<int, std::string>& db = TextureManager::Get().Relation();
-
-  for (int i = 0; i < db.size(); i++)
+  int textureId = TextureManager::Get().FindTextureByRole(GlobalStrings::BackgroundRole);
+  if (textureId != -1)
   {
-    if (db[i] == GlobalStrings::BackgroundRole)
-    {
-      _background.Init(i);
-      break;
-    }
+    _background.Init(textureId);
   }
 }
 

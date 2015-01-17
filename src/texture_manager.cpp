@@ -91,3 +91,18 @@ void TextureManager::BuildDatabase(std::string filename)
 
   Logger::Get().LogPrint("Database loaded!\n");
 }
+
+int TextureManager::FindTextureByRole(std::string rolename)
+{
+  for (int i = 0; i < _spritesRelation.size(); i++)
+  {
+    if (_spritesRelation[i] == rolename)
+    {
+      return i;
+    }
+  }
+
+  Logger::Get().LogPrint("(warning) Could not find texture for role %s in images database!\n", rolename.data());
+
+  return -1;
+}
