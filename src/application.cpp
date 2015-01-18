@@ -5,8 +5,6 @@ Application::Application()
   _logger->Init(GlobalStrings::LogFilename);
   _videoSystem->Init(_screenWidth, _screenHeight);
   _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename);
-
-  _deltaTime = 0.0;
 }
 
 Application::~Application()
@@ -40,45 +38,59 @@ void Application::Start()
 
   ship.Move(300, 300);
 
-  _lastTime = SDL_GetTicks();
+  bool fireTrigger = false;
 
-  SDL_Event event;
+  Uint8* keyboardState = nullptr;
   while (_running)
   {
-    _currentTime = SDL_GetTicks();
+    GameTime::Get().MeasureBefore();
 
-    // TODO:
-    // Допилить InputManager, чтобы можно было юзать как зажатые кнопки, так и одиночные.
-    InputManager::Get().PollEvents();
+    SDL_PumpEvents();
 
-    if (InputManager::Get().GetKeyState(SDLK_ESCAPE) == SDL_KEYDOWN)
+    keyboardState = (Uint8*)SDL_GetKeyboardState(nullptr);
+
+    if (keyboardState[SDL_SCANCODE_ESCAPE])
     {
       _running = false;
     }
 
-    if (InputManager::Get().GetKeyState(SDLK_a) == SDL_KEYDOWN)
+    if (keyboardState[SDL_SCANCODE_A])
     {
-      angle -= _rotateSpeed * _deltaTime;
+      angle -= _rotateSpeed * GameTime::Get().DeltaTime();
     }
 
-    if (InputManager::Get().GetKeyState(SDLK_d) == SDL_KEYDOWN)
+    if (keyboardState[SDL_SCANCODE_D])
     {
-      angle += _rotateSpeed * _deltaTime;
+      angle += _rotateSpeed * GameTime::Get().DeltaTime();
     }
 
-    if (InputManager::Get().GetKeyState(SDLK_w) == SDL_KEYDOWN)
+    if (keyboardState[SDL_SCANCODE_W])
     {
-      ship.Accelerate(_accelerationSpeed * _deltaTime);
+      ship.Accelerate(_accelerationSpeed * GameTime::Get().DeltaTime());
     }
 
-//    if (InputManager::Get().GetKeyState(SDLK_s) == SDL_KEYDOWN)
+    if (keyboardState[SDL_SCANCODE_SPACE])
+    {
+      if (!fireTrigger)
+      {
+        fireTrigger = true;
+        ship.Fire();
+      }
+    }
+
+    if (!keyboardState[SDL_SCANCODE_SPACE])
+    {
+      fireTrigger = false;
+    }
+
+//    if (keyboardState[SDL_SCANCODE_S])
 //    {
 //      ship.Accelerate(-_accelerationSpeed);
 //    }
 
-    if (InputManager::Get().GetKeyState(SDLK_w) == SDL_KEYUP && ship.Speed() > 0.0)
+    if (!keyboardState[SDL_SCANCODE_W] && ship.Speed() > 0.0)
     {
-      ship.Accelerate(-_accelerationSpeed * _deltaTime);
+      ship.Accelerate(-_accelerationSpeed * GameTime::Get().DeltaTime());
     }
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -89,12 +101,11 @@ void Application::Start()
     ship.Rotate(angle);
     ship.Move();
 
+    ship.ComputeBullets();
     ship.Draw(true);
 
     SDL_RenderPresent(renderer);
 
-    _deltaTime = (double)(_currentTime - _lastTime) / 1000;
-
-    _lastTime = _currentTime;
+    GameTime::Get().MeasureAfter();
   }
 }

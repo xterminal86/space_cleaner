@@ -41,8 +41,8 @@ class Vector2
 
 	void ToZero()
 	{
-		_x = 0.0f;
-		_y = 0.0f;
+		_x = 0.0;
+		_y = 0.0;
 	}
 
 	void Normalize()
@@ -65,7 +65,7 @@ class Vector2
 		return Vector2(_x + rhs.X(), _y + rhs.Y());
 	}
 
-	float operator* (Vector2& rhs)
+	double operator* (Vector2& rhs)
 	{
 		return _x*rhs.X() + _y*rhs.Y();
 	}
@@ -74,6 +74,12 @@ class Vector2
 	{
 		return Vector2(_x * scalar, _y * scalar);
 	}
+
+  Vector2& operator= (Vector2& rhs)
+  {
+    _x = rhs.X();
+    _y = rhs.Y();
+  }
 
 	Vector2 GetPerpendicular()
 	{

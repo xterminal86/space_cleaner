@@ -50,6 +50,7 @@
 		<Unit filename="include/bullet.h" />
 		<Unit filename="include/component.h" />
 		<Unit filename="include/game_object.h" />
+		<Unit filename="include/gametime.h" />
 		<Unit filename="include/globals.h" />
 		<Unit filename="include/input_manager.h" />
 		<Unit filename="include/logger.h" />

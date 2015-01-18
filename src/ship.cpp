@@ -20,6 +20,12 @@ Ship::Ship(double posx, double posy)
 
   _colliderCenter.x = _shipSprite.ImageWrapper()->Width() / 2;
   _colliderCenter.y = _shipSprite.ImageWrapper()->Height() / 2;
+
+  for (int i = 0; i < _maxBullets; i++)
+  {
+    Bullet b;
+    _bullets.push_back(b);
+  }
 }
 
 Ship::~Ship()
@@ -79,6 +85,14 @@ void Ship::Draw(bool drawCollider)
   Draw((int)_position.X(), (int)_position.Y(), drawCollider);
 }
 
+void Ship::ComputeBullets()
+{
+  for (int i = 0; i < _bullets.size(); i++)
+  {
+    _bullets[i].Compute();
+  }
+}
+
 void Ship::Rotate(double angle)
 {
   _angle = angle;
@@ -113,5 +127,17 @@ void Ship::Accelerate(double dspeed)
   else if (_speed > _shipMaxSpeed)
   {
     _speed = _shipMaxSpeed;
+  }
+}
+
+void Ship::Fire()
+{
+  for (int i = 0; i < _bullets.size(); i++)
+  {
+    if (_bullets[i].Active() == false)
+    {
+      _bullets[i].Fire(_position, _localDirection, _angle, _bulletSpeed);
+      break;
+    }
   }
 }

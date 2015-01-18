@@ -3,6 +3,7 @@
 
 #include "globals.h"
 #include "logger.h"
+#include "gametime.h"
 #include "video_system.h"
 #include "texture_manager.h"
 #include "input_manager.h"
@@ -23,13 +24,10 @@ class Application
 
     const int _screenWidth = 1280;
     const int _screenHeight = 600;
-    const int _rotateSpeed = 100;
-    const double _accelerationSpeed = 4;
 
-    unsigned int _currentTime;
-    unsigned int _lastTime;
-
-    double _deltaTime;
+    // FIXME: Move to Ship class and access through methods
+    const double _rotateSpeed = 0.15;
+    const double _accelerationSpeed = 0.01;
 
     bool _running;
 
