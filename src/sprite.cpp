@@ -40,7 +40,8 @@ int Sprite::Init(int textureIndex)
   return 0;
 }
 
-void Sprite::Draw(int x, int y, double angle, bool drawCollider)
+// TODO: Think about positioning sprite image centered around (x; y)
+void Sprite::Draw(int x, int y, double angle)
 {
   if (_imageWrapper == nullptr)
   {
@@ -53,9 +54,12 @@ void Sprite::Draw(int x, int y, double angle, bool drawCollider)
 
   int res = SDL_RenderCopyEx(VideoSystem::Get().Renderer(), _imageWrapper->Texture(), &_sourceRect, &_destRect, angle, nullptr, SDL_FLIP_NONE);
   if (res != 0) Logger::Get().LogPrint("(warning) Render copy error!\nReason: %s\n", SDL_GetError());
-  if (drawCollider)
-  {
-    SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 0, 255);
-    SDL_RenderDrawLines(VideoSystem::Get().Renderer(), _originalCollider->data(), _originalCollider->size());
-  }
+}
+
+void Sprite::Draw(int x, int y, double angle, std::vector<SDL_Point>* colliderToDraw)
+{
+  Draw(x, y, angle);
+
+  SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 0, 255);
+  SDL_RenderDrawLines(VideoSystem::Get().Renderer(), colliderToDraw->data(), colliderToDraw->size());
 }

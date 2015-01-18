@@ -31,7 +31,7 @@ void Bullet::Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed)
   _active = true;
 }
 
-void Bullet::Compute(bool drawCollider)
+void Bullet::Compute()
 {
   if (!_active) return;
 
@@ -41,7 +41,7 @@ void Bullet::Compute(bool drawCollider)
   _position.Set(_position.X() + _direction.X() * _bulletSpeed * GameTime::Get().DeltaTime(),
                 _position.Y() + _direction.Y() * _bulletSpeed * GameTime::Get().DeltaTime());
 
-  Draw(drawCollider);
+  Draw();
 
   if (_position.X() < 0 || _position.X() > sx || _position.Y() < 0 || _position.Y() > sy)
   {
@@ -49,7 +49,7 @@ void Bullet::Compute(bool drawCollider)
   }
 }
 
-void Bullet::Draw(bool drawCollider)
+void Bullet::Draw()
 {
-  _bulletSprite.Draw(_position.X(), _position.Y(), _angle, drawCollider);
+  _bulletSprite.Draw(_position.X(), _position.Y(), _angle);
 }

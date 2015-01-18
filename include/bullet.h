@@ -13,12 +13,14 @@ class Bullet
     Bullet();
     virtual ~Bullet();
 
-    void Compute(bool drawCollider = false);
+    void Compute();
     void Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed);
 
     Vector2 Position() { return _position; }
 
     bool Active() { return _active; }
+
+    Sprite& BulletSprite() { return _bulletSprite; }
   protected:
   private:
     Sprite _bulletSprite;
@@ -26,14 +28,12 @@ class Bullet
     Vector2 _position;
     Vector2 _direction;
 
-    std::vector<SDL_Point> _localCollider;
-
     double _bulletSpeed;
     double _angle;
 
     bool _active;
 
-    void Draw(bool drawCollider);
+    void Draw();
 };
 
 #endif // BULLET_H

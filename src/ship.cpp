@@ -67,17 +67,18 @@ void Ship::Move()
 
 void Ship::Draw(int x, int y, bool drawCollider)
 {
-  _shipSprite.Draw(x - _colliderCenter.x, y - _colliderCenter.y, _angle);
-
   if (drawCollider)
   {
-    SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 0, 255);
-    SDL_RenderDrawLines(VideoSystem::Get().Renderer(), _localCollider.data(), _localCollider.size());
-  }
+    _shipSprite.Draw(x - _colliderCenter.x, y - _colliderCenter.y, _angle, &_localCollider);
 
-  SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(),
-                                                    _position.X() + (int)(_localDirection.X() * DirectionResolution),
-                                                    _position.Y() + (int)(_localDirection.Y() * DirectionResolution));
+    SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(),
+                                                      _position.X() + (int)(_localDirection.X() * DirectionResolution),
+                                                      _position.Y() + (int)(_localDirection.Y() * DirectionResolution));
+  }
+  else
+  {
+    _shipSprite.Draw(x - _colliderCenter.x, y - _colliderCenter.y, _angle);
+  }
 }
 
 void Ship::Draw(bool drawCollider)
@@ -136,7 +137,9 @@ void Ship::Fire()
   {
     if (_bullets[i].Active() == false)
     {
-      _bullets[i].Fire(_position, _localDirection, _angle, BulletSpeed);
+      Vector2 shotPoint(_position.X() - _bullets[i].BulletSprite().ImageWrapper()->Width() / 2,
+                        _position.Y() - _bullets[i].BulletSprite().ImageWrapper()->Height() / 2);
+      _bullets[i].Fire(shotPoint, _localDirection, _angle, BulletSpeed);
       break;
     }
   }
