@@ -8,8 +8,8 @@ Ship::Ship(double posx, double posy)
   _position.Set(posx, posy);
 
   // We go up the screen when Y is decreasing.
-  _originalDirection.Set(0.0, -1.0 * _directionResolution);
-  _localDirection.Set(0.0, -1.0 * _directionResolution);
+  _originalDirection.Set(0.0, -1.0 * DirectionResolution);
+  _localDirection.Set(0.0, -1.0 * DirectionResolution);
 
   _shipSprite.Init(0);
 
@@ -21,7 +21,7 @@ Ship::Ship(double posx, double posy)
   _colliderCenter.x = _shipSprite.ImageWrapper()->Width() / 2;
   _colliderCenter.y = _shipSprite.ImageWrapper()->Height() / 2;
 
-  for (int i = 0; i < _maxBullets; i++)
+  for (int i = 0; i < MaxBullets; i++)
   {
     Bullet b;
     _bullets.push_back(b);
@@ -76,8 +76,8 @@ void Ship::Draw(int x, int y, bool drawCollider)
   }
 
   SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(),
-                                                    _position.X() + (int)(_localDirection.X() * _directionResolution),
-                                                    _position.Y() + (int)(_localDirection.Y() * _directionResolution));
+                                                    _position.X() + (int)(_localDirection.X() * DirectionResolution),
+                                                    _position.Y() + (int)(_localDirection.Y() * DirectionResolution));
 }
 
 void Ship::Draw(bool drawCollider)
@@ -124,9 +124,9 @@ void Ship::Accelerate(double dspeed)
   {
     _speed = 0.0;
   }
-  else if (_speed > _shipMaxSpeed)
+  else if (_speed > ShipMaxSpeed)
   {
-    _speed = _shipMaxSpeed;
+    _speed = ShipMaxSpeed;
   }
 }
 
@@ -136,7 +136,7 @@ void Ship::Fire()
   {
     if (_bullets[i].Active() == false)
     {
-      _bullets[i].Fire(_position, _localDirection, _angle, _bulletSpeed);
+      _bullets[i].Fire(_position, _localDirection, _angle, BulletSpeed);
       break;
     }
   }

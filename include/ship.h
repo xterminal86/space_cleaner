@@ -27,6 +27,14 @@ class Ship
 
     double Speed() { return _speed; }
     Vector2& Direction() { return _localDirection; }
+
+    const int DirectionResolution = 100;
+    const int MaxBullets = 5;
+    const double BulletSpeed = 0.5;
+    const double ShipMaxSpeed = 6.0;
+    const double RotateSpeed = 0.15;
+    const double AccelerationSpeed = 0.01;
+
   protected:
   private:
     Sprite _shipSprite;
@@ -43,11 +51,6 @@ class Ship
     std::vector<SDL_Point> _localCollider;
 
     std::vector<Bullet> _bullets;
-
-    const int _directionResolution = 100;
-    const int _maxBullets = 5;
-    const double _bulletSpeed = 0.5;
-    const double _shipMaxSpeed = 6.0;
 
     void Draw(int x, int y, bool drawCollider = false);
     void MoveCollider(int x, int y);

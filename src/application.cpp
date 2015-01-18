@@ -56,17 +56,17 @@ void Application::Start()
 
     if (keyboardState[SDL_SCANCODE_A])
     {
-      angle -= _rotateSpeed * GameTime::Get().DeltaTime();
+      angle -= ship.RotateSpeed * GameTime::Get().DeltaTime();
     }
 
     if (keyboardState[SDL_SCANCODE_D])
     {
-      angle += _rotateSpeed * GameTime::Get().DeltaTime();
+      angle += ship.RotateSpeed * GameTime::Get().DeltaTime();
     }
 
     if (keyboardState[SDL_SCANCODE_W])
     {
-      ship.Accelerate(_accelerationSpeed * GameTime::Get().DeltaTime());
+      ship.Accelerate(ship.AccelerationSpeed * GameTime::Get().DeltaTime());
     }
 
     if (keyboardState[SDL_SCANCODE_SPACE])
@@ -90,7 +90,7 @@ void Application::Start()
 
     if (!keyboardState[SDL_SCANCODE_W] && ship.Speed() > 0.0)
     {
-      ship.Accelerate(-_accelerationSpeed * GameTime::Get().DeltaTime());
+      ship.Accelerate(-ship.AccelerationSpeed * GameTime::Get().DeltaTime());
     }
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);

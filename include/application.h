@@ -25,10 +25,6 @@ class Application
     const int _screenWidth = 1280;
     const int _screenHeight = 600;
 
-    // FIXME: Move to Ship class and access through methods
-    const double _rotateSpeed = 0.15;
-    const double _accelerationSpeed = 0.01;
-
     bool _running;
 
     Sprite _background;
