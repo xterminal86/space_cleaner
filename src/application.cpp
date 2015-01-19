@@ -56,12 +56,12 @@ void Application::Start()
 
     if (keyboardState[SDL_SCANCODE_A])
     {
-      angle -= ship.RotateSpeed * GameTime::Get().DeltaTime();
+      angle -= ship.RotationSpeed * GameTime::Get().DeltaTime();
     }
 
     if (keyboardState[SDL_SCANCODE_D])
     {
-      angle += ship.RotateSpeed * GameTime::Get().DeltaTime();
+      angle += ship.RotationSpeed * GameTime::Get().DeltaTime();
     }
 
     if (keyboardState[SDL_SCANCODE_W])
