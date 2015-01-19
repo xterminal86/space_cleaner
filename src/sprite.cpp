@@ -37,6 +37,15 @@ int Sprite::Init(int textureIndex)
 
   _originalCollider = TextureManager::Get().GetCollider(textureIndex);
 
+  if (_originalCollider != nullptr)
+  {
+    for (int i = 0; i < _originalCollider->size(); i++)
+    {
+      _originalCollider->at(i).x -= _imageWrapper->Width() / 2;
+      _originalCollider->at(i).y -= _imageWrapper->Height() / 2;
+    }
+  }
+
   return 0;
 }
 
@@ -49,8 +58,11 @@ void Sprite::Draw(int x, int y, double angle)
     return;
   }
 
-  _destRect.x = x;
-  _destRect.y = y;
+  //_destRect.x = x;
+  //_destRect.y = y;
+
+  _destRect.x = x - _imageWrapper->Width() / 2;
+  _destRect.y = y - _imageWrapper->Height() / 2;
 
   int res = SDL_RenderCopyEx(VideoSystem::Get().Renderer(), _imageWrapper->Texture(), &_sourceRect, &_destRect, angle, nullptr, SDL_FLIP_NONE);
   if (res != 0) Logger::Get().LogPrint("(warning) Render copy error!\nReason: %s\n", SDL_GetError());

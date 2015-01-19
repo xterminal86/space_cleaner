@@ -31,10 +31,10 @@ void Application::Start()
 
   LoadBackground();
 
-  Ship ship(0.0, 0.0);
+  int bgx = _screenWidth / 2;
+  int bgy = _screenHeight / 2;
 
-  int bgx = _screenWidth / 2 - _background.ImageWrapper()->Width() / 2;
-  int bgy = _screenHeight / 2 - _background.ImageWrapper()->Height() / 2;
+  Ship ship(0.0, 0.0);
 
   ship.Move(300, 300);
 

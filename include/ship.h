@@ -47,7 +47,6 @@ class Ship
     Vector2 _originalDirection;
     Vector2 _localDirection;
 
-    SDL_Point _colliderCenter;
     std::vector<SDL_Point> _localCollider;
 
     std::vector<Bullet> _bullets;
