@@ -49,7 +49,6 @@ int Sprite::Init(int textureIndex)
   return 0;
 }
 
-// TODO: Think about positioning sprite image centered around (x; y)
 void Sprite::Draw(int x, int y, double angle)
 {
   if (_imageWrapper == nullptr)
@@ -57,9 +56,6 @@ void Sprite::Draw(int x, int y, double angle)
     Logger::Get().LogPrint("(warning) Sprite 0x%zX _imageWrapper is NULL, so drawing nothing\n", this);
     return;
   }
-
-  //_destRect.x = x;
-  //_destRect.y = y;
 
   _destRect.x = x - _imageWrapper->Width() / 2;
   _destRect.y = y - _imageWrapper->Height() / 2;
@@ -72,6 +68,9 @@ void Sprite::Draw(int x, int y, double angle, std::vector<SDL_Point>* colliderTo
 {
   Draw(x, y, angle);
 
-  SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 0, 255);
-  SDL_RenderDrawLines(VideoSystem::Get().Renderer(), colliderToDraw->data(), colliderToDraw->size());
+  if (colliderToDraw != nullptr)
+  {
+    SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 0, 255);
+    SDL_RenderDrawLines(VideoSystem::Get().Renderer(), colliderToDraw->data(), colliderToDraw->size());
+  }
 }
