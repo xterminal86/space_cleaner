@@ -41,12 +41,21 @@ int Sprite::Init(int textureIndex)
   {
     for (int i = 0; i < _originalCollider->size(); i++)
     {
-      _originalCollider->at(i).x -= _imageWrapper->Width() / 2;
-      _originalCollider->at(i).y -= _imageWrapper->Height() / 2;
+      _localCollider.push_back(_originalCollider->at(i));
     }
   }
 
   return 0;
+}
+
+void Sprite::MoveCollider(double newX, double newY)
+{
+  int csize = _localCollider.size();
+  for (int i = 0; i < csize; i++)
+  {
+    _localCollider[i].x += newX;
+    _localCollider[i].y += newY;
+  }
 }
 
 void Sprite::Draw(int x, int y, double angle)

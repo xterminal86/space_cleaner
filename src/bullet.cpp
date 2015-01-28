@@ -29,6 +29,19 @@ void Bullet::Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed)
   _bulletSpeed = speed;
   _angle = angle;
   _active = true;
+
+  Vector2 res;
+  int cs = _bulletSprite.LocalCollider().size();
+  for (int i = 0; i < cs; i++)
+  {
+    Vector2 origCollider(_bulletSprite.OriginalCollider()->at(i).x, _bulletSprite.OriginalCollider()->at(i).y);
+    Vector2::RotateVector(res, Vector2(0.0, 0.0), origCollider, angle);
+
+    _bulletSprite.LocalCollider()[i].x = res.X();
+    _bulletSprite.LocalCollider()[i].y = res.Y();
+  }
+
+  _bulletSprite.MoveCollider(shotPoint.X(), shotPoint.Y());
 }
 
 void Bullet::Compute()
@@ -38,8 +51,12 @@ void Bullet::Compute()
   int sx = VideoSystem::Get().ScreenDimensions().x;
   int sy = VideoSystem::Get().ScreenDimensions().y;
 
-  _position.Set(_position.X() + _direction.X() * _bulletSpeed * GameTime::Get().DeltaTime(),
-                _position.Y() + _direction.Y() * _bulletSpeed * GameTime::Get().DeltaTime());
+  double dx = _direction.X() * _bulletSpeed * GameTime::Get().DeltaTime();
+  double dy = _direction.Y() * _bulletSpeed * GameTime::Get().DeltaTime();
+
+  _position.Set(_position.X() + dx, _position.Y() + dy);
+
+  _bulletSprite.MoveCollider(dx, dy);
 
   Draw();
 
@@ -51,5 +68,5 @@ void Bullet::Compute()
 
 void Bullet::Draw()
 {
-  _bulletSprite.Draw(_position.X(), _position.Y(), _angle);
+  _bulletSprite.Draw(_position.X(), _position.Y(), _angle, &_bulletSprite.LocalCollider());
 }

@@ -11,11 +11,10 @@ Ship::Ship(double posx, double posy)
   _originalDirection.Set(0.0, -1.0 * DirectionResolution);
   _localDirection.Set(0.0, -1.0 * DirectionResolution);
 
-  _shipSprite.Init(0);
-
-  for (int i = 0; i < _shipSprite.OriginalCollider()->size(); i++)
+  int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipRole);
+  if (res != -1)
   {
-    _localCollider.push_back(_shipSprite.OriginalCollider()->at(i));
+    _shipSprite.Init(res);
   }
 
   for (int i = 0; i < MaxBullets; i++)
@@ -28,15 +27,6 @@ Ship::Ship(double posx, double posy)
 Ship::~Ship()
 {
   //dtor
-}
-
-void Ship::MoveCollider(int x, int y)
-{
-  for (int i = 0; i < _localCollider.size(); i++)
-  {
-    _localCollider[i].x += x;
-    _localCollider[i].y += y;
-  }
 }
 
 void Ship::Move(int x, int y)
@@ -66,7 +56,7 @@ void Ship::Draw(int x, int y, bool drawCollider)
 {
   if (drawCollider)
   {
-    _shipSprite.Draw(x, y, _angle, &_localCollider);
+    _shipSprite.Draw(x, y, _angle, &_shipSprite.LocalCollider());
 
     SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(),
                                                       _position.X() + (int)(_localDirection.X() * DirectionResolution),
@@ -95,19 +85,18 @@ void Ship::Rotate(double angle)
 {
   _angle = angle;
 
-  Vector2 center(0.0, 0.0);
-
+  int cs = _shipSprite.LocalCollider().size();
   Vector2 res;
-  for (int i = 0; i < _localCollider.size(); i++)
+  for (int i = 0; i < cs; i++)
   {
     Vector2 origCollider(_shipSprite.OriginalCollider()->at(i).x, _shipSprite.OriginalCollider()->at(i).y);
-    Vector2::RotateVector(res, center, origCollider, angle);
+    Vector2::RotateVector(res, Vector2(0.0, 0.0), origCollider, angle);
 
-    _localCollider[i].x = res.X();
-    _localCollider[i].y = res.Y();
+    _shipSprite.LocalCollider()[i].x = res.X();
+    _shipSprite.LocalCollider()[i].y = res.Y();
   }
 
-  MoveCollider(_position.X(), _position.Y());
+  _shipSprite.MoveCollider(_position.X(), _position.Y());
 
   Vector2::RotateVector(res, Vector2::Zero(), _originalDirection, angle);
   _localDirection = res;

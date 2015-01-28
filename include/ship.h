@@ -30,7 +30,7 @@ class Ship
 
     const int DirectionResolution = 100;
     const int MaxBullets = 50;
-    const double BulletSpeed = 0.7;
+    const double BulletSpeed = 0.07;
     const double ShipMaxSpeed = 4.0;
     const double RotationSpeed = 0.1;
     const double AccelerationSpeed = 0.005;
@@ -47,12 +47,9 @@ class Ship
     Vector2 _originalDirection;
     Vector2 _localDirection;
 
-    std::vector<SDL_Point> _localCollider;
-
     std::vector<Bullet> _bullets;
 
     void Draw(int x, int y, bool drawCollider = false);
-    void MoveCollider(int x, int y);
 };
 
 #endif // SHIP_H

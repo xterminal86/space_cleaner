@@ -59,8 +59,14 @@ void TextureManager::LoadCollider(int textureIndex, std::string filename)
   {
     SDL_Point point;
     fscanf(f, "%i %i", &x, &y);
-    point.x = x;
-    point.y = y;
+
+    // Collider points are given relative to pixels of picture.
+    // We offset collider coordinates by image's width and height, which will position it centered around (0; 0).
+    // Thus we can call some Draw(x, y) method and our sprite will position centered around that given point.
+
+    point.x = x - _textures[textureIndex]->Width() / 2;
+    point.y = y - _textures[textureIndex]->Height() / 2;
+
     _colliders[textureIndex].push_back(point);
   }
   fclose(f);
