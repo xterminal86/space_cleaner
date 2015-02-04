@@ -19,7 +19,8 @@ class Sprite
     SDL_Rect* SourceRect() { return &_sourceRect; }
     SDL_Rect* DestinationRect() { return &_destRect; }
     std::vector<SDL_Point>* OriginalCollider() { return _originalCollider; }
-    std::vector<SDL_Point>& LocalCollider() { return _localCollider; }
+    std::vector<SDL_Point>& RotatedCollider() { return _rotatedCollider; }
+    std::vector<SDL_Point>& TranslatedCollider() { return _translatedCollider; }
   private:
     SDL_Rect _sourceRect;
     SDL_Rect _destRect;
@@ -28,7 +29,8 @@ class Sprite
     int _screenY;
     float _scaleFactor;
     std::vector<SDL_Point>* _originalCollider;
-    std::vector<SDL_Point> _localCollider;
+    std::vector<SDL_Point> _rotatedCollider;
+    std::vector<SDL_Point> _translatedCollider;
 };
 
 #endif // SPRITE_H

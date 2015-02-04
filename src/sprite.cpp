@@ -41,7 +41,8 @@ int Sprite::Init(int textureIndex)
   {
     for (int i = 0; i < _originalCollider->size(); i++)
     {
-      _localCollider.push_back(_originalCollider->at(i));
+      _rotatedCollider.push_back(_originalCollider->at(i));
+      _translatedCollider.push_back(_originalCollider->at(i));
     }
   }
 
@@ -50,11 +51,11 @@ int Sprite::Init(int textureIndex)
 
 void Sprite::MoveCollider(double newX, double newY)
 {
-  int csize = _localCollider.size();
+  int csize = _rotatedCollider.size();
   for (int i = 0; i < csize; i++)
   {
-    _localCollider[i].x += newX;
-    _localCollider[i].y += newY;
+    _translatedCollider[i].x = _rotatedCollider[i].x + newX;
+    _translatedCollider[i].y = _rotatedCollider[i].y + newY;
   }
 }
 

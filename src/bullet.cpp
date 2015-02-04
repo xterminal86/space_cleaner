@@ -31,14 +31,14 @@ void Bullet::Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed)
   _active = true;
 
   Vector2 res;
-  int cs = _bulletSprite.LocalCollider().size();
+  int cs = _bulletSprite.RotatedCollider().size();
   for (int i = 0; i < cs; i++)
   {
     Vector2 origCollider(_bulletSprite.OriginalCollider()->at(i).x, _bulletSprite.OriginalCollider()->at(i).y);
     Vector2::RotateVector(res, Vector2(0.0, 0.0), origCollider, angle);
 
-    _bulletSprite.LocalCollider()[i].x = res.X();
-    _bulletSprite.LocalCollider()[i].y = res.Y();
+    _bulletSprite.RotatedCollider()[i].x = res.X();
+    _bulletSprite.RotatedCollider()[i].y = res.Y();
   }
 
   _bulletSprite.MoveCollider(shotPoint.X(), shotPoint.Y());
@@ -56,7 +56,7 @@ void Bullet::Compute()
 
   _position.Set(_position.X() + dx, _position.Y() + dy);
 
-  _bulletSprite.MoveCollider(dx, dy);
+  _bulletSprite.MoveCollider(_position.X(), _position.Y());
 
   Draw();
 
@@ -68,5 +68,5 @@ void Bullet::Compute()
 
 void Bullet::Draw()
 {
-  _bulletSprite.Draw(_position.X(), _position.Y(), _angle, &_bulletSprite.LocalCollider());
+  _bulletSprite.Draw(_position.X(), _position.Y(), _angle, &_bulletSprite.TranslatedCollider());
 }
