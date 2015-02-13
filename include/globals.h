@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 #include <SDL.h>
 #include <SDL_image.h>
 

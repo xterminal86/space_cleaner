@@ -2,6 +2,8 @@
 
 Sprite::Sprite()
 {
+  //printf ("Sprite ctor\t");
+
   _screenX = 0;
   _screenY = 0;
   _scaleFactor = 1.0f;
@@ -10,6 +12,7 @@ Sprite::Sprite()
 
 Sprite::~Sprite()
 {
+  //printf ("Sprite dtor\t");
 }
 
 int Sprite::Init(int textureIndex)

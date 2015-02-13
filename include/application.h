@@ -25,12 +25,16 @@ class Application
 
     const int _screenWidth = 1280;
     const int _screenHeight = 600;
+    const int _maxAsteroids = 5;
 
     bool _running;
 
     Sprite _background;
 
     void LoadBackground();
+    void InitAsteroids();
+
+    std::vector<std::unique_ptr<Asteroid>> _asteroids;
 };
 
 #endif // APPLICATION_H

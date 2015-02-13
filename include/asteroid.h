@@ -15,12 +15,18 @@ class Asteroid
     void Move(double x, double y);
     void Move();
     void Rotate(double angle);
+    void Compute();
+
+    const double MaxSpeed = 1.0;
+    const double MaxRotationSpeed = 2.0;
+
   protected:
   private:
     Sprite _asteroidSprite;
 
     double _speed;
     double _angle;
+    double _angleIncrement;
 
     Vector2 _position;
     Vector2 _direction;

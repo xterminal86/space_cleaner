@@ -10,6 +10,8 @@ Application::Application()
 Application::~Application()
 {
   Logger::Get().LogPrint("Closing application...\n");
+
+  _asteroids.clear();
 }
 
 void Application::LoadBackground()
@@ -21,8 +23,25 @@ void Application::LoadBackground()
   }
 }
 
+void Application::InitAsteroids()
+{
+  int posx = 0, posy = 0;
+  int screenx = VideoSystem::Get().ScreenDimensions().x;
+  int screeny = VideoSystem::Get().ScreenDimensions().y;
+
+  for (int i = 0; i < _maxAsteroids; i++)
+  {
+    posx = (rand() % screenx - 40) + 40;
+    posy = (rand() % screeny - 40) + 40;
+
+    _asteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(posx, posy)));
+  }
+}
+
 void Application::Start()
 {
+  srand(time(nullptr));
+
   double shipAngle = 0.0;
 
   _running = true;
@@ -30,17 +49,13 @@ void Application::Start()
   SDL_Renderer* renderer = VideoSystem::Get().Renderer();
 
   LoadBackground();
+  InitAsteroids();
 
   int bgx = _screenWidth / 2;
   int bgy = _screenHeight / 2;
 
   Ship ship(0.0, 0.0);
   ship.Move(300, 300);
-
-  Asteroid a(0, 0);
-  a.Move(100, 100);
-
-  double asteroidAngle = 0.0;
 
   bool fireTrigger = false;
 
@@ -108,11 +123,11 @@ void Application::Start()
     ship.ComputeBullets();
     ship.Draw(true);
 
-    a.Rotate(asteroidAngle);
-    a.Move();
-    a.Draw(true);
-
-    asteroidAngle++;
+    for (int i = 0; i < _asteroids.size(); i++)
+    {
+      _asteroids[i].get()->Compute();
+      _asteroids[i].get()->Draw(true);
+    }
 
     SDL_RenderPresent(renderer);
 
