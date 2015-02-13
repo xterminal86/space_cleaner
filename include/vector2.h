@@ -86,11 +86,6 @@ class Vector2
 		return Vector2(-_y, _x);
 	}
 
-	std::vector<SDL_Point>* ProjectTriangle(std::vector<SDL_Point>* triangle, Vector2 axis)
-	{
-	  return &_triangleProjection;
-	}
-
   void Invert(bool invertX)
   {
     if (invertX)
@@ -122,8 +117,6 @@ class Vector2
 private:
 	double _x;
 	double _y;
-
-	std::vector<SDL_Point> _triangleProjection;
 };
 
 #endif // VECTOR2_H

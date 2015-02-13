@@ -8,5 +8,5 @@ Vector2::Vector2()
 
 Vector2::~Vector2()
 {
-  //dtor
+  //printf ("Vector2 dtor ");
 }

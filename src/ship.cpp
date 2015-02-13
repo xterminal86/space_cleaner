@@ -19,8 +19,7 @@ Ship::Ship(double posx, double posy)
 
   for (int i = 0; i < MaxBullets; i++)
   {
-    Bullet b;
-    _bullets.push_back(b);
+    _bullets.push_back(std::unique_ptr<Bullet>(new Bullet()));
   }
 }
 
@@ -77,7 +76,7 @@ void Ship::ComputeBullets()
 {
   for (int i = 0; i < _bullets.size(); i++)
   {
-    _bullets[i].Compute();
+    _bullets[i].get()->Compute();
   }
 }
 
@@ -121,10 +120,10 @@ void Ship::Fire()
 {
   for (int i = 0; i < _bullets.size(); i++)
   {
-    if (_bullets[i].Active() == false)
+    if (_bullets[i].get()->Active() == false)
     {
       Vector2 shotPoint(_position.X(), _position.Y());
-      _bullets[i].Fire(shotPoint, _localDirection, _angle, BulletSpeed);
+      _bullets[i].get()->Fire(shotPoint, _localDirection, _angle, BulletSpeed);
       break;
     }
   }

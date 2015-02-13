@@ -23,7 +23,7 @@ void Application::LoadBackground()
 
 void Application::Start()
 {
-  double angle = 0.0;
+  double shipAngle = 0.0;
 
   _running = true;
 
@@ -35,8 +35,12 @@ void Application::Start()
   int bgy = _screenHeight / 2;
 
   Ship ship(0.0, 0.0);
-
   ship.Move(300, 300);
+
+  Asteroid a(0, 0);
+  a.Move(100, 100);
+
+  double asteroidAngle = 0.0;
 
   bool fireTrigger = false;
 
@@ -56,12 +60,12 @@ void Application::Start()
 
     if (keyboardState[SDL_SCANCODE_A])
     {
-      angle -= ship.RotationSpeed * GameTime::Get().DeltaTime();
+      shipAngle -= ship.RotationSpeed * GameTime::Get().DeltaTime();
     }
 
     if (keyboardState[SDL_SCANCODE_D])
     {
-      angle += ship.RotationSpeed * GameTime::Get().DeltaTime();
+      shipAngle += ship.RotationSpeed * GameTime::Get().DeltaTime();
     }
 
     if (keyboardState[SDL_SCANCODE_W])
@@ -98,11 +102,17 @@ void Application::Start()
 
     _background.Draw(bgx, bgy);
 
-    ship.Rotate(angle);
+    ship.Rotate(shipAngle);
     ship.Move();
 
     ship.ComputeBullets();
     ship.Draw(true);
+
+    a.Rotate(asteroidAngle);
+    a.Move();
+    a.Draw(true);
+
+    asteroidAngle++;
 
     SDL_RenderPresent(renderer);
 

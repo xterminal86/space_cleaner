@@ -47,9 +47,8 @@
 		</Linker>
 		<Unit filename="cb.bmp" />
 		<Unit filename="include/application.h" />
+		<Unit filename="include/asteroid.h" />
 		<Unit filename="include/bullet.h" />
-		<Unit filename="include/component.h" />
-		<Unit filename="include/game_object.h" />
 		<Unit filename="include/gametime.h" />
 		<Unit filename="include/globals.h" />
 		<Unit filename="include/input_manager.h" />
@@ -63,9 +62,8 @@
 		<Unit filename="include/video_system.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/application.cpp" />
+		<Unit filename="src/asteroid.cpp" />
 		<Unit filename="src/bullet.cpp" />
-		<Unit filename="src/component.cpp" />
-		<Unit filename="src/game_object.cpp" />
 		<Unit filename="src/input_manager.cpp" />
 		<Unit filename="src/logger.cpp" />
 		<Unit filename="src/map_object.cpp" />

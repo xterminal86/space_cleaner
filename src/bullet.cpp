@@ -19,7 +19,7 @@ Bullet::Bullet()
 
 Bullet::~Bullet()
 {
-  //dtor
+  //printf ("bullet dtor ");
 }
 
 void Bullet::Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed)

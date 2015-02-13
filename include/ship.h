@@ -47,7 +47,7 @@ class Ship
     Vector2 _originalDirection;
     Vector2 _localDirection;
 
-    std::vector<Bullet> _bullets;
+    std::vector<std::unique_ptr<Bullet>> _bullets;
 
     void Draw(int x, int y, bool drawCollider = false);
 };
