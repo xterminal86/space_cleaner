@@ -70,6 +70,11 @@ class Vector2
 		return _x*rhs.X() + _y*rhs.Y();
 	}
 
+  double CrossProduct(Vector2& rhs)
+  {
+    return (_x*rhs.Y() - rhs.X()*_y);
+  }
+
 	Vector2 operator* (double scalar)
 	{
 		return Vector2(_x * scalar, _y * scalar);
