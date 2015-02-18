@@ -126,7 +126,7 @@ void Application::Start()
     for (int i = 0; i < _asteroids.size(); i++)
     {
       _asteroids[i].get()->Compute();
-      _asteroids[i].get()->Draw(true);
+      _asteroids[i].get()->Draw(true, true);
     }
 
     SDL_RenderPresent(renderer);

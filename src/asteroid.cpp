@@ -54,9 +54,14 @@ void Asteroid::Move()
   _asteroidSprite.MoveCollider(newX, newY);
 }
 
-void Asteroid::Draw(bool drawCollider)
+void Asteroid::Draw(bool drawCollider, bool drawAxes)
 {
   Draw((int)_position.X(), (int)_position.Y(), drawCollider);
+
+  if (drawAxes)
+  {
+    DrawAxes();
+  }
 }
 
 void Asteroid::Draw(int x, int y, bool drawCollider)
@@ -68,6 +73,21 @@ void Asteroid::Draw(int x, int y, bool drawCollider)
   else
   {
     _asteroidSprite.Draw(x, y);
+  }
+}
+
+void Asteroid::DrawAxes()
+{
+  auto axes = _asteroidSprite.GetAxes();
+
+  for (auto &i : axes)
+  {
+    SDL_Point pos;
+
+    pos.x = (int)_position.X() + i.x;
+    pos.y = (int)_position.Y() + i.y;
+
+    SDL_RenderDrawLine(VideoSystem::Get().Renderer(), (int)_position.X(), (int)_position.Y(), pos.x, pos.y);
   }
 }
 

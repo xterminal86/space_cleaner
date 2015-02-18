@@ -10,7 +10,7 @@ class Asteroid
   public:
     Asteroid(double posx, double posy);
     virtual ~Asteroid();
-    void Draw(bool drawCollider = false);
+    void Draw(bool drawCollider = false, bool drawAxes = false);
     void Move(Vector2 newPos);
     void Move(double x, double y);
     void Move();
@@ -32,6 +32,7 @@ class Asteroid
     Vector2 _direction;
 
     void Draw(int x, int y, bool drawCollider = false);
+    void DrawAxes();
 };
 
 #endif // ASTEROID_H

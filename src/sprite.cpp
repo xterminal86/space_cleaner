@@ -15,6 +15,30 @@ Sprite::~Sprite()
   //printf ("Sprite dtor\t");
 }
 
+std::vector<SDL_Point>& Sprite::GetAxes()
+{
+  _projectionAxes.clear();
+
+  size_t length = _translatedCollider.size();
+  for (int i = 0; i < length; i++)
+  {
+    SDL_Point p1 = _translatedCollider[i];
+    SDL_Point p2 = _translatedCollider[i + 1 == length ? 0 : i + 1];
+
+    int dx = p1.x - p2.x;
+    int dy = p1.y - p2.y;
+
+    SDL_Point p;
+
+    p.x = dy;
+    p.y = -dx;
+
+    _projectionAxes.push_back(p);
+  }
+
+  return _projectionAxes;
+}
+
 int Sprite::Init(int textureIndex)
 {
   _imageWrapper = TextureManager::Get().GetTextureWrapper(textureIndex);
@@ -52,6 +76,12 @@ int Sprite::Init(int textureIndex)
   return 0;
 }
 
+// In order to avoid "acceleration" of results, we always offset from some point when performing calculations.
+// I.e. first we take original collider, rotate it and remember the values of rotated points,
+// then we offset those points to somewhere we want.
+// Previously offset was taken from _originalCollider, thus incrementing the wrong position in the first place.
+// And if we would just replace _originalCollider with += of the _rotatedCollider, it would "fly away", since
+// increment performs every frame. Therefore, three colliders.
 void Sprite::MoveCollider(double newX, double newY)
 {
   int csize = _rotatedCollider.size();

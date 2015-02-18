@@ -18,9 +18,14 @@ class Sprite
     const PNGLoader* ImageWrapper() { return _imageWrapper; }
     SDL_Rect* SourceRect() { return &_sourceRect; }
     SDL_Rect* DestinationRect() { return &_destRect; }
+    // Collider points with default origin ( [0;0] at upper left corner of the image)
     std::vector<SDL_Point>* OriginalCollider() { return _originalCollider; }
+    // The same points after rotation
     std::vector<SDL_Point>& RotatedCollider() { return _rotatedCollider; }
+    // The above points after translation (basically, you should use this one)
     std::vector<SDL_Point>& TranslatedCollider() { return _translatedCollider; }
+    // Axes to project on for SAT test
+    std::vector<SDL_Point>& GetAxes();
   private:
     SDL_Rect _sourceRect;
     SDL_Rect _destRect;
@@ -31,6 +36,7 @@ class Sprite
     std::vector<SDL_Point>* _originalCollider;
     std::vector<SDL_Point> _rotatedCollider;
     std::vector<SDL_Point> _translatedCollider;
+    std::vector<SDL_Point> _projectionAxes;
 };
 
 #endif // SPRITE_H

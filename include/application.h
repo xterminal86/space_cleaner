@@ -25,7 +25,7 @@ class Application
 
     const int _screenWidth = 1280;
     const int _screenHeight = 600;
-    const int _maxAsteroids = 5;
+    const int _maxAsteroids = 1;
 
     bool _running;
 
