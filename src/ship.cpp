@@ -49,6 +49,7 @@ void Ship::Move()
   if (newY > VideoSystem::Get().ScreenDimensions().y) newY = VideoSystem::Get().ScreenDimensions().y;
 
   _position.Set(newX, newY);
+  _shipSprite.MoveCollider(_position.X(), _position.Y());
 }
 
 void Ship::Draw(int x, int y, bool drawCollider)
@@ -94,8 +95,6 @@ void Ship::Rotate(double angle)
     _shipSprite.RotatedCollider()[i].x = res.X();
     _shipSprite.RotatedCollider()[i].y = res.Y();
   }
-
-  _shipSprite.MoveCollider(_position.X(), _position.Y());
 
   Vector2::RotateVector(res, Vector2::Zero(), _originalDirection, angle);
   _localDirection = res;
