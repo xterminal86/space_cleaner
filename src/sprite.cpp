@@ -15,28 +15,32 @@ Sprite::~Sprite()
   //printf ("Sprite dtor\t");
 }
 
-std::vector<SDL_Point>& Sprite::GetAxes()
+void Sprite::CalculateSATAxes()
 {
   _projectionAxes.clear();
+  _projectionAxesV2.clear();
 
   size_t length = _translatedCollider.size();
-  for (int i = 0; i < length; i++)
+  for (int i = 0; i < length - 1; i++)
   {
     SDL_Point p1 = _translatedCollider[i];
-    SDL_Point p2 = _translatedCollider[i + 1 == length ? 0 : i + 1];
+    SDL_Point p2 = _translatedCollider[i + 1];
 
     int dx = p1.x - p2.x;
     int dy = p1.y - p2.y;
 
     SDL_Point p;
+    Vector2 v;
 
     p.x = dy;
     p.y = -dx;
 
-    _projectionAxes.push_back(p);
-  }
+    v.Set(p.x, p.y);
+    v.Normalize();
 
-  return _projectionAxes;
+    _projectionAxes.push_back(p);
+    _projectionAxesV2.push_back(v);
+  }
 }
 
 int Sprite::Init(int textureIndex)

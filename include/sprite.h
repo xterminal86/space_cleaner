@@ -4,6 +4,7 @@
 #include "globals.h"
 #include "png_loader.h"
 #include "texture_manager.h"
+#include "vector2.h"
 
 class Sprite
 {
@@ -25,7 +26,11 @@ class Sprite
     // The above points after translation (basically, you should use this one)
     std::vector<SDL_Point>& TranslatedCollider() { return _translatedCollider; }
     // Axes to project on for SAT test
-    std::vector<SDL_Point>& GetAxes();
+    void CalculateSATAxes();
+
+    std::vector<SDL_Point>& GetAxes() { return _projectionAxes; }
+    std::vector<Vector2>& GetAxesV2() { return _projectionAxesV2; }
+
   private:
     SDL_Rect _sourceRect;
     SDL_Rect _destRect;
@@ -37,6 +42,7 @@ class Sprite
     std::vector<SDL_Point> _rotatedCollider;
     std::vector<SDL_Point> _translatedCollider;
     std::vector<SDL_Point> _projectionAxes;
+    std::vector<Vector2> _projectionAxesV2;
 };
 
 #endif // SPRITE_H

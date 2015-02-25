@@ -17,8 +17,10 @@ class Asteroid
     void Rotate(double angle);
     void Compute();
 
-    const double MaxSpeed = 1.0;
-    const double MaxRotationSpeed = 2.0;
+    Sprite& GetSprite() { return _asteroidSprite; }
+
+    const double MaxSpeed = 0.5;
+    const double MaxRotationSpeed = 1.0;
 
   protected:
   private:

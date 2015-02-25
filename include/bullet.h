@@ -20,7 +20,8 @@ class Bullet
 
     bool Active() { return _active; }
 
-    Sprite& BulletSprite() { return _bulletSprite; }
+    Sprite& GetSprite() { return _bulletSprite; }
+
   protected:
   private:
     Sprite _bulletSprite;
@@ -33,7 +34,8 @@ class Bullet
 
     bool _active;
 
-    void Draw();
+    void Draw(bool drawCollider, bool drawSxes);
+    void DrawAxes();
 };
 
 #endif // BULLET_H

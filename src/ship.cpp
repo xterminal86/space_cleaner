@@ -1,6 +1,10 @@
 #include "ship.h"
 
-Ship::Ship(double posx, double posy)
+Ship::Ship()
+{
+}
+
+void Ship::Init(double posx, double posy)
 {
   _angle = 0.0;
   _speed = 0.0;
@@ -126,4 +130,17 @@ void Ship::Fire()
       break;
     }
   }
+}
+
+bool Ship::BulletsActive()
+{
+  for (auto &i : _bullets)
+  {
+    if (i.get()->Active())
+    {
+      return true;
+    }
+  }
+
+  return false;
 }

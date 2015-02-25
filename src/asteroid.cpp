@@ -78,6 +78,9 @@ void Asteroid::Draw(int x, int y, bool drawCollider)
 
 void Asteroid::DrawAxes()
 {
+  SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 0, 255, 255, 255);
+
+  _asteroidSprite.CalculateSATAxes();
   auto axes = _asteroidSprite.GetAxes();
 
   for (auto &i : axes)

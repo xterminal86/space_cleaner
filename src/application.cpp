@@ -38,6 +38,82 @@ void Application::InitAsteroids()
   }
 }
 
+Vector2Pair Application::ProjectPolygon(std::vector<SDL_Point>& polygon, Vector2& axe)
+{
+  Vector2Pair proj;
+
+  Vector2 projMin;
+  Vector2 projMax;
+
+  double min = polygon[0].x * axe.X() + polygon[0].y * axe.Y();
+  double max = min;
+  for (auto &i : polygon)
+  {
+    Vector2 tmp;
+    tmp.Set(i.x, i.y);
+
+    double scalar = tmp * axe;
+
+    if (scalar < min) min = scalar;
+    else if (scalar > max) max = scalar;
+
+    //double x = axe.X() * scalar;
+    //double y = axe.Y() * scalar;
+  }
+
+  projMin.Set(axe.X() * min, axe.Y() * min);
+  projMax.Set(axe.X() * max, axe.Y() * max);
+
+  proj.Min = projMin;
+  proj.Max = projMax;
+
+  return proj;
+}
+
+void Application::ProcessCollisions()
+{
+  // Perform the following only if needed
+  if (_ship.BulletsActive())
+  {
+    for (auto &i : _ship.GetBullets())
+    {
+      // Take into account only active bullets
+      if (i.get()->Active())
+      {
+        _asteroids.at(0).get()->GetSprite().CalculateSATAxes();
+        i.get()->GetSprite().CalculateSATAxes();
+
+        auto asteroidAxes = _asteroids.at(0).get()->GetSprite().GetAxesV2();
+        auto bulletAxes = i.get()->GetSprite().GetAxesV2();
+
+        for (auto &i2 : bulletAxes)
+        {
+          Vector2Pair tmp = ProjectPolygon(i.get()->GetSprite().TranslatedCollider(), i2);
+          Vector2Pair tmp2 = ProjectPolygon(_asteroids.at(0).get()->GetSprite().TranslatedCollider(), i2);
+
+          SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 0, 255, 255, 255);
+          SDL_RenderDrawLine(VideoSystem::Get().Renderer(), tmp.Min.X(), tmp.Min.Y(), tmp.Max.X(), tmp.Max.Y());
+
+          SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 255, 255);
+          SDL_RenderDrawLine(VideoSystem::Get().Renderer(), tmp2.Min.X(), tmp2.Min.Y(), tmp2.Max.X(), tmp2.Max.Y());
+        }
+
+        for (auto &i3 : asteroidAxes)
+        {
+          Vector2Pair tmp = ProjectPolygon(i.get()->GetSprite().TranslatedCollider(), i3);
+          Vector2Pair tmp2 = ProjectPolygon(_asteroids.at(0).get()->GetSprite().TranslatedCollider(), i3);
+
+          SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 0, 255, 0, 255);
+          SDL_RenderDrawLine(VideoSystem::Get().Renderer(), tmp.Min.X(), tmp.Min.Y(), tmp.Max.X(), tmp.Max.Y());
+
+          SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 0, 255);
+          SDL_RenderDrawLine(VideoSystem::Get().Renderer(), tmp2.Min.X(), tmp2.Min.Y(), tmp2.Max.X(), tmp2.Max.Y());
+        }
+      }
+    }
+  }
+}
+
 void Application::Start()
 {
   srand(time(nullptr));
@@ -54,8 +130,8 @@ void Application::Start()
   int bgx = _screenWidth / 2;
   int bgy = _screenHeight / 2;
 
-  Ship ship(0.0, 0.0);
-  ship.Move(300, 300);
+  _ship.Init(0, 0);
+  _ship.Move(300, 300);
 
   bool fireTrigger = false;
 
@@ -75,17 +151,17 @@ void Application::Start()
 
     if (keyboardState[SDL_SCANCODE_A])
     {
-      shipAngle -= ship.RotationSpeed * GameTime::Get().DeltaTime();
+      shipAngle -= _ship.RotationSpeed * GameTime::Get().DeltaTime();
     }
 
     if (keyboardState[SDL_SCANCODE_D])
     {
-      shipAngle += ship.RotationSpeed * GameTime::Get().DeltaTime();
+      shipAngle += _ship.RotationSpeed * GameTime::Get().DeltaTime();
     }
 
     if (keyboardState[SDL_SCANCODE_W])
     {
-      ship.Accelerate(ship.AccelerationSpeed * GameTime::Get().DeltaTime());
+      _ship.Accelerate(_ship.AccelerationSpeed * GameTime::Get().DeltaTime());
     }
 
     if (keyboardState[SDL_SCANCODE_SPACE])
@@ -93,7 +169,7 @@ void Application::Start()
       if (!fireTrigger)
       {
         fireTrigger = true;
-        ship.Fire();
+        _ship.Fire();
       }
     }
 
@@ -104,12 +180,12 @@ void Application::Start()
 
 //    if (keyboardState[SDL_SCANCODE_S])
 //    {
-//      ship.Accelerate(-_accelerationSpeed);
+//      _ship.Accelerate(-_accelerationSpeed);
 //    }
 
-    if (!keyboardState[SDL_SCANCODE_W] && ship.Speed() > 0.0)
+    if (!keyboardState[SDL_SCANCODE_W] && _ship.Speed() > 0.0)
     {
-      ship.Accelerate(-ship.AccelerationSpeed * GameTime::Get().DeltaTime());
+      _ship.Accelerate(-_ship.AccelerationSpeed * GameTime::Get().DeltaTime());
     }
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -117,17 +193,19 @@ void Application::Start()
 
     _background.Draw(bgx, bgy);
 
-    ship.Rotate(shipAngle);
-    ship.Move();
+    _ship.Rotate(shipAngle);
+    _ship.Move();
 
-    ship.ComputeBullets();
-    ship.Draw(true);
+    _ship.ComputeBullets();
+    _ship.Draw(true);
 
     for (int i = 0; i < _asteroids.size(); i++)
     {
       _asteroids[i].get()->Compute();
       _asteroids[i].get()->Draw(true, true);
     }
+
+    ProcessCollisions();
 
     SDL_RenderPresent(renderer);
 

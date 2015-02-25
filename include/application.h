@@ -10,6 +10,12 @@
 #include "ship.h"
 #include "asteroid.h"
 
+struct Vector2Pair
+{
+  Vector2 Min;
+  Vector2 Max;
+};
+
 class Application
 {
   public:
@@ -30,9 +36,12 @@ class Application
     bool _running;
 
     Sprite _background;
+    Ship _ship;
 
     void LoadBackground();
     void InitAsteroids();
+    void ProcessCollisions();
+    Vector2Pair ProjectPolygon(std::vector<SDL_Point>& polygon, Vector2& axe);
 
     std::vector<std::unique_ptr<Asteroid>> _asteroids;
 };

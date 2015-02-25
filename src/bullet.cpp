@@ -58,7 +58,7 @@ void Bullet::Compute()
 
   _bulletSprite.MoveCollider(_position.X(), _position.Y());
 
-  Draw();
+  Draw(true, true);
 
   if (_position.X() < 0 || _position.X() > sx || _position.Y() < 0 || _position.Y() > sy)
   {
@@ -66,7 +66,37 @@ void Bullet::Compute()
   }
 }
 
-void Bullet::Draw()
+void Bullet::Draw(bool drawCollider, bool drawAxes)
 {
-  _bulletSprite.Draw(_position.X(), _position.Y(), _angle, &_bulletSprite.TranslatedCollider());
+  if (drawCollider)
+  {
+    _bulletSprite.Draw(_position.X(), _position.Y(), _angle, &_bulletSprite.TranslatedCollider());
+  }
+  else
+  {
+    _bulletSprite.Draw(_position.X(), _position.Y(), _angle, nullptr);
+  }
+
+  if (drawAxes)
+  {
+    DrawAxes();
+  }
+}
+
+void Bullet::DrawAxes()
+{
+  SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 0, 255, 255, 255);
+
+  _bulletSprite.CalculateSATAxes();
+  auto axes = _bulletSprite.GetAxes();
+
+  for (auto &i : axes)
+  {
+    SDL_Point pos;
+
+    pos.x = (int)_position.X() + i.x;
+    pos.y = (int)_position.Y() + i.y;
+
+    SDL_RenderDrawLine(VideoSystem::Get().Renderer(), (int)_position.X(), (int)_position.Y(), pos.x, pos.y);
+  }
 }

@@ -10,12 +10,13 @@
 class Ship
 {
   public:
-    Ship(double posx, double posy);
+    Ship();
     virtual ~Ship();
     Sprite& GetSprite()
     {
       return _shipSprite;
     }
+    void Init(double posx, double posy);
     void Accelerate(double dspeed);
     void Move(int x, int y);
     void Move(Vector2 newPos);
@@ -25,12 +26,15 @@ class Ship
     void Rotate(double angle);
     void Fire();
 
+    bool BulletsActive();
+    std::vector<std::unique_ptr<Bullet>>& GetBullets() { return _bullets; }
+
     double Speed() { return _speed; }
     Vector2& Direction() { return _localDirection; }
 
     const int DirectionResolution = 100;
     const int MaxBullets = 50;
-    const double BulletSpeed = 0.7;
+    const double BulletSpeed = 0.1;
     const double ShipMaxSpeed = 4.0;
     const double RotationSpeed = 0.1;
     const double AccelerationSpeed = 0.005;
