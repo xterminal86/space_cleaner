@@ -64,8 +64,7 @@ Vector2Pair Application::ProjectPolygon(std::vector<SDL_Point>& polygon, Vector2
   projMin.Set(axe.X() * min, axe.Y() * min);
   projMax.Set(axe.X() * max, axe.Y() * max);
 
-  proj.Min = projMin;
-  proj.Max = projMax;
+  proj.Set(projMin, projMax);
 
   return proj;
 }
@@ -73,7 +72,7 @@ Vector2Pair Application::ProjectPolygon(std::vector<SDL_Point>& polygon, Vector2
 void Application::ProcessCollisions()
 {
   // Perform the following only if needed
-  if (_ship.BulletsActive())
+  if (_ship.HasBulletsActive())
   {
     for (auto &i : _ship.GetBullets())
     {
@@ -86,16 +85,19 @@ void Application::ProcessCollisions()
         auto asteroidAxes = _asteroids.at(0).get()->GetSprite().GetAxesV2();
         auto bulletAxes = i.get()->GetSprite().GetAxesV2();
 
+        bool collisionFlag = true;
+
         for (auto &i2 : bulletAxes)
         {
           Vector2Pair tmp = ProjectPolygon(i.get()->GetSprite().TranslatedCollider(), i2);
           Vector2Pair tmp2 = ProjectPolygon(_asteroids.at(0).get()->GetSprite().TranslatedCollider(), i2);
 
-          SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 0, 255, 255, 255);
-          SDL_RenderDrawLine(VideoSystem::Get().Renderer(), tmp.Min.X(), tmp.Min.Y(), tmp.Max.X(), tmp.Max.Y());
+          collisionFlag = (collisionFlag && Vector2Pair::TestIntersection(tmp, tmp2));
 
-          SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 255, 255);
-          SDL_RenderDrawLine(VideoSystem::Get().Renderer(), tmp2.Min.X(), tmp2.Min.Y(), tmp2.Max.X(), tmp2.Max.Y());
+          if (!collisionFlag)
+          {
+            return;
+          }
         }
 
         for (auto &i3 : asteroidAxes)
@@ -103,11 +105,17 @@ void Application::ProcessCollisions()
           Vector2Pair tmp = ProjectPolygon(i.get()->GetSprite().TranslatedCollider(), i3);
           Vector2Pair tmp2 = ProjectPolygon(_asteroids.at(0).get()->GetSprite().TranslatedCollider(), i3);
 
-          SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 0, 255, 0, 255);
-          SDL_RenderDrawLine(VideoSystem::Get().Renderer(), tmp.Min.X(), tmp.Min.Y(), tmp.Max.X(), tmp.Max.Y());
+          collisionFlag = (collisionFlag && Vector2Pair::TestIntersection(tmp, tmp2));
 
-          SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 0, 255);
-          SDL_RenderDrawLine(VideoSystem::Get().Renderer(), tmp2.Min.X(), tmp2.Min.Y(), tmp2.Max.X(), tmp2.Max.Y());
+          if (!collisionFlag)
+          {
+            return;
+          }
+        }
+
+        if (collisionFlag)
+        {
+          printf ("Collision ");
         }
       }
     }

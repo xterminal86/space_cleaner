@@ -814,7 +814,7 @@
 1418898844 source:h:\sources\c++\asteroids.git\main.cpp
 	"application.h"
 
-1424884134 h:\sources\c++\asteroids.git\include\application.h
+1424953719 h:\sources\c++\asteroids.git\include\application.h
 	"globals.h"
 	"logger.h"
 	"gametime.h"
@@ -823,6 +823,7 @@
 	"input_manager.h"
 	"ship.h"
 	"asteroid.h"
+	"vector2pair.h"
 
 1423837073 h:\sources\c++\asteroids.git\include\globals.h
 	<string>
@@ -1175,7 +1176,7 @@
 1421682465 h:\sources\c++\asteroids.git\include\input_manager.h
 	"globals.h"
 
-1424887267 source:h:\sources\c++\asteroids.git\src\application.cpp
+1425054326 source:h:\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 
 1418898844 source:h:\sources\c++\asteroids.git\src\component.cpp
@@ -1224,12 +1225,12 @@
 	"video_system.h"
 	"logger.h"
 
-1424886922 h:\sources\c++\asteroids.git\include\ship.h
+1424950801 h:\sources\c++\asteroids.git\include\ship.h
 	"vector2.h"
 	"sprite.h"
 	"bullet.h"
 
-1424876660 source:h:\sources\c++\asteroids.git\src\ship.cpp
+1424950801 source:h:\sources\c++\asteroids.git\src\ship.cpp
 	"ship.h"
 
 1421537555 source:d:\nick\sources\c++\asteroids.git\main.cpp
@@ -1689,11 +1690,17 @@
 1424883978 source:h:\sources\c++\asteroids.git\src\bullet.cpp
 	"bullet.h"
 
-1424882919 source:h:\sources\c++\asteroids.git\src\asteroid.cpp
+1424956010 source:h:\sources\c++\asteroids.git\src\asteroid.cpp
 	"asteroid.h"
 
-1424887479 h:\sources\c++\asteroids.git\include\asteroid.h
+1424955911 h:\sources\c++\asteroids.git\include\asteroid.h
 	"gametime.h"
 	"sprite.h"
 	"vector2.h"
+
+1425054874 h:\sources\c++\asteroids.git\include\vector2pair.h
+	"vector2.h"
+
+1424954447 source:h:\sources\c++\asteroids.git\src\vector2pair.cpp
+	"vector2pair.h"
 

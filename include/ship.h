@@ -26,7 +26,7 @@ class Ship
     void Rotate(double angle);
     void Fire();
 
-    bool BulletsActive();
+    bool HasBulletsActive();
     std::vector<std::unique_ptr<Bullet>>& GetBullets() { return _bullets; }
 
     double Speed() { return _speed; }

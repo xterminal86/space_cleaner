@@ -132,7 +132,7 @@ void Ship::Fire()
   }
 }
 
-bool Ship::BulletsActive()
+bool Ship::HasBulletsActive()
 {
   for (auto &i : _bullets)
   {

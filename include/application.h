@@ -9,12 +9,7 @@
 #include "input_manager.h"
 #include "ship.h"
 #include "asteroid.h"
-
-struct Vector2Pair
-{
-  Vector2 Min;
-  Vector2 Max;
-};
+#include "vector2pair.h"
 
 class Application
 {
