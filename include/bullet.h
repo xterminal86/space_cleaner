@@ -16,6 +16,8 @@ class Bullet
     void Compute();
     void Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed);
 
+    double Angle() { return _angle; }
+
     Vector2 Position() { return _position; }
 
     bool Active() { return _active; }

@@ -96,7 +96,7 @@ void Application::ProcessCollisions()
 
           if (!collisionFlag)
           {
-            return;
+            break;
           }
         }
 
@@ -109,13 +109,13 @@ void Application::ProcessCollisions()
 
           if (!collisionFlag)
           {
-            return;
+            break;
           }
         }
 
         if (collisionFlag)
         {
-          printf ("Collision ");
+          printf("%f ", i.get()->Angle());
         }
       }
     }
