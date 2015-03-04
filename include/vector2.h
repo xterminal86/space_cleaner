@@ -90,6 +90,8 @@ class Vector2
   {
     _x = rhs.X();
     _y = rhs.Y();
+
+    return *this;
   }
 
 	Vector2 GetPerpendicular()
@@ -120,8 +122,8 @@ class Vector2
 
   static void RotateVector(Vector2& result, Vector2 around, Vector2 what, double angle)
   {
-    double nx = around.X() + (what.X() - around.X()) * SDL_cos(angle * PIOVER180) - (what.Y() - around.Y()) * SDL_sin(angle * PIOVER180);
-    double ny = around.Y() + (what.X() - around.X()) * SDL_sin(angle * PIOVER180) + (what.Y() - around.Y()) * SDL_cos(angle * PIOVER180);
+    double nx = around.X() + (what.X() - around.X()) * SDL_cos(angle * Math::PIOVER180) - (what.Y() - around.Y()) * SDL_sin(angle * Math::PIOVER180);
+    double ny = around.Y() + (what.X() - around.X()) * SDL_sin(angle * Math::PIOVER180) + (what.Y() - around.Y()) * SDL_cos(angle * Math::PIOVER180);
 
     result.Set(nx, ny);
   }

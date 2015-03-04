@@ -14,8 +14,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#define PIOVER180     0.01745329251
-
 namespace GlobalStrings
 {
   static std::string BackgroundRole = "background";
@@ -26,6 +24,11 @@ namespace GlobalStrings
   static std::string ImagesFilename = "images.txt";
   static std::string LogFilename = "output_log.txt";
   static std::string RelationFilename = "relation.txt";
+}
+
+namespace Math
+{
+  static const double PIOVER180 = 0.01745329251;
 }
 
 #endif // GLOBALS_H_INCLUDED

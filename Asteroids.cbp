@@ -58,6 +58,7 @@
 		<Unit filename="include/ship.h" />
 		<Unit filename="include/sprite.h" />
 		<Unit filename="include/texture_manager.h" />
+		<Unit filename="include/util.h" />
 		<Unit filename="include/vector2.h" />
 		<Unit filename="include/vector2pair.h" />
 		<Unit filename="include/video_system.h" />
@@ -72,6 +73,7 @@
 		<Unit filename="src/ship.cpp" />
 		<Unit filename="src/sprite.cpp" />
 		<Unit filename="src/texture_manager.cpp" />
+		<Unit filename="src/util.cpp" />
 		<Unit filename="src/vector2.cpp" />
 		<Unit filename="src/vector2pair.cpp" />
 		<Unit filename="src/video_system.cpp" />

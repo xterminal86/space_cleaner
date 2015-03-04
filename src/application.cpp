@@ -38,37 +38,6 @@ void Application::InitAsteroids()
   }
 }
 
-Vector2Pair Application::ProjectPolygon(std::vector<SDL_Point>& polygon, Vector2& axe)
-{
-  Vector2Pair proj;
-
-  Vector2 projMin;
-  Vector2 projMax;
-
-  double min = polygon[0].x * axe.X() + polygon[0].y * axe.Y();
-  double max = min;
-  for (auto &i : polygon)
-  {
-    Vector2 tmp;
-    tmp.Set(i.x, i.y);
-
-    double scalar = tmp * axe;
-
-    if (scalar < min) min = scalar;
-    else if (scalar > max) max = scalar;
-
-    //double x = axe.X() * scalar;
-    //double y = axe.Y() * scalar;
-  }
-
-  projMin.Set(axe.X() * min, axe.Y() * min);
-  projMax.Set(axe.X() * max, axe.Y() * max);
-
-  proj.Set(projMin, projMax);
-
-  return proj;
-}
-
 void Application::ProcessCollisions()
 {
   // Perform the following only if needed
@@ -79,41 +48,7 @@ void Application::ProcessCollisions()
       // Take into account only active bullets
       if (i.get()->Active())
       {
-        _asteroids.at(0).get()->GetSprite().CalculateSATAxes();
-        i.get()->GetSprite().CalculateSATAxes();
-
-        auto asteroidAxes = _asteroids.at(0).get()->GetSprite().GetAxesV2();
-        auto bulletAxes = i.get()->GetSprite().GetAxesV2();
-
-        bool collisionFlag = true;
-
-        for (auto &i2 : bulletAxes)
-        {
-          Vector2Pair tmp = ProjectPolygon(i.get()->GetSprite().TranslatedCollider(), i2);
-          Vector2Pair tmp2 = ProjectPolygon(_asteroids.at(0).get()->GetSprite().TranslatedCollider(), i2);
-
-          collisionFlag = (collisionFlag && Vector2Pair::TestIntersection(tmp, tmp2));
-
-          if (!collisionFlag)
-          {
-            break;
-          }
-        }
-
-        for (auto &i3 : asteroidAxes)
-        {
-          Vector2Pair tmp = ProjectPolygon(i.get()->GetSprite().TranslatedCollider(), i3);
-          Vector2Pair tmp2 = ProjectPolygon(_asteroids.at(0).get()->GetSprite().TranslatedCollider(), i3);
-
-          collisionFlag = (collisionFlag && Vector2Pair::TestIntersection(tmp, tmp2));
-
-          if (!collisionFlag)
-          {
-            break;
-          }
-        }
-
-        if (collisionFlag)
+        if (Util::TestIntersection(_asteroids.at(0).get()->GetSprite(), i.get()->GetSprite()))
         {
           printf("%f ", i.get()->Angle());
         }

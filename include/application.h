@@ -10,6 +10,7 @@
 #include "ship.h"
 #include "asteroid.h"
 #include "vector2pair.h"
+#include "util.h"
 
 class Application
 {
@@ -36,7 +37,6 @@ class Application
     void LoadBackground();
     void InitAsteroids();
     void ProcessCollisions();
-    Vector2Pair ProjectPolygon(std::vector<SDL_Point>& polygon, Vector2& axe);
 
     std::vector<std::unique_ptr<Asteroid>> _asteroids;
 };
