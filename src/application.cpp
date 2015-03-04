@@ -43,14 +43,17 @@ void Application::ProcessCollisions()
   // Perform the following only if needed
   if (_ship.HasBulletsActive())
   {
-    for (auto &i : _ship.GetBullets())
+    for (auto &bullet : _ship.GetBullets())
     {
       // Take into account only active bullets
-      if (i.get()->Active())
+      if (bullet.get()->Active())
       {
-        if (Util::TestIntersection(_asteroids.at(0).get()->GetSprite(), i.get()->GetSprite()))
+        for (auto &asteroid : _asteroids)
         {
-          printf("%f ", i.get()->Angle());
+          if (Util::TestIntersection(asteroid.get()->GetSprite(), bullet.get()->GetSprite()))
+          {
+            printf("%f ", bullet.get()->Angle());
+          }
         }
       }
     }

@@ -19,8 +19,8 @@ class Asteroid
 
     Sprite& GetSprite() { return _asteroidSprite; }
 
-    const double MaxSpeed = 0.5;
-    const double MaxRotationSpeed = 1.0;
+    const int SpeedSpread = 10;
+    const int RotationSpeedSpread = 10;
 
   protected:
   private:

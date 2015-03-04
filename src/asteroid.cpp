@@ -17,8 +17,8 @@ Asteroid::Asteroid(double posx, double posy)
 
   _direction.Set(dx, dy);
 
-  _speed = MaxSpeed / (double)(rand() % 10 + 1);
-  _angleIncrement = MaxRotationSpeed / (double)(rand() % 10 + 1);
+  _speed = 0.5 / (double)(rand() % SpeedSpread + 1);
+  _angleIncrement = 1.0 / (double)(rand() % RotationSpeedSpread + 1);
 
   int sign = rand() % 4 + 1;
 
