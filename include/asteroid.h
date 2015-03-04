@@ -16,6 +16,7 @@ class Asteroid
     void Move();
     void Rotate(double angle);
     void Compute();
+    Vector2& Position() { return _position; }
 
     Sprite& GetSprite() { return _asteroidSprite; }
 

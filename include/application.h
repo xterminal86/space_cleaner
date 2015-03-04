@@ -30,6 +30,7 @@ class Application
     const int _maxAsteroids = 3;
 
     bool _running;
+    bool _shipHit;
 
     Sprite _background;
     Ship _ship;
@@ -39,6 +40,9 @@ class Application
     void ProcessCollisions();
 
     std::vector<std::unique_ptr<Asteroid>> _asteroids;
+
+    TTF_Font* _font;
+    SDL_Texture* _text;
 };
 
 #endif // APPLICATION_H

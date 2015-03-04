@@ -1236,7 +1236,7 @@
 1421537555 source:d:\nick\sources\c++\asteroids.git\main.cpp
 	"application.h"
 
-1425503269 d:\nick\sources\c++\asteroids.git\include\application.h
+1425506727 d:\nick\sources\c++\asteroids.git\include\application.h
 	"globals.h"
 	"logger.h"
 	"gametime.h"
@@ -1248,7 +1248,7 @@
 	"vector2pair.h"
 	"util.h"
 
-1425502202 d:\nick\sources\c++\asteroids.git\include\globals.h
+1425505267 d:\nick\sources\c++\asteroids.git\include\globals.h
 	<string>
 	<map>
 	<memory>
@@ -1260,6 +1260,7 @@
 	<time.h>
 	<SDL.h>
 	<SDL_image.h>
+	<SDL_ttf.h>
 
 1394253498 d:\nick\sources\c++\asteroids.git\lib\sdl2-i686-w64-mingw32\include\sdl2\sdl.h
 	"SDL_main.h"
@@ -1659,7 +1660,7 @@
 	"video_system.h"
 	"logger.h"
 
-1425503617 source:d:\nick\sources\c++\asteroids.git\src\application.cpp
+1425507465 source:d:\nick\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 
 1424880985 h:\sources\c++\asteroids.git\include\vector2.h
@@ -1709,7 +1710,7 @@
 1424954447 source:h:\sources\c++\asteroids.git\src\vector2pair.cpp
 	"vector2pair.h"
 
-1425503985 d:\nick\sources\c++\asteroids.git\include\asteroid.h
+1425504590 d:\nick\sources\c++\asteroids.git\include\asteroid.h
 	"gametime.h"
 	"sprite.h"
 	"vector2.h"
@@ -1717,7 +1718,7 @@
 1425061146 d:\nick\sources\c++\asteroids.git\include\vector2pair.h
 	"vector2.h"
 
-1425061146 source:d:\nick\sources\c++\asteroids.git\src\asteroid.cpp
+1425504287 source:d:\nick\sources\c++\asteroids.git\src\asteroid.cpp
 	"asteroid.h"
 
 1425061146 source:d:\nick\sources\c++\asteroids.git\src\vector2pair.cpp
@@ -1730,4 +1731,9 @@
 	"sprite.h"
 	"vector2.h"
 	"vector2pair.h"
+
+1376156543 d:\nick\sources\c++\asteroids.git\lib\sdl2ttf-i686-w64-mingw32\include\sdl2\sdl_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
 

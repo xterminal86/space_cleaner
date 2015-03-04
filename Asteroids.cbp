@@ -36,14 +36,17 @@
 			<Add directory="include" />
 			<Add directory="lib/SDL2-i686-w64-mingw32/include/SDL2" />
 			<Add directory="lib/SDL2_image-i686-w64-mingw32/include/SDL2" />
+			<Add directory="lib/SDL2ttf-i686-w64-mingw32/include/SDL2" />
 		</Compiler>
 		<Linker>
 			<Add library="mingw32" />
 			<Add library="SDL2main" />
 			<Add library="SDL2" />
 			<Add library="SDL2_image" />
+			<Add library="SDL2_ttf" />
 			<Add directory="lib/SDL2-i686-w64-mingw32/lib" />
 			<Add directory="lib/SDL2_image-i686-w64-mingw32/lib" />
+			<Add directory="lib/SDL2ttf-i686-w64-mingw32/lib" />
 		</Linker>
 		<Unit filename="cb.bmp" />
 		<Unit filename="include/application.h" />
