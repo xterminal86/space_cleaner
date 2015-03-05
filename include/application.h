@@ -31,6 +31,8 @@ class Application
     const int _screenHeight = 600;
     const int _maxAsteroids = 3;
 
+    unsigned int _score;
+
     bool _running;
     bool _shipHit;
 

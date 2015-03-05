@@ -6,7 +6,7 @@ Sprite::Sprite()
 
   _screenX = 0;
   _screenY = 0;
-  _scaleFactor = 1.0f;
+  _scaledLetterWidth = 1.0f;
   _imageWrapper = nullptr;
 }
 
@@ -63,8 +63,8 @@ int Sprite::Init(int textureIndex)
 
   _destRect.x = _screenX;
   _destRect.y = _screenY;
-  _destRect.w = _imageWrapper->Width() * _scaleFactor;
-  _destRect.h = _imageWrapper->Height() * _scaleFactor;
+  _destRect.w = _imageWrapper->Width() * _scaledLetterWidth;
+  _destRect.h = _imageWrapper->Height() * _scaledLetterWidth;
 
   _originalCollider = TextureManager::Get().GetCollider(textureIndex);
 

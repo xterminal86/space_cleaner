@@ -15,7 +15,7 @@ class Sprite
     void MoveCollider(double newX, double newY);
     void Draw(int x, int y, double angle = 0.0);
     void Draw(int x, int y, double angle, std::vector<SDL_Point>* colliderToDraw);
-    void SetScaleFactor(float scaleFactor) { _scaleFactor = scaleFactor; }
+    void SetScaleFactor(float scaleFactor) { _scaledLetterWidth = scaleFactor; }
     const PNGLoader* ImageWrapper() { return _imageWrapper; }
     SDL_Rect* SourceRect() { return &_sourceRect; }
     SDL_Rect* DestinationRect() { return &_destRect; }
@@ -37,7 +37,7 @@ class Sprite
     const PNGLoader* _imageWrapper;
     int _screenX;
     int _screenY;
-    float _scaleFactor;
+    float _scaledLetterWidth;
     std::vector<SDL_Point>* _originalCollider;
     std::vector<SDL_Point> _rotatedCollider;
     std::vector<SDL_Point> _translatedCollider;

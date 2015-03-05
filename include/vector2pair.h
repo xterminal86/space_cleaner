@@ -40,18 +40,27 @@ class Vector2Pair
         s.Swap();
       }
 
-      if ( (f.Max().X() > s.Min().X() && f.Max().X() < s.Max().X()) ||
-           (f.Max().X() > s.Max().X() && f.Min().X() < s.Min().X()) ||
-           (f.Max().X() < s.Max().X() && f.Min().X() > s.Min().X()) ||
-           (f.Min().X() > s.Min().X() && f.Min().X() < s.Max().X()) )
+      // Using strict conditions leads to incorrect collision detection: e.g. when ship stayed on collision
+      // with asteroid for some time, collision detection result fluctuated (in some frames it could be false,
+      // while most of the time it was true). I replaced test clauses with non-strict conditional,
+      // and it seems to have fixed the issue.
+      // I guess the problem was in precision loss, because in the essence sprite colliders are just
+      // SDL_Points (integers) which then are passed around to different methods for calculation in double precision,
+      // so there might be a situation where SAT projection degenerated and then its value went on to calculation.
+      // So, I thought, I might try to add non-strict conditions instead strict ones.
+
+      if ( (f.Max().X() >= s.Min().X() && f.Max().X() <= s.Max().X()) ||
+           (f.Max().X() >= s.Max().X() && f.Min().X() <= s.Min().X()) ||
+           (f.Max().X() <= s.Max().X() && f.Min().X() >= s.Min().X()) ||
+           (f.Min().X() >= s.Min().X() && f.Min().X() <= s.Max().X()) )
       {
         return true;
       }
 
-      if ( (f.Max().Y() > s.Min().Y() && f.Max().Y() < s.Max().Y()) ||
-           (f.Max().Y() > s.Max().Y() && f.Min().Y() < s.Min().Y()) ||
-           (f.Max().Y() < s.Max().Y() && f.Min().Y() > s.Min().Y()) ||
-           (f.Min().Y() > s.Min().Y() && f.Min().Y() < s.Max().Y()) )
+      if ( (f.Max().Y() >= s.Min().Y() && f.Max().Y() <= s.Max().Y()) ||
+           (f.Max().Y() >= s.Max().Y() && f.Min().Y() <= s.Min().Y()) ||
+           (f.Max().Y() <= s.Max().Y() && f.Min().Y() >= s.Min().Y()) ||
+           (f.Min().Y() >= s.Min().Y() && f.Min().Y() <= s.Max().Y()) )
       {
         return true;
       }

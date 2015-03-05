@@ -8,6 +8,8 @@ Application::Application()
   _bitmapFont->Init(GlobalStrings::BitmapFontFilename);
 
   _shipHit = false;
+
+  _score = 0;
 }
 
 Application::~Application()
@@ -171,8 +173,16 @@ void Application::Start()
 
     if (_shipHit)
     {
-
     }
+
+    _bitmapFont->SetScale(1.0f);
+    _bitmapFont->Printf(0, 0, BitmapFont::AlignLeft, "Score: %u", _score);
+
+    int x = (int)_ship.Position().X();
+    int y = (int)_ship.Position().Y();
+
+    _bitmapFont->SetScale(0.5f);
+    _bitmapFont->Printf(x, y, BitmapFont::AlignLeft, "Ship hit: %i", _shipHit);
 
     SDL_RenderPresent(renderer);
 

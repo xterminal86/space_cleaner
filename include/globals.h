@@ -25,7 +25,7 @@ namespace GlobalStrings
   static std::string LogFilename = "output_log.txt";
   static std::string RelationFilename = "relation.txt";
 
-  static std::string BitmapFontFilename = "assets/fonts/MyFont.png";
+  static std::string BitmapFontFilename = "assets/fonts/retro.png";
 }
 
 namespace Math

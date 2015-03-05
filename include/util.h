@@ -29,9 +29,6 @@ class Util
 
         if (scalar < min) min = scalar;
         else if (scalar > max) max = scalar;
-
-        //double x = axe.X() * scalar;
-        //double y = axe.Y() * scalar;
       }
 
       projMin.Set(axe.X() * min, axe.Y() * min);
