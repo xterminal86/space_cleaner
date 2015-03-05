@@ -36,21 +36,19 @@
 			<Add directory="include" />
 			<Add directory="lib/SDL2-i686-w64-mingw32/include/SDL2" />
 			<Add directory="lib/SDL2_image-i686-w64-mingw32/include/SDL2" />
-			<Add directory="lib/SDL2ttf-i686-w64-mingw32/include/SDL2" />
 		</Compiler>
 		<Linker>
 			<Add library="mingw32" />
 			<Add library="SDL2main" />
 			<Add library="SDL2" />
 			<Add library="SDL2_image" />
-			<Add library="SDL2_ttf" />
 			<Add directory="lib/SDL2-i686-w64-mingw32/lib" />
 			<Add directory="lib/SDL2_image-i686-w64-mingw32/lib" />
-			<Add directory="lib/SDL2ttf-i686-w64-mingw32/lib" />
 		</Linker>
 		<Unit filename="cb.bmp" />
 		<Unit filename="include/application.h" />
 		<Unit filename="include/asteroid.h" />
+		<Unit filename="include/bitmapfont.h" />
 		<Unit filename="include/bullet.h" />
 		<Unit filename="include/gametime.h" />
 		<Unit filename="include/globals.h" />
@@ -68,6 +66,7 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="src/application.cpp" />
 		<Unit filename="src/asteroid.cpp" />
+		<Unit filename="src/bitmapfont.cpp" />
 		<Unit filename="src/bullet.cpp" />
 		<Unit filename="src/input_manager.cpp" />
 		<Unit filename="src/logger.cpp" />

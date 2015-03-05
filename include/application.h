@@ -7,6 +7,7 @@
 #include "video_system.h"
 #include "texture_manager.h"
 #include "input_manager.h"
+#include "bitmapfont.h"
 #include "ship.h"
 #include "asteroid.h"
 #include "vector2pair.h"
@@ -24,6 +25,7 @@ class Application
     VideoSystem* _videoSystem = &VideoSystem::Get();
     TextureManager* _textureManager = &TextureManager::Get();
     InputManager* _inputManager = &InputManager::Get();
+    BitmapFont* _bitmapFont = &BitmapFont::Get();
 
     const int _screenWidth = 1280;
     const int _screenHeight = 600;
@@ -40,9 +42,6 @@ class Application
     void ProcessCollisions();
 
     std::vector<std::unique_ptr<Asteroid>> _asteroids;
-
-    TTF_Font* _font;
-    SDL_Texture* _text;
 };
 
 #endif // APPLICATION_H

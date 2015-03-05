@@ -5,22 +5,9 @@ Application::Application()
   _logger->Init(GlobalStrings::LogFilename);
   _videoSystem->Init(_screenWidth, _screenHeight);
   _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename);
+  _bitmapFont->Init(GlobalStrings::BitmapFontFilename);
 
   _shipHit = false;
-
-  TTF_Init();
-
-  _font = TTF_OpenFont("assets/fonts/alger.ttf", 32);
-
-  if (_font == nullptr)
-  {
-    Logger::Get().LogPrint("!!! ERROR !!! Couldn't open font!\n");
-  }
-
-  SDL_Color c = {255, 255, 255};
-  SDL_Surface* text = TTF_RenderText_Solid(_font, "Game Over", c);
-  _text = SDL_CreateTextureFromSurface(VideoSystem::Get().Renderer(), text);
-  SDL_FreeSurface(text);
 }
 
 Application::~Application()
@@ -28,9 +15,6 @@ Application::~Application()
   Logger::Get().LogPrint("Closing application...\n");
 
   _asteroids.clear();
-
-  TTF_CloseFont(_font);
-  TTF_Quit();
 }
 
 void Application::LoadBackground()
@@ -113,20 +97,6 @@ void Application::Start()
 
   int tw, th;
 
-  SDL_QueryTexture(_text, nullptr, nullptr, &tw, &th);
-
-  SDL_Rect textSrc;
-  textSrc.x = 0;
-  textSrc.y = 0;
-  textSrc.w = tw;
-  textSrc.h = th;
-
-  SDL_Rect textDst;
-  textDst.x = 100;
-  textDst.y = 100;
-  textDst.w = tw;
-  textDst.h = th;
-
   Uint8* keyboardState = nullptr;
   while (_running)
   {
@@ -201,7 +171,7 @@ void Application::Start()
 
     if (_shipHit)
     {
-      SDL_RenderCopy(renderer, _text, &textSrc, &textDst);
+
     }
 
     SDL_RenderPresent(renderer);

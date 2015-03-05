@@ -13,7 +13,6 @@
 #include <time.h>
 #include <SDL.h>
 #include <SDL_image.h>
-#include <SDL_ttf.h>
 
 namespace GlobalStrings
 {
@@ -25,6 +24,8 @@ namespace GlobalStrings
   static std::string ImagesFilename = "images.txt";
   static std::string LogFilename = "output_log.txt";
   static std::string RelationFilename = "relation.txt";
+
+  static std::string BitmapFontFilename = "assets/fonts/MyFont.png";
 }
 
 namespace Math
