@@ -20,6 +20,9 @@ class BitmapFont
     void Print(int x, int y, int anchor, std::string text);
     void Printf(int x, int y, int anchor, char* text, ...);
 
+    void SetTextColor(SDL_Color newColor);
+    void SetTextColor(unsigned int r, unsigned int g, unsigned int b, unsigned int a);
+    void SetTextColor(unsigned int r, unsigned int g, unsigned int b);
     void SetScale(float scale);
 
     static const int AlignCenter = 0;
@@ -34,6 +37,8 @@ class BitmapFont
     BitmapFont& operator= (const BitmapFont&);
 
     std::unique_ptr<PNGLoader> _font;
+
+    SDL_Color _textColor;
 
     int _lettersDistance;
     float _scaledLetterWidth;

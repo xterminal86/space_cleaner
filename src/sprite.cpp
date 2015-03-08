@@ -121,3 +121,24 @@ void Sprite::Draw(int x, int y, double angle, std::vector<SDL_Point>* colliderTo
     SDL_RenderDrawLines(VideoSystem::Get().Renderer(), colliderToDraw->data(), colliderToDraw->size());
   }
 }
+
+void Sprite::SetColor(unsigned int r, unsigned int g, unsigned int b, unsigned int a)
+{
+  _spriteColor.r = r;
+  _spriteColor.g = g;
+  _spriteColor.b = b;
+  _spriteColor.a = a;
+
+  SDL_SetTextureColorMod(_imageWrapper->Texture(), r, g, b);
+  SDL_SetTextureAlphaMod(_imageWrapper->Texture(), a);
+}
+
+void Sprite::SetColor(unsigned int r, unsigned int g, unsigned int b)
+{
+  SetColor(r, g, b, 255);
+}
+
+void Sprite::SetColor(SDL_Color newColor)
+{
+  SetColor(newColor.r, newColor.g, newColor.b, newColor.a);
+}

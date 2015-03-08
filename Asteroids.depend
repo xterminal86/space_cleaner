@@ -1607,7 +1607,7 @@
 	"sprite.h"
 	"bullet.h"
 
-1425593354 d:\nick\sources\c++\asteroids.git\include\sprite.h
+1425816550 d:\nick\sources\c++\asteroids.git\include\sprite.h
 	"globals.h"
 	"png_loader.h"
 	"texture_manager.h"
@@ -1646,7 +1646,7 @@
 1425061146 source:d:\nick\sources\c++\asteroids.git\src\ship.cpp
 	"ship.h"
 
-1425593354 source:d:\nick\sources\c++\asteroids.git\src\sprite.cpp
+1425817269 source:d:\nick\sources\c++\asteroids.git\src\sprite.cpp
 	"sprite.h"
 
 1423150594 source:d:\nick\sources\c++\asteroids.git\src\texture_manager.cpp
@@ -1662,7 +1662,7 @@
 	"video_system.h"
 	"logger.h"
 
-1425594414 source:d:\nick\sources\c++\asteroids.git\src\application.cpp
+1425817318 source:d:\nick\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 
 1425549829 h:\sources\c++\asteroids.git\include\vector2.h
@@ -1758,9 +1758,9 @@
 1425575512 h:\sources\c++\asteroids.git\include\bitmapfont.h
 	"png_loader.h"
 
-1425593340 d:\nick\sources\c++\asteroids.git\include\bitmapfont.h
+1425816481 d:\nick\sources\c++\asteroids.git\include\bitmapfont.h
 	"png_loader.h"
 
-1425594400 source:d:\nick\sources\c++\asteroids.git\src\bitmapfont.cpp
+1425816238 source:d:\nick\sources\c++\asteroids.git\src\bitmapfont.cpp
 	"BitmapFont.h"
 

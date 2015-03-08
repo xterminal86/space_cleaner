@@ -57,7 +57,8 @@ void Application::ProcessCollisions()
         {
           if (Util::TestIntersection(asteroid.get()->GetSprite(), bullet.get()->GetSprite()))
           {
-            printf("%f ", bullet.get()->Angle());
+            //asteroid.get()->GetSprite().SetColor(255, 0, 0);
+            //printf("%f ", bullet.get()->Angle());
           }
         }
       }
@@ -175,6 +176,7 @@ void Application::Start()
     {
     }
 
+    _bitmapFont->SetTextColor(255, 128, 255, 255);
     _bitmapFont->SetScale(1.0f);
     _bitmapFont->Printf(0, 0, BitmapFont::AlignLeft, "Score: %u", _score);
 

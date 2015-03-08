@@ -17,10 +17,31 @@ void BitmapFont::Init(std::string fontImageFilename)
   SetScale(1.0f);
 }
 
+void BitmapFont::SetTextColor(unsigned int r, unsigned int g, unsigned int b)
+{
+  SetTextColor(r, g, b, 255);
+}
+
+void BitmapFont::SetTextColor(unsigned int r, unsigned int g, unsigned int b, unsigned int a)
+{
+  _textColor.r = r;
+  _textColor.g = g;
+  _textColor.b = b;
+  _textColor.a = a;
+
+  SDL_SetTextureColorMod(_font.get()->Texture(), r, g, b);
+  SDL_SetTextureAlphaMod(_font.get()->Texture(), a);
+}
+
+void BitmapFont::SetTextColor(SDL_Color newColor)
+{
+  SetTextColor(newColor.r, newColor.g, newColor.b, newColor.a);
+}
+
 void BitmapFont::SetScale(float scale)
 {
   _scaledLetterWidth = LetterWidth * scale;
-  _lettersDistance = (int)_scaledLetterWidth / 2 + 2;
+  _lettersDistance = (int)(_scaledLetterWidth / 2) + 2;
 }
 
 void BitmapFont::Print(int x, int y, int anchor, std::string text)
