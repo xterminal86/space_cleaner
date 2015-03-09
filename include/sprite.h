@@ -15,11 +15,10 @@ class Sprite
     void MoveCollider(double newX, double newY);
     void Draw(int x, int y, double angle = 0.0);
     void Draw(int x, int y, double angle, std::vector<SDL_Point>* colliderToDraw);
-    void SetColor(SDL_Color newColor);
-    void SetColor(unsigned int r, unsigned int g, unsigned int b, unsigned int a);
-    void SetColor(unsigned int r, unsigned int g, unsigned int b);
 
+    void SetColor(SDL_Color c);
     void SetScaleFactor(float scaleFactor) { _scaledLetterWidth = scaleFactor; }
+
     const PNGLoader* ImageWrapper() { return _imageWrapper; }
     SDL_Rect* SourceRect() { return &_sourceRect; }
     SDL_Rect* DestinationRect() { return &_destRect; }

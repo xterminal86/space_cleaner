@@ -33,4 +33,10 @@ namespace Math
   static const double PIOVER180 = 0.01745329251;
 }
 
+namespace Colors
+{
+  static SDL_Color AsIs = { 255, 255, 255, 255 };
+  static SDL_Color Red = { 255, 0, 0, 255 };
+}
+
 #endif // GLOBALS_H_INCLUDED

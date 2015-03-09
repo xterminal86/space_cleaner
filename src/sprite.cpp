@@ -8,6 +8,8 @@ Sprite::Sprite()
   _screenY = 0;
   _scaledLetterWidth = 1.0f;
   _imageWrapper = nullptr;
+
+  _spriteColor = Colors::AsIs;
 }
 
 Sprite::~Sprite()
@@ -107,6 +109,9 @@ void Sprite::Draw(int x, int y, double angle)
   _destRect.x = x - _imageWrapper->Width() / 2;
   _destRect.y = y - _imageWrapper->Height() / 2;
 
+  SDL_SetTextureColorMod(_imageWrapper->Texture(), _spriteColor.r, _spriteColor.g, _spriteColor.b);
+  SDL_SetTextureAlphaMod(_imageWrapper->Texture(), _spriteColor.a);
+
   int res = SDL_RenderCopyEx(VideoSystem::Get().Renderer(), _imageWrapper->Texture(), &_sourceRect, &_destRect, angle, nullptr, SDL_FLIP_NONE);
   if (res != 0) Logger::Get().LogPrint("(warning) Render copy error!\nReason: %s\n", SDL_GetError());
 }
@@ -122,23 +127,7 @@ void Sprite::Draw(int x, int y, double angle, std::vector<SDL_Point>* colliderTo
   }
 }
 
-void Sprite::SetColor(unsigned int r, unsigned int g, unsigned int b, unsigned int a)
+void Sprite::SetColor(SDL_Color c)
 {
-  _spriteColor.r = r;
-  _spriteColor.g = g;
-  _spriteColor.b = b;
-  _spriteColor.a = a;
-
-  SDL_SetTextureColorMod(_imageWrapper->Texture(), r, g, b);
-  SDL_SetTextureAlphaMod(_imageWrapper->Texture(), a);
-}
-
-void Sprite::SetColor(unsigned int r, unsigned int g, unsigned int b)
-{
-  SetColor(r, g, b, 255);
-}
-
-void Sprite::SetColor(SDL_Color newColor)
-{
-  SetColor(newColor.r, newColor.g, newColor.b, newColor.a);
+  _spriteColor = c;
 }

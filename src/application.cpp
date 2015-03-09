@@ -57,8 +57,10 @@ void Application::ProcessCollisions()
         {
           if (Util::TestIntersection(asteroid.get()->GetSprite(), bullet.get()->GetSprite()))
           {
-            //asteroid.get()->GetSprite().SetColor(255, 0, 0);
-            //printf("%f ", bullet.get()->Angle());
+            //asteroid.get()->GetSprite().SetColor(Colors::Red);
+            _bitmapFont->SetTextColor(255, 255, 255, 255);
+            _bitmapFont->SetScale(0.5f);
+            _bitmapFont->Printf(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), BitmapFont::AlignLeft, "Asteroid hit: %f", bullet.get()->Angle());
           }
         }
       }
@@ -157,6 +159,9 @@ void Application::Start()
     SDL_RenderClear(renderer);
 
     _background.Draw(bgx, bgy);
+
+    if (shipAngle > 360) shipAngle -= 360;
+    if (shipAngle < 0) shipAngle += 360;
 
     _ship.Rotate(shipAngle);
     _ship.Move();

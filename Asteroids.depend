@@ -1251,7 +1251,7 @@
 	"vector2pair.h"
 	"util.h"
 
-1425585479 d:\nick\sources\c++\asteroids.git\include\globals.h
+1425906006 d:\nick\sources\c++\asteroids.git\include\globals.h
 	<string>
 	<map>
 	<memory>
@@ -1607,7 +1607,7 @@
 	"sprite.h"
 	"bullet.h"
 
-1425816550 d:\nick\sources\c++\asteroids.git\include\sprite.h
+1425905794 d:\nick\sources\c++\asteroids.git\include\sprite.h
 	"globals.h"
 	"png_loader.h"
 	"texture_manager.h"
@@ -1646,7 +1646,7 @@
 1425061146 source:d:\nick\sources\c++\asteroids.git\src\ship.cpp
 	"ship.h"
 
-1425817269 source:d:\nick\sources\c++\asteroids.git\src\sprite.cpp
+1425905961 source:d:\nick\sources\c++\asteroids.git\src\sprite.cpp
 	"sprite.h"
 
 1423150594 source:d:\nick\sources\c++\asteroids.git\src\texture_manager.cpp
@@ -1662,7 +1662,7 @@
 	"video_system.h"
 	"logger.h"
 
-1425817318 source:d:\nick\sources\c++\asteroids.git\src\application.cpp
+1425907007 source:d:\nick\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 
 1425549829 h:\sources\c++\asteroids.git\include\vector2.h
@@ -1671,7 +1671,7 @@
 1423835359 source:h:\sources\c++\asteroids.git\src\vector2.cpp
 	"vector2.h"
 
-1424897434 source:d:\nick\sources\c++\asteroids.git\src\bullet.cpp
+1425905884 source:d:\nick\sources\c++\asteroids.git\src\bullet.cpp
 	"bullet.h"
 
 1425061146 d:\nick\sources\c++\asteroids.git\include\bullet.h
