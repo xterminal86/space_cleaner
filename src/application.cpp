@@ -183,6 +183,7 @@ void Application::Start()
     int x = (int)_ship.Position().X();
     int y = (int)_ship.Position().Y();
 
+    _bitmapFont->SetTextColor(255, 0, 0, 255);
     _bitmapFont->SetScale(0.5f);
     _bitmapFont->Printf(x, y, BitmapFont::AlignLeft, "Ship hit: %i", _shipHit);
 
