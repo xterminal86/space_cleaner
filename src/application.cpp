@@ -30,16 +30,16 @@ void Application::LoadBackground()
 
 void Application::InitAsteroids()
 {
-  int posx = 0, posy = 0;
   int screenx = VideoSystem::Get().ScreenDimensions().x;
   int screeny = VideoSystem::Get().ScreenDimensions().y;
 
   for (int i = 0; i < _maxAsteroids; i++)
   {
-    posx = (rand() % screenx - 40) + 40;
-    posy = (rand() % screeny - 40) + 40;
+    Vector2 pos;
 
-    _asteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(posx, posy)));
+    Util::CreateRandomPosition(pos, screenx, screeny);
+
+    _asteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(pos)));
   }
 }
 
@@ -181,7 +181,7 @@ void Application::Start()
     {
     }
 
-    _bitmapFont->SetTextColor(255, 128, 255, 255);
+    _bitmapFont->SetTextColor(0, 255, 0, 255);
     _bitmapFont->SetScale(1.0f);
     _bitmapFont->Printf(0, 0, BitmapFont::AlignLeft, "Score: %u", _score);
 

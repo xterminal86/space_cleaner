@@ -2,31 +2,33 @@
 
 Asteroid::Asteroid(double posx, double posy)
 {
-  _position.Set(posx, posy);
+  Init(Vector2(posx, posy));
+}
 
+Asteroid::Asteroid(Vector2 pos)
+{
+  Init(pos);
+}
+
+void Asteroid::Init(Vector2 pos)
+{
   int res = TextureManager::Get().FindTextureByRole(GlobalStrings::AsteroidRole);
   if (res != -1)
   {
     _asteroidSprite.Init(res);
   }
 
+  _position.Set(pos.X(), pos.Y());
+
+  Util::CreateRandomDirection(_direction);
+
   _angle = 0.0;
 
-  double dx = 1.0 / (double)(rand() % 10 + 1);
-  double dy = 1.0 / (double)(rand() % 10 + 1);
+  _angleIncrement = Util::CreateRandomRotation();
 
-  _direction.Set(dx, dy);
+  _speed = 0.25 / (double)(rand() % Util::SpeedSpread + 1);
 
-  _direction.Normalize();
-
-  _speed = 0.25 / (double)(rand() % SpeedSpread + 1);
-  _angleIncrement = 1.0 / (double)(rand() % RotationSpeedSpread + 1);
-
-  int sign = rand() % 4 + 1;
-
-  if (sign % 2 == 0) _angleIncrement *= -1;
-
-  _asteroidSprite.MoveCollider(posx, posy);
+  _asteroidSprite.MoveCollider(pos.X(), pos.Y());
 }
 
 Asteroid::~Asteroid()
@@ -74,7 +76,7 @@ void Asteroid::Draw(int x, int y, bool drawCollider)
   }
   else
   {
-    _asteroidSprite.Draw(x, y);
+    _asteroidSprite.Draw(x, y, _angle);
   }
 }
 
@@ -120,4 +122,8 @@ void Asteroid::Compute()
 
   Rotate(_angle);
   Move();
+}
+
+void Asteroid::Breakdown()
+{
 }

@@ -814,7 +814,7 @@
 1418898844 source:h:\sources\c++\asteroids.git\main.cpp
 	"application.h"
 
-1425575743 h:\sources\c++\asteroids.git\include\application.h
+1425638002 h:\sources\c++\asteroids.git\include\application.h
 	"globals.h"
 	"logger.h"
 	"gametime.h"
@@ -827,7 +827,7 @@
 	"vector2pair.h"
 	"util.h"
 
-1425576077 h:\sources\c++\asteroids.git\include\globals.h
+1425984143 h:\sources\c++\asteroids.git\include\globals.h
 	<string>
 	<map>
 	<memory>
@@ -1178,7 +1178,7 @@
 1421682465 h:\sources\c++\asteroids.git\include\input_manager.h
 	"globals.h"
 
-1425575733 source:h:\sources\c++\asteroids.git\src\application.cpp
+1425989409 source:h:\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 
 1418898844 source:h:\sources\c++\asteroids.git\src\component.cpp
@@ -1208,7 +1208,7 @@
 	"globals.h"
 	"sprite.h"
 
-1424885180 h:\sources\c++\asteroids.git\include\sprite.h
+1425984143 h:\sources\c++\asteroids.git\include\sprite.h
 	"globals.h"
 	"png_loader.h"
 	"texture_manager.h"
@@ -1217,7 +1217,7 @@
 1418898844 source:h:\sources\c++\asteroids.git\src\png_loader.cpp
 	"png_loader.h"
 
-1424885821 source:h:\sources\c++\asteroids.git\src\sprite.cpp
+1425984143 source:h:\sources\c++\asteroids.git\src\sprite.cpp
 	"sprite.h"
 
 1422465283 source:h:\sources\c++\asteroids.git\src\texture_manager.cpp
@@ -1227,7 +1227,7 @@
 	"video_system.h"
 	"logger.h"
 
-1424950801 h:\sources\c++\asteroids.git\include\ship.h
+1425638002 h:\sources\c++\asteroids.git\include\ship.h
 	"vector2.h"
 	"sprite.h"
 	"bullet.h"
@@ -1698,15 +1698,16 @@
 1424883978 source:h:\sources\c++\asteroids.git\src\bullet.cpp
 	"bullet.h"
 
-1425571947 source:h:\sources\c++\asteroids.git\src\asteroid.cpp
+1425990314 source:h:\sources\c++\asteroids.git\src\asteroid.cpp
 	"asteroid.h"
 
-1425549829 h:\sources\c++\asteroids.git\include\asteroid.h
+1425989465 h:\sources\c++\asteroids.git\include\asteroid.h
 	"gametime.h"
 	"sprite.h"
 	"vector2.h"
+	"util.h"
 
-1425054874 h:\sources\c++\asteroids.git\include\vector2pair.h
+1425638002 h:\sources\c++\asteroids.git\include\vector2pair.h
 	"vector2.h"
 
 1424954447 source:h:\sources\c++\asteroids.git\src\vector2pair.cpp
@@ -1744,7 +1745,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1425549829 h:\sources\c++\asteroids.git\include\util.h
+1425990388 h:\sources\c++\asteroids.git\include\util.h
 	"sprite.h"
 	"vector2.h"
 	"vector2pair.h"
@@ -1752,10 +1753,10 @@
 1425549829 source:h:\sources\c++\asteroids.git\src\util.cpp
 	"util.h"
 
-1425575535 source:h:\sources\c++\asteroids.git\src\bitmapfont.cpp
+1425984143 source:h:\sources\c++\asteroids.git\src\bitmapfont.cpp
 	"BitmapFont.h"
 
-1425575512 h:\sources\c++\asteroids.git\include\bitmapfont.h
+1425984143 h:\sources\c++\asteroids.git\include\bitmapfont.h
 	"png_loader.h"
 
 1425816481 d:\nick\sources\c++\asteroids.git\include\bitmapfont.h

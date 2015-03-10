@@ -78,6 +78,58 @@ class Util
       return true;
     }
 
+    static void CreateRandomPosition(Vector2& pos, int pxLimitX, int pxLimitY)
+    {
+      double px = (double)((rand() % pxLimitX - 40) + 40);
+      double py = (double)((rand() % pxLimitY - 40) + 40);
+
+      pos.Set(px, py);
+
+      printf ("%f %f | ", pos.X(), pos.Y());
+    }
+
+    static void CreateRandomDirection(Vector2& dir)
+    {
+      double dx = (double)(rand() % 10 + 1);
+      double dy = (double)(rand() % 10 + 1);
+
+      int sign = rand() % 11;
+
+      if (sign % 2 == 0)
+      {
+        dx *= -1;
+      }
+      else if (sign % 3 == 0)
+      {
+        dy *= -1;
+      }
+      else
+      {
+        dx *= -1;
+        dy *= -1;
+      }
+
+      dir.Set(dx, dy);
+      dir.Normalize();
+    }
+
+    static double CreateRandomRotation()
+    {
+      double angleIncrement = 1.0 / (double)(rand() % RotationSpeedSpread + 1);
+
+      int sign = rand() % 4 + 1;
+
+      if (sign % 2 == 0)
+      {
+        angleIncrement *= -1;
+      }
+
+      return angleIncrement;
+    }
+
+    static const int SpeedSpread = 10;
+    static const int RotationSpeedSpread = 10;
+
   protected:
   private:
 };
