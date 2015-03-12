@@ -33,13 +33,13 @@ void Application::InitAsteroids()
   int screenx = VideoSystem::Get().ScreenDimensions().x;
   int screeny = VideoSystem::Get().ScreenDimensions().y;
 
-  for (int i = 0; i < _maxAsteroids; i++)
+  for (int i = 0; i < GameMechanic::MaxAsteroids; i++)
   {
     Vector2 pos;
 
     Util::CreateRandomPosition(pos, screenx, screeny);
 
-    _asteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(pos)));
+    _asteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(pos, GameMechanic::AsteroidMaxBreakdownLevel, &_asteroids)));
   }
 }
 
@@ -53,14 +53,19 @@ void Application::ProcessCollisions()
       // Take into account only active bullets
       if (bullet.get()->Active())
       {
-        for (auto &asteroid : _asteroids)
+        for (int i = 0; i < _asteroids.size(); i++)
         {
-          if (Util::TestIntersection(asteroid.get()->GetSprite(), bullet.get()->GetSprite()))
+          if (_asteroids[i].get()->Active() && Util::TestIntersection(_asteroids[i].get()->GetSprite(), bullet.get()->GetSprite()))
           {
+            _asteroids[i].get()->ProcessCollision();
             //asteroid.get()->GetSprite().SetColor(Colors::Red);
-            _bitmapFont->SetTextColor(255, 255, 255, 255);
-            _bitmapFont->SetScale(0.5f);
-            _bitmapFont->Printf(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), BitmapFont::AlignLeft, "Asteroid hit: %f", bullet.get()->Angle());
+            //_bitmapFont->SetTextColor(255, 255, 255, 255);
+            //_bitmapFont->SetScale(0.5f);
+            //_bitmapFont->Printf(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y(), BitmapFont::AlignLeft, "Asteroid hit: %f", bullet.get()->Angle());
+
+            bullet.get()->SetActive(false);
+
+            break;
           }
         }
       }
@@ -71,7 +76,7 @@ void Application::ProcessCollisions()
 
   for (auto &asteroid : _asteroids)
   {
-    if (Util::TestIntersection(asteroid.get()->GetSprite(), _ship.GetSprite()))
+    if (asteroid.get()->Active() && Util::TestIntersection(asteroid.get()->GetSprite(), _ship.GetSprite()))
     {
         _shipHit = true;
         break;
@@ -171,6 +176,11 @@ void Application::Start()
 
     for (int i = 0; i < _asteroids.size(); i++)
     {
+      if (!_asteroids[i].get()->Active())
+      {
+        continue;
+      }
+
       _asteroids[i].get()->Compute();
       _asteroids[i].get()->Draw(true, true);
     }

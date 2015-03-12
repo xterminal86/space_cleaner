@@ -1,16 +1,16 @@
 #include "asteroid.h"
 
-Asteroid::Asteroid(double posx, double posy)
+Asteroid::Asteroid(double posx, double posy, int breakdownLevel, std::vector<std::unique_ptr<Asteroid>>* mainAsteroidsCollection)
 {
-  Init(Vector2(posx, posy));
+  Init(Vector2(posx, posy), breakdownLevel, mainAsteroidsCollection);
 }
 
-Asteroid::Asteroid(Vector2 pos)
+Asteroid::Asteroid(Vector2 pos, int breakdownLevel, std::vector<std::unique_ptr<Asteroid>>* mainAsteroidsCollection)
 {
-  Init(pos);
+  Init(pos, breakdownLevel, mainAsteroidsCollection);
 }
 
-void Asteroid::Init(Vector2 pos)
+void Asteroid::Init(Vector2 pos, int breakdownLevel, std::vector<std::unique_ptr<Asteroid>>* mainAsteroidsCollection)
 {
   int res = TextureManager::Get().FindTextureByRole(GlobalStrings::AsteroidRole);
   if (res != -1)
@@ -29,6 +29,12 @@ void Asteroid::Init(Vector2 pos)
   _speed = 0.25 / (double)(rand() % Util::SpeedSpread + 1);
 
   _asteroidSprite.MoveCollider(pos.X(), pos.Y());
+
+  _active = true;
+
+  _currentBreakdownLevel = breakdownLevel;
+
+  _mainAsteroidsCollectionReference = mainAsteroidsCollection;
 }
 
 Asteroid::~Asteroid()
@@ -124,6 +130,26 @@ void Asteroid::Compute()
   Move();
 }
 
+void Asteroid::ProcessCollision()
+{
+  if (_currentBreakdownLevel > 0)
+  {
+    _currentBreakdownLevel--;
+
+    Breakdown();
+
+    _active = false;
+  }
+  else
+  {
+    _active = false;
+  }
+}
+
 void Asteroid::Breakdown()
 {
+  for (int i = 0; i < GameMechanic::AsteroidBreakdownChildren; i++)
+  {
+    _mainAsteroidsCollectionReference->push_back(std::unique_ptr<Asteroid>(new Asteroid(_position, _currentBreakdownLevel, _mainAsteroidsCollectionReference)));
+  }
 }

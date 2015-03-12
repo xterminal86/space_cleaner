@@ -29,7 +29,6 @@ class Application
 
     const int _screenWidth = 1280;
     const int _screenHeight = 600;
-    const int _maxAsteroids = 3;
 
     unsigned int _score;
 

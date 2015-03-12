@@ -84,8 +84,6 @@ class Util
       double py = (double)((rand() % pxLimitY - 40) + 40);
 
       pos.Set(px, py);
-
-      printf ("%f %f | ", pos.X(), pos.Y());
     }
 
     static void CreateRandomDirection(Vector2& dir)

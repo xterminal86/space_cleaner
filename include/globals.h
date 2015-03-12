@@ -33,6 +33,14 @@ namespace Math
   static const double PIOVER180 = 0.01745329251;
 }
 
+namespace GameMechanic
+{
+  static const int MaxAsteroids = 3;
+  static const int AsteroidMaxBreakdownLevel = 1;
+  static const int AsteroidBreakdownChildren = 4;
+  static const double AsteroidBreakdownScaleFactor = 0.5;
+}
+
 namespace Colors
 {
   static SDL_Color AsIs = { 255, 255, 255, 255 };
