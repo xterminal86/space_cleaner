@@ -17,13 +17,15 @@ class Sprite
     void Draw(int x, int y, double angle, std::vector<SDL_Point>* colliderToDraw);
 
     void SetColor(SDL_Color c);
-    void SetScaleFactor(float scaleFactor) { _scaledLetterWidth = scaleFactor; }
+    void SetScaleFactor(double scaleFactor);
 
     const PNGLoader* ImageWrapper() { return _imageWrapper; }
     SDL_Rect* SourceRect() { return &_sourceRect; }
     SDL_Rect* DestinationRect() { return &_destRect; }
     // Collider points with default origin ( [0;0] at upper left corner of the image)
     std::vector<SDL_Point>* OriginalCollider() { return _originalCollider; }
+    // Original collider after scale
+    std::vector<SDL_Point>& ScaledCollider() { return _scaledCollider; }
     // The same points after rotation
     std::vector<SDL_Point>& RotatedCollider() { return _rotatedCollider; }
     // The above points after translation (basically, you should use this one)
@@ -41,10 +43,11 @@ class Sprite
     const PNGLoader* _imageWrapper;
     int _screenX;
     int _screenY;
-    float _scaledLetterWidth;
+    double _scaleFactor;
     std::vector<SDL_Point>* _originalCollider;
     std::vector<SDL_Point> _rotatedCollider;
     std::vector<SDL_Point> _translatedCollider;
+    std::vector<SDL_Point> _scaledCollider;
     std::vector<SDL_Point> _projectionAxes;
     std::vector<Vector2> _projectionAxesV2;
 };

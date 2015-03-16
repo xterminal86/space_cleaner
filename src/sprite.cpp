@@ -6,7 +6,7 @@ Sprite::Sprite()
 
   _screenX = 0;
   _screenY = 0;
-  _scaledLetterWidth = 1.0f;
+  _scaleFactor = 1.0;
   _imageWrapper = nullptr;
 
   _spriteColor = Colors::AsIs;
@@ -65,8 +65,8 @@ int Sprite::Init(int textureIndex)
 
   _destRect.x = _screenX;
   _destRect.y = _screenY;
-  _destRect.w = _imageWrapper->Width() * _scaledLetterWidth;
-  _destRect.h = _imageWrapper->Height() * _scaledLetterWidth;
+  _destRect.w = _imageWrapper->Width() * _scaleFactor;
+  _destRect.h = _imageWrapper->Height() * _scaleFactor;
 
   _originalCollider = TextureManager::Get().GetCollider(textureIndex);
 
@@ -76,10 +76,25 @@ int Sprite::Init(int textureIndex)
     {
       _rotatedCollider.push_back(_originalCollider->at(i));
       _translatedCollider.push_back(_originalCollider->at(i));
+      _scaledCollider.push_back(_originalCollider->at(i));
     }
   }
 
   return 0;
+}
+
+void Sprite::SetScaleFactor(double scaleFactor)
+{
+  _scaleFactor = scaleFactor;
+
+  for (int i = 0; i < _originalCollider->size(); i++)
+  {
+    double tmpX = (double)_originalCollider->at(i).x * scaleFactor;
+    double tmpY = (double)_originalCollider->at(i).y * scaleFactor;
+
+    _scaledCollider[i].x = (int)tmpX;
+    _scaledCollider[i].y = (int)tmpY;
+  }
 }
 
 // In order to avoid "acceleration" of results, we always offset from some point when performing calculations.

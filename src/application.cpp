@@ -101,6 +101,7 @@ void Application::Start()
   int bgy = _screenHeight / 2;
 
   _ship.Init(0, 0);
+  _ship.GetSprite().SetScaleFactor(1.5);
   _ship.Move(300, 300);
 
   bool fireTrigger = false;
