@@ -40,6 +40,17 @@ namespace GameMechanic
   static const int AsteroidBreakdownChildren = 4;
   static const double AsteroidBreakdownScaleFactor = 1.5;
   static const double AsteroidInitialScaleFactor = 1.0;
+  static const double AsteroidMaxSpeed = 0.125;
+
+  // In particular, determines the values below AsteroidMaxSpeed
+  // The more - the less speed values can be.
+  // TLDR: goes in denominator of asteroid random speed generation.
+  static const int RandomSpeedSpread = 5;
+
+  // Determines spread of rotation increment fraction. The more - the less increment value can possibly be.
+  // See Util::CreateRandomRotation.
+  // TLDR: this value goes in denominator.
+  static const int RandomRotationSpeedSpread = 10;
 }
 
 namespace Colors

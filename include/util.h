@@ -113,7 +113,7 @@ class Util
 
     static double CreateRandomRotation()
     {
-      double angleIncrement = 1.0 / (double)(rand() % RotationSpeedSpread + 1);
+      double angleIncrement = 1.0 / (double)(rand() % GameMechanic::RandomRotationSpeedSpread + 1);
 
       int sign = rand() % 4 + 1;
 
@@ -124,9 +124,6 @@ class Util
 
       return angleIncrement;
     }
-
-    static const int SpeedSpread = 10;
-    static const int RotationSpeedSpread = 10;
 
   protected:
   private:
