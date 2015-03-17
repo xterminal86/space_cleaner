@@ -17,7 +17,7 @@ Sprite::Sprite()
 
 Sprite::~Sprite()
 {
-  //printf ("Sprite dtor\t");
+  //printf ("Sprite dtor 0x%x 0x%x\t", this, _imageWrapper);
 }
 
 void Sprite::CalculateSATAxes()

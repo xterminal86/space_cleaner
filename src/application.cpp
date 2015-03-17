@@ -39,7 +39,7 @@ void Application::InitAsteroids()
 
     Util::CreateRandomPosition(pos, screenx, screeny);
 
-    _asteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(pos, GameMechanic::AsteroidMaxBreakdownLevel, &_asteroids)));
+    _asteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(pos, 0, &_asteroids)));
   }
 }
 

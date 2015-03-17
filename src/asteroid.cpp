@@ -20,6 +20,10 @@ void Asteroid::Init(Vector2 pos, int breakdownLevel, std::vector<std::unique_ptr
 
   _position.Set(pos.X(), pos.Y());
 
+  _asteroidSprite.SetScaleFactor(breakdownLevel == 0 ?
+                                 GameMechanic::AsteroidInitialScaleFactor :
+                                 GameMechanic::AsteroidInitialScaleFactor / (GameMechanic::AsteroidBreakdownScaleFactor * breakdownLevel));
+
   Util::CreateRandomDirection(_direction);
 
   _angle = 0.0;
@@ -122,9 +126,9 @@ void Asteroid::Compute()
 
 void Asteroid::ProcessCollision()
 {
-  if (_currentBreakdownLevel > 0)
+  if (_currentBreakdownLevel < GameMechanic::AsteroidMaxBreakdownLevel)
   {
-    _currentBreakdownLevel--;
+    _currentBreakdownLevel++;
 
     Breakdown();
 
