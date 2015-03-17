@@ -6,7 +6,10 @@ Sprite::Sprite()
 
   _screenX = 0;
   _screenY = 0;
+
+  _angle = 0.0;
   _scaleFactor = 1.0;
+
   _imageWrapper = nullptr;
 
   _spriteColor = Colors::AsIs;
@@ -95,6 +98,26 @@ void Sprite::SetScaleFactor(double scaleFactor)
     _scaledCollider[i].x = (int)tmpX;
     _scaledCollider[i].y = (int)tmpY;
   }
+
+  _destRect.w = _imageWrapper->Width() * _scaleFactor;
+  _destRect.h = _imageWrapper->Height() * _scaleFactor;
+}
+
+void Sprite::SetAngle(double angle)
+{
+  _angle = angle;
+
+  int cs = _scaledCollider.size();
+  Vector2 res;
+  for (int i = 0; i < cs; i++)
+  {
+    Vector2 tmp(_scaledCollider[i].x, _scaledCollider[i].y);
+    Vector2::RotateVector(res, Vector2(0.0, 0.0), tmp, angle);
+
+    _rotatedCollider[i].x = res.X();
+    _rotatedCollider[i].y = res.Y();
+  }
+
 }
 
 // In order to avoid "acceleration" of results, we always offset from some point when performing calculations.
@@ -113,7 +136,7 @@ void Sprite::MoveCollider(double newX, double newY)
   }
 }
 
-void Sprite::Draw(int x, int y, double angle)
+void Sprite::Draw(int x, int y)
 {
   if (_imageWrapper == nullptr)
   {
@@ -121,19 +144,19 @@ void Sprite::Draw(int x, int y, double angle)
     return;
   }
 
-  _destRect.x = x - _imageWrapper->Width() / 2;
-  _destRect.y = y - _imageWrapper->Height() / 2;
+  _destRect.x = x - (_imageWrapper->Width() * _scaleFactor) / 2;
+  _destRect.y = y - (_imageWrapper->Height() * _scaleFactor) / 2;
 
   SDL_SetTextureColorMod(_imageWrapper->Texture(), _spriteColor.r, _spriteColor.g, _spriteColor.b);
   SDL_SetTextureAlphaMod(_imageWrapper->Texture(), _spriteColor.a);
 
-  int res = SDL_RenderCopyEx(VideoSystem::Get().Renderer(), _imageWrapper->Texture(), &_sourceRect, &_destRect, angle, nullptr, SDL_FLIP_NONE);
+  int res = SDL_RenderCopyEx(VideoSystem::Get().Renderer(), _imageWrapper->Texture(), &_sourceRect, &_destRect, _angle, nullptr, SDL_FLIP_NONE);
   if (res != 0) Logger::Get().LogPrint("(warning) Render copy error!\nReason: %s\n", SDL_GetError());
 }
 
-void Sprite::Draw(int x, int y, double angle, std::vector<SDL_Point>* colliderToDraw)
+void Sprite::Draw(int x, int y, std::vector<SDL_Point>* colliderToDraw)
 {
-  Draw(x, y, angle);
+  Draw(x, y);
 
   if (colliderToDraw != nullptr)
   {

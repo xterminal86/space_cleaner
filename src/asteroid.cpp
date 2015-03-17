@@ -78,11 +78,11 @@ void Asteroid::Draw(int x, int y, bool drawCollider)
 {
   if (drawCollider)
   {
-    _asteroidSprite.Draw(x, y, _angle, &_asteroidSprite.TranslatedCollider());
+    _asteroidSprite.Draw(x, y, &_asteroidSprite.TranslatedCollider());
   }
   else
   {
-    _asteroidSprite.Draw(x, y, _angle);
+    _asteroidSprite.Draw(x, y);
   }
 }
 
@@ -108,17 +108,7 @@ void Asteroid::Rotate(double angle)
 {
   _angle = angle;
 
-  int cs = _asteroidSprite.RotatedCollider().size();
-  Vector2 res;
-  for (int i = 0; i < cs; i++)
-  {
-    Vector2 origCollider(_asteroidSprite.OriginalCollider()->at(i).x, _asteroidSprite.OriginalCollider()->at(i).y);
-    Vector2::RotateVector(res, Vector2(0.0, 0.0), origCollider, angle);
-
-    _asteroidSprite.RotatedCollider()[i].x = res.X();
-    _asteroidSprite.RotatedCollider()[i].y = res.Y();
-  }
-
+  _asteroidSprite.SetAngle(angle);
   _asteroidSprite.MoveCollider(_position.X(), _position.Y());
 }
 

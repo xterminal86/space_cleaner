@@ -12,9 +12,10 @@ class Sprite
     Sprite();
     virtual ~Sprite();
     int Init(int textureIndex);
+    void SetAngle(double angle);
     void MoveCollider(double newX, double newY);
-    void Draw(int x, int y, double angle = 0.0);
-    void Draw(int x, int y, double angle, std::vector<SDL_Point>* colliderToDraw);
+    void Draw(int x, int y);
+    void Draw(int x, int y, std::vector<SDL_Point>* colliderToDraw);
 
     void SetColor(SDL_Color c);
     void SetScaleFactor(double scaleFactor);
@@ -44,6 +45,7 @@ class Sprite
     int _screenX;
     int _screenY;
     double _scaleFactor;
+    double _angle;
     std::vector<SDL_Point>* _originalCollider;
     std::vector<SDL_Point> _rotatedCollider;
     std::vector<SDL_Point> _translatedCollider;

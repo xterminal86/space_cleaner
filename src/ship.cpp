@@ -60,7 +60,7 @@ void Ship::Draw(int x, int y, bool drawCollider)
 {
   if (drawCollider)
   {
-    _shipSprite.Draw(x, y, _angle, &_shipSprite.TranslatedCollider());
+    _shipSprite.Draw(x, y, &_shipSprite.TranslatedCollider());
 
     SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(),
                                                       _position.X() + (int)(_localDirection.X() * DirectionResolution),
@@ -68,7 +68,7 @@ void Ship::Draw(int x, int y, bool drawCollider)
   }
   else
   {
-    _shipSprite.Draw(x, y, _angle);
+    _shipSprite.Draw(x, y);
   }
 }
 
@@ -89,21 +89,11 @@ void Ship::Rotate(double angle)
 {
   _angle = angle;
 
-  int cs = _shipSprite.RotatedCollider().size();
+  _shipSprite.SetAngle(angle);
+
   Vector2 res;
-  for (int i = 0; i < cs; i++)
-  {
-    //Vector2 origCollider(_shipSprite.OriginalCollider()->at(i).x, _shipSprite.OriginalCollider()->at(i).y);
-    //Vector2::RotateVector(res, Vector2(0.0, 0.0), origCollider, angle);
-
-    Vector2 tmp(_shipSprite.ScaledCollider()[i].x, _shipSprite.ScaledCollider()[i].y);
-    Vector2::RotateVector(res, Vector2(0.0, 0.0), tmp, angle);
-
-    _shipSprite.RotatedCollider()[i].x = res.X();
-    _shipSprite.RotatedCollider()[i].y = res.Y();
-  }
-
   Vector2::RotateVector(res, Vector2::Zero(), _originalDirection, angle);
+
   _localDirection = res;
   _localDirection.Normalize();
 }
