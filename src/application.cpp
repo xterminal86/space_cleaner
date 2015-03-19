@@ -178,6 +178,7 @@ void Application::Start()
 
     _ship.ComputeBullets();
     _ship.Draw(true);
+    //_ship.Draw(false);
 
     for (int i = 0; i < _asteroids.size(); i++)
     {

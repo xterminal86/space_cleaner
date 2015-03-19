@@ -49,6 +49,7 @@ void Bullet::Compute()
   _bulletSprite.MoveCollider(_position.X(), _position.Y());
 
   Draw(true, true);
+  //Draw(false, false);
 
   if (_position.X() < 0 || _position.X() > sx || _position.Y() < 0 || _position.Y() > sy)
   {

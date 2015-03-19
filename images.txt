@@ -1,4 +1,4 @@
 0 assets/ship/ship_small.png
-1 assets/bullets/laser_shot.png
+1 assets/bullets/shot_round.png
 2 assets/asteroids/asteroid.png
 3 assets/background.png

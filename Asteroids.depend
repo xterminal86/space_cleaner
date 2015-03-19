@@ -814,7 +814,7 @@
 1418898844 source:h:\sources\c++\asteroids.git\main.cpp
 	"application.h"
 
-1426779798 h:\sources\c++\asteroids.git\include\application.h
+1426782518 h:\sources\c++\asteroids.git\include\application.h
 	"globals.h"
 	"logger.h"
 	"gametime.h"
@@ -822,7 +822,7 @@
 	"texture_manager.h"
 	"input_manager.h"
 	"bitmapfont.h"
-	"explosions_pool.h"
+	"animations_pool.h"
 	"ship.h"
 	"asteroid.h"
 	"vector2pair.h"
@@ -1179,7 +1179,7 @@
 1421682465 h:\sources\c++\asteroids.git\include\input_manager.h
 	"globals.h"
 
-1426778183 source:h:\sources\c++\asteroids.git\src\application.cpp
+1426782529 source:h:\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 
 1418898844 source:h:\sources\c++\asteroids.git\src\component.cpp
@@ -1221,14 +1221,14 @@
 1426612925 source:h:\sources\c++\asteroids.git\src\sprite.cpp
 	"sprite.h"
 
-1422465283 source:h:\sources\c++\asteroids.git\src\texture_manager.cpp
+1426780545 source:h:\sources\c++\asteroids.git\src\texture_manager.cpp
 	"texture_manager.h"
 
 1421424834 source:h:\sources\c++\asteroids.git\src\video_system.cpp
 	"video_system.h"
 	"logger.h"
 
-1425638002 h:\sources\c++\asteroids.git\include\ship.h
+1426780666 h:\sources\c++\asteroids.git\include\ship.h
 	"vector2.h"
 	"sprite.h"
 	"bullet.h"
@@ -1696,7 +1696,7 @@
 	"vector2.h"
 	"sprite.h"
 
-1426610339 source:h:\sources\c++\asteroids.git\src\bullet.cpp
+1426782411 source:h:\sources\c++\asteroids.git\src\bullet.cpp
 	"bullet.h"
 
 1426613878 source:h:\sources\c++\asteroids.git\src\asteroid.cpp
@@ -1781,8 +1781,17 @@
 1426779799 h:\sources\c++\asteroids.git\include\explosions_pool.h
 	"animation_sequence.h"
 
-1426779785 h:\sources\c++\asteroids.git\include\animation_sequence.h
+1426779845 h:\sources\c++\asteroids.git\include\animation_sequence.h
 	"gametime.h"
 	"png_loader.h"
-	"explosions_pool.h"
+	"animations_pool.h"
+
+1426779799 h:\sources\c++\asteroids.git\include\animations_pool.h
+	"animation_sequence.h"
+
+1426779801 source:h:\sources\c++\asteroids.git\src\animation_sequence.cpp
+	"animation_sequence.h"
+
+1426779853 source:h:\sources\c++\asteroids.git\src\animations_pool.cpp
+	"animations_pool.h"
 

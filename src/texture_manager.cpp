@@ -28,7 +28,6 @@ int TextureManager::Init(std::string imagesFilename, std::string relationFilenam
       Logger::Get().LogPrint("----|_textures[%i] (0x%zX) = %s\n", index, _textures[index].get(), buf);
       png = buf;
       LoadCollider(index, png);
-      //index++;
     }
     fclose(f);
     Logger::Get().LogPrint("*** SUCCESS *** Done creating textures!\n");

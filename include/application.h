@@ -30,7 +30,7 @@ class Application
 
     const int _screenWidth = 1280;
     const int _screenHeight = 600;
-    const int _maxExplosions = 10;
+    const int _maxExplosions = 20;
 
     unsigned int _score;
 
