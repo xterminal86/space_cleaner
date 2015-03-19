@@ -8,7 +8,7 @@
 #include "texture_manager.h"
 #include "input_manager.h"
 #include "bitmapfont.h"
-#include "explosions_pool.h"
+#include "animations_pool.h"
 #include "ship.h"
 #include "asteroid.h"
 #include "vector2pair.h"
@@ -46,7 +46,7 @@ class Application
 
     std::vector<std::unique_ptr<Asteroid>> _asteroids;
 
-    ExplosionsPool _explosions;
+    AnimationsPool _explosions;
 };
 
 #endif // APPLICATION_H

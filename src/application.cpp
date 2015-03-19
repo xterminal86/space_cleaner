@@ -7,7 +7,7 @@ Application::Application()
   _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename);
   _bitmapFont->Init(GlobalStrings::BitmapFontFilename);
 
-  _explosions.InitPool(_maxExplosions);
+  _explosions.Init(GlobalStrings::ExplosionSpriteFilename, _maxExplosions);
 
   _shipHit = false;
 
@@ -112,8 +112,6 @@ void Application::Start()
 
   int tw, th;
 
-  SpriteAnimated explosion;
-
   Uint8* keyboardState = nullptr;
   while (_running)
   {
@@ -197,6 +195,7 @@ void Application::Start()
 
     if (_shipHit)
     {
+      //_explosions.PlayExplosion(_ship.Position().X(), _ship.Position().Y());
     }
 
     _explosions.Process();

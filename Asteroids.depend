@@ -814,7 +814,7 @@
 1418898844 source:h:\sources\c++\asteroids.git\main.cpp
 	"application.h"
 
-1426776524 h:\sources\c++\asteroids.git\include\application.h
+1426779798 h:\sources\c++\asteroids.git\include\application.h
 	"globals.h"
 	"logger.h"
 	"gametime.h"
@@ -1179,7 +1179,7 @@
 1421682465 h:\sources\c++\asteroids.git\include\input_manager.h
 	"globals.h"
 
-1426775829 source:h:\sources\c++\asteroids.git\src\application.cpp
+1426778183 source:h:\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 
 1418898844 source:h:\sources\c++\asteroids.git\src\component.cpp
@@ -1767,16 +1767,22 @@
 1425816238 source:d:\nick\sources\c++\asteroids.git\src\bitmapfont.cpp
 	"BitmapFont.h"
 
-1426776270 h:\sources\c++\asteroids.git\include\sprite_animated.h
+1426779335 h:\sources\c++\asteroids.git\include\sprite_animated.h
 	"gametime.h"
 	"png_loader.h"
-
-1426775323 source:h:\sources\c++\asteroids.git\src\sprite_animated.cpp
-	"sprite_animated.h"
-
-1426776365 source:h:\sources\c++\asteroids.git\src\explosions_pool.cpp
 	"explosions_pool.h"
 
-1426776348 h:\sources\c++\asteroids.git\include\explosions_pool.h
+1426778957 source:h:\sources\c++\asteroids.git\src\sprite_animated.cpp
 	"sprite_animated.h"
+
+1426779340 source:h:\sources\c++\asteroids.git\src\explosions_pool.cpp
+	"explosions_pool.h"
+
+1426779799 h:\sources\c++\asteroids.git\include\explosions_pool.h
+	"animation_sequence.h"
+
+1426779785 h:\sources\c++\asteroids.git\include\animation_sequence.h
+	"gametime.h"
+	"png_loader.h"
+	"explosions_pool.h"
 

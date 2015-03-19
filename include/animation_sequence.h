@@ -3,37 +3,32 @@
 
 #include "gametime.h"
 #include "png_loader.h"
+#include "animations_pool.h"
 
-class SpriteAnimated
+class AnimationsPool;
+
+class AnimationSequence
 {
   public:
-    SpriteAnimated();
-    virtual ~SpriteAnimated();
+    AnimationSequence(AnimationsPool* owner);
+    virtual ~AnimationSequence();
 
     void Play(int x, int y);
     void Draw();
 
     bool Active() { return _active; }
 
-    const int SpeedMs = 25;
-
   protected:
   private:
 
-  std::unique_ptr<PNGLoader> _spriteSheet;
+  AnimationsPool* _owner;
+  PNGLoader* _spriteSheetRef;
 
   bool _active;
-
-  int _wx;
-  int _wy;
-
-  int _lengthX;
-  int _lengthY;
 
   SDL_Rect _src;
   SDL_Rect _dst;
 
-  int _frames;
   int _framesPlayed;
 
   double _currentMsPassed;
