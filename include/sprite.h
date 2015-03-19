@@ -46,7 +46,9 @@ class Sprite
     int _screenY;
     double _scaleFactor;
     double _angle;
+    // Owner is TextureManager
     std::vector<SDL_Point>* _originalCollider;
+
     std::vector<SDL_Point> _rotatedCollider;
     std::vector<SDL_Point> _translatedCollider;
     std::vector<SDL_Point> _scaledCollider;

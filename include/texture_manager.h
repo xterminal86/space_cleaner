@@ -50,6 +50,8 @@ class TextureManager
       }
 
       _colliders.clear();
+
+      _spritesRelation.clear();
     }
     TextureManager& operator=(const TextureManager&);
 

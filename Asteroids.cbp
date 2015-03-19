@@ -50,6 +50,7 @@
 		<Unit filename="include/asteroid.h" />
 		<Unit filename="include/bitmapfont.h" />
 		<Unit filename="include/bullet.h" />
+		<Unit filename="include/explosions_pool.h" />
 		<Unit filename="include/gametime.h" />
 		<Unit filename="include/globals.h" />
 		<Unit filename="include/input_manager.h" />
@@ -58,6 +59,7 @@
 		<Unit filename="include/png_loader.h" />
 		<Unit filename="include/ship.h" />
 		<Unit filename="include/sprite.h" />
+		<Unit filename="include/sprite_animated.h" />
 		<Unit filename="include/texture_manager.h" />
 		<Unit filename="include/util.h" />
 		<Unit filename="include/vector2.h" />
@@ -68,12 +70,14 @@
 		<Unit filename="src/asteroid.cpp" />
 		<Unit filename="src/bitmapfont.cpp" />
 		<Unit filename="src/bullet.cpp" />
+		<Unit filename="src/explosions_pool.cpp" />
 		<Unit filename="src/input_manager.cpp" />
 		<Unit filename="src/logger.cpp" />
 		<Unit filename="src/map_object.cpp" />
 		<Unit filename="src/png_loader.cpp" />
 		<Unit filename="src/ship.cpp" />
 		<Unit filename="src/sprite.cpp" />
+		<Unit filename="src/sprite_animated.cpp" />
 		<Unit filename="src/texture_manager.cpp" />
 		<Unit filename="src/util.cpp" />
 		<Unit filename="src/vector2.cpp" />

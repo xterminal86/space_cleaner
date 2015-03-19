@@ -29,6 +29,8 @@ class Asteroid
   protected:
   private:
     Sprite _asteroidSprite;
+
+    // Comes from Application
     std::vector<std::unique_ptr<Asteroid>>* _mainAsteroidsCollectionReference;
 
     bool _active;

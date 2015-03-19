@@ -7,6 +7,8 @@ Application::Application()
   _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename);
   _bitmapFont->Init(GlobalStrings::BitmapFontFilename);
 
+  _explosions.InitPool(_maxExplosions);
+
   _shipHit = false;
 
   _score = 0;
@@ -57,6 +59,8 @@ void Application::ProcessCollisions()
         {
           if (_asteroids[i].get()->Active() && Util::TestIntersection(_asteroids[i].get()->GetSprite(), bullet.get()->GetSprite()))
           {
+            _explosions.PlayExplosion(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y());
+
             _asteroids[i].get()->ProcessCollision();
             //asteroid.get()->GetSprite().SetColor(Colors::Red);
             //_bitmapFont->SetTextColor(255, 255, 255, 255);
@@ -107,6 +111,8 @@ void Application::Start()
   bool fireTrigger = false;
 
   int tw, th;
+
+  SpriteAnimated explosion;
 
   Uint8* keyboardState = nullptr;
   while (_running)
@@ -184,6 +190,7 @@ void Application::Start()
 
       _asteroids[i].get()->Compute();
       _asteroids[i].get()->Draw(true, true);
+      //_asteroids[i].get()->Draw(false, false);
     }
 
     ProcessCollisions();
@@ -191,6 +198,8 @@ void Application::Start()
     if (_shipHit)
     {
     }
+
+    _explosions.Process();
 
     _bitmapFont->SetTextColor(0, 255, 0, 255);
     _bitmapFont->SetScale(1.0f);

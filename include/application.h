@@ -8,6 +8,7 @@
 #include "texture_manager.h"
 #include "input_manager.h"
 #include "bitmapfont.h"
+#include "explosions_pool.h"
 #include "ship.h"
 #include "asteroid.h"
 #include "vector2pair.h"
@@ -29,6 +30,7 @@ class Application
 
     const int _screenWidth = 1280;
     const int _screenHeight = 600;
+    const int _maxExplosions = 10;
 
     unsigned int _score;
 
@@ -43,6 +45,8 @@ class Application
     void ProcessCollisions();
 
     std::vector<std::unique_ptr<Asteroid>> _asteroids;
+
+    ExplosionsPool _explosions;
 };
 
 #endif // APPLICATION_H

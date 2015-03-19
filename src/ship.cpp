@@ -29,7 +29,7 @@ void Ship::Init(double posx, double posy)
 
 Ship::~Ship()
 {
-  //dtor
+  _bullets.clear();
 }
 
 void Ship::Move(int x, int y)
