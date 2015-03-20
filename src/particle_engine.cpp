@@ -32,7 +32,6 @@ void ParticleEngine::Init(int particlesNumber, int lifetimeMsMin, int lifetimeMs
   {
     Particle p;
 
-    p.Active = true;
     p.CurrentLifeTimeMs = 0;
     int lt = rand() % lifetimeMsMax;
     if (lt == 0) lt = lifetimeMsMin;
@@ -59,15 +58,16 @@ void ParticleEngine::SetUp(Vector2 pos, Vector2 dir, double bulletSpeed)
     i.Direction = dir;
     i.Position = pos;
     i.Speed = bulletSpeed;
+    i.Active = true;
   }
 }
 
 void ParticleEngine::Emit()
 {
-  if (!_active) return;
-
   for (auto& i : _particles)
   {
+    if (!i.Active) continue;
+
     double dx = _direction.X() * (i.Speed * GameTime::Get().DeltaTime());
     double dy = _direction.Y() * (i.Speed * GameTime::Get().DeltaTime());
 
@@ -94,6 +94,7 @@ void ParticleEngine::Emit()
       i.MaxLifeTimeMs = lt;
       i.Position.Set(_position);
       i.ScaleFactor = 1.0;
+      i.Active = _active;
     }
   }
 }

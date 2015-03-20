@@ -44,6 +44,8 @@ void Bullet::Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed)
 
 void Bullet::Compute()
 {
+  _trail.Emit();
+
   if (!_active) return;
 
   int sx = VideoSystem::Get().ScreenDimensions().x;
@@ -58,8 +60,8 @@ void Bullet::Compute()
 
   _bulletSprite.MoveCollider(_position.X(), _position.Y());
 
-  //Draw(true, true);
-  Draw(false, false);
+  Draw(true, true);
+  //Draw(false, false);
 
   if (_position.X() < 0 || _position.X() > sx || _position.Y() < 0 || _position.Y() > sy)
   {
@@ -78,8 +80,6 @@ void Bullet::Draw(bool drawCollider, bool drawAxes)
   {
     _bulletSprite.Draw(_position.X(), _position.Y());
   }
-
-  _trail.Emit();
 
   if (drawAxes)
   {

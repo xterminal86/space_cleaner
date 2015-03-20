@@ -22,7 +22,11 @@ class Bullet
     Vector2 Position() { return _position; }
 
     bool Active() { return _active; }
-    void SetActive(bool status) { _active = status; }
+    void SetActive(bool status)
+    {
+      _active = status;
+      _trail.SetActive(status);
+    }
 
     Sprite& GetSprite() { return _bulletSprite; }
 
