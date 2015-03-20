@@ -228,7 +228,7 @@ void Application::Start()
 
     _bitmapFont->SetTextColor(0, 255, 0, 255);
     _bitmapFont->SetScale(1.0f);
-    _bitmapFont->Printf(0, 0, BitmapFont::AlignLeft, "Score: %u", _score);
+    _bitmapFont->Printf(0, 0, BitmapFont::AlignLeft, "Score:%u", _score);
 
     int x = (int)_ship.Position().X();
     int y = (int)_ship.Position().Y();

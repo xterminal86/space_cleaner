@@ -44,6 +44,9 @@ namespace GameMechanic
   static const double AsteroidBreakdownScaleFactor = 1.5;
   static const double AsteroidInitialScaleFactor = 1.0;
   static const double AsteroidMaxSpeed = 0.125;
+
+  // For visual debug: determines length of direction vectors
+  // Because they are normalized, we have to extend them in order to see.
   static const int DirectionResolution = 100;
 
   // In particular, determines the values below AsteroidMaxSpeed

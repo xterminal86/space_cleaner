@@ -12,8 +12,8 @@ void Ship::Init(double posx, double posy)
   _position.Set(posx, posy);
 
   // We go up the screen when Y is decreasing.
-  _originalDirection.Set(0.0, -1.0 * GameMechanic::DirectionResolution);
-  _localDirection.Set(0.0, -1.0 * GameMechanic::DirectionResolution);
+  _originalDirection.Set(0.0, -1.0);
+  _localDirection.Set(0.0, -1.0);
 
   int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipRole);
   if (res != -1)

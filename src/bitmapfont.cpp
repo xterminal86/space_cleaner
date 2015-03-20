@@ -41,7 +41,7 @@ void BitmapFont::SetTextColor(SDL_Color newColor)
 void BitmapFont::SetScale(float scale)
 {
   _scaledLetterWidth = LetterWidth * scale;
-  _lettersDistance = (int)(_scaledLetterWidth / 2) + 2;
+  _lettersDistance = (int)(_scaledLetterWidth / 2);
 }
 
 void BitmapFont::Print(int x, int y, int anchor, std::string text)
