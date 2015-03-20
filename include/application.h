@@ -159,6 +159,8 @@ class Application
     bool _shipHit;
 
     Sprite _backgroundStar;
+    Sprite _background;
+
     Ship _ship;
 
     void LoadBackground();

@@ -1,4 +1,5 @@
 0 ship
 1 laser_shot
 2 asteroid
-3 background
+3 background_star
+4 background

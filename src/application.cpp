@@ -23,7 +23,7 @@ Application::~Application()
 
 void Application::LoadBackground()
 {
-  int textureId = TextureManager::Get().FindTextureByRole(GlobalStrings::BackgroundRole);
+  int textureId = TextureManager::Get().FindTextureByRole(GlobalStrings::BackgroundStarRole);
   if (textureId != -1)
   {
     _backgroundStar.Init(textureId);
@@ -36,6 +36,12 @@ void Application::LoadBackground()
     s.Init(_backgroundStar.ImageWrapper());
 
     _stars.push_back(s);
+  }
+
+  textureId = TextureManager::Get().FindTextureByRole(GlobalStrings::BackgroundRole);
+  if (textureId != -1)
+  {
+    _background.Init(textureId);
   }
 }
 
@@ -185,7 +191,8 @@ void Application::Start()
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    //_backgroundStar.Draw(bgx, bgy);
+    _background.Draw(bgx, bgy);
+
     DrawBackground();
 
     if (shipAngle > 360) shipAngle -= 360;

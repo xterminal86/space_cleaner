@@ -2,3 +2,4 @@
 1 assets/bullets/shot_round.png
 2 assets/asteroids/asteroid.png
 3 assets/star_transparent.png
+4 assets/background.png
