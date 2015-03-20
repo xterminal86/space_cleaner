@@ -26,7 +26,24 @@ void Application::LoadBackground()
   int textureId = TextureManager::Get().FindTextureByRole(GlobalStrings::BackgroundRole);
   if (textureId != -1)
   {
-    _background.Init(textureId);
+    _backgroundStar.Init(textureId);
+  }
+
+  for (int i = 0; i < _backgroundStars; i++)
+  {
+    Star s;
+
+    s.Init(_backgroundStar.ImageWrapper());
+
+    _stars.push_back(s);
+  }
+}
+
+void Application::DrawBackground()
+{
+  for (auto& i : _stars)
+  {
+    i.Pulse();
   }
 }
 
@@ -168,7 +185,8 @@ void Application::Start()
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    _background.Draw(bgx, bgy);
+    //_backgroundStar.Draw(bgx, bgy);
+    DrawBackground();
 
     if (shipAngle > 360) shipAngle -= 360;
     if (shipAngle < 0) shipAngle += 360;
