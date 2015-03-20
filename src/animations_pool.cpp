@@ -16,7 +16,7 @@ void AnimationsPool::Init(std::string spriteSheetName, int poolSize)
 
   _spriteSheet = std::unique_ptr<PNGLoader>(new PNGLoader(GlobalStrings::ExplosionSpriteFilename));
 
-  std::string fname = GlobalStrings::ExplosionSpriteFilename;
+  std::string fname = spriteSheetName;
   fname.replace(fname.end() - 3, fname.end(), "txt");
   FILE* f = fopen(fname.data(), "r");
   while (!feof(f))

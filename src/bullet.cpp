@@ -8,6 +8,8 @@ Bullet::Bullet()
     _bulletSprite.Init(res);
   }
 
+  _trail.Init(TrailLenght, 200, 210, 0.1, _bulletSprite.ImageWrapper());
+
   _position.ToZero();
   _direction.ToZero();
 
@@ -32,6 +34,12 @@ void Bullet::Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed)
 
   _bulletSprite.SetAngle(angle);
   _bulletSprite.MoveCollider(shotPoint.X(), shotPoint.Y());
+
+  Vector2 tmp = dir;
+  tmp.Negate();
+
+  _trail.SetUp(shotPoint, tmp, speed / 10);
+  _trail.SetActive(true);
 }
 
 void Bullet::Compute()
@@ -46,14 +54,17 @@ void Bullet::Compute()
 
   _position.Set(_position.X() + dx, _position.Y() + dy);
 
+  _trail.MoveOrigin(_position);
+
   _bulletSprite.MoveCollider(_position.X(), _position.Y());
 
-  Draw(true, true);
-  //Draw(false, false);
+  //Draw(true, true);
+  Draw(false, false);
 
   if (_position.X() < 0 || _position.X() > sx || _position.Y() < 0 || _position.Y() > sy)
   {
     _active = false;
+    _trail.SetActive(false);
   }
 }
 
@@ -67,6 +78,8 @@ void Bullet::Draw(bool drawCollider, bool drawAxes)
   {
     _bulletSprite.Draw(_position.X(), _position.Y());
   }
+
+  _trail.Emit();
 
   if (drawAxes)
   {

@@ -12,8 +12,8 @@ void Ship::Init(double posx, double posy)
   _position.Set(posx, posy);
 
   // We go up the screen when Y is decreasing.
-  _originalDirection.Set(0.0, -1.0 * DirectionResolution);
-  _localDirection.Set(0.0, -1.0 * DirectionResolution);
+  _originalDirection.Set(0.0, -1.0 * GameMechanic::DirectionResolution);
+  _localDirection.Set(0.0, -1.0 * GameMechanic::DirectionResolution);
 
   int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipRole);
   if (res != -1)
@@ -63,8 +63,8 @@ void Ship::Draw(int x, int y, bool drawCollider)
     _shipSprite.Draw(x, y, &_shipSprite.TranslatedCollider());
 
     SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(),
-                                                      _position.X() + (int)(_localDirection.X() * DirectionResolution),
-                                                      _position.Y() + (int)(_localDirection.Y() * DirectionResolution));
+                                                      _position.X() + (int)(_localDirection.X() * GameMechanic::DirectionResolution),
+                                                      _position.Y() + (int)(_localDirection.Y() * GameMechanic::DirectionResolution));
   }
   else
   {

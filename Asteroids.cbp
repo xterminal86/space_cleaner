@@ -57,6 +57,7 @@
 		<Unit filename="include/input_manager.h" />
 		<Unit filename="include/logger.h" />
 		<Unit filename="include/map_object.h" />
+		<Unit filename="include/particle_engine.h" />
 		<Unit filename="include/png_loader.h" />
 		<Unit filename="include/ship.h" />
 		<Unit filename="include/sprite.h" />
@@ -75,6 +76,7 @@
 		<Unit filename="src/input_manager.cpp" />
 		<Unit filename="src/logger.cpp" />
 		<Unit filename="src/map_object.cpp" />
+		<Unit filename="src/particle_engine.cpp" />
 		<Unit filename="src/png_loader.cpp" />
 		<Unit filename="src/ship.cpp" />
 		<Unit filename="src/sprite.cpp" />

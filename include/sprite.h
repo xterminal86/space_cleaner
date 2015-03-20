@@ -20,7 +20,7 @@ class Sprite
     void SetColor(SDL_Color c);
     void SetScaleFactor(double scaleFactor);
 
-    const PNGLoader* ImageWrapper() { return _imageWrapper; }
+    PNGLoader* ImageWrapper() { return _imageWrapper; }
     SDL_Rect* SourceRect() { return &_sourceRect; }
     SDL_Rect* DestinationRect() { return &_destRect; }
     // Collider points with default origin ( [0;0] at upper left corner of the image)
@@ -41,7 +41,7 @@ class Sprite
     SDL_Color _spriteColor;
     SDL_Rect _sourceRect;
     SDL_Rect _destRect;
-    const PNGLoader* _imageWrapper;
+    PNGLoader* _imageWrapper;
     int _screenX;
     int _screenY;
     double _scaleFactor;

@@ -111,6 +111,12 @@ class Vector2
     }
   }
 
+  void Negate()
+  {
+    _x = -_x;
+    _y = -_y;
+  }
+
 	static Vector2 Zero() {	return Vector2(0.0, 0.0); }
   static Vector2 Up() { return Vector2(0.0, 1.0); }
 

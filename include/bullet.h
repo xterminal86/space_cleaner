@@ -6,6 +6,7 @@
 #include "gametime.h"
 #include "vector2.h"
 #include "sprite.h"
+#include "particle_engine.h"
 
 class Bullet
 {
@@ -25,9 +26,12 @@ class Bullet
 
     Sprite& GetSprite() { return _bulletSprite; }
 
+    const int TrailLenght = 8;
+
   protected:
   private:
     Sprite _bulletSprite;
+    ParticleEngine _trail;
 
     Vector2 _position;
     Vector2 _direction;
