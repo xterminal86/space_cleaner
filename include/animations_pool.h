@@ -11,7 +11,7 @@ class AnimationsPool
     AnimationsPool();
     virtual ~AnimationsPool();
     void Init(std::string spriteSheetName, int poolSize);
-    void PlayExplosion(int x, int y);
+    void PlayExplosion(int x, int y, double scale = 1.0);
     void Process();
 
     int FrameWidthX() { return _frameWidthX; }

@@ -82,7 +82,7 @@ void Application::ProcessCollisions()
         {
           if (_asteroids[i].get()->Active() && Util::TestIntersection(_asteroids[i].get()->GetSprite(), bullet.get()->GetSprite()))
           {
-            _explosions.PlayExplosion(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y());
+            _explosions.PlayExplosion(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y(), _bigAsteroidExplosionScale / (_asteroids[i].get()->CurrentBreakdownLevel() + 1));
 
             _asteroids[i].get()->ProcessCollision();
             //asteroid.get()->GetSprite().SetColor(Colors::Red);

@@ -25,6 +25,7 @@ class Asteroid
     Sprite& GetSprite() { return _asteroidSprite; }
 
     bool Active() { return _active; }
+    int CurrentBreakdownLevel() { return _currentBreakdownLevel; }
 
   protected:
   private:

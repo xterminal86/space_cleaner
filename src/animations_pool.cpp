@@ -35,13 +35,13 @@ void AnimationsPool::Init(std::string spriteSheetName, int poolSize)
   }
 }
 
-void AnimationsPool::PlayExplosion(int x, int y)
+void AnimationsPool::PlayExplosion(int x, int y, double scale)
 {
   for (int i = 0; i < _pool.size(); i++)
   {
     if (!_pool[i].get()->Active())
     {
-      _pool[i].get()->Play(x, y);
+      _pool[i].get()->Play(x, y, scale);
       break;
     }
   }

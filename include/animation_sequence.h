@@ -13,7 +13,7 @@ class AnimationSequence
     AnimationSequence(AnimationsPool* owner);
     virtual ~AnimationSequence();
 
-    void Play(int x, int y);
+    void Play(int x, int y, double scale = 1.0);
     void Draw();
 
     bool Active() { return _active; }

@@ -27,13 +27,16 @@ AnimationSequence::~AnimationSequence()
   //dtor
 }
 
-void AnimationSequence::Play(int x, int y)
+void AnimationSequence::Play(int x, int y, double scale)
 {
   _active = true;
   _framesPlayed = 0;
 
-  _dst.x = x - _owner->FrameWidthX() / 2;
-  _dst.y = y - _owner->FrameWidthY() / 2;
+  _dst.x = x - (_owner->FrameWidthX() * scale) / 2;
+  _dst.y = y - (_owner->FrameWidthY() * scale) / 2;
+
+  _dst.w = _owner->FrameWidthX() * scale;
+  _dst.h = _owner->FrameWidthY() * scale;
 }
 
 void AnimationSequence::Draw()
