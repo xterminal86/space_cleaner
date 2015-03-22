@@ -14,10 +14,9 @@ class AnimationsPool
     void PlayExplosion(int x, int y, double scale = 1.0);
     void Process();
 
-    int FrameWidthX() { return _frameWidthX; }
-    int FrameWidthY() { return _frameWidthY; }
-    int FramesNumX() { return _framesNumX; }
-    int FramesNumY() { return _framesNumY; }
+    int FrameWidth() { return _frameWidth; }
+    int FrameHeight() { return _frameHeight; }
+    int FramesInRow() { return _framesInRow; }
     int TotalFrames() { return _totalFrames; }
 
     PNGLoader* SpriteSheet() { return _spriteSheet.get(); }
@@ -27,10 +26,9 @@ class AnimationsPool
   protected:
   private:
     int _poolSize;
-    int _frameWidthX;
-    int _frameWidthY;
-    int _framesNumX;
-    int _framesNumY;
+    int _frameWidth;
+    int _frameHeight;
+    int _framesInRow;
     int _totalFrames;
 
     std::unique_ptr<PNGLoader> _spriteSheet;

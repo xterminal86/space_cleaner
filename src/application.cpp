@@ -113,8 +113,6 @@ void Application::ProcessCollisions()
 
 void Application::Start()
 {
-  srand(time(nullptr));
-
   double shipAngle = 0.0;
 
   _running = true;
@@ -227,7 +225,7 @@ void Application::Start()
     _explosions.Process();
 
     _bitmapFont->SetTextColor(0, 255, 0, 255);
-    _bitmapFont->SetScale(1.0f);
+    _bitmapFont->SetScale(0.5f);
     _bitmapFont->Printf(0, 0, BitmapFont::AlignLeft, "Score:%u", _score);
 
     int x = (int)_ship.Position().X();

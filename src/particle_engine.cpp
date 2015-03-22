@@ -33,12 +33,12 @@ void ParticleEngine::Init(int particlesNumber, int lifetimeMsMin, int lifetimeMs
     Particle p;
 
     p.CurrentLifeTimeMs = 0;
-    int lt = rand() % lifetimeMsMax;
+    int lt = Util::RandomNumber() % lifetimeMsMax;
     if (lt == 0) lt = lifetimeMsMin;
     p.MaxLifeTimeMs = lt;
     //p.MaxLifeTimeMs = 1000;
     p.Speed = 0.0;
-    //p.Speed = 0.15 / (double)(rand() % 10 + 2);
+    //p.Speed = 0.15 / (double)(Util::RandomNumber() % 10 + 2);
     p.ScaleFactor = 1.0;
 
     _particles.push_back(p);
@@ -89,7 +89,7 @@ void ParticleEngine::Emit()
     if (i.CurrentLifeTimeMs > i.MaxLifeTimeMs)
     {
       i.CurrentLifeTimeMs = 0;
-      int lt = rand() % _particlesLifeTimeMsMax;
+      int lt = Util::RandomNumber() % _particlesLifeTimeMsMax;
       if (lt == 0) lt = _particlesLifeTimeMsMin;
       i.MaxLifeTimeMs = lt;
       i.Position.Set(_position);

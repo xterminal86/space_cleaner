@@ -80,18 +80,18 @@ class Util
 
     static void CreateRandomPosition(Vector2& pos, int pxLimitX, int pxLimitY)
     {
-      double px = (double)((rand() % pxLimitX - 40) + 40);
-      double py = (double)((rand() % pxLimitY - 40) + 40);
+      double px = (double)((RandomNumber() % pxLimitX - 40) + 40);
+      double py = (double)((RandomNumber() % pxLimitY - 40) + 40);
 
       pos.Set(px, py);
     }
 
     static void CreateRandomDirection(Vector2& dir)
     {
-      double dx = (double)(rand() % 10 + 1);
-      double dy = (double)(rand() % 10 + 1);
+      double dx = (double)(RandomNumber() % 10 + 1);
+      double dy = (double)(RandomNumber() % 10 + 1);
 
-      int sign = rand() % 11;
+      int sign = RandomNumber() % 11;
 
       if (sign % 2 == 0)
       {
@@ -113,9 +113,9 @@ class Util
 
     static double CreateRandomRotation()
     {
-      double angleIncrement = 1.0 / (double)(rand() % GameMechanic::RandomRotationSpeedSpread + 1);
+      double angleIncrement = 1.0 / (double)(RandomNumber() % GameMechanic::RandomRotationSpeedSpread + 1);
 
-      int sign = rand() % 4 + 1;
+      int sign = RandomNumber() % 4 + 1;
 
       if (sign % 2 == 0)
       {
@@ -123,6 +123,13 @@ class Util
       }
 
       return angleIncrement;
+    }
+
+    static unsigned int RandomNumber()
+    {
+      static unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+      static std::mt19937 myRandomGenerator(seed);
+      return myRandomGenerator();
     }
 
   protected:

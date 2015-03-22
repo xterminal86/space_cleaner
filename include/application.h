@@ -50,9 +50,9 @@ public:
     /*
     SDL_Color c;
 
-    c.r = rand() % 200 + 55;
-    c.g = rand() % 200 + 55;
-    c.b = rand() % 200 + 55;
+    c.r = Util::RandomNumber() % 200 + 55;
+    c.g = Util::RandomNumber() % 200 + 55;
+    c.b = Util::RandomNumber() % 200 + 55;
     c.a = 0;
     */
 
@@ -64,10 +64,10 @@ public:
     c.a = 0;
 
     _color = c;
-    _scaleFactor = 0.15 / (double)(rand() % 2 + 1);
+    _scaleFactor = 0.15 / (double)(Util::RandomNumber() % 2 + 1);
     _alpha = 0;
-    _alphaIncrement = rand() % 5 + 1;
-    //_alphaIncrement = 4.0 / (double)(rand() % 10 + 1);
+    _alphaIncrement = Util::RandomNumber() % 5 + 1;
+    //_alphaIncrement = 4.0 / (double)(Util::RandomNumber() % 10 + 1);
 
     _msPassed = 0;
 
@@ -124,13 +124,13 @@ public:
 
   void SetRandomPosition()
   {
-    int x = rand() % VideoSystem::Get().ScreenDimensions().x;
-    int y = rand() % VideoSystem::Get().ScreenDimensions().y;
+    int x = Util::RandomNumber() % VideoSystem::Get().ScreenDimensions().x;
+    int y = Util::RandomNumber() % VideoSystem::Get().ScreenDimensions().y;
 
     _position.Set(x, y);
 
-    //_pauseMs = rand() % 2000 + 3000;
-    _pauseMs = rand() % 1000 + 1000;
+    //_pauseMs = Util::RandomNumber() % 2000 + 3000;
+    _pauseMs = Util::RandomNumber() % 1000 + 1000;
   }
 };
 

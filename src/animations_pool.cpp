@@ -21,13 +21,11 @@ void AnimationsPool::Init(std::string spriteSheetName, int poolSize)
   FILE* f = fopen(fname.data(), "r");
   while (!feof(f))
   {
-    fscanf(f, "%i %i", &_framesNumX, &_framesNumY);
+    fscanf(f, "%i %i", &_framesInRow, &_totalFrames);
   }
 
-  _totalFrames = _framesNumX * _framesNumY;
-
-  _frameWidthX = _spriteSheet.get()->Width() / _framesNumX;
-  _frameWidthY = _spriteSheet.get()->Height() / _framesNumY;
+  _frameWidth = _spriteSheet.get()->Width() / _framesInRow;
+  _frameHeight = _spriteSheet.get()->Height() / _framesInRow;
 
   for (int i = 0; i < _poolSize; i++)
   {

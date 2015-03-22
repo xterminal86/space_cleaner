@@ -7,13 +7,13 @@ AnimationSequence::AnimationSequence(AnimationsPool* owner)
 
   _src.x = 0;
   _src.y = 0;
-  _src.w = _owner->FrameWidthX();
-  _src.h = _owner->FrameWidthY();
+  _src.w = _owner->FrameWidth();
+  _src.h = _owner->FrameHeight();
 
   _dst.x = 0;
   _dst.y = 0;
-  _dst.w = _owner->FrameWidthX();
-  _dst.h = _owner->FrameWidthY();
+  _dst.w = _owner->FrameWidth();
+  _dst.h = _owner->FrameHeight();
 
   _framesPlayed = 0;
 
@@ -32,11 +32,11 @@ void AnimationSequence::Play(int x, int y, double scale)
   _active = true;
   _framesPlayed = 0;
 
-  _dst.x = x - (_owner->FrameWidthX() * scale) / 2;
-  _dst.y = y - (_owner->FrameWidthY() * scale) / 2;
+  _dst.x = x - (_owner->FrameWidth() * scale) / 2;
+  _dst.y = y - (_owner->FrameHeight() * scale) / 2;
 
-  _dst.w = _owner->FrameWidthX() * scale;
-  _dst.h = _owner->FrameWidthY() * scale;
+  _dst.w = _owner->FrameWidth() * scale;
+  _dst.h = _owner->FrameHeight() * scale;
 }
 
 void AnimationSequence::Draw()
@@ -54,11 +54,11 @@ void AnimationSequence::Draw()
 
     _framesPlayed++;
 
-    int dy = _framesPlayed / _owner->FramesNumX();
-    int dx = _framesPlayed % _owner->FramesNumY();
+    int dy = _framesPlayed / _owner->FramesInRow();
+    int dx = _framesPlayed % _owner->FramesInRow();
 
-    _src.x = dx * _owner->FrameWidthX();
-    _src.y = dy * _owner->FrameWidthY();
+    _src.x = dx * _owner->FrameWidth();
+    _src.y = dy * _owner->FrameHeight();
 
     if (_framesPlayed > _owner->TotalFrames())
     {

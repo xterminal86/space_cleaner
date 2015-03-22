@@ -2,6 +2,7 @@
 #define PARTICLEENGINE_H
 
 #include "gametime.h"
+#include "util.h"
 #include "png_loader.h"
 #include "vector2.h"
 
