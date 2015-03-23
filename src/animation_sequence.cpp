@@ -48,7 +48,7 @@ void AnimationSequence::Draw()
 
   _currentMsPassed += GameTime::Get().DeltaTime();
 
-  if (_currentMsPassed > _owner->SpeedMs)
+  if (_currentMsPassed > _owner->SpeedMs())
   {
     _currentMsPassed = 0.0;
 

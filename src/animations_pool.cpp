@@ -10,22 +10,23 @@ AnimationsPool::~AnimationsPool()
   _pool.clear();
 }
 
-void AnimationsPool::Init(std::string spriteSheetName, int poolSize)
+void AnimationsPool::Init(std::string spriteSheetName, int poolSize, int speedMs)
 {
   _poolSize = poolSize;
+  _speedMs = speedMs;
 
-  _spriteSheet = std::unique_ptr<PNGLoader>(new PNGLoader(GlobalStrings::ExplosionSpriteFilename));
+  _spriteSheet = std::unique_ptr<PNGLoader>(new PNGLoader(spriteSheetName));
 
   std::string fname = spriteSheetName;
   fname.replace(fname.end() - 3, fname.end(), "txt");
   FILE* f = fopen(fname.data(), "r");
   while (!feof(f))
   {
-    fscanf(f, "%i %i", &_framesInRow, &_totalFrames);
+    fscanf(f, "%i %i %i", &_framesInRow, &_framesInCol, &_totalFrames);
   }
 
   _frameWidth = _spriteSheet.get()->Width() / _framesInRow;
-  _frameHeight = _spriteSheet.get()->Height() / _framesInRow;
+  _frameHeight = _spriteSheet.get()->Height() / _framesInCol;
 
   for (int i = 0; i < _poolSize; i++)
   {
@@ -33,7 +34,7 @@ void AnimationsPool::Init(std::string spriteSheetName, int poolSize)
   }
 }
 
-void AnimationsPool::PlayExplosion(int x, int y, double scale)
+void AnimationsPool::Play(int x, int y, double scale)
 {
   for (int i = 0; i < _pool.size(); i++)
   {
