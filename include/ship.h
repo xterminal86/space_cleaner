@@ -25,6 +25,8 @@ class Ship
     void ComputeBullets();
     void Rotate(double angle);
     void Fire();
+    void SetActive(bool status) { _active = status; }
+    bool Active() { return _active; }
 
     bool HasBulletsActive();
     std::vector<std::unique_ptr<Bullet>>& GetBullets() { return _bullets; }
@@ -42,6 +44,8 @@ class Ship
   protected:
   private:
     Sprite _shipSprite;
+
+    bool _active;
 
     double _angle;
     double _speed;

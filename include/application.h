@@ -168,11 +168,15 @@ class Application
     void DrawBackground();
     void InitAsteroids();
     void ProcessCollisions();
+    void ProcessExplosions();
+    void DrawGUI();
 
     std::vector<std::unique_ptr<Asteroid>> _asteroids;
     std::vector<Star> _stars;
 
-    AnimationsPool _explosions;
+    AnimationsPool _asteroidExplosion;
+    AnimationsPool _shipExplosion;
+    //std::vector<
 };
 
 #endif // APPLICATION_H

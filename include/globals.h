@@ -29,6 +29,7 @@ namespace GlobalStrings
   static std::string BitmapFontFilename = "assets/fonts/retro.png";
 
   static std::string ExplosionSpriteFilename = "assets/animations/explosion.png";
+  static std::string ExplosionSpriteShipFilename = "assets/animations/explosion_round.png";
 }
 
 namespace Math

@@ -6,6 +6,8 @@ Ship::Ship()
 
 void Ship::Init(double posx, double posy)
 {
+  _active = true;
+
   _angle = 0.0;
   _speed = 0.0;
 
