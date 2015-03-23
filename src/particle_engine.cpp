@@ -45,7 +45,7 @@ void ParticleEngine::Init(int particlesNumber, int lifetimeMsMin, int lifetimeMs
   }
 }
 
-void ParticleEngine::SetUp(Vector2 pos, Vector2 dir, double bulletSpeed)
+void ParticleEngine::SetUp(Vector2 pos, Vector2 dir, double bulletSpeed, double angle)
 {
   _position = pos;
   _direction = dir;
@@ -59,6 +59,7 @@ void ParticleEngine::SetUp(Vector2 pos, Vector2 dir, double bulletSpeed)
     i.Position = pos;
     i.Speed = bulletSpeed;
     i.Active = true;
+    i.Angle = angle;
   }
 }
 
@@ -78,7 +79,7 @@ void ParticleEngine::Emit()
     _dstRect.w = _particleImage->Width() * i.ScaleFactor;
     _dstRect.h = _particleImage->Height() * i.ScaleFactor;
 
-    int res = SDL_RenderCopy(VideoSystem::Get().Renderer(), _particleImage->Texture(), &_srcRect, &_dstRect);
+    int res = SDL_RenderCopyEx(VideoSystem::Get().Renderer(), _particleImage->Texture(), &_srcRect, &_dstRect, i.Angle, nullptr, SDL_FLIP_NONE);
     if (res != 0) Logger::Get().LogPrint("(warning) Render copy error!\nReason: %s\n", SDL_GetError());
 
     i.CurrentLifeTimeMs += GameTime::Get().DeltaTime();

@@ -20,7 +20,7 @@ namespace GlobalStrings
   static std::string BackgroundStarRole = "background_star";
   static std::string ShipRole = "ship";
   static std::string AsteroidRole = "asteroid";
-  static std::string BulletLaserRole = "laser_shot";
+  static std::string BulletLaserRole = "fire_shot";
 
   static std::string ImagesFilename = "images.txt";
   static std::string LogFilename = "output_log.txt";

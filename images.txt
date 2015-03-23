@@ -3,3 +3,4 @@
 2 assets/asteroids/asteroid.png
 3 assets/star_transparent.png
 4 assets/background.png
+5 assets/bullets/fire_shot.png
