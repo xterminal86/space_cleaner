@@ -32,6 +32,8 @@ class Ship
     std::vector<std::unique_ptr<Bullet>>& GetBullets() { return _bullets; }
 
     double Speed() { return _speed; }
+    void SetSpeed(double val) { _speed = val; }
+
     Vector2& Position() { return _position; }
     Vector2& Direction() { return _localDirection; }
 

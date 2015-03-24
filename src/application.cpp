@@ -58,6 +58,11 @@ void Application::Start()
       _running = false;
     }
 
+    if (keyboardState[SDL_SCANCODE_RETURN] && !_ship.Active())
+    {
+      _ship.SetActive(true);
+    }
+
     if (_ship.Active())
     {
       if (keyboardState[SDL_SCANCODE_A])
@@ -107,6 +112,8 @@ void Application::Start()
 
     DrawBackground();
 
+    _ship.ComputeBullets();
+
     if (_ship.Active())
     {
       if (shipAngle > 360) shipAngle -= 360;
@@ -114,7 +121,6 @@ void Application::Start()
 
       _ship.Rotate(shipAngle);
       _ship.Move();
-      _ship.ComputeBullets();
       _ship.Draw(true);
       //_ship.Draw(false);
     }
@@ -136,6 +142,7 @@ void Application::Start()
     if (_shipHit)
     {
       _shipHit = false;
+      _ship.SetSpeed(0.0);
       _ship.SetActive(false);
       _shipExplosion.Play(_ship.Position().X(), _ship.Position().Y(), 1.0);
     }
@@ -202,7 +209,7 @@ void Application::InitAsteroids()
 void Application::ProcessCollisions()
 {
   // Perform the following only if needed
-  if (_ship.Active() && _ship.HasBulletsActive())
+  if (_ship.HasBulletsActive())
   {
     for (auto &bullet : _ship.GetBullets())
     {

@@ -1179,7 +1179,7 @@
 1421682465 h:\sources\c++\asteroids.git\include\input_manager.h
 	"globals.h"
 
-1427133477 source:h:\sources\c++\asteroids.git\src\application.cpp
+1427215922 source:h:\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 
 1418898844 source:h:\sources\c++\asteroids.git\src\component.cpp
@@ -1228,7 +1228,7 @@
 	"video_system.h"
 	"logger.h"
 
-1427133113 h:\sources\c++\asteroids.git\include\ship.h
+1427215905 h:\sources\c++\asteroids.git\include\ship.h
 	"vector2.h"
 	"sprite.h"
 	"bullet.h"
@@ -1829,4 +1829,10 @@
 
 1426877737 source:d:\nick\sources\c++\asteroids.git\src\particle_engine.cpp
 	"particle_engine.h"
+
+1427215161 source:h:\sources\c++\asteroids.git\src\explosion.cpp
+	"explosion.h"
+
+1427215177 h:\sources\c++\asteroids.git\include\explosion.h
+	"png_loader.h"
 
