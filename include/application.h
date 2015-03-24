@@ -9,6 +9,7 @@
 #include "input_manager.h"
 #include "bitmapfont.h"
 #include "animations_pool.h"
+#include "explosion.h"
 #include "ship.h"
 #include "asteroid.h"
 #include "vector2pair.h"
@@ -176,7 +177,7 @@ class Application
 
     AnimationsPool _asteroidExplosion;
     AnimationsPool _shipExplosion;
-    //std::vector<
+    Explosion _shipDebris;
 };
 
 #endif // APPLICATION_H

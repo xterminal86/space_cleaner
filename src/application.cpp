@@ -40,6 +40,16 @@ void Application::Start()
   _ship.GetSprite().SetScaleFactor(1.0);
   _ship.Move(300, 300);
 
+  int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipBigRole);
+  if (res != -1)
+  {
+    PNGLoader* imageRef = TextureManager::Get().GetTextureWrapper(res);
+    _shipDebris.Init(imageRef, 10, 1500);
+  }
+
+  //_shipDebris.Init(_ship.GetSprite().ImageWrapper(), 10, 2000);
+  //_shipDebris.SetScale(2.0);
+
   bool fireTrigger = false;
 
   int tw, th;
@@ -145,6 +155,7 @@ void Application::Start()
       _ship.SetSpeed(0.0);
       _ship.SetActive(false);
       _shipExplosion.Play(_ship.Position().X(), _ship.Position().Y(), 1.0);
+      _shipDebris.Play(_ship.Position());
     }
 
     ProcessExplosions();
@@ -256,6 +267,7 @@ void Application::ProcessExplosions()
 {
   _asteroidExplosion.Process();
   _shipExplosion.Process();
+  _shipDebris.Process();
 }
 
 void Application::DrawGUI()

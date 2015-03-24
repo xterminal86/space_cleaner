@@ -4,3 +4,4 @@
 3 background_star
 4 background
 5 fire_shot
+6 ship_big
