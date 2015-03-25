@@ -131,8 +131,8 @@ void Application::Start()
 
       _ship.Rotate(shipAngle);
       _ship.Move();
-      _ship.Draw(true);
-      //_ship.Draw(false);
+      //_ship.Draw(true);
+      _ship.Draw(false);
     }
 
     for (int i = 0; i < _asteroids.size(); i++)
@@ -143,8 +143,8 @@ void Application::Start()
       }
 
       _asteroids[i].get()->Compute();
-      _asteroids[i].get()->Draw(true, true);
-      //_asteroids[i].get()->Draw(false, false);
+      //_asteroids[i].get()->Draw(true, true);
+      _asteroids[i].get()->Draw(false, false);
     }
 
     ProcessCollisions();
@@ -279,7 +279,7 @@ void Application::DrawGUI()
   int x = (int)_ship.Position().X();
   int y = (int)_ship.Position().Y();
 
-  _bitmapFont->SetTextColor(255, 0, 0, 255);
-  _bitmapFont->SetScale(0.5f);
-  _bitmapFont->Printf(x, y, BitmapFont::AlignLeft, "Ship hit: %i", _shipHit);
+  //_bitmapFont->SetTextColor(255, 0, 0, 255);
+  //_bitmapFont->SetScale(0.5f);
+  //_bitmapFont->Printf(x, y, BitmapFont::AlignLeft, "Ship hit: %i", _shipHit);
 }
