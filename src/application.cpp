@@ -276,10 +276,11 @@ void Application::DrawGUI()
   _bitmapFont->SetScale(0.5f);
   _bitmapFont->Printf(0, 0, BitmapFont::AlignLeft, "Score:%u", _score);
 
-  int x = (int)_ship.Position().X();
-  int y = (int)_ship.Position().Y();
+  _bitmapFont->SetTextColor(0, 255, 255, 255);
+  _bitmapFont->SetScale(0.5f);
+  _bitmapFont->Printf(VideoSystem::Get().ScreenDimensions().x, 0, BitmapFont::AlignRight, "Energy: >>>>>>>>>>>>>>>>>>>>");
 
-  //_bitmapFont->SetTextColor(255, 0, 0, 255);
-  //_bitmapFont->SetScale(0.5f);
-  //_bitmapFont->Printf(x, y, BitmapFont::AlignLeft, "Ship hit: %i", _shipHit);
+  _bitmapFont->SetTextColor(255, 255, 0, 255);
+  _bitmapFont->SetScale(2.0f);
+  _bitmapFont->Printf(VideoSystem::Get().ScreenDimensions().x / 2, 0, BitmapFont::AlignCenter, "*** Asteroids ***");
 }

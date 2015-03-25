@@ -68,20 +68,19 @@ void BitmapFont::Print(int x, int y, int anchor, std::string text)
     src.w = LetterWidth;
     src.h = LetterWidth;
 
-    dst.x = x + i*_lettersDistance;
-
     switch (anchor)
     {
       case AlignRight:
-        dst.x -= strLength * (int)_scaledLetterWidth;
+        dst.x = x - (strLength - i)*_lettersDistance;
         break;
 
       case AlignCenter:
-        dst.x -= (strLength / 2) * (int)_scaledLetterWidth;
+        dst.x = x - (strLength / 2 - i)*_lettersDistance;
         break;
 
       case AlignLeft:
       default:
+        dst.x = x + i*_lettersDistance;
         break;
     }
 
