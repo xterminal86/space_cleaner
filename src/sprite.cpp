@@ -77,10 +77,18 @@ int Sprite::Init(int textureIndex)
   {
     for (int i = 0; i < _originalCollider->size(); i++)
     {
+      _originalColliderCopy.push_back(_originalCollider->at(i));
       _rotatedCollider.push_back(_originalCollider->at(i));
       _translatedCollider.push_back(_originalCollider->at(i));
       _scaledCollider.push_back(_originalCollider->at(i));
     }
+  }
+
+  _convex = IsConvex();
+
+  if (!_convex)
+  {
+    TriangulateCollider();
   }
 
   return 0;
@@ -168,4 +176,188 @@ void Sprite::Draw(int x, int y, std::vector<SDL_Point>* colliderToDraw)
 void Sprite::SetColor(SDL_Color c)
 {
   _spriteColor = c;
+}
+
+// ==================== Private Methods =================== //
+
+bool Sprite::IsConvex()
+{
+  if (_originalCollider != nullptr)
+  {
+    int size = _originalCollider->size() - 1;
+    for (int i = 0; i < size; i++)
+    {
+      double d1x = _originalCollider->at( (i + 1) % size ).x - _originalCollider->at(i).x;
+      double d1y = _originalCollider->at( (i + 1) % size ).y - _originalCollider->at(i).y;
+      double d2x = _originalCollider->at( (i + 2) % size ).x - _originalCollider->at( (i + 1) % size ).x;
+      double d2y = _originalCollider->at( (i + 2) % size ).y - _originalCollider->at( (i + 1) % size ).y;
+
+      double cross = d1x * d2y - d1y * d2x;
+
+      // Positive Y goes down here,
+      // so we need negative cross products in contrast to Unity triangulation test project
+      if (cross > 0)
+      {
+        //printf("Concave\n");
+        return false;
+      }
+    }
+
+    //printf("Convex\n");
+
+    return true;
+  }
+}
+
+void Sprite::TriangulateCollider()
+{
+  // If we get stuck in infinite recursion.
+  bool loopDetector = true;
+
+  /*
+  // Not very necessary check for remainig vertices collinearity
+  if (_originalColliderCopy.size() != 0)
+  {
+    bool found = false;
+    int size = _originalColliderCopy.size();
+    for (int i = 0; i < size; i++)
+    {
+      Vector2 p1Min(_originalColliderCopy[i].x, _originalColliderCopy[i].y);
+      Vector2 p1Max(_originalColliderCopy[(i + 1) % size].x, _originalColliderCopy[(i + 1) % size].y);
+
+      Vector2 p2Min(_originalColliderCopy[(i + 1) % size].x, _originalColliderCopy[(i + 1) % size].y);
+      Vector2 p2Max(_originalColliderCopy[(i + 2) % size].x, _originalColliderCopy[(i + 2) % size].y);
+
+      Vector2Pair s1(p1Min, p1Max);
+      Vector2Pair s2(p2Min, p2Max);
+
+      float cross = Util::Vector2Cross(s1.Direction(), s2.Direction());
+
+      if (cross != 0.0f)
+      {
+        found = true;
+      }
+    }
+
+    if (!found)
+    {
+      polyRef.Clear();
+      Debug.Log("Remaining vertices are collinear - removing");
+      return;
+    }
+  }
+  else
+  {
+    Debug.Log("We're done");
+    return;
+  }
+  */
+
+  // If we got all triangles we need (which are n-2 =>  Points.Count-3 in our case, since we have first vertex excplicitly defined in vertex filelist)
+  if ( _triangulatedCollider.size() == (_originalCollider.size() - 3) )
+  {
+    Logger::Get().LogPrint("Triangulation finished\n");
+    return;
+  }
+
+  // Look for two convex (or, more precise, with proper winding) sides.
+  // If we found one, check if triangle formed by these vertices contains any vertices from the polygon.
+  int size = _originalColliderCopy.size();
+  for (int i = 0; i < size; i++)
+  {
+    Vector2 v1(_originalColliderCopy[i].x, _originalColliderCopy[i].y);
+    Vector2 v2(_originalColliderCopy[ (i + 1) %  size ].x, _originalColliderCopy[ (i + 1) % size ].y);
+    Vector2 v3(_originalColliderCopy[ (i + 2) %  size ].x, _originalColliderCopy[ (i + 2) % size ].y);
+
+    Vector2Pair side1(v1, v2);
+    Vector2Pair side2(v2, v3);
+
+    double cross = Util::Vector2Cross(side1.Direction(), side2.Direction());
+
+    if (cross < 0)
+    {
+      std::vector<Vector2> triangle;
+      triangle.push_back(v1);
+      triangle.push_back(v2);
+      triangle.push_back(v3);
+
+      if (IsTriangleValid(triangle, _originalColliderCopy))
+      {
+        loopDetector = false;
+        //Logger::Get().LogPrint("Adding triangle: " + t);
+        _triangulatedPolygon.push_back(triangle);
+        _originalColliderCopy.erase(_originalColliderCopy.begin() + (i + 1));
+        //PrintVertices(polyRef);
+        break;
+      }
+    }
+  }
+
+  //Logger::Get().LogPrint("Total Triangles: " + _triangulatedPolygon.Count);
+
+  if (loopDetector)
+  {
+    Logger::Get().LogPrint("Looks like we're running in circles - exiting\n");
+    return;
+  }
+
+  TriangulateCollider();
+}
+
+bool Sprite::IsTriangleValid(std::vector<Vector2>& triangle, std::vector<SDL_Point>& collider)
+{
+  for (auto& v : collider)
+  {
+    if ( (v.X() == t[0].X() && v.Y() == t[0].Y() )
+      || (v.X() == t[1].X() && v.Y() == t[1].Y() )
+      || (v.X() == t[2].X() && v.Y() == t[2].Y() ) )
+    {
+      continue;
+    }
+
+    bool result = IsPointOutsideTriangle(t, v);
+
+    //Debug.Log(t + " " + v + " result: " + result);
+
+    if (!result) return false;
+  }
+
+  return true;
+}
+
+bool Sprite::IsPointOutsideTriangle(std::vector<Vector2>& triangle, Vector2 point)
+{
+  Vector2Pair rayLeft = new Vector2Pair(point, new Vector2(_horizontalRay.Min.x, point.y));
+  Vector2Pair rayRight = new Vector2Pair(point, new Vector2(_horizontalRay.Max.x, point.y));
+
+  int leftCount = 0;
+  int rightCount = 0;
+
+  foreach (var side in t.Sides)
+  {
+    Vector2Pair diag = new Vector2Pair(t.P1, t.P3);
+
+    // Special case
+    if (Util.IsPointOnTheLine(diag, point)) continue;
+
+    if (Util.AreLinesIntersecting(rayLeft, side, true))
+    {
+      if (side.Min.y > point.y || side.Max.y > point.y)
+      {
+        leftCount++;
+      }
+    }
+
+    if (Util.AreLinesIntersecting(rayRight, side, true))
+    {
+      if (side.Min.y > point.y || side.Max.y > point.y)
+      {
+        rightCount++;
+      }
+    }
+  }
+
+  //Debug.Log(point + " " + leftCount + " " + rightCount);
+
+  return (leftCount % 2 == 0 && rightCount % 2 == 0);
 }

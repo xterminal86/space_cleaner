@@ -46,14 +46,25 @@ class Sprite
     int _screenY;
     double _scaleFactor;
     double _angle;
+
     // Owner is TextureManager
     std::vector<SDL_Point>* _originalCollider;
 
+    std::vector<SDL_Point> _originalColliderCopy;
     std::vector<SDL_Point> _rotatedCollider;
     std::vector<SDL_Point> _translatedCollider;
     std::vector<SDL_Point> _scaledCollider;
     std::vector<SDL_Point> _projectionAxes;
     std::vector<Vector2> _projectionAxesV2;
+
+    std::vector<std::vector<Vector2>> _triangulatedCollider;
+
+    bool _convex;
+
+    bool IsConvex();
+    void TriangulateCollider();
+    bool IsTriangleValid(std::vector<Vector2>& triangle, std::vector<SDL_Point>& collider);
+    bool IsPointOutsideTriangle(std::vector<Vector2>& triangle, Vector2 point);
 };
 
 #endif // SPRITE_H

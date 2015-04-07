@@ -131,8 +131,8 @@ void Application::Start()
 
       _ship.Rotate(shipAngle);
       _ship.Move();
-      //_ship.Draw(true);
-      _ship.Draw(false);
+      _ship.Draw(true);
+      //_ship.Draw(false);
     }
 
     for (int i = 0; i < _asteroids.size(); i++)
@@ -273,11 +273,11 @@ void Application::ProcessExplosions()
 void Application::DrawGUI()
 {
   _bitmapFont->SetTextColor(0, 255, 0, 255);
-  _bitmapFont->SetScale(0.5f);
+  _bitmapFont->SetScale(1.0f);
   _bitmapFont->Printf(0, 0, BitmapFont::AlignLeft, "Score:%u", _score);
 
   _bitmapFont->SetTextColor(0, 255, 255, 255);
-  _bitmapFont->SetScale(0.5f);
+  _bitmapFont->SetScale(1.0f);
   _bitmapFont->Printf(VideoSystem::Get().ScreenDimensions().x, 0, BitmapFont::AlignRight, "Energy: >>>>>>>>>>>>>>>>>>>>");
 
   _bitmapFont->SetTextColor(255, 255, 0, 255);

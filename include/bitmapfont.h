@@ -14,7 +14,7 @@ class BitmapFont
     void Init(std::string fontImageFilename);
 
     const int LettersInRow = 16;
-    const int LetterWidth = 32;
+    const int LetterWidth = 16;
     const int StartingCharacter = 32;
 
     void Print(int x, int y, int anchor, std::string text);

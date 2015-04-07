@@ -4,4 +4,4 @@
 3 assets/star_transparent.png
 4 assets/background.png
 5 assets/bullets/fire_shot.png
-6 assets/ship/ship.png
+6 assets/ship/type2.png

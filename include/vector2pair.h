@@ -14,6 +14,16 @@ class Vector2Pair
 
     Vector2& Min() { return _min; }
     Vector2& Max() { return _max; }
+    Vector2& Direction()
+    {
+      double dx = _max.X() - _min.X();
+      double dy = _max.Y() - _min.Y();
+
+      _dir.Set(dx, dy);
+
+      return _dir;
+    }
+
     double& Length() { return _length; }
 
     void Swap()
@@ -72,6 +82,7 @@ class Vector2Pair
   private:
     Vector2 _min;
     Vector2 _max;
+    Vector2 _dir;
 
     double _length;
 };

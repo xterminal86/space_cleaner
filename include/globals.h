@@ -27,7 +27,7 @@ namespace GlobalStrings
   static std::string LogFilename = "output_log.txt";
   static std::string RelationFilename = "relation.txt";
 
-  static std::string BitmapFontFilename = "assets/fonts/retro.png";
+  static std::string BitmapFontFilename = "assets/fonts/font_fixed.png";
 
   static std::string ExplosionSpriteFilename = "assets/animations/explosion.png";
   static std::string ExplosionSpriteShipFilename = "assets/animations/explosion2.png";
