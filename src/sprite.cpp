@@ -58,6 +58,9 @@ int Sprite::Init(int textureIndex)
     return 1;
   }
 
+  _colliderMinX = 0;
+  _colliderMaxX = 0;
+
   _screenX = 0;
   _screenY = 0;
 
@@ -77,6 +80,16 @@ int Sprite::Init(int textureIndex)
   {
     for (int i = 0; i < _originalCollider->size(); i++)
     {
+      if (_originalCollider->at(i).x < _colliderMinX)
+      {
+        _colliderMinX = _originalCollider->at(i).x;
+      }
+
+      if (_originalCollider->at(i).x > _colliderMaxX)
+      {
+        _colliderMaxX = _originalCollider->at(i).x;
+      }
+
       _originalColliderCopy.push_back(_originalCollider->at(i));
       _rotatedCollider.push_back(_originalCollider->at(i));
       _translatedCollider.push_back(_originalCollider->at(i));
@@ -254,7 +267,7 @@ void Sprite::TriangulateCollider()
   */
 
   // If we got all triangles we need (which are n-2 =>  Points.Count-3 in our case, since we have first vertex excplicitly defined in vertex filelist)
-  if ( _triangulatedCollider.size() == (_originalCollider.size() - 3) )
+  if ( _triangulatedCollider.size() == (_originalCollider->size() - 3) )
   {
     Logger::Get().LogPrint("Triangulation finished\n");
     return;
@@ -327,22 +340,29 @@ bool Sprite::IsTriangleValid(std::vector<Vector2>& triangle, std::vector<SDL_Poi
 
 bool Sprite::IsPointOutsideTriangle(std::vector<Vector2>& triangle, Vector2 point)
 {
-  Vector2Pair rayLeft = new Vector2Pair(point, new Vector2(_horizontalRay.Min.x, point.y));
-  Vector2Pair rayRight = new Vector2Pair(point, new Vector2(_horizontalRay.Max.x, point.y));
+  Vector2Pair rayLeft(point, Vector2(_colliderMinX, point.y));
+  Vector2Pair rayRight(point, Vector2(_colliderMaxX, point.y));
 
   int leftCount = 0;
   int rightCount = 0;
 
-  foreach (var side in t.Sides)
+  int size = triangle.size();
+  for (int i = 0; i < size; i++)
   {
-    Vector2Pair diag = new Vector2Pair(t.P1, t.P3);
+    Vector2 v1(triangle[i].x, triangle[i].y);
+    Vector2 v2(triangle[ (i + 1) % size ].x, triangle[ (i + 1) % size ].y);
+    Vector2 v3(triangle[ (i + 2) % size ].x, triangle[ (i + 2) % size ].y);
+
+    Vector2Pair s1(v1, v2);
+    Vector2Pair s1(v2, v3);
+    Vector2Pair s1(v3, v1);
 
     // Special case
     if (Util.IsPointOnTheLine(diag, point)) continue;
 
     if (Util.AreLinesIntersecting(rayLeft, side, true))
     {
-      if (side.Min.y > point.y || side.Max.y > point.y)
+      if (side.Min().Y() > point.Y() || side.Max().Y() > point.Y())
       {
         leftCount++;
       }
@@ -350,7 +370,7 @@ bool Sprite::IsPointOutsideTriangle(std::vector<Vector2>& triangle, Vector2 poin
 
     if (Util.AreLinesIntersecting(rayRight, side, true))
     {
-      if (side.Min.y > point.y || side.Max.y > point.y)
+      if (side.Min().Y() > point.Y() || side.Max().Y() > point.Y())
       {
         rightCount++;
       }

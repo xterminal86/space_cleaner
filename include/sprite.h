@@ -4,7 +4,7 @@
 #include "globals.h"
 #include "png_loader.h"
 #include "texture_manager.h"
-#include "vector2.h"
+#include "util.h"
 
 class Sprite
 {
@@ -58,6 +58,9 @@ class Sprite
     std::vector<Vector2> _projectionAxesV2;
 
     std::vector<std::vector<Vector2>> _triangulatedCollider;
+
+    int _colliderMinX;
+    int _colliderMaxX;
 
     bool _convex;
 
