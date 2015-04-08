@@ -49,33 +49,9 @@ class Util
 
       bool collisionFlag = true;
 
-      for (int i = 0; i < firstSpriteAxes->size(); i++)
-      {
-        Vector2Pair selfProjection = ProjectPolygon(firstSpriteCollider, firstSpriteAxes->at(i));
-        Vector2Pair otherProjection = ProjectPolygon(secondSpriteCollider, firstSpriteAxes->at(i));
+      collisionFlag = ( AreCollidersIntersecting(firstSpriteCollider, secondSpriteCollider, firstSpriteAxes) && AreCollidersIntersecting(firstSpriteCollider, secondSpriteCollider, secondSpriteAxes) );
 
-        collisionFlag = (collisionFlag && Vector2Pair::TestIntersection(selfProjection, otherProjection));
-
-        if (!collisionFlag)
-        {
-          return false;
-        }
-      }
-
-      for (int i = 0; i < secondSpriteAxes->size(); i++)
-      {
-        Vector2Pair selfProjection = ProjectPolygon(secondSpriteCollider, secondSpriteAxes->at(i));
-        Vector2Pair otherProjection = ProjectPolygon(firstSpriteCollider, secondSpriteAxes->at(i));
-
-        collisionFlag = (collisionFlag && Vector2Pair::TestIntersection(selfProjection, otherProjection));
-
-        if (!collisionFlag)
-        {
-          return false;
-        }
-      }
-
-      return true;
+      return collisionFlag;
     }
 
     static void CreateRandomPosition(Vector2& pos, int pxLimitX, int pxLimitY)
@@ -194,6 +170,25 @@ class Util
 
   protected:
   private:
+    static bool AreCollidersIntersecting(std::vector<SDL_Point>* collider1Ref, std::vector<SDL_Point>* collider2Ref, std::vector<Vector2>* satAxesRef)
+    {
+      bool intersectionFlag = true;
+      for (int i = 0; i < satAxesRef->size(); i++)
+      {
+        Vector2Pair projection1 = ProjectPolygon(collider1Ref, satAxesRef->at(i));
+        Vector2Pair projection2 = ProjectPolygon(collider2Ref, satAxesRef->at(i));
+
+        intersectionFlag = (intersectionFlag && Vector2Pair::TestIntersection(projection1, projection2));
+
+        if (!intersectionFlag)
+        {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
 };
 
 #endif // UTIL_H

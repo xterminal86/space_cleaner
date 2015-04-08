@@ -147,7 +147,7 @@ void Application::Start()
       _asteroids[i].get()->Draw(false, false);
     }
 
-    //ProcessCollisions();
+    ProcessCollisions();
 
     if (_shipHit)
     {

@@ -1613,7 +1613,7 @@
 	"sprite.h"
 	"bullet.h"
 
-1428429946 d:\nick\sources\c++\asteroids.git\include\sprite.h
+1428523116 d:\nick\sources\c++\asteroids.git\include\sprite.h
 	"globals.h"
 	"png_loader.h"
 	"texture_manager.h"
@@ -1649,10 +1649,10 @@
 1399753389 source:d:\nick\sources\c++\asteroids.git\src\png_loader.cpp
 	"png_loader.h"
 
-1428428656 source:d:\nick\sources\c++\asteroids.git\src\ship.cpp
+1428524044 source:d:\nick\sources\c++\asteroids.git\src\ship.cpp
 	"ship.h"
 
-1426628994 source:d:\nick\sources\c++\asteroids.git\src\sprite.cpp
+1428523116 source:d:\nick\sources\c++\asteroids.git\src\sprite.cpp
 	"sprite.h"
 
 1426787332 source:d:\nick\sources\c++\asteroids.git\src\texture_manager.cpp
@@ -1668,7 +1668,7 @@
 	"video_system.h"
 	"logger.h"
 
-1428430020 source:d:\nick\sources\c++\asteroids.git\src\application.cpp
+1428523116 source:d:\nick\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 
 1428421080 h:\sources\c++\asteroids.git\include\vector2.h
@@ -1739,10 +1739,10 @@
 1425502223 source:d:\nick\sources\c++\asteroids.git\src\util.cpp
 	"util.h"
 
-1428430063 d:\nick\sources\c++\asteroids.git\include\util.h
-	"sprite.h"
+1428523980 d:\nick\sources\c++\asteroids.git\include\util.h
 	"vector2.h"
 	"vector2pair.h"
+	"collision_info.h"
 
 1376156543 d:\nick\sources\c++\asteroids.git\lib\sdl2ttf-i686-w64-mingw32\include\sdl2\sdl_ttf.h
 	"SDL.h"
@@ -1875,5 +1875,12 @@
 	"vector2.h"
 
 1428506270 source:h:\sources\c++\asteroids.git\src\collision_info.cpp
+	"collision_info.h"
+
+1428523116 d:\nick\sources\c++\asteroids.git\include\collision_info.h
+	"globals.h"
+	"vector2.h"
+
+1428523116 source:d:\nick\sources\c++\asteroids.git\src\collision_info.cpp
 	"collision_info.h"
 
