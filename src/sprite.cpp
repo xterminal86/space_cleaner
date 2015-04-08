@@ -13,6 +13,8 @@ Sprite::Sprite()
   _imageWrapper = nullptr;
 
   _spriteColor = Colors::AsIs;
+
+  _triangulated = false;
 }
 
 Sprite::~Sprite()
@@ -25,27 +27,59 @@ void Sprite::CalculateSATAxes()
   _projectionAxes.clear();
   _projectionAxesV2.clear();
 
-  size_t length = _translatedCollider.size();
-  for (int i = 0; i < length - 1; i++)
+  if (_convex)
   {
-    SDL_Point p1 = _translatedCollider[i];
-    SDL_Point p2 = _translatedCollider[i + 1];
+    size_t length = _translatedCollider.size();
+    for (int i = 0; i < length - 1; i++)
+    {
+      SDL_Point p1 = _translatedCollider[i];
+      SDL_Point p2 = _translatedCollider[i + 1];
 
-    int dx = p1.x - p2.x;
-    int dy = p1.y - p2.y;
+      int dx = p1.x - p2.x;
+      int dy = p1.y - p2.y;
 
-    SDL_Point p;
-    Vector2 v;
+      SDL_Point p;
+      Vector2 v;
 
-    p.x = dy;
-    p.y = -dx;
+      p.x = dy;
+      p.y = -dx;
 
-    v.Set(p.x, p.y);
-    v.Normalize();
+      v.Set(p.x, p.y);
+      v.Normalize();
 
-    _projectionAxes.push_back(p);
-    _projectionAxesV2.push_back(v);
+      _projectionAxes.push_back(p);
+      _projectionAxesV2.push_back(v);
+    }
   }
+  else
+  {
+    for (auto& triangle : _triangulatedTranslatedCollider)
+    {
+      for (int i = 0; i < triangle.size() - 1; i++)
+      {
+        SDL_Point p1 = triangle[i];
+        SDL_Point p2 = triangle[i + 1];
+
+        int dx = p1.x - p2.x;
+        int dy = p1.y - p2.y;
+
+        SDL_Point p;
+        Vector2 v;
+
+        p.x = dy;
+        p.y = -dx;
+
+        v.Set(p.x, p.y);
+        v.Normalize();
+
+        _projectionAxes.push_back(p);
+        _projectionAxesV2.push_back(v);
+      }
+    }
+  }
+
+  _collisionInfo.SatAxesV2Ref = &_projectionAxesV2;
+  _collisionInfo.TranslatedColliderRef = &_translatedCollider;
 }
 
 int Sprite::Init(int textureIndex)
@@ -76,32 +110,42 @@ int Sprite::Init(int textureIndex)
 
   _originalCollider = TextureManager::Get().GetCollider(textureIndex);
 
+  // Not every image has a collider
   if (_originalCollider != nullptr)
   {
-    for (int i = 0; i < _originalCollider->size(); i++)
+    _convex = IsConvex();
+
+    if (_convex)
     {
-      if (_originalCollider->at(i).x < _colliderMinX)
+      for (int i = 0; i < _originalCollider->size(); i++)
       {
-        _colliderMinX = _originalCollider->at(i).x;
-      }
+        if (_originalCollider->at(i).x < _colliderMinX)
+        {
+          _colliderMinX = _originalCollider->at(i).x;
+        }
 
-      if (_originalCollider->at(i).x > _colliderMaxX)
-      {
-        _colliderMaxX = _originalCollider->at(i).x;
-      }
+        if (_originalCollider->at(i).x > _colliderMaxX)
+        {
+          _colliderMaxX = _originalCollider->at(i).x;
+        }
 
-      _originalColliderCopy.push_back(_originalCollider->at(i));
-      _rotatedCollider.push_back(_originalCollider->at(i));
-      _translatedCollider.push_back(_originalCollider->at(i));
-      _scaledCollider.push_back(_originalCollider->at(i));
+        _originalColliderCopy.push_back(_originalCollider->at(i));
+        _rotatedCollider.push_back(_originalCollider->at(i));
+        _translatedCollider.push_back(_originalCollider->at(i));
+        _scaledCollider.push_back(_originalCollider->at(i));
+      }
     }
-  }
+    else
+    {
+      TriangulateCollider();
 
-  _convex = IsConvex();
-
-  if (!_convex)
-  {
-    TriangulateCollider();
+      for (auto& triangle : _triangulatedCollider)
+      {
+        _triangulatedScaledCollider.push_back(triangle);
+        _triangulatedRotatedCollider.push_back(triangle);
+        _triangulatedTranslatedCollider.push_back(triangle);
+      }
+    }
   }
 
   return 0;
@@ -111,34 +155,68 @@ void Sprite::SetScaleFactor(double scaleFactor)
 {
   _scaleFactor = scaleFactor;
 
-  for (int i = 0; i < _originalCollider->size(); i++)
-  {
-    double tmpX = (double)_originalCollider->at(i).x * scaleFactor;
-    double tmpY = (double)_originalCollider->at(i).y * scaleFactor;
-
-    _scaledCollider[i].x = (int)tmpX;
-    _scaledCollider[i].y = (int)tmpY;
-  }
-
   _destRect.w = _imageWrapper->Width() * _scaleFactor;
   _destRect.h = _imageWrapper->Height() * _scaleFactor;
+
+  if (_convex)
+  {
+    for (int i = 0; i < _originalCollider->size(); i++)
+    {
+      double tmpX = (double)_originalCollider->at(i).x * scaleFactor;
+      double tmpY = (double)_originalCollider->at(i).y * scaleFactor;
+
+      _scaledCollider[i].x = (int)tmpX;
+      _scaledCollider[i].y = (int)tmpY;
+    }
+  }
+  else
+  {
+    for (int i = 0; i < _triangulatedCollider.size(); i++)
+    {
+      for (int j = 0; j < _triangulatedCollider[i].size(); j++)
+      {
+        double tmpX = (double)_triangulatedCollider[i].at(j).x * scaleFactor;
+        double tmpY = (double)_triangulatedCollider[i].at(j).y * scaleFactor;
+
+        _triangulatedScaledCollider[i].at(j).x = (int)tmpX;
+        _triangulatedScaledCollider[i].at(j).y = (int)tmpY;
+      }
+    }
+  }
 }
 
 void Sprite::SetAngle(double angle)
 {
   _angle = angle;
 
-  int cs = _scaledCollider.size();
-  Vector2 res;
-  for (int i = 0; i < cs; i++)
+  if (_convex)
   {
-    Vector2 tmp(_scaledCollider[i].x, _scaledCollider[i].y);
-    Vector2::RotateVector(res, Vector2(0.0, 0.0), tmp, angle);
+    int cs = _scaledCollider.size();
+    Vector2 res;
+    for (int i = 0; i < cs; i++)
+    {
+      Vector2 tmp(_scaledCollider[i].x, _scaledCollider[i].y);
+      Vector2::RotateVector(res, Vector2(0.0, 0.0), tmp, angle);
 
-    _rotatedCollider[i].x = res.X();
-    _rotatedCollider[i].y = res.Y();
+      _rotatedCollider[i].x = res.X();
+      _rotatedCollider[i].y = res.Y();
+    }
   }
+  else
+  {
+    Vector2 res;
+    for (int i = 0; i < _triangulatedCollider.size(); i++)
+    {
+      for (int j = 0; j < _triangulatedCollider[i].size(); j++)
+      {
+        Vector2 tmp(_triangulatedScaledCollider[i].at(j).x, _triangulatedScaledCollider[i].at(j).y);
+        Vector2::RotateVector(res, Vector2(0.0, 0.0), tmp, angle);
 
+        _triangulatedRotatedCollider[i].at(j).x = res.X();
+        _triangulatedRotatedCollider[i].at(j).y = res.Y();
+      }
+    }
+  }
 }
 
 // In order to avoid "acceleration" of results, we always offset from some point when performing calculations.
@@ -149,11 +227,26 @@ void Sprite::SetAngle(double angle)
 // increment performs every frame. Therefore, three colliders.
 void Sprite::MoveCollider(double newX, double newY)
 {
-  int csize = _rotatedCollider.size();
-  for (int i = 0; i < csize; i++)
+  if (_convex)
   {
-    _translatedCollider[i].x = _rotatedCollider[i].x + newX;
-    _translatedCollider[i].y = _rotatedCollider[i].y + newY;
+    int csize = _rotatedCollider.size();
+    for (int i = 0; i < csize; i++)
+    {
+      _translatedCollider[i].x = _rotatedCollider[i].x + newX;
+      _translatedCollider[i].y = _rotatedCollider[i].y + newY;
+    }
+  }
+  else
+  {
+    int size = _triangulatedRotatedCollider.size();
+    for (int i = 0; i < size; i++)
+    {
+      for (int j = 0; j < _triangulatedRotatedCollider[i].size(); j++)
+      {
+        _triangulatedTranslatedCollider[i].at(j).x = _triangulatedRotatedCollider[i].at(j).x + newX;
+        _triangulatedTranslatedCollider[i].at(j).y = _triangulatedRotatedCollider[i].at(j).y + newY;
+      }
+    }
   }
 }
 
@@ -183,6 +276,17 @@ void Sprite::Draw(int x, int y, std::vector<SDL_Point>* colliderToDraw)
   {
     SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 0, 255);
     SDL_RenderDrawLines(VideoSystem::Get().Renderer(), colliderToDraw->data(), colliderToDraw->size());
+  }
+}
+
+void Sprite::Draw(int x, int y, std::vector<std::vector<SDL_Point>>* colliderToDraw)
+{
+  if (colliderToDraw != nullptr)
+  {
+    for (int i = 0; i < colliderToDraw->size(); i++)
+    {
+      Draw(x, y, &colliderToDraw->at(i));
+    }
   }
 }
 
@@ -270,14 +374,16 @@ void Sprite::TriangulateCollider()
   if ( _triangulatedCollider.size() == (_originalCollider->size() - 3) )
   {
     Logger::Get().LogPrint("Triangulation finished\n");
+    _triangulated = true;
     return;
   }
 
   // Look for two convex (or, more precise, with proper winding) sides.
   // If we found one, check if triangle formed by these vertices contains any vertices from the polygon.
-  int size = _originalColliderCopy.size();
-  for (int i = 0; i < size; i++)
+  for (int i = 0; i < _originalColliderCopy.size(); i++)
   {
+    int size = _originalColliderCopy.size();
+
     Vector2 v1(_originalColliderCopy[i].x, _originalColliderCopy[i].y);
     Vector2 v2(_originalColliderCopy[ (i + 1) %  size ].x, _originalColliderCopy[ (i + 1) % size ].y);
     Vector2 v3(_originalColliderCopy[ (i + 2) %  size ].x, _originalColliderCopy[ (i + 2) % size ].y);
@@ -298,7 +404,13 @@ void Sprite::TriangulateCollider()
       {
         loopDetector = false;
         //Logger::Get().LogPrint("Adding triangle: " + t);
-        _triangulatedPolygon.push_back(triangle);
+
+        std::vector<SDL_Point> triangleSdlPoint;
+        triangleSdlPoint.push_back(v1.ToSDL_Point());
+        triangleSdlPoint.push_back(v2.ToSDL_Point());
+        triangleSdlPoint.push_back(v3.ToSDL_Point());
+
+        _triangulatedCollider.push_back(triangleSdlPoint);
         _originalColliderCopy.erase(_originalColliderCopy.begin() + (i + 1));
         //PrintVertices(polyRef);
         break;
@@ -311,6 +423,7 @@ void Sprite::TriangulateCollider()
   if (loopDetector)
   {
     Logger::Get().LogPrint("Looks like we're running in circles - exiting\n");
+    _triangulated = true;
     return;
   }
 
@@ -321,14 +434,16 @@ bool Sprite::IsTriangleValid(std::vector<Vector2>& triangle, std::vector<SDL_Poi
 {
   for (auto& v : collider)
   {
-    if ( (v.X() == t[0].X() && v.Y() == t[0].Y() )
-      || (v.X() == t[1].X() && v.Y() == t[1].Y() )
-      || (v.X() == t[2].X() && v.Y() == t[2].Y() ) )
+    if ( (v.x == triangle[0].X() && v.y == triangle[0].Y() )
+      || (v.x == triangle[1].X() && v.y == triangle[1].Y() )
+      || (v.x == triangle[2].X() && v.y == triangle[2].Y() ) )
     {
       continue;
     }
 
-    bool result = IsPointOutsideTriangle(t, v);
+    Vector2 p(v.x, v.y);
+
+    bool result = IsPointOutsideTriangle(triangle, p);
 
     //Debug.Log(t + " " + v + " result: " + result);
 
@@ -340,27 +455,34 @@ bool Sprite::IsTriangleValid(std::vector<Vector2>& triangle, std::vector<SDL_Poi
 
 bool Sprite::IsPointOutsideTriangle(std::vector<Vector2>& triangle, Vector2 point)
 {
-  Vector2Pair rayLeft(point, Vector2(_colliderMinX, point.y));
-  Vector2Pair rayRight(point, Vector2(_colliderMaxX, point.y));
+  std::vector<Vector2Pair> triangleSides;
+
+  Vector2 v1(triangle[0].X(), triangle[0].Y());
+  Vector2 v2(triangle[1].X(), triangle[1].Y());
+  Vector2 v3(triangle[2].X(), triangle[2].Y());
+
+  Vector2Pair s1(v1, v2);
+  Vector2Pair s2(v2, v3);
+  Vector2Pair s3(v3, v1);
+
+  triangleSides.push_back(s1);
+  triangleSides.push_back(s2);
+  triangleSides.push_back(s3);
+
+  Vector2Pair diag(v1, v3);
+
+  Vector2Pair rayLeft(point, Vector2(_colliderMinX, point.Y()));
+  Vector2Pair rayRight(point, Vector2(_colliderMaxX, point.Y()));
 
   int leftCount = 0;
   int rightCount = 0;
 
-  int size = triangle.size();
-  for (int i = 0; i < size; i++)
+  for (auto& side : triangleSides)
   {
-    Vector2 v1(triangle[i].x, triangle[i].y);
-    Vector2 v2(triangle[ (i + 1) % size ].x, triangle[ (i + 1) % size ].y);
-    Vector2 v3(triangle[ (i + 2) % size ].x, triangle[ (i + 2) % size ].y);
-
-    Vector2Pair s1(v1, v2);
-    Vector2Pair s1(v2, v3);
-    Vector2Pair s1(v3, v1);
-
     // Special case
-    if (Util.IsPointOnTheLine(diag, point)) continue;
+    if (Util::IsPointOnTheLine(diag, point)) continue;
 
-    if (Util.AreLinesIntersecting(rayLeft, side, true))
+    if (Util::AreLinesIntersecting(rayLeft, side, true))
     {
       if (side.Min().Y() > point.Y() || side.Max().Y() > point.Y())
       {
@@ -368,7 +490,7 @@ bool Sprite::IsPointOutsideTriangle(std::vector<Vector2>& triangle, Vector2 poin
       }
     }
 
-    if (Util.AreLinesIntersecting(rayRight, side, true))
+    if (Util::AreLinesIntersecting(rayRight, side, true))
     {
       if (side.Min().Y() > point.Y() || side.Max().Y() > point.Y())
       {

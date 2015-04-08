@@ -229,7 +229,7 @@ void Application::ProcessCollisions()
       {
         for (int i = 0; i < _asteroids.size(); i++)
         {
-          if (_asteroids[i].get()->Active() && Util::TestIntersection(&_asteroids[i].get()->GetSprite(), &bullet.get()->GetSprite()))
+          if (_asteroids[i].get()->Active() && Util::TestIntersection(_asteroids[i].get()->GetSprite().GetCollisionInfo(), bullet.get()->GetSprite().GetCollisionInfo()))
           {
             _asteroidExplosion.Play(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y(), _bigAsteroidExplosionScale / (_asteroids[i].get()->CurrentBreakdownLevel() + 1));
 
@@ -254,7 +254,7 @@ void Application::ProcessCollisions()
 
     for (auto &asteroid : _asteroids)
     {
-      if (asteroid.get()->Active() && Util::TestIntersection(&asteroid.get()->GetSprite(), &_ship.GetSprite()))
+      if (asteroid.get()->Active() && Util::TestIntersection(asteroid.get()->GetSprite().GetCollisionInfo(), _ship.GetSprite().GetCollisionInfo()))
       {
           _shipHit = true;
           break;

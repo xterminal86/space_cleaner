@@ -3,6 +3,7 @@
 
 #include "vector2.h"
 #include "vector2pair.h"
+#include "collision_info.h"
 
 class Util
 {
@@ -10,19 +11,19 @@ class Util
     Util();
     virtual ~Util();
 
-    static Vector2Pair ProjectPolygon(std::vector<SDL_Point>& polygon, Vector2& axe)
+    static Vector2Pair ProjectPolygon(std::vector<SDL_Point>* polygon, Vector2& axe)
     {
       Vector2Pair proj;
 
       Vector2 projMin;
       Vector2 projMax;
 
-      double min = polygon[0].x * axe.X() + polygon[0].y * axe.Y();
+      double min = polygon->at(0).x * axe.X() + polygon->at(0).y * axe.Y();
       double max = min;
-      for (auto &i : polygon)
+      for (int i = 0; i < polygon->size(); i++)
       {
         Vector2 tmp;
-        tmp.Set(i.x, i.y);
+        tmp.Set(polygon->at(i).x, polygon->at(i).y);
 
         double scalar = tmp * axe;
 
@@ -38,20 +39,23 @@ class Util
       return proj;
     }
 
-    static bool TestIntersection(Sprite* firstSprite, Sprite* secondSprite)
+    static bool TestIntersection(CollisionInfo& firstSprite, CollisionInfo& secondSprite)
     {
-      firstSprite->CalculateSATAxes();
-      secondSprite->CalculateSATAxes();
+      //firstSprite->CalculateSATAxes();
+      //secondSprite->CalculateSATAxes();
 
-      auto fisrstSpriteAxes = firstSprite->GetAxesV2();
-      auto secondSpriteAxes = secondSprite->GetAxesV2();
+      auto firstSpriteAxes = firstSprite.SatAxesV2Ref;
+      auto secondSpriteAxes = secondSprite.SatAxesV2Ref;
+
+      auto firstSpriteCollider = firstSprite.TranslatedColliderRef;
+      auto secondSpriteCollider = secondSprite.TranslatedColliderRef;
 
       bool collisionFlag = true;
 
-      for (auto &i : fisrstSpriteAxes)
+      for (int i = 0; i < firstSpriteAxes->size(); i++)
       {
-        Vector2Pair selfProjection = ProjectPolygon(firstSprite->TranslatedCollider(), i);
-        Vector2Pair otherProjection = ProjectPolygon(secondSprite->TranslatedCollider(), i);
+        Vector2Pair selfProjection = ProjectPolygon(firstSpriteCollider, firstSpriteAxes->at(i));
+        Vector2Pair otherProjection = ProjectPolygon(secondSpriteCollider, firstSpriteAxes->at(i));
 
         collisionFlag = (collisionFlag && Vector2Pair::TestIntersection(selfProjection, otherProjection));
 
@@ -61,10 +65,10 @@ class Util
         }
       }
 
-      for (auto &i : secondSpriteAxes)
+      for (int i = 0; i < secondSpriteAxes->size(); i++)
       {
-        Vector2Pair selfProjection = ProjectPolygon(secondSprite->TranslatedCollider(), i);
-        Vector2Pair otherProjection = ProjectPolygon(firstSprite->TranslatedCollider(), i);
+        Vector2Pair selfProjection = ProjectPolygon(secondSpriteCollider, secondSpriteAxes->at(i));
+        Vector2Pair otherProjection = ProjectPolygon(firstSpriteCollider, secondSpriteAxes->at(i));
 
         collisionFlag = (collisionFlag && Vector2Pair::TestIntersection(selfProjection, otherProjection));
 

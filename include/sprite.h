@@ -16,6 +16,7 @@ class Sprite
     void MoveCollider(double newX, double newY);
     void Draw(int x, int y);
     void Draw(int x, int y, std::vector<SDL_Point>* colliderToDraw);
+    void Draw(int x, int y, std::vector<std::vector<SDL_Point>>* colliderToDraw);
 
     void SetColor(SDL_Color c);
     void SetScaleFactor(double scaleFactor);
@@ -34,8 +35,19 @@ class Sprite
     // Axes to project on for SAT test
     void CalculateSATAxes();
 
+    std::vector<std::vector<SDL_Point>>& TriangulatedTranslatedCollider() { return _triangulatedTranslatedCollider; }
+
     std::vector<SDL_Point>& GetAxes() { return _projectionAxes; }
     std::vector<Vector2>& GetAxesV2() { return _projectionAxesV2; }
+
+    CollisionInfo& GetCollisionInfo()
+    {
+      CalculateSATAxes();
+
+      return _collisionInfo;
+    }
+
+    bool Convex() { return _convex; }
 
   private:
     SDL_Color _spriteColor;
@@ -46,18 +58,27 @@ class Sprite
     int _screenY;
     double _scaleFactor;
     double _angle;
+    bool _triangulated;
+
+    CollisionInfo _collisionInfo;
 
     // Owner is TextureManager
     std::vector<SDL_Point>* _originalCollider;
 
-    std::vector<SDL_Point> _originalColliderCopy;
     std::vector<SDL_Point> _rotatedCollider;
     std::vector<SDL_Point> _translatedCollider;
     std::vector<SDL_Point> _scaledCollider;
+
     std::vector<SDL_Point> _projectionAxes;
     std::vector<Vector2> _projectionAxesV2;
 
-    std::vector<std::vector<Vector2>> _triangulatedCollider;
+    // Used up in triangulation method
+    std::vector<SDL_Point> _originalColliderCopy;
+
+    std::vector<std::vector<SDL_Point>> _triangulatedCollider;
+    std::vector<std::vector<SDL_Point>> _triangulatedScaledCollider;
+    std::vector<std::vector<SDL_Point>> _triangulatedRotatedCollider;
+    std::vector<std::vector<SDL_Point>> _triangulatedTranslatedCollider;
 
     int _colliderMinX;
     int _colliderMaxX;
