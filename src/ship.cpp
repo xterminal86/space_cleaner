@@ -71,12 +71,10 @@ void Ship::Draw(int x, int y, bool drawCollider)
       _shipSprite.Draw(x, y, &_shipSprite.TriangulatedTranslatedCollider());
     }
 
-    SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(),
-                                                      _position.X() + (int)(_localDirection.X() * GameMechanic::DirectionResolution),
-                                                      _position.Y() + (int)(_localDirection.Y() * GameMechanic::DirectionResolution));
+    //SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(),
+    //                                                  _position.X() + (int)(_localDirection.X() * GameMechanic::DirectionResolution),
+    //                                                  _position.Y() + (int)(_localDirection.Y() * GameMechanic::DirectionResolution));
   }
-
-  _shipSprite.Draw(x, y);
 }
 
 void Ship::Draw(bool drawCollider)

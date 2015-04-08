@@ -41,9 +41,6 @@ class Util
 
     static bool TestIntersection(CollisionInfo& firstSprite, CollisionInfo& secondSprite)
     {
-      //firstSprite->CalculateSATAxes();
-      //secondSprite->CalculateSATAxes();
-
       auto firstSpriteAxes = firstSprite.SatAxesV2Ref;
       auto secondSpriteAxes = secondSprite.SatAxesV2Ref;
 

@@ -50,6 +50,8 @@ void Sprite::CalculateSATAxes()
       _projectionAxes.push_back(p);
       _projectionAxesV2.push_back(v);
     }
+
+    _collisionInfo.TranslatedColliderRef = &_translatedCollider;
   }
   else
   {
@@ -76,10 +78,11 @@ void Sprite::CalculateSATAxes()
         _projectionAxesV2.push_back(v);
       }
     }
+
+    _collisionInfo.TriangulatedTranslatedColliderRef = &_triangulatedTranslatedCollider;
   }
 
   _collisionInfo.SatAxesV2Ref = &_projectionAxesV2;
-  _collisionInfo.TranslatedColliderRef = &_translatedCollider;
 }
 
 int Sprite::Init(int textureIndex)
@@ -129,7 +132,6 @@ int Sprite::Init(int textureIndex)
           _colliderMaxX = _originalCollider->at(i).x;
         }
 
-        _originalColliderCopy.push_back(_originalCollider->at(i));
         _rotatedCollider.push_back(_originalCollider->at(i));
         _translatedCollider.push_back(_originalCollider->at(i));
         _scaledCollider.push_back(_originalCollider->at(i));
@@ -137,6 +139,21 @@ int Sprite::Init(int textureIndex)
     }
     else
     {
+      for (int i = 0; i < _originalCollider->size(); i++)
+      {
+        if (_originalCollider->at(i).x < _colliderMinX)
+        {
+          _colliderMinX = _originalCollider->at(i).x;
+        }
+
+        if (_originalCollider->at(i).x > _colliderMaxX)
+        {
+          _colliderMaxX = _originalCollider->at(i).x;
+        }
+
+        _originalColliderCopy.push_back(_originalCollider->at(i));
+      }
+
       TriangulateCollider();
 
       for (auto& triangle : _triangulatedCollider)
@@ -281,11 +298,14 @@ void Sprite::Draw(int x, int y, std::vector<SDL_Point>* colliderToDraw)
 
 void Sprite::Draw(int x, int y, std::vector<std::vector<SDL_Point>>* colliderToDraw)
 {
+  Draw(x, y);
+
   if (colliderToDraw != nullptr)
   {
-    for (int i = 0; i < colliderToDraw->size(); i++)
+    for (auto& triangle : *colliderToDraw)
     {
-      Draw(x, y, &colliderToDraw->at(i));
+      SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 0, 255);
+      SDL_RenderDrawLines(VideoSystem::Get().Renderer(), triangle.data(), triangle.size());
     }
   }
 }
@@ -330,45 +350,6 @@ void Sprite::TriangulateCollider()
 {
   // If we get stuck in infinite recursion.
   bool loopDetector = true;
-
-  /*
-  // Not very necessary check for remainig vertices collinearity
-  if (_originalColliderCopy.size() != 0)
-  {
-    bool found = false;
-    int size = _originalColliderCopy.size();
-    for (int i = 0; i < size; i++)
-    {
-      Vector2 p1Min(_originalColliderCopy[i].x, _originalColliderCopy[i].y);
-      Vector2 p1Max(_originalColliderCopy[(i + 1) % size].x, _originalColliderCopy[(i + 1) % size].y);
-
-      Vector2 p2Min(_originalColliderCopy[(i + 1) % size].x, _originalColliderCopy[(i + 1) % size].y);
-      Vector2 p2Max(_originalColliderCopy[(i + 2) % size].x, _originalColliderCopy[(i + 2) % size].y);
-
-      Vector2Pair s1(p1Min, p1Max);
-      Vector2Pair s2(p2Min, p2Max);
-
-      float cross = Util::Vector2Cross(s1.Direction(), s2.Direction());
-
-      if (cross != 0.0f)
-      {
-        found = true;
-      }
-    }
-
-    if (!found)
-    {
-      polyRef.Clear();
-      Debug.Log("Remaining vertices are collinear - removing");
-      return;
-    }
-  }
-  else
-  {
-    Debug.Log("We're done");
-    return;
-  }
-  */
 
   // If we got all triangles we need (which are n-2 =>  Points.Count-3 in our case, since we have first vertex excplicitly defined in vertex filelist)
   if ( _triangulatedCollider.size() == (_originalCollider->size() - 3) )
