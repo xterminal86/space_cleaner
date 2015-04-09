@@ -35,7 +35,7 @@ int VideoSystem::Init(int w, int h)
 			Logger::Get().LogPrint( "(warning) Linear texture filtering could not be enabled!");
 		}
 
-    _window = SDL_CreateWindow("Isometric Engine",
+    _window = SDL_CreateWindow("Space Cleaner 0.1 by xterminal86",
                               SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                               w, h,
                               SDL_WINDOW_SHOWN);

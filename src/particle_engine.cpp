@@ -85,21 +85,11 @@ void ParticleEngine::SetLifeAndSpeed(int lifeTimeMsMin, int lifeTimeMsMax, doubl
   */
 }
 
-void ParticleEngine::TurnOn()
-{
-  _active = true;
-
-  for (auto& i : _particles)
-  {
-    i.Active = true;
-  }
-}
-
 void ParticleEngine::Emit()
 {
   for (auto& i : _particles)
   {
-    if (!i.Active)
+    if (!_active && !i.Active)
     {
       i.Position.Set(_position);
       continue;

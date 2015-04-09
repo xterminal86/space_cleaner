@@ -68,12 +68,8 @@ void Application::Start()
 
     _ship.ComputeBullets();
 
-    if (_ship.Active())
-    {
-      _ship.Move();
-      //_ship.Draw(true);
-      _ship.Draw(false);
-    }
+    _ship.Move();
+    _ship.Draw(false);
 
     for (int i = 0; i < _asteroids.size(); i++)
     {
@@ -283,5 +279,5 @@ void Application::DrawGUI()
 
   _bitmapFont->SetTextColor(255, 255, 0, 255);
   _bitmapFont->SetScale(2.0f);
-  _bitmapFont->Printf(VideoSystem::Get().ScreenDimensions().x / 2, 0, BitmapFont::AlignCenter, "*** Asteroids ***");
+  _bitmapFont->Printf(VideoSystem::Get().ScreenDimensions().x / 2, 0, BitmapFont::AlignCenter, "*** SPACE CLEANER ***");
 }

@@ -21,7 +21,15 @@ class Ship
     void ComputeBullets();
     void Rotate(double angle);
     void Fire();
-    void SetActive(bool status) { _active = status; }
+    void SetActive(bool status)
+    {
+      _active = status;
+
+      if (!status)
+      {
+         _engineTrail.TurnOff();
+      }
+    }
     bool Active() { return _active; }
     double Angle() { return _angle; }
 

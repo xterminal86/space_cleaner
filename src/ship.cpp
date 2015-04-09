@@ -37,12 +37,14 @@ void Ship::Init(double posx, double posy)
     image = TextureManager::Get().GetTextureWrapper(index);
   }
 
-  _originalEnginePoint.Set(_position.X(), _position.Y() + 50);
+  int engineY = _shipSprite.ImageWrapper()->Height() / 2;
+
+  _originalEnginePoint.Set(_position.X(), _position.Y() + engineY);
   _enginePointRotated.Set(_originalEnginePoint);
   _enginePointTranslated.Set(_originalEnginePoint);
 
   _engineTrail.Init(20, 200, 250, 0.01, 0.15, image);
-  _engineTrail.SetUp(Vector2(_position.X(), _position.Y() - 50),
+  _engineTrail.SetUp(Vector2(_position.X(), _position.Y() - engineY),
                      Vector2(_originalDirection.X(), -_originalDirection.Y()),
                      0.0, 0.0);
   _engineTrail.TurnOff();
@@ -65,6 +67,8 @@ void Ship::Move(Vector2 newPos)
 
 void Ship::Move()
 {
+  if (!_active) return;
+
   double newX = _position.X() + _localDirection.X() * _speed;
   double newY = _position.Y() + _localDirection.Y() * _speed;
 
@@ -77,30 +81,34 @@ void Ship::Move()
   _shipSprite.MoveCollider(_position.X(), _position.Y());
 
   _enginePointTranslated.Set(Vector2(_enginePointRotated.X() + newX, _enginePointRotated.Y() + newY));
+  _engineTrail.MoveOrigin(_enginePointTranslated);
 }
 
 void Ship::Draw(int x, int y, bool drawCollider)
 {
-  if (drawCollider)
+  _engineTrail.Emit();
+
+  if (_active)
   {
-    if (_shipSprite.Convex())
+    if (drawCollider)
     {
-      _shipSprite.Draw(x, y, &_shipSprite.TranslatedCollider());
+      if (_shipSprite.Convex())
+      {
+        _shipSprite.Draw(x, y, &_shipSprite.TranslatedCollider());
+      }
+      else
+      {
+        _shipSprite.Draw(x, y, &_shipSprite.TriangulatedTranslatedCollider());
+      }
+
+      //SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(),
+      //                                                  _position.X() + (int)(_localDirection.X() * GameMechanic::DirectionResolution),
+      //                                                  _position.Y() + (int)(_localDirection.Y() * GameMechanic::DirectionResolution));
     }
     else
     {
-      _shipSprite.Draw(x, y, &_shipSprite.TriangulatedTranslatedCollider());
+      _shipSprite.Draw(x, y);
     }
-
-    //SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(),
-    //                                                  _position.X() + (int)(_localDirection.X() * GameMechanic::DirectionResolution),
-    //                                                  _position.Y() + (int)(_localDirection.Y() * GameMechanic::DirectionResolution));
-  }
-  else
-  {
-    _shipSprite.Draw(x, y);
-    _engineTrail.MoveOrigin(_enginePointTranslated);
-    _engineTrail.Emit();
   }
 }
 
