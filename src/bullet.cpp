@@ -8,7 +8,7 @@ Bullet::Bullet()
     _bulletSprite.Init(res);
   }
 
-  _trail.Init(TrailLenght, 200, 210, 0.1, _bulletSprite.ImageWrapper());
+  _trail.Init(TrailLenght, 200, 210, 0.1, 1.0, _bulletSprite.ImageWrapper());
 
   _position.ToZero();
   _direction.ToZero();

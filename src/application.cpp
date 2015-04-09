@@ -27,8 +27,6 @@ Application::~Application()
 
 void Application::Start()
 {
-  double shipAngle = 0.0;
-
   _running = true;
 
   SDL_Renderer* renderer = VideoSystem::Get().Renderer();
@@ -73,8 +71,8 @@ void Application::Start()
     if (_ship.Active())
     {
       _ship.Move();
-      _ship.Draw(true);
-      //_ship.Draw(false);
+      //_ship.Draw(true);
+      _ship.Draw(false);
     }
 
     for (int i = 0; i < _asteroids.size(); i++)

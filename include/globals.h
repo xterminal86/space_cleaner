@@ -22,6 +22,7 @@ namespace GlobalStrings
   static std::string AsteroidRole = "asteroid";
   static std::string BulletLaserRole = "fire_shot";
   static std::string ShipBigRole = "ship_big";
+  static std::string DefaultParticleRole = "default_particle";
 
   static std::string ImagesFilename = "images.txt";
   static std::string LogFilename = "output_log.txt";

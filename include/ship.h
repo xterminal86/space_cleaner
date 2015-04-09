@@ -44,6 +44,7 @@ class Ship
 
   protected:
   private:
+    ParticleEngine _engineTrail;
     Sprite _shipSprite;
 
     bool _active;
@@ -55,6 +56,10 @@ class Ship
 
     Vector2 _originalDirection;
     Vector2 _localDirection;
+
+    Vector2 _originalEnginePoint;
+    Vector2 _enginePointRotated;
+    Vector2 _enginePointTranslated;
 
     std::vector<std::unique_ptr<Bullet>> _bullets;
 

@@ -10,13 +10,14 @@ ParticleEngine::~ParticleEngine()
   _particles.clear();
 }
 
-void ParticleEngine::Init(int particlesNumber, int lifetimeMsMin, int lifetimeMsMax, double particleScaleIncrement, PNGLoader* particleImage)
+void ParticleEngine::Init(int particlesNumber, int lifetimeMsMin, int lifetimeMsMax, double particleScaleIncrement, double scaleFactor, PNGLoader* particleImage)
 {
   _numParticles = particlesNumber;
   _particleImage = particleImage;
   _particlesLifeTimeMsMin = lifetimeMsMin;
   _particlesLifeTimeMsMax = lifetimeMsMax;
   _particleScaleIncrement = particleScaleIncrement;
+  _particleScaleFactor = scaleFactor;
 
   _srcRect.x = 0;
   _srcRect.y = 0;
@@ -39,17 +40,17 @@ void ParticleEngine::Init(int particlesNumber, int lifetimeMsMin, int lifetimeMs
     //p.MaxLifeTimeMs = 1000;
     p.Speed = 0.0;
     //p.Speed = 0.15 / (double)(Util::RandomNumber() % 10 + 2);
-    p.ScaleFactor = 1.0;
+    p.ScaleFactor = scaleFactor;
 
     _particles.push_back(p);
   }
 }
 
-void ParticleEngine::SetUp(Vector2 pos, Vector2 dir, double bulletSpeed, double angle)
+void ParticleEngine::SetUp(Vector2 pos, Vector2 dir, double speed, double angle)
 {
   _position = pos;
   _direction = dir;
-  _bulletSpeed = bulletSpeed;
+  _speed = speed;
 
   _direction.Normalize();
 
@@ -57,10 +58,30 @@ void ParticleEngine::SetUp(Vector2 pos, Vector2 dir, double bulletSpeed, double 
   {
     i.Direction = dir;
     i.Position = pos;
-    i.Speed = bulletSpeed;
+    i.Speed = speed;
     i.Active = true;
     i.Angle = angle;
   }
+}
+
+void ParticleEngine::SetLifeAndSpeed(int lifeTimeMsMin, int lifeTimeMsMax, double speed)
+{
+  _particlesLifeTimeMsMin = lifeTimeMsMin;
+  _particlesLifeTimeMsMax = lifeTimeMsMax;
+  //_par
+
+  /*
+  for (auto& i : _particles)
+  {
+    //if (i.Acgive
+    p.CurrentLifeTimeMs = 0;
+    int lt = Util::RandomNumber() % lifetimeMsMax;
+    if (lt == 0) lt = lifetimeMsMin;
+
+    i.CurrentLife
+    i.MaxLifeTimeMs = lifeTimeMsMax;
+  }
+  */
 }
 
 void ParticleEngine::Emit()
@@ -94,7 +115,7 @@ void ParticleEngine::Emit()
       if (lt == 0) lt = _particlesLifeTimeMsMin;
       i.MaxLifeTimeMs = lt;
       i.Position.Set(_position);
-      i.ScaleFactor = 1.0;
+      i.ScaleFactor = _particleScaleFactor;
       i.Active = _active;
     }
   }

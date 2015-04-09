@@ -117,6 +117,12 @@ class Vector2
     _y = -_y;
   }
 
+  void Translate(double dx, double dy)
+  {
+    _x += dx;
+    _y += dy;
+  }
+
 	static Vector2 Zero() {	return Vector2(0.0, 0.0); }
   static Vector2 Up() { return Vector2(0.0, 1.0); }
 

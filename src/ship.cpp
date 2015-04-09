@@ -28,6 +28,24 @@ void Ship::Init(double posx, double posy)
   {
     _bullets.push_back(std::unique_ptr<Bullet>(new Bullet()));
   }
+
+  PNGLoader* image = nullptr;
+
+  int index = TextureManager::Get().FindTextureByRole(GlobalStrings::DefaultParticleRole);
+  if (index != -1)
+  {
+    image = TextureManager::Get().GetTextureWrapper(index);
+  }
+
+  _originalEnginePoint.Set(_position.X(), _position.Y() + 50);
+  _enginePointRotated.Set(_originalEnginePoint);
+  _enginePointTranslated.Set(_originalEnginePoint);
+
+  _engineTrail.Init(20, 200, 250, 0.01, 0.15, image);
+  _engineTrail.SetUp(Vector2(_position.X(), _position.Y() - 50),
+                     Vector2(_originalDirection.X(), -_originalDirection.Y()),
+                     0.0, 0.0);
+  _engineTrail.SetActive(true);
 }
 
 Ship::~Ship()
@@ -57,6 +75,8 @@ void Ship::Move()
 
   _position.Set(newX, newY);
   _shipSprite.MoveCollider(_position.X(), _position.Y());
+
+  _enginePointTranslated.Set(Vector2(_enginePointRotated.X() + newX, _enginePointRotated.Y() + newY));
 }
 
 void Ship::Draw(int x, int y, bool drawCollider)
@@ -79,6 +99,8 @@ void Ship::Draw(int x, int y, bool drawCollider)
   else
   {
     _shipSprite.Draw(x, y);
+    _engineTrail.MoveOrigin(_enginePointTranslated);
+    _engineTrail.Emit();
   }
 }
 
@@ -109,6 +131,9 @@ void Ship::Rotate(double angle)
 
   _localDirection = res;
   _localDirection.Normalize();
+
+  Vector2::RotateVector(res, Vector2::Zero(), _originalEnginePoint, angle);
+  _enginePointRotated = res;
 }
 
 void Ship::Accelerate(double dspeed)
@@ -123,6 +148,8 @@ void Ship::Accelerate(double dspeed)
   {
     _speed = ShipMaxSpeed;
   }
+
+  _engineTrail.SetLifeAndSpeed(_speed * 100, _speed * 100 + 50, _speed);
 }
 
 void Ship::Fire()
