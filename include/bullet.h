@@ -25,7 +25,7 @@ class Bullet
     void SetActive(bool status)
     {
       _active = status;
-      _trail.SetActive(status);
+      _trail.TurnOff();
     }
 
     Sprite& GetSprite() { return _bulletSprite; }

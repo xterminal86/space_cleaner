@@ -25,7 +25,8 @@ class ParticleEngine
     virtual ~ParticleEngine();
     void Init(int particlesNumber, int lifeTimeMsMin, int lifetimeMsMax, double particleScaleIncrement, double scaleFactor, PNGLoader* particleImage);
     bool Active() { return _active; }
-    void SetActive(bool flag) { _active = flag; }
+    void TurnOff() { _active = false; }
+    void TurnOn();
     void SetUp(Vector2 pos, Vector2 dir, double speed, double angle);
     void SetLifeAndSpeed(int lifeTimeMsMin, int lifeTimeMsMax, double speed);
     void MoveOrigin(Vector2 newPos) { _position = newPos; }

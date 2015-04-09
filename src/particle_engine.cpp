@@ -51,6 +51,7 @@ void ParticleEngine::SetUp(Vector2 pos, Vector2 dir, double speed, double angle)
   _position = pos;
   _direction = dir;
   _speed = speed;
+  _active = true;
 
   _direction.Normalize();
 
@@ -84,11 +85,25 @@ void ParticleEngine::SetLifeAndSpeed(int lifeTimeMsMin, int lifeTimeMsMax, doubl
   */
 }
 
+void ParticleEngine::TurnOn()
+{
+  _active = true;
+
+  for (auto& i : _particles)
+  {
+    i.Active = true;
+  }
+}
+
 void ParticleEngine::Emit()
 {
   for (auto& i : _particles)
   {
-    if (!i.Active) continue;
+    if (!i.Active)
+    {
+      i.Position.Set(_position);
+      continue;
+    }
 
     double dx = _direction.X() * (i.Speed * GameTime::Get().DeltaTime());
     double dy = _direction.Y() * (i.Speed * GameTime::Get().DeltaTime());

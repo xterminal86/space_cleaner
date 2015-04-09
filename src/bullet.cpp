@@ -39,7 +39,6 @@ void Bullet::Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed)
   tmp.Negate();
 
   _trail.SetUp(shotPoint, tmp, speed / 10, angle);
-  _trail.SetActive(true);
 }
 
 void Bullet::Compute()
@@ -66,7 +65,7 @@ void Bullet::Compute()
   if (_position.X() < 0 || _position.X() > sx || _position.Y() < 0 || _position.Y() > sy)
   {
     _active = false;
-    _trail.SetActive(false);
+    _trail.TurnOff();
   }
 }
 

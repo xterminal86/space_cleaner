@@ -45,7 +45,7 @@ void Ship::Init(double posx, double posy)
   _engineTrail.SetUp(Vector2(_position.X(), _position.Y() - 50),
                      Vector2(_originalDirection.X(), -_originalDirection.Y()),
                      0.0, 0.0);
-  _engineTrail.SetActive(true);
+  _engineTrail.TurnOff();
 }
 
 Ship::~Ship()
@@ -147,6 +147,16 @@ void Ship::Accelerate(double dspeed)
   else if (_speed > ShipMaxSpeed)
   {
     _speed = ShipMaxSpeed;
+  }
+
+  if (dspeed > 0.0 && !_engineTrail.Active())
+  {
+    _engineTrail.TurnOn();
+  }
+
+  if (dspeed <= 0.0 && _engineTrail.Active())
+  {
+    _engineTrail.TurnOff();
   }
 
   _engineTrail.SetLifeAndSpeed(_speed * 100, _speed * 100 + 50, _speed);
