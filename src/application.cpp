@@ -11,8 +11,11 @@ Application::Application()
   _shipExplosion.Init(GlobalStrings::ExplosionSpriteShipFilename, 1, 25);
 
   _shipHit = false;
+  _fireTrigger = false;
 
   _score = 0;
+
+  _keyboardState = nullptr;
 }
 
 Application::~Application()
@@ -50,70 +53,13 @@ void Application::Start()
   //_shipDebris.Init(_ship.GetSprite().ImageWrapper(), 10, 2000);
   //_shipDebris.SetScale(2.0);
 
-  bool fireTrigger = false;
-
   int tw, th;
 
-  Uint8* keyboardState = nullptr;
   while (_running)
   {
     GameTime::Get().MeasureBefore();
 
-    SDL_PumpEvents();
-
-    keyboardState = (Uint8*)SDL_GetKeyboardState(nullptr);
-
-    if (keyboardState[SDL_SCANCODE_ESCAPE])
-    {
-      _running = false;
-    }
-
-    if (keyboardState[SDL_SCANCODE_RETURN] && !_ship.Active())
-    {
-      _ship.SetActive(true);
-    }
-
-    if (_ship.Active())
-    {
-      if (keyboardState[SDL_SCANCODE_A])
-      {
-        shipAngle -= _ship.RotationSpeed * GameTime::Get().DeltaTime();
-      }
-
-      if (keyboardState[SDL_SCANCODE_D])
-      {
-        shipAngle += _ship.RotationSpeed * GameTime::Get().DeltaTime();
-      }
-
-      if (keyboardState[SDL_SCANCODE_W])
-      {
-        _ship.Accelerate(_ship.AccelerationSpeed * GameTime::Get().DeltaTime());
-      }
-
-      if (keyboardState[SDL_SCANCODE_SPACE])
-      {
-        if (!fireTrigger)
-        {
-          fireTrigger = true;
-          _ship.Fire();
-        }
-      }
-
-      if (!keyboardState[SDL_SCANCODE_SPACE])
-      {
-        fireTrigger = false;
-      }
-
-  //    if (keyboardState[SDL_SCANCODE_S])
-  //    {
-  //      _ship.Accelerate(-_accelerationSpeed);
-  //    }
-
-      if (!keyboardState[SDL_SCANCODE_W] && _ship.Speed() > 0.0)
-      {
-        _ship.Accelerate(-_ship.AccelerationSpeed * GameTime::Get().DeltaTime());
-      }
-    }
+    ProcessInput();
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
@@ -126,13 +72,9 @@ void Application::Start()
 
     if (_ship.Active())
     {
-      if (shipAngle > 360) shipAngle -= 360;
-      if (shipAngle < 0) shipAngle += 360;
-
-      _ship.Rotate(shipAngle);
       _ship.Move();
-      //_ship.Draw(true);
-      _ship.Draw(false);
+      _ship.Draw(true);
+      //_ship.Draw(false);
     }
 
     for (int i = 0; i < _asteroids.size(); i++)
@@ -268,6 +210,67 @@ void Application::ProcessExplosions()
   _asteroidExplosion.Process();
   _shipExplosion.Process();
   _shipDebris.Process();
+}
+
+void Application::ProcessInput()
+{
+  SDL_PumpEvents();
+
+  _keyboardState = (Uint8*)SDL_GetKeyboardState(nullptr);
+
+  if (_keyboardState[SDL_SCANCODE_ESCAPE])
+  {
+    _running = false;
+  }
+
+  if (_keyboardState[SDL_SCANCODE_RETURN] && !_ship.Active())
+  {
+    _ship.SetActive(true);
+  }
+
+  if (_ship.Active())
+  {
+    if (_keyboardState[SDL_SCANCODE_A])
+    {
+      double d = _ship.RotationSpeed * GameTime::Get().DeltaTime();
+      _ship.Rotate(_ship.Angle() - d);
+    }
+
+    if (_keyboardState[SDL_SCANCODE_D])
+    {
+      double d = _ship.RotationSpeed * GameTime::Get().DeltaTime();
+      _ship.Rotate(_ship.Angle() + d);
+    }
+
+    if (_keyboardState[SDL_SCANCODE_W])
+    {
+      _ship.Accelerate(_ship.AccelerationSpeed * GameTime::Get().DeltaTime());
+    }
+
+    if (_keyboardState[SDL_SCANCODE_SPACE])
+    {
+      if (!_fireTrigger)
+      {
+        _fireTrigger = true;
+        _ship.Fire();
+      }
+    }
+
+    if (!_keyboardState[SDL_SCANCODE_SPACE])
+    {
+      _fireTrigger = false;
+    }
+
+//    if (keyboardState[SDL_SCANCODE_S])
+//    {
+//      _ship.Accelerate(-_accelerationSpeed);
+//    }
+
+    if (!_keyboardState[SDL_SCANCODE_W] && _ship.Speed() > 0.0)
+    {
+      _ship.Accelerate(-_ship.AccelerationSpeed * GameTime::Get().DeltaTime());
+    }
+  }
 }
 
 void Application::DrawGUI()

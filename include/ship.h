@@ -12,10 +12,6 @@ class Ship
   public:
     Ship();
     virtual ~Ship();
-    Sprite& GetSprite()
-    {
-      return _shipSprite;
-    }
     void Init(double posx, double posy);
     void Accelerate(double dspeed);
     void Move(int x, int y);
@@ -27,12 +23,15 @@ class Ship
     void Fire();
     void SetActive(bool status) { _active = status; }
     bool Active() { return _active; }
+    double Angle() { return _angle; }
 
     bool HasBulletsActive();
     std::vector<std::unique_ptr<Bullet>>& GetBullets() { return _bullets; }
 
     double Speed() { return _speed; }
     void SetSpeed(double val) { _speed = val; }
+
+    Sprite& GetSprite() { return _shipSprite; }
 
     Vector2& Position() { return _position; }
     Vector2& Direction() { return _localDirection; }

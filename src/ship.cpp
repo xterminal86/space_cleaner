@@ -99,6 +99,9 @@ void Ship::Rotate(double angle)
 {
   _angle = angle;
 
+  if (_angle > 360) _angle -= 360;
+  if (_angle < 0) _angle += 360;
+
   _shipSprite.SetAngle(angle);
 
   Vector2 res;

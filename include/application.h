@@ -40,6 +40,7 @@ class Application
 
     bool _running;
     bool _shipHit;
+    bool _fireTrigger;
 
     Sprite _backgroundStar;
     Sprite _background;
@@ -51,6 +52,7 @@ class Application
     void InitAsteroids();
     void ProcessCollisions();
     void ProcessExplosions();
+    void ProcessInput();
     void DrawGUI();
 
     std::vector<std::unique_ptr<Asteroid>> _asteroids;
@@ -59,6 +61,8 @@ class Application
     AnimationsPool _asteroidExplosion;
     AnimationsPool _shipExplosion;
     Explosion _shipDebris;
+
+    Uint8* _keyboardState;
 };
 
 #endif // APPLICATION_H
