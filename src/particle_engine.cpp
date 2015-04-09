@@ -69,20 +69,16 @@ void ParticleEngine::SetLifeAndSpeed(int lifeTimeMsMin, int lifeTimeMsMax, doubl
 {
   _particlesLifeTimeMsMin = lifeTimeMsMin;
   _particlesLifeTimeMsMax = lifeTimeMsMax;
-  //_par
 
-  /*
-  for (auto& i : _particles)
-  {
-    //if (i.Acgive
-    p.CurrentLifeTimeMs = 0;
-    int lt = Util::RandomNumber() % lifetimeMsMax;
-    if (lt == 0) lt = lifetimeMsMin;
+  // Illusion of trail is done by setting up particle engine with speed 0.0.
+  // So, when ship moves, point of particles' origin also moves, thus creating illusion of trail.
+  // No speed is used and no new direction is assigned.
+  // This was made unintentionally - speaking of Providence. :-)
+  // I figured everything out when I tried to increase the speed of trail in ship.cpp
+  //
+  // Uncomment line below to break everything.
 
-    i.CurrentLife
-    i.MaxLifeTimeMs = lifeTimeMsMax;
-  }
-  */
+  //_speed = speed;
 }
 
 void ParticleEngine::Emit()

@@ -43,10 +43,13 @@ void Ship::Init(double posx, double posy)
   _enginePointRotated.Set(_originalEnginePoint);
   _enginePointTranslated.Set(_originalEnginePoint);
 
-  _engineTrail.Init(20, 200, 250, 0.01, 0.15, image);
+  _engineTrail.Init(EngineTrailParticles, 200, 250, 0.01, 0.15, image);
+
+  // Look for comments in ParticleEngine::SetLifeAndSpeed - it's important.
   _engineTrail.SetUp(Vector2(_position.X(), _position.Y() - engineY),
                      Vector2(_originalDirection.X(), -_originalDirection.Y()),
                      0.0, 0.0);
+
   _engineTrail.TurnOff();
 }
 
@@ -100,6 +103,8 @@ void Ship::Draw(int x, int y, bool drawCollider)
       {
         _shipSprite.Draw(x, y, &_shipSprite.TriangulatedTranslatedCollider());
       }
+
+      // Line showing ship's direction
 
       //SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(),
       //                                                  _position.X() + (int)(_localDirection.X() * GameMechanic::DirectionResolution),
@@ -167,7 +172,8 @@ void Ship::Accelerate(double dspeed)
     _engineTrail.TurnOff();
   }
 
-  _engineTrail.SetLifeAndSpeed(_speed * 100, _speed * 100 + 50, _speed);
+  // Look for comments in ParticleEngine::SetLifeAndSpeed - it's important.
+  _engineTrail.SetLifeAndSpeed(_speed * 100, _speed * 100, _speed);
 }
 
 void Ship::Fire()

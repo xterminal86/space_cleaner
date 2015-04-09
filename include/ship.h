@@ -45,6 +45,7 @@ class Ship
     Vector2& Direction() { return _localDirection; }
 
     const int MaxBullets = 50;
+    const int EngineTrailParticles = 50;
     const double BulletSpeed = 0.5;
     const double ShipMaxSpeed = 4.0;
     const double RotationSpeed = 0.1;
