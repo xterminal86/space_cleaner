@@ -47,9 +47,49 @@ class Util
       auto firstSpriteCollider = firstSprite.TranslatedColliderRef;
       auto secondSpriteCollider = secondSprite.TranslatedColliderRef;
 
-      bool collisionFlag = true;
+      auto firstSpriteColliderTr = firstSprite.TriangulatedTranslatedColliderRef;
+      auto secondSpriteColliderTr = secondSprite.TriangulatedTranslatedColliderRef;
 
-      collisionFlag = ( AreCollidersIntersecting(firstSpriteCollider, secondSpriteCollider, firstSpriteAxes) && AreCollidersIntersecting(firstSpriteCollider, secondSpriteCollider, secondSpriteAxes) );
+      bool collisionFlag = false;
+
+      // First is triangulated, second - isn't
+      if (firstSpriteCollider == nullptr && secondSpriteCollider != nullptr)
+      {
+        for (auto& t : *firstSpriteColliderTr)
+        {
+          collisionFlag = ( AreCollidersIntersecting(&t, secondSpriteCollider, firstSpriteAxes) && AreCollidersIntersecting(&t, secondSpriteCollider, secondSpriteAxes) );
+
+          if (collisionFlag) return true;
+        }
+      }
+      // First is not triangulated, second - is
+      else if (firstSpriteCollider != nullptr && secondSpriteCollider == nullptr)
+      {
+        for (auto& t : *secondSpriteColliderTr)
+        {
+          collisionFlag = ( AreCollidersIntersecting(&t, firstSpriteCollider, firstSpriteAxes) && AreCollidersIntersecting(&t, firstSpriteCollider, secondSpriteAxes) );
+
+          if (collisionFlag) return true;
+        }
+      }
+      // Both are triangulated
+      else if (firstSpriteCollider == nullptr && secondSpriteCollider == nullptr)
+      {
+        for (auto& t1 : *firstSpriteColliderTr)
+        {
+          for (auto& t2 : *secondSpriteColliderTr)
+          {
+            collisionFlag = ( AreCollidersIntersecting(&t1, &t2, firstSpriteAxes) && AreCollidersIntersecting(&t1, &t2, secondSpriteAxes) );
+
+            if (collisionFlag) return true;
+          }
+        }
+      }
+      // Both aren't triangulated
+      else
+      {
+        collisionFlag = ( AreCollidersIntersecting(firstSpriteCollider, secondSpriteCollider, firstSpriteAxes) && AreCollidersIntersecting(firstSpriteCollider, secondSpriteCollider, secondSpriteAxes) );
+      }
 
       return collisionFlag;
     }

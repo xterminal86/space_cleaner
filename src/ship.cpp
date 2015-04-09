@@ -17,8 +17,8 @@ void Ship::Init(double posx, double posy)
   _originalDirection.Set(0.0, -1.0);
   _localDirection.Set(0.0, -1.0);
 
-  //int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipBigRole);
-  int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipRole);
+  int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipBigRole);
+  //int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipRole);
   if (res != -1)
   {
     _shipSprite.Init(res);
@@ -75,6 +75,10 @@ void Ship::Draw(int x, int y, bool drawCollider)
     //SDL_RenderDrawLine(VideoSystem::Get().Renderer(), _position.X(), _position.Y(),
     //                                                  _position.X() + (int)(_localDirection.X() * GameMechanic::DirectionResolution),
     //                                                  _position.Y() + (int)(_localDirection.Y() * GameMechanic::DirectionResolution));
+  }
+  else
+  {
+    _shipSprite.Draw(x, y);
   }
 }
 

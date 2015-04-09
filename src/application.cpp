@@ -131,8 +131,8 @@ void Application::Start()
 
       _ship.Rotate(shipAngle);
       _ship.Move();
-      _ship.Draw(true);
-      //_ship.Draw(false);
+      //_ship.Draw(true);
+      _ship.Draw(false);
     }
 
     for (int i = 0; i < _asteroids.size(); i++)
