@@ -15,6 +15,21 @@ PNGLoader::PNGLoader(std::string filename)
 {
   Logger::Get().LogPrint("PNGLoader::ctor(std::string) 0x%zX\n", this);
 
+  // Filtering is applied during texture creation
+  //
+  // "0" - nearest
+  // "1" - linear
+  // "2" - anisotropic
+
+  if (filename == "assets/fonts/font_fixed.png")
+  {
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
+  }
+  else
+  {
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+  }
+
   _texture = nullptr;
   SDL_Surface* surface = IMG_Load(filename.c_str());
   if (surface == nullptr)

@@ -30,11 +30,6 @@ int VideoSystem::Init(int w, int h)
 		  exit(1);
 	  }
 
-    if(!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
-		{
-			Logger::Get().LogPrint( "(warning) Linear texture filtering could not be enabled!");
-		}
-
     _window = SDL_CreateWindow("Space Cleaner 0.1 by xterminal86",
                               SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                               w, h,
