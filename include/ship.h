@@ -21,6 +21,7 @@ class Ship
     void ComputeBullets();
     void Rotate(double angle);
     void Fire();
+    void Scale(double scaleFactor);
     void SetActive(bool status)
     {
       _active = status;
@@ -50,6 +51,8 @@ class Ship
     const double ShipMaxSpeed = 4.0;
     const double RotationSpeed = 0.1;
     const double AccelerationSpeed = 0.005;
+    const double DefaultParticleScale = 0.15;
+    const double DefaultParticleScaleIncrement = 0.01;
 
   protected:
   private:
@@ -60,6 +63,7 @@ class Ship
 
     double _angle;
     double _speed;
+    double _scaleFactor;
 
     Vector2 _position;
 
@@ -73,6 +77,7 @@ class Ship
     std::vector<std::unique_ptr<Bullet>> _bullets;
 
     void Draw(int x, int y, bool drawCollider = false);
+    void ResetEnginePoint(Vector2 newEnginePoint);
 };
 
 #endif // SHIP_H

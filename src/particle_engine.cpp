@@ -81,6 +81,12 @@ void ParticleEngine::SetLifeAndSpeed(int lifeTimeMsMin, int lifeTimeMsMax, doubl
   //_speed = speed;
 }
 
+void ParticleEngine::RescaleParticles(double scaleFactor, double scaleFactorIncrement)
+{
+  _particleScaleFactor = scaleFactor;
+  _particleScaleIncrement = scaleFactorIncrement;
+}
+
 void ParticleEngine::Emit()
 {
   for (auto& i : _particles)

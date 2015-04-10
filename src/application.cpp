@@ -38,7 +38,7 @@ void Application::Start()
   int bgy = _screenHeight / 2;
 
   _ship.Init(0, 0);
-  _ship.GetSprite().SetScaleFactor(1.0);
+  _ship.Scale(0.5);
   _ship.Move(300, 300);
 
   int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipBigRole);
@@ -70,6 +70,7 @@ void Application::Start()
 
     _ship.Move();
     _ship.Draw(false);
+    //_ship.Draw(true);
 
     for (int i = 0; i < _asteroids.size(); i++)
     {

@@ -39,11 +39,9 @@ void Ship::Init(double posx, double posy)
 
   int engineY = _shipSprite.ImageWrapper()->Height() / 2;
 
-  _originalEnginePoint.Set(_position.X(), _position.Y() + engineY);
-  _enginePointRotated.Set(_originalEnginePoint);
-  _enginePointTranslated.Set(_originalEnginePoint);
+  ResetEnginePoint(Vector2(_position.X(), _position.Y() + engineY));
 
-  _engineTrail.Init(EngineTrailParticles, 200, 250, 0.01, 0.15, image);
+  _engineTrail.Init(EngineTrailParticles, 200, 250, DefaultParticleScaleIncrement, DefaultParticleScale, image);
 
   // Look for comments in ParticleEngine::SetLifeAndSpeed - it's important.
   _engineTrail.SetUp(Vector2(_position.X(), _position.Y() - engineY),
@@ -56,6 +54,23 @@ void Ship::Init(double posx, double posy)
 Ship::~Ship()
 {
   _bullets.clear();
+}
+
+void Ship::Scale(double scaleFactor)
+{
+  _scaleFactor = scaleFactor;
+
+  _shipSprite.SetScaleFactor(scaleFactor);
+
+  // We scale first, then use scaled collider in rotation calculations to determine rotated collider.
+  // So, in case we scaled, but forgot to rotate, collider will not update.
+  Rotate(_angle);
+
+  double engineY = _shipSprite.ImageWrapper()->Height() / 2;
+  engineY *= scaleFactor;
+
+  ResetEnginePoint(Vector2(_position.X(), _position.Y() + engineY));
+  _engineTrail.RescaleParticles(scaleFactor * DefaultParticleScale, DefaultParticleScaleIncrement);
 }
 
 void Ship::Move(int x, int y)
@@ -200,4 +215,11 @@ bool Ship::HasBulletsActive()
   }
 
   return false;
+}
+
+void Ship::ResetEnginePoint(Vector2 newEnginePoint)
+{
+  _originalEnginePoint.Set(newEnginePoint);
+  _enginePointRotated.Set(newEnginePoint);
+  _enginePointTranslated.Set(newEnginePoint);
 }
