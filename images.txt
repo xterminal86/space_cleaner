@@ -6,3 +6,4 @@
 5 assets/bullets/fire_shot.png
 6 assets/ship/type2.png
 7 assets/default_particle.png
+8 assets/fonts/font_fixed.png

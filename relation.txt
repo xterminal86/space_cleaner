@@ -6,3 +6,4 @@
 5 fire_shot
 6 ship_big
 7 default_particle
+8 font

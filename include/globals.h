@@ -23,12 +23,11 @@ namespace GlobalStrings
   static std::string BulletLaserRole = "fire_shot";
   static std::string ShipBigRole = "ship_big";
   static std::string DefaultParticleRole = "default_particle";
+  static std::string FontRole = "font";
 
   static std::string ImagesFilename = "images.txt";
   static std::string LogFilename = "output_log.txt";
   static std::string RelationFilename = "relation.txt";
-
-  static std::string BitmapFontFilename = "assets/fonts/font_fixed.png";
 
   static std::string ExplosionSpriteFilename = "assets/animations/explosion.png";
   static std::string ExplosionSpriteShipFilename = "assets/animations/explosion2.png";

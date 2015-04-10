@@ -830,7 +830,7 @@
 	"vector2pair.h"
 	"util.h"
 
-1428592693 h:\sources\c++\asteroids.git\include\globals.h
+1428656530 h:\sources\c++\asteroids.git\include\globals.h
 	<string>
 	<map>
 	<memory>
@@ -1181,7 +1181,7 @@
 1421682465 h:\sources\c++\asteroids.git\include\input_manager.h
 	"globals.h"
 
-1428592403 source:h:\sources\c++\asteroids.git\src\application.cpp
+1428656586 source:h:\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 
 1418898844 source:h:\sources\c++\asteroids.git\src\component.cpp
@@ -1226,16 +1226,16 @@
 1426780545 source:h:\sources\c++\asteroids.git\src\texture_manager.cpp
 	"texture_manager.h"
 
-1421424834 source:h:\sources\c++\asteroids.git\src\video_system.cpp
+1428654417 source:h:\sources\c++\asteroids.git\src\video_system.cpp
 	"video_system.h"
 	"logger.h"
 
-1428596810 h:\sources\c++\asteroids.git\include\ship.h
+1428654417 h:\sources\c++\asteroids.git\include\ship.h
 	"vector2.h"
 	"sprite.h"
 	"bullet.h"
 
-1428597358 source:h:\sources\c++\asteroids.git\src\ship.cpp
+1428654417 source:h:\sources\c++\asteroids.git\src\ship.cpp
 	"ship.h"
 
 1421537555 source:d:\nick\sources\c++\asteroids.git\main.cpp
@@ -1696,7 +1696,7 @@
 1423839392 h:\sources\c++\asteroids.git\include\gametime.h
 	"globals.h"
 
-1428596785 h:\sources\c++\asteroids.git\include\bullet.h
+1428654361 h:\sources\c++\asteroids.git\include\bullet.h
 	"globals.h"
 	"gametime.h"
 	"vector2.h"
@@ -1765,8 +1765,8 @@
 1427304843 source:h:\sources\c++\asteroids.git\src\bitmapfont.cpp
 	"BitmapFont.h"
 
-1428417391 h:\sources\c++\asteroids.git\include\bitmapfont.h
-	"png_loader.h"
+1428656606 h:\sources\c++\asteroids.git\include\bitmapfont.h
+	"texture_manager.h"
 
 1428428656 d:\nick\sources\c++\asteroids.git\include\bitmapfont.h
 	"png_loader.h"
@@ -1802,10 +1802,10 @@
 1427105363 source:h:\sources\c++\asteroids.git\src\animations_pool.cpp
 	"animations_pool.h"
 
-1428597549 source:h:\sources\c++\asteroids.git\src\particle_engine.cpp
+1428654417 source:h:\sources\c++\asteroids.git\src\particle_engine.cpp
 	"particle_engine.h"
 
-1428596688 h:\sources\c++\asteroids.git\include\particle_engine.h
+1428654417 h:\sources\c++\asteroids.git\include\particle_engine.h
 	"gametime.h"
 	"util.h"
 	"png_loader.h"

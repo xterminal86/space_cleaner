@@ -10,9 +10,13 @@ BitmapFont::~BitmapFont()
   //dtor
 }
 
-void BitmapFont::Init(std::string fontImageFilename)
+void BitmapFont::Init()
 {
-  _font = std::unique_ptr<PNGLoader>(new PNGLoader(fontImageFilename));
+  int index = TextureManager::Get().FindTextureByRole(GlobalStrings::FontRole);
+  if (index != -1)
+  {
+    _font = TextureManager::Get().GetTextureWrapper(index);
+  }
 
   SetScale(1.0f);
 }
@@ -29,8 +33,8 @@ void BitmapFont::SetTextColor(unsigned int r, unsigned int g, unsigned int b, un
   _textColor.b = b;
   _textColor.a = a;
 
-  SDL_SetTextureColorMod(_font.get()->Texture(), r, g, b);
-  SDL_SetTextureAlphaMod(_font.get()->Texture(), a);
+  SDL_SetTextureColorMod(_font->Texture(), r, g, b);
+  SDL_SetTextureAlphaMod(_font->Texture(), a);
 }
 
 void BitmapFont::SetTextColor(SDL_Color newColor)
@@ -84,7 +88,7 @@ void BitmapFont::Print(int x, int y, int anchor, std::string text)
         break;
     }
 
-    SDL_RenderCopy(VideoSystem::Get().Renderer(), _font.get()->Texture(), &src, &dst);
+    SDL_RenderCopy(VideoSystem::Get().Renderer(), _font->Texture(), &src, &dst);
   }
 }
 

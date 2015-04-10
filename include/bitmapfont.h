@@ -1,7 +1,7 @@
 #ifndef BITMAPFONT_H
 #define BITMAPFONT_H
 
-#include "png_loader.h"
+#include "texture_manager.h"
 
 class BitmapFont
 {
@@ -11,7 +11,7 @@ class BitmapFont
       static BitmapFont instance;
       return instance;
     }
-    void Init(std::string fontImageFilename);
+    void Init();
 
     const int LettersInRow = 16;
     const int LetterWidth = 16;
@@ -36,7 +36,7 @@ class BitmapFont
     BitmapFont(const BitmapFont&);
     BitmapFont& operator= (const BitmapFont&);
 
-    std::unique_ptr<PNGLoader> _font;
+    PNGLoader* _font;
 
     SDL_Color _textColor;
 
