@@ -11,6 +11,8 @@ void Ship::Init(double posx, double posy)
   _angle = 0.0;
   _speed = 0.0;
 
+  _hitPoints = ShipHitPoints;
+
   _position.Set(posx, posy);
 
   // We go up the screen when Y is decreasing.
@@ -222,4 +224,15 @@ void Ship::ResetEnginePoint(Vector2 newEnginePoint)
   _originalEnginePoint.Set(newEnginePoint);
   _enginePointRotated.Set(newEnginePoint);
   _enginePointTranslated.Set(newEnginePoint);
+}
+
+void Ship::ProcessCollision()
+{
+  _hitPoints -= 1;
+}
+
+void Ship::Respawn()
+{
+  SetActive(true);
+  _hitPoints = ShipHitPoints;
 }

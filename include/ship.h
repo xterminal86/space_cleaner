@@ -19,9 +19,11 @@ class Ship
     void Move();
     void Draw(bool drawCollider = false);
     void ComputeBullets();
+    void ProcessCollision();
     void Rotate(double angle);
     void Fire();
     void Scale(double scaleFactor);
+    void Respawn();
     void SetActive(bool status)
     {
       _active = status;
@@ -33,6 +35,7 @@ class Ship
     }
     bool Active() { return _active; }
     double Angle() { return _angle; }
+    int HitPoints() { return _hitPoints; }
 
     bool HasBulletsActive();
     std::vector<std::unique_ptr<Bullet>>& GetBullets() { return _bullets; }
@@ -47,6 +50,7 @@ class Ship
 
     const int MaxBullets = 50;
     const int EngineTrailParticles = 50;
+    const int ShipHitPoints = 20;
     const double BulletSpeed = 0.5;
     const double ShipMaxSpeed = 4.0;
     const double RotationSpeed = 0.1;
@@ -64,6 +68,8 @@ class Ship
     double _angle;
     double _speed;
     double _scaleFactor;
+
+    int _hitPoints;
 
     Vector2 _position;
 

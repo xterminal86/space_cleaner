@@ -16,6 +16,8 @@ Application::Application()
   _score = 0;
 
   _keyboardState = nullptr;
+
+  _hitPointsColorDelta = 255 / _ship.ShipHitPoints;
 }
 
 Application::~Application()
@@ -85,15 +87,7 @@ void Application::Start()
     }
 
     ProcessCollisions();
-
-    if (_shipHit)
-    {
-      _shipHit = false;
-      _ship.SetSpeed(0.0);
-      _ship.SetActive(false);
-      _shipExplosion.Play(_ship.Position().X(), _ship.Position().Y(), 1.0);
-      _shipDebris.Play(_ship.Position());
-    }
+    HandleCollisions();
 
     ProcessExplosions();
 
@@ -193,11 +187,29 @@ void Application::ProcessCollisions()
     {
       if (asteroid.get()->Active() && Util::TestIntersection(asteroid.get()->GetSprite().GetCollisionInfo(), _ship.GetSprite().GetCollisionInfo()))
       {
+        _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
+
         asteroid.get()->ProcessCollision();
 
         _shipHit = true;
         break;
       }
+    }
+  }
+}
+
+void Application::HandleCollisions()
+{
+  if (_shipHit)
+  {
+    _shipHit = false;
+    _ship.ProcessCollision();
+    if (_ship.HitPoints() <= 0)
+    {
+      _ship.SetSpeed(0.0);
+      _ship.SetActive(false);
+      _shipExplosion.Play(_ship.Position().X(), _ship.Position().Y(), 1.0);
+      _shipDebris.Play(_ship.Position());
     }
   }
 }
@@ -222,7 +234,7 @@ void Application::ProcessInput()
 
   if (_keyboardState[SDL_SCANCODE_RETURN] && !_ship.Active())
   {
-    _ship.SetActive(true);
+    _ship.Respawn();
   }
 
   if (_ship.Active())
@@ -272,13 +284,35 @@ void Application::ProcessInput()
 
 void Application::DrawGUI()
 {
-  _bitmapFont->SetTextColor(0, 255, 0, 255);
-  _bitmapFont->SetScale(1.0f);
+  _bitmapFont->SetTextColor(0, 255, 255, 255);
+  _bitmapFont->SetScale(2.0f);
   _bitmapFont->Printf(0, 0, BitmapFont::AlignLeft, "Score:%u", _score);
 
+  _shipHitpoints.clear();
+
+  for (int i = 0; i < _ship.HitPoints(); i++)
+  {
+    _shipHitpoints.append(">");
+  }
+
+  int r = (_ship.ShipHitPoints - _ship.HitPoints()) * _hitPointsColorDelta;
+  int g = 255;
+
+  if (_ship.HitPoints() < 10)
+  {
+    r = 255;
+    g = 255 - (_ship.ShipHitPoints - _ship.HitPoints()) * _hitPointsColorDelta;
+  }
+
+  _bitmapFont->SetTextColor(r, g, 0, 255);
+  _bitmapFont->SetScale(2.0f);
+  _bitmapFont->Printf(VideoSystem::Get().ScreenDimensions().x, 0, BitmapFont::AlignRight, (char*)_shipHitpoints.data());
+
+  /*
   _bitmapFont->SetTextColor(0, 255, 255, 255);
   _bitmapFont->SetScale(1.0f);
   _bitmapFont->Printf(VideoSystem::Get().ScreenDimensions().x, 0, BitmapFont::AlignRight, "Energy: >>>>>>>>>>>>>>>>>>>>");
+  */
 
   _bitmapFont->SetTextColor(255, 255, 0, 255);
   _bitmapFont->SetScale(2.0f);

@@ -37,6 +37,7 @@ class Application
     const double _bigAsteroidExplosionScale = 1.5;
 
     unsigned int _score;
+    int _hitPointsColorDelta;
 
     bool _running;
     bool _shipHit;
@@ -51,6 +52,7 @@ class Application
     void DrawBackground();
     void InitAsteroids();
     void ProcessCollisions();
+    void HandleCollisions();
     void ProcessExplosions();
     void ProcessInput();
     void DrawGUI();
@@ -63,6 +65,8 @@ class Application
     Explosion _shipDebris;
 
     Uint8* _keyboardState;
+
+    std::string _shipHitpoints;
 };
 
 #endif // APPLICATION_H
