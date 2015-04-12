@@ -57,6 +57,7 @@ class TextureManager
 
     void LoadCollider(int textureIndex, std::string filename);
     void BuildDatabase(std::string filename);
+    void PrintColliderData(int textureIndex);
 };
 
 #endif // TEXTUREMANAGER_H

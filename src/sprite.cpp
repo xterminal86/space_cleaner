@@ -306,6 +306,9 @@ void Sprite::Draw(int x, int y, std::vector<std::vector<SDL_Point>>* colliderToD
     {
       SDL_SetRenderDrawColor(VideoSystem::Get().Renderer(), 255, 255, 0, 255);
       SDL_RenderDrawLines(VideoSystem::Get().Renderer(), triangle.data(), triangle.size());
+
+      // In "triangle" we have three points - for a line we need at least two, so we manually connect last point to the first
+      SDL_RenderDrawLine(VideoSystem::Get().Renderer(), triangle.data()[2].x, triangle.data()[2].y, triangle.data()[0].x, triangle.data()[0].y);
     }
   }
 }
@@ -384,7 +387,8 @@ void Sprite::TriangulateCollider()
       if (IsTriangleValid(triangle, _originalColliderCopy))
       {
         loopDetector = false;
-        //Logger::Get().LogPrint("Adding triangle: " + t);
+
+        //Logger::Get().LogPrint("Adding triangle: [%f %f] [%f %f] [%f %f]\n", v1.X() + 64, v1.Y() + 52, v2.X() + 64, v2.Y() + 52, v3.X() + 64, v3.Y() + 52);
 
         std::vector<SDL_Point> triangleSdlPoint;
         triangleSdlPoint.push_back(v1.ToSDL_Point());
@@ -393,7 +397,7 @@ void Sprite::TriangulateCollider()
 
         _triangulatedCollider.push_back(triangleSdlPoint);
         _originalColliderCopy.erase(_originalColliderCopy.begin() + (i + 1));
-        //PrintVertices(polyRef);
+        //PrintVertices(_originalColliderCopy);
         break;
       }
     }
@@ -483,4 +487,12 @@ bool Sprite::IsPointOutsideTriangle(std::vector<Vector2>& triangle, Vector2 poin
   //Debug.Log(point + " " + leftCount + " " + rightCount);
 
   return (leftCount % 2 == 0 && rightCount % 2 == 0);
+}
+
+void Sprite::PrintVertices(std::vector<SDL_Point>& data)
+{
+  for (auto& point : data)
+  {
+    Logger::Get().LogPrint("\t%i %i\n", point.x, point.y);
+  }
 }

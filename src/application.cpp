@@ -193,8 +193,10 @@ void Application::ProcessCollisions()
     {
       if (asteroid.get()->Active() && Util::TestIntersection(asteroid.get()->GetSprite().GetCollisionInfo(), _ship.GetSprite().GetCollisionInfo()))
       {
-          _shipHit = true;
-          break;
+        asteroid.get()->ProcessCollision();
+
+        _shipHit = true;
+        break;
       }
     }
   }

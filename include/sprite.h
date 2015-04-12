@@ -89,6 +89,7 @@ class Sprite
     void TriangulateCollider();
     bool IsTriangleValid(std::vector<Vector2>& triangle, std::vector<SDL_Point>& collider);
     bool IsPointOutsideTriangle(std::vector<Vector2>& triangle, Vector2 point);
+    void PrintVertices(std::vector<SDL_Point>& data);
 };
 
 #endif // SPRITE_H

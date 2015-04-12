@@ -71,6 +71,8 @@ void TextureManager::LoadCollider(int textureIndex, std::string filename)
   fclose(f);
 
   Logger::Get().LogPrint("Collider data loaded!\n");
+
+  PrintColliderData(textureIndex);
 }
 
 void TextureManager::BuildDatabase(std::string filename)
@@ -110,4 +112,16 @@ int TextureManager::FindTextureByRole(std::string rolename)
   Logger::Get().LogPrint("(warning) Could not find texture for role %s in images database!\n", rolename.data());
 
   return -1;
+}
+
+void TextureManager::PrintColliderData(int textureIndex)
+{
+  Logger::Get().LogPrint("Collider data for _colliders[%i]\n", textureIndex);
+
+  int counter = 1;
+  for (auto& point : _colliders[textureIndex])
+  {
+    Logger::Get().LogPrint("\t%i -> [%i ; %i] \n", counter, point.x, point.y);
+    counter++;
+  }
 }
