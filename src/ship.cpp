@@ -7,11 +7,18 @@ Ship::Ship()
 void Ship::Init(double posx, double posy)
 {
   _active = true;
+  _shieldHit = false;
+
+  _shieldColor.r = 255;
+  _shieldColor.g = 255;
+  _shieldColor.b = 255;
+  _shieldColor.a = 255;
 
   _angle = 0.0;
   _speed = 0.0;
 
-  _hitPoints = ShipHitPoints;
+  _hitPoints = ShipMaxHitPoints;
+  _shieldPoints = ShieldMaxPoints;
 
   _position.Set(posx, posy);
 
@@ -24,6 +31,12 @@ void Ship::Init(double posx, double posy)
   if (res != -1)
   {
     _shipSprite.Init(res);
+  }
+
+  res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipShieldRole);
+  if (res != -1)
+  {
+    _shieldSprite.Init(res);
   }
 
   for (int i = 0; i < MaxBullets; i++)
@@ -130,7 +143,25 @@ void Ship::Draw(int x, int y, bool drawCollider)
     else
     {
       _shipSprite.Draw(x, y);
+      DrawShield();
     }
+  }
+
+  MakeBars();
+}
+
+void Ship::MakeBars()
+{
+  _hitPointsBar.clear();
+  for (int i = 0; i < _hitPoints; i++)
+  {
+    _hitPointsBar.append(">");
+  }
+
+  _shieldPointsBar.clear();
+  for (int i = 0; i < _shieldPoints; i++)
+  {
+    _shieldPointsBar.append(">");
   }
 }
 
@@ -231,8 +262,38 @@ void Ship::ProcessCollision()
   _hitPoints -= 1;
 }
 
+void Ship::ProcessShieldCollision()
+{
+  _shieldHit = true;
+  _shieldColor.a = 255;
+  _shieldPoints -= 1;
+
+  if (_shieldPoints <= 0)
+  {
+    _shieldPoints = 0;
+  }
+}
+
+void Ship::DrawShield()
+{
+  if (_shieldHit)
+  {
+    _shieldColor.a -= ShieldFadeSpeed;
+
+    if (_shieldColor.a <= 0)
+    {
+      _shieldColor.a = 0;
+      _shieldHit = false;
+    }
+
+    _shieldSprite.SetColor(_shieldColor);
+    _shieldSprite.Draw(_position.X(), _position.Y());
+  }
+}
+
 void Ship::Respawn()
 {
   SetActive(true);
-  _hitPoints = ShipHitPoints;
+  _hitPoints = ShipMaxHitPoints;
+  _shieldPoints = ShieldMaxPoints;
 }

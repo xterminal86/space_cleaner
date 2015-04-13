@@ -208,6 +208,35 @@ class Util
       return (t1 == t2);
     }
 
+    static bool PolygonVsCircle(Vector2& center, int radius, std::vector<SDL_Point>& polygon)
+    {
+      Vector2 distance;
+      for (auto& point : polygon)
+      {
+        distance.Set((double)point.x - center.X(), (double)point.y - center.Y());
+        double length = distance.GetLength();
+        if (length <= radius)
+        {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    static bool PolygonVsCircle(Vector2& center, int radius, std::vector<std::vector<SDL_Point>>& polygon)
+    {
+      for (auto& triangle : polygon)
+      {
+        if (PolygonVsCircle(center, radius, triangle))
+        {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
   protected:
   private:
     static bool AreCollidersIntersecting(std::vector<SDL_Point>* collider1Ref, std::vector<SDL_Point>* collider2Ref, std::vector<Vector2>* satAxesRef)

@@ -42,6 +42,8 @@ class Sprite
 
     CollisionInfo& GetCollisionInfo()
     {
+      _collisionInfo.ConvexFlag = _convex;
+
       CalculateSATAxes();
 
       return _collisionInfo;

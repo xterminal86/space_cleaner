@@ -20,6 +20,7 @@ class Ship
     void Draw(bool drawCollider = false);
     void ComputeBullets();
     void ProcessCollision();
+    void ProcessShieldCollision();
     void Rotate(double angle);
     void Fire();
     void Scale(double scaleFactor);
@@ -33,12 +34,17 @@ class Ship
          _engineTrail.TurnOff();
       }
     }
+    bool ShieldActive() { return _shieldPoints > 0; }
     bool Active() { return _active; }
     double Angle() { return _angle; }
     int HitPoints() { return _hitPoints; }
+    int ShieldPoints() { return _shieldPoints; }
 
     bool HasBulletsActive();
     std::vector<std::unique_ptr<Bullet>>& GetBullets() { return _bullets; }
+
+    std::string& HitPointsBar() { return _hitPointsBar; }
+    std::string& ShieldPointsBar() { return _shieldPointsBar; }
 
     double Speed() { return _speed; }
     void SetSpeed(double val) { _speed = val; }
@@ -50,26 +56,34 @@ class Ship
 
     const int MaxBullets = 50;
     const int EngineTrailParticles = 50;
-    const int ShipHitPoints = 20;
+    const int ShipMaxHitPoints = 20;
+    const int ShieldMaxPoints = 20;
     const double BulletSpeed = 0.5;
     const double ShipMaxSpeed = 4.0;
     const double RotationSpeed = 0.1;
     const double AccelerationSpeed = 0.005;
     const double DefaultParticleScale = 0.15;
     const double DefaultParticleScaleIncrement = 0.01;
+    const int DefaultShieldRadius = 60;
+    const int ShieldFadeSpeed = 5;
 
   protected:
   private:
     ParticleEngine _engineTrail;
     Sprite _shipSprite;
+    Sprite _shieldSprite;
+
+    SDL_Color _shieldColor;
 
     bool _active;
+    bool _shieldHit;
 
     double _angle;
     double _speed;
     double _scaleFactor;
 
     int _hitPoints;
+    int _shieldPoints;
 
     Vector2 _position;
 
@@ -82,8 +96,13 @@ class Ship
 
     std::vector<std::unique_ptr<Bullet>> _bullets;
 
+    std::string _hitPointsBar;
+    std::string _shieldPointsBar;
+
     void Draw(int x, int y, bool drawCollider = false);
     void ResetEnginePoint(Vector2 newEnginePoint);
+    void DrawShield();
+    void MakeBars();
 };
 
 #endif // SHIP_H

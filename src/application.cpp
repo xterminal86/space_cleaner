@@ -17,7 +17,10 @@ Application::Application()
 
   _keyboardState = nullptr;
 
-  _hitPointsColorDelta = 255 / _ship.ShipHitPoints;
+  _hitPointsColorDelta = 255 / _ship.ShipMaxHitPoints;
+  _hitPointsColorDelta *= 2;
+  _shipHitPointsHalf = _ship.ShipMaxHitPoints / 2;
+  _shieldColorAlphaDelta = 128 / _ship.ShieldMaxPoints;
 }
 
 Application::~Application()
@@ -185,14 +188,47 @@ void Application::ProcessCollisions()
 
     for (auto &asteroid : _asteroids)
     {
-      if (asteroid.get()->Active() && Util::TestIntersection(asteroid.get()->GetSprite().GetCollisionInfo(), _ship.GetSprite().GetCollisionInfo()))
+      if (asteroid.get()->Active())
       {
-        _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
+        if (_ship.ShieldActive())
+        {
+         if (asteroid.get()->GetSprite().Convex())
+         {
+           if (Util::PolygonVsCircle(_ship.Position(),
+                                     _ship.DefaultShieldRadius,
+                                     asteroid.get()->GetSprite().TranslatedCollider()))
+           {
+             _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
+             asteroid.get()->ProcessCollision();
+             _ship.ProcessShieldCollision();
+             break;
+           }
+         }
+         else
+         {
+           if (Util::PolygonVsCircle(_ship.Position(),
+                                     _ship.DefaultShieldRadius,
+                                     asteroid.get()->GetSprite().TriangulatedTranslatedCollider()))
+           {
+             _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
+             asteroid.get()->ProcessCollision();
+             _ship.ProcessShieldCollision();
+             break;
+           }
+         }
+        }
+        else
+        {
+          if (Util::TestIntersection(asteroid.get()->GetSprite().GetCollisionInfo(), _ship.GetSprite().GetCollisionInfo()))
+          {
+            _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
 
-        asteroid.get()->ProcessCollision();
+            asteroid.get()->ProcessCollision();
 
-        _shipHit = true;
-        break;
+            _shipHit = true;
+            break;
+          }
+        }
       }
     }
   }
@@ -288,25 +324,24 @@ void Application::DrawGUI()
   _bitmapFont->SetScale(2.0f);
   _bitmapFont->Printf(0, 0, BitmapFont::AlignLeft, "Score:%u", _score);
 
-  _shipHitpoints.clear();
-
-  for (int i = 0; i < _ship.HitPoints(); i++)
-  {
-    _shipHitpoints.append(">");
-  }
-
-  int r = (_ship.ShipHitPoints - _ship.HitPoints()) * _hitPointsColorDelta;
+  int r = (_ship.ShipMaxHitPoints - _ship.HitPoints()) * _hitPointsColorDelta;
   int g = 255;
 
-  if (_ship.HitPoints() < 10)
+  if (_ship.HitPoints() <= _shipHitPointsHalf)
   {
     r = 255;
-    g = 255 - (_ship.ShipHitPoints - _ship.HitPoints()) * _hitPointsColorDelta;
+    g = 255 - ((_ship.ShipMaxHitPoints - _shipHitPointsHalf) - _ship.HitPoints()) * _hitPointsColorDelta;
   }
 
   _bitmapFont->SetTextColor(r, g, 0, 255);
   _bitmapFont->SetScale(2.0f);
-  _bitmapFont->Printf(VideoSystem::Get().ScreenDimensions().x, 0, BitmapFont::AlignRight, (char*)_shipHitpoints.data());
+  _bitmapFont->Printf(VideoSystem::Get().ScreenDimensions().x, 0, BitmapFont::AlignRight, (char*)_ship.HitPointsBar().data());
+
+  int a = 255 - (_ship.ShieldMaxPoints - _ship.ShieldPoints()) * _shieldColorAlphaDelta;
+
+  _bitmapFont->SetTextColor(0, 255, 255, a);
+  _bitmapFont->SetScale(2.0f);
+  _bitmapFont->Printf(VideoSystem::Get().ScreenDimensions().x, 16, BitmapFont::AlignRight, (char*)_ship.ShieldPointsBar().data());
 
   /*
   _bitmapFont->SetTextColor(0, 255, 255, 255);

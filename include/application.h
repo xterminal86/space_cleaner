@@ -38,6 +38,8 @@ class Application
 
     unsigned int _score;
     int _hitPointsColorDelta;
+    int _shipHitPointsHalf;
+    int _shieldColorAlphaDelta;
 
     bool _running;
     bool _shipHit;
@@ -65,8 +67,6 @@ class Application
     Explosion _shipDebris;
 
     Uint8* _keyboardState;
-
-    std::string _shipHitpoints;
 };
 
 #endif // APPLICATION_H
