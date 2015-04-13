@@ -46,7 +46,7 @@ void AnimationSequence::Draw()
   int res = SDL_RenderCopy(VideoSystem::Get().Renderer(), _spriteSheetRef->Texture(), &_src, &_dst);
   if (res != 0) Logger::Get().LogPrint("(warning) Render copy error!\nReason: %s\n", SDL_GetError());
 
-  _currentMsPassed += GameTime::Get().DeltaTime();
+  _currentMsPassed += GameTime::Get().DeltaTimeMs();
 
   if (_currentMsPassed > _owner->SpeedMs())
   {

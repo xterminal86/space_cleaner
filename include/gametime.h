@@ -13,24 +13,24 @@ class GameTime
     }
     void MeasureBefore()
     {
-      _lastTime = SDL_GetTicks();
+      _lastTimeMs = SDL_GetTicks();
     }
     void MeasureAfter()
     {
-      _currentTime = SDL_GetTicks();
-      _deltaTime = (double)(_currentTime - _lastTime);
-      _lastTime = _currentTime;
+      _currentTimeMs = SDL_GetTicks();
+      _deltaTimeMs = (double)(_currentTimeMs - _lastTimeMs);
+      _lastTimeMs = _currentTimeMs;
     }
-    double DeltaTime()
+    double DeltaTimeMs()
     {
-      return _deltaTime;
+      return _deltaTimeMs;
     }
   protected:
   private:
     GameTime()
     {
-      _currentTime = SDL_GetTicks();
-      _lastTime = _currentTime;
+      _currentTimeMs = SDL_GetTicks();
+      _lastTimeMs = _currentTimeMs;
     }
     ~GameTime()
     {
@@ -39,10 +39,10 @@ class GameTime
     GameTime(const GameTime&);
     GameTime& operator=(const GameTime&);
 
-    double _deltaTime;
+    double _deltaTimeMs;
 
-    unsigned int _currentTime;
-    unsigned int _lastTime;
+    unsigned int _currentTimeMs;
+    unsigned int _lastTimeMs;
 };
 
 #endif // GAMETIME_H

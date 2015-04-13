@@ -82,7 +82,7 @@ void Explosion::Process()
 {
   if (!_active) return;
 
-  _msPassed += GameTime::Get().DeltaTime();
+  _msPassed += GameTime::Get().DeltaTimeMs();
   _alphaValue = 255.0 * ( (double)_msPassed / (double)_lifeTimeMs );
 
   bool allDone = true;
@@ -92,8 +92,8 @@ void Explosion::Process()
 
     allDone = false;
 
-    double newX = i.Position.X() + i.Direction.X() * (i.Speed * GameTime::Get().DeltaTime());
-    double newY = i.Position.Y() + i.Direction.Y() * (i.Speed * GameTime::Get().DeltaTime());
+    double newX = i.Position.X() + i.Direction.X() * (i.Speed * GameTime::Get().DeltaTimeMs());
+    double newY = i.Position.Y() + i.Direction.Y() * (i.Speed * GameTime::Get().DeltaTimeMs());
 
     i.DstRect.x = i.Position.X() - (_divX * _scaleFactor) / 2;
     i.DstRect.y = i.Position.Y() - (_divY * _scaleFactor) / 2;

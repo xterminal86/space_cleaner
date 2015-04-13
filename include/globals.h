@@ -49,6 +49,9 @@ namespace GameMechanic
   static const double AsteroidBreakdownScaleFactor = 1.5;
   static const double AsteroidInitialScaleFactor = 0.5;
   static const double AsteroidMaxSpeed = 0.125;
+  static const int StartingSpawnRateMs = 10000;
+  static const int MaxSpawnRateMs = 1000;
+  static const int SpawnRateDeltaMs = 500;
 
   // For visual debug: determines length of direction vectors
   // Because they are normalized, we have to extend them in order to see.

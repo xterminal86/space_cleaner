@@ -58,8 +58,8 @@ void Asteroid::Move(Vector2 newPos)
 
 void Asteroid::Move()
 {
-  double newX = _position.X() + _direction.X() * (_speed * GameTime::Get().DeltaTime());
-  double newY = _position.Y() + _direction.Y() * (_speed * GameTime::Get().DeltaTime());
+  double newX = _position.X() + _direction.X() * (_speed * GameTime::Get().DeltaTimeMs());
+  double newY = _position.Y() + _direction.Y() * (_speed * GameTime::Get().DeltaTimeMs());
 
   if (newX < 0 || newX > VideoSystem::Get().ScreenDimensions().x) _direction.Set(-_direction.X(), _direction.Y());
   if (newY < 0 || newY > VideoSystem::Get().ScreenDimensions().y) _direction.Set(_direction.X(), -_direction.Y());

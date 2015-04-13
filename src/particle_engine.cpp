@@ -97,8 +97,8 @@ void ParticleEngine::Emit()
       continue;
     }
 
-    double dx = _direction.X() * (i.Speed * GameTime::Get().DeltaTime());
-    double dy = _direction.Y() * (i.Speed * GameTime::Get().DeltaTime());
+    double dx = _direction.X() * (i.Speed * GameTime::Get().DeltaTimeMs());
+    double dy = _direction.Y() * (i.Speed * GameTime::Get().DeltaTimeMs());
 
     i.Position.Set(i.Position.X() + dx, i.Position.Y() + dy);
 
@@ -110,7 +110,7 @@ void ParticleEngine::Emit()
     int res = SDL_RenderCopyEx(VideoSystem::Get().Renderer(), _particleImage->Texture(), &_srcRect, &_dstRect, i.Angle, nullptr, SDL_FLIP_NONE);
     if (res != 0) Logger::Get().LogPrint("(warning) Render copy error!\nReason: %s\n", SDL_GetError());
 
-    i.CurrentLifeTimeMs += GameTime::Get().DeltaTime();
+    i.CurrentLifeTimeMs += GameTime::Get().DeltaTimeMs();
     i.ScaleFactor -= _particleScaleIncrement;
 
     if (i.ScaleFactor < 0.0) i.ScaleFactor = 0.0;

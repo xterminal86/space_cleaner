@@ -57,7 +57,7 @@ void Star::Pulse()
 {
   if (!_active)
   {
-    _msPassed += GameTime::Get().DeltaTime();
+    _msPassed += GameTime::Get().DeltaTimeMs();
 
     if (_msPassed > _pauseMs)
     {

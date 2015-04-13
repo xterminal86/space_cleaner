@@ -15,7 +15,11 @@ Application::Application()
 
   _score = 0;
   _highScore = 0;
-  _currentLives = MaxLives;
+  _timePassed = 0;
+  _waveCounter = 0;
+  _currentLives = _maxLives;
+  _currentSpawnRate = GameMechanic::StartingSpawnRateMs;
+  _guiSpawnRateNumber = (double)GameMechanic::StartingSpawnRateMs / (double)_currentSpawnRate;
 
   _keyboardState = nullptr;
 
@@ -26,6 +30,11 @@ Application::Application()
 
   _screenSizeX = VideoSystem::Get().ScreenDimensions().x;
   _screenSizeY = VideoSystem::Get().ScreenDimensions().y;
+
+  _spawnPoints.push_back(Vector2(_spawnSpread, _spawnSpread));
+  _spawnPoints.push_back(Vector2(_screenSizeX - _spawnSpread, _spawnSpread));
+  _spawnPoints.push_back(Vector2(_screenSizeX - _spawnSpread, _screenSizeY - _spawnSpread));
+  _spawnPoints.push_back(Vector2(_spawnSpread, _screenSizeY - _spawnSpread));
 
   InitGUI();
 }
@@ -44,14 +53,14 @@ void Application::Start()
   SDL_Renderer* renderer = VideoSystem::Get().Renderer();
 
   LoadBackground();
-  InitAsteroids();
+  //InitAsteroids();
 
   int bgx = _screenWidth / 2;
   int bgy = _screenHeight / 2;
 
   _ship.Init(0, 0);
   _ship.Scale(0.5);
-  _ship.Move(300, 300);
+  _ship.Move(_screenSizeX / 2, _screenSizeY / 2);
 
   int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipBigRole);
   if (res != -1)
@@ -106,6 +115,27 @@ void Application::Start()
     SDL_RenderPresent(renderer);
 
     GameTime::Get().MeasureAfter();
+
+    _timePassed += GameTime::Get().DeltaTimeMs();
+
+    if (_timePassed >= _currentSpawnRate)
+    {
+      int index = Util::RandomNumber() % _spawnPoints.size();
+
+      SpawnAsteroid((int)_spawnPoints[index].X(), (int)_spawnPoints[index].Y());
+
+      _currentSpawnRate -= GameMechanic::SpawnRateDeltaMs;
+
+      if (_currentSpawnRate <= GameMechanic::MaxSpawnRateMs)
+      {
+        _currentSpawnRate = GameMechanic::MaxSpawnRateMs;
+      }
+
+      _waveCounter++;
+      _timePassed = 0;
+    }
+
+    CleanAsteroids();
   }
 }
 
@@ -155,6 +185,34 @@ void Application::InitAsteroids()
     Util::CreateRandomPosition(pos, screenx, screeny);
 
     _asteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(pos, 0, &_asteroids)));
+  }
+}
+
+void Application::SpawnAsteroid(int x, int y)
+{
+  int dx = Util::RandomNumber() % _spawnSpread;
+  int dy = Util::RandomNumber() % _spawnSpread;
+
+  int posx = x + dx;
+  int posy = y + dy;
+
+  if (posx < 0) posx = 1;
+  if (posx > _screenSizeX) posx = _screenSizeX - 1;
+  if (posy < 0) posy = 1;
+  if (posy > _screenSizeY) posy = _screenSizeY - 1;
+
+  Vector2 pos(posx, posy);
+  _asteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(pos, 0, &_asteroids)));
+}
+
+void Application::CleanAsteroids()
+{
+  for (int i = 0; i < _asteroids.size(); i++)
+  {
+    if (!_asteroids[i].get()->Active())
+    {
+      _asteroids.erase(_asteroids.begin() + i);
+    }
   }
 }
 
@@ -282,9 +340,14 @@ void Application::ProcessInput()
   {
     if (_currentLives == 0)
     {
-      _currentLives = MaxLives;
+      _currentLives = _maxLives;
       if (_score > _highScore) _highScore = _score;
       _score = 0;
+      _timePassed = 0;
+      _currentSpawnRate = GameMechanic::StartingSpawnRateMs;
+      _guiSpawnRateNumber = (double)GameMechanic::StartingSpawnRateMs / (double)_currentSpawnRate;
+      _waveCounter = 0;
+      _asteroids.clear();
     }
 
     _ship.Respawn();
@@ -294,19 +357,19 @@ void Application::ProcessInput()
   {
     if (_keyboardState[SDL_SCANCODE_A])
     {
-      double d = _ship.RotationSpeed * GameTime::Get().DeltaTime();
+      double d = _ship.RotationSpeed * GameTime::Get().DeltaTimeMs();
       _ship.Rotate(_ship.Angle() - d);
     }
 
     if (_keyboardState[SDL_SCANCODE_D])
     {
-      double d = _ship.RotationSpeed * GameTime::Get().DeltaTime();
+      double d = _ship.RotationSpeed * GameTime::Get().DeltaTimeMs();
       _ship.Rotate(_ship.Angle() + d);
     }
 
     if (_keyboardState[SDL_SCANCODE_W])
     {
-      _ship.Accelerate(_ship.AccelerationSpeed * GameTime::Get().DeltaTime());
+      _ship.Accelerate(_ship.AccelerationSpeed * GameTime::Get().DeltaTimeMs());
     }
 
     if (_keyboardState[SDL_SCANCODE_SPACE])
@@ -330,7 +393,7 @@ void Application::ProcessInput()
 
     if (!_keyboardState[SDL_SCANCODE_W] && _ship.Speed() > 0.0)
     {
-      _ship.Accelerate(-_ship.AccelerationSpeed * GameTime::Get().DeltaTime());
+      _ship.Accelerate(-_ship.AccelerationSpeed * GameTime::Get().DeltaTimeMs());
     }
   }
 }
@@ -362,6 +425,16 @@ void Application::InitGUI()
 
 void Application::DrawGUI()
 {
+  _guiSpawnRateNumber = (double)GameMechanic::StartingSpawnRateMs / (double)_currentSpawnRate;
+  _guiTimeToSpawnNumber = (double)_timePassed / (double)_currentSpawnRate;
+
+  int meter = (int)(_spawnTimeMeterLength * _guiTimeToSpawnNumber);
+  _guiSpawnTimeString.clear();
+  for (int i = 0; i < meter; i++)
+  {
+    _guiSpawnTimeString.append("-");
+  }
+
   for (int i = 0; i < _currentLives; i++)
   {
     _guiLives.Draw(i * (_guiLives.ImageWrapper()->Width() * 0.2) + 10, (_guiLives.ImageWrapper()->Height() * 0.2) / 2);
@@ -397,18 +470,27 @@ void Application::DrawGUI()
   _bitmapFont->SetScale(1.0);
   _bitmapFont->Printf(_screenSizeX - 25, 16, BitmapFont::AlignRight, (char*)_ship.ShieldPointsBar().data());
 
+  _bitmapFont->SetTextColor(255, 255, 255, 255);
+  _bitmapFont->SetScale(1.0);
+  _bitmapFont->Printf(_screenSizeX - 25, 32, BitmapFont::AlignRight, "Wave: %i", _waveCounter);
+  _bitmapFont->Printf(_screenSizeX - _spawnTimeMeterLength * (_bitmapFont->LetterWidth / 2), 48, BitmapFont::AlignLeft, (char*)_guiSpawnTimeString.data());
+  _bitmapFont->SetScale(0.75);
+  _bitmapFont->Printf(_screenSizeX - 25, 64, BitmapFont::AlignRight, "(spawn rate: %.2f)", _guiSpawnRateNumber);
+
   if (!_ship.Active())
   {
-    _bitmapFont->SetTextColor(255, 255, 0, 255);
-    _bitmapFont->SetScale(4.0);
     if (_currentLives > 0)
     {
-      _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY / 2 - _bitmapFont->LetterWidth,
-                                               BitmapFont::AlignCenter, "PRESS ENTER TO RESPAWN");
+      _bitmapFont->SetTextColor(255, 255, 0, 255);
+      _bitmapFont->SetScale(2.0);
+      _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY - _bitmapFont->LetterWidth * 2,
+                                               BitmapFont::AlignCenter, "Hit enter to respawn");
     }
     else
     {
-      _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY / 2 - _bitmapFont->LetterWidth,
+      _bitmapFont->SetTextColor(255, 255, 0, 255);
+      _bitmapFont->SetScale(4.0);
+      _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY / 2 - _bitmapFont->LetterWidth * 4,
                                                BitmapFont::AlignCenter, "GAME OVER");
     }
   }

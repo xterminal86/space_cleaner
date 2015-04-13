@@ -9,6 +9,7 @@ Bullet::Bullet()
   }
 
   _trail.Init(TrailLenght, 200, 210, 0.1, 1.0, _bulletSprite.ImageWrapper());
+  _trail.TurnOff();
 
   _position.ToZero();
   _direction.ToZero();
@@ -50,8 +51,8 @@ void Bullet::Compute()
   int sx = VideoSystem::Get().ScreenDimensions().x;
   int sy = VideoSystem::Get().ScreenDimensions().y;
 
-  double dx = _direction.X() * _bulletSpeed * GameTime::Get().DeltaTime();
-  double dy = _direction.Y() * _bulletSpeed * GameTime::Get().DeltaTime();
+  double dx = _direction.X() * _bulletSpeed * GameTime::Get().DeltaTimeMs();
+  double dy = _direction.Y() * _bulletSpeed * GameTime::Get().DeltaTimeMs();
 
   _position.Set(_position.X() + dx, _position.Y() + dy);
 

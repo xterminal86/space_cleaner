@@ -34,14 +34,25 @@ class Application
     const int _screenHeight = 600;
     const int _maxExplosions = 20;
     const int _backgroundStars = 100;
-    const int MaxLives = 3;
+    const int _maxLives = 3;
+    const int _maxSpawnedAsteroids = 10;
+    const int _spawnSpread = 100;
 
+    const double _spawnTimeMeterLength = 20.0;
     const double _bigAsteroidExplosionScale = 1.5;
 
     unsigned int _score;
     unsigned int _highScore;
+    unsigned int _timePassed;
+    unsigned int _currentSpawnRate;
+
+    double _guiSpawnRateNumber;
+    double _guiTimeToSpawnNumber;
+
+    std::string _guiSpawnTimeString;
 
     int _currentLives;
+    int _waveCounter;
 
     int _hitPointsColorDelta;
     int _shipHitPointsHalf;
@@ -71,9 +82,12 @@ class Application
     void ProcessInput();
     void InitGUI();
     void DrawGUI();
+    void SpawnAsteroid(int x, int y);
+    void CleanAsteroids();
 
     std::vector<std::unique_ptr<Asteroid>> _asteroids;
     std::vector<Star> _stars;
+    std::vector<Vector2> _spawnPoints;
 
     AnimationsPool _asteroidExplosion;
     AnimationsPool _shipExplosion;
