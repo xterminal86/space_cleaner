@@ -180,6 +180,8 @@ void Application::ProcessCollisions()
 
             bullet.get()->SetActive(false);
 
+            _score += _asteroids[i].get()->CurrentBreakdownLevel();
+
             break;
           }
         }
@@ -343,9 +345,9 @@ void Application::InitGUI()
 
 void Application::DrawGUI()
 {
-  _bitmapFont->SetTextColor(0, 255, 255, 255);
+  _bitmapFont->SetTextColor(255, 255, 255, 255);
   _bitmapFont->SetScale(2.0);
-  _bitmapFont->Printf(0, 0, BitmapFont::AlignLeft, "Score:%u", _score);
+  _bitmapFont->Printf(_screenSizeX / 2, 0, BitmapFont::AlignCenter, "%u", _score);
 
   int r = (_ship.ShipMaxHitPoints - _ship.HitPoints()) * _hitPointsColorDelta;
   int g = 255;
@@ -358,18 +360,14 @@ void Application::DrawGUI()
 
   _bitmapFont->SetTextColor(r, g, 0, 255);
   _bitmapFont->SetScale(2.0);
-  _bitmapFont->Printf(_screenSizeX, 0, BitmapFont::AlignRight, (char*)_ship.HitPointsBar().data());
+  _bitmapFont->Printf(_screenSizeX - _guiHeart.ImageWrapper()->Width() + 10, 0, BitmapFont::AlignRight, (char*)_ship.HitPointsBar().data());
 
-  _guiHeart.Draw(_screenSizeX - (_ship.ShipMaxHitPoints * _bitmapFont->LetterWidth) - 20, _bitmapFont->LetterWidth);
-  _guiShield.Draw(_screenSizeX - (_ship.ShieldMaxPoints * _bitmapFont->LetterWidth) - 20, 48);
+  _guiHeart.Draw(_screenSizeX - _guiHeart.ImageWrapper()->Width() / 2, _bitmapFont->LetterWidth);
+  _guiShield.Draw(_screenSizeX - _guiShield.ImageWrapper()->Width() / 2, 48);
 
   int a = 255 - (_ship.ShieldMaxPoints - _ship.ShieldPoints()) * _shieldColorAlphaDelta;
 
   _bitmapFont->SetTextColor(0, 255, 255, a);
   _bitmapFont->SetScale(2.0);
-  _bitmapFont->Printf(_screenSizeX, 32, BitmapFont::AlignRight, (char*)_ship.ShieldPointsBar().data());
-
-  _bitmapFont->SetTextColor(255, 255, 0, 255);
-  _bitmapFont->SetScale(2.0f);
-  _bitmapFont->Printf(_screenSizeX / 2, 0, BitmapFont::AlignCenter, "*** SPACE CLEANER ***");
+  _bitmapFont->Printf(_screenSizeX - _guiShield.ImageWrapper()->Width() + 10, 32, BitmapFont::AlignRight, (char*)_ship.ShieldPointsBar().data());
 }

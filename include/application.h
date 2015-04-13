@@ -37,6 +37,7 @@ class Application
     const double _bigAsteroidExplosionScale = 1.5;
 
     unsigned int _score;
+
     int _hitPointsColorDelta;
     int _shipHitPointsHalf;
     int _shieldColorAlphaDelta;

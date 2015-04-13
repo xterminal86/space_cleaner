@@ -136,6 +136,7 @@ void Asteroid::ProcessCollision()
   }
   else
   {
+    _currentBreakdownLevel++;
     _active = false;
   }
 }
