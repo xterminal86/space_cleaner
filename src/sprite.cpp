@@ -86,7 +86,7 @@ void Sprite::CalculateSATAxes()
   _collisionInfo.SatAxesV2Ref = &_projectionAxesV2;
 }
 
-int Sprite::Init(int textureIndex)
+int Sprite::Init(int textureIndex, bool forceSkipCollider)
 {
   _imageWrapper = TextureManager::Get().GetTextureWrapper(textureIndex);
 
@@ -111,6 +111,8 @@ int Sprite::Init(int textureIndex)
   _destRect.y = _screenY;
   _destRect.w = _imageWrapper->Width() * _scaleFactor;
   _destRect.h = _imageWrapper->Height() * _scaleFactor;
+
+  if (forceSkipCollider) return 0;
 
   _originalCollider = TextureManager::Get().GetCollider(textureIndex);
 

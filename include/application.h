@@ -34,9 +34,14 @@ class Application
     const int _screenHeight = 600;
     const int _maxExplosions = 20;
     const int _backgroundStars = 100;
+    const int MaxLives = 3;
+
     const double _bigAsteroidExplosionScale = 1.5;
 
     unsigned int _score;
+    unsigned int _highScore;
+
+    int _currentLives;
 
     int _hitPointsColorDelta;
     int _shipHitPointsHalf;
@@ -53,6 +58,7 @@ class Application
 
     Sprite _guiHeart;
     Sprite _guiShield;
+    Sprite _guiLives;
 
     Ship _ship;
 

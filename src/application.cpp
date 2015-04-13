@@ -14,6 +14,8 @@ Application::Application()
   _fireTrigger = false;
 
   _score = 0;
+  _highScore = 0;
+  _currentLives = MaxLives;
 
   _keyboardState = nullptr;
 
@@ -253,6 +255,7 @@ void Application::HandleCollisions()
       _ship.SetActive(false);
       _shipExplosion.Play(_ship.Position().X(), _ship.Position().Y(), 1.0);
       _shipDebris.Play(_ship.Position());
+      _currentLives--;
     }
   }
 }
@@ -277,6 +280,13 @@ void Application::ProcessInput()
 
   if (_keyboardState[SDL_SCANCODE_RETURN] && !_ship.Active())
   {
+    if (_currentLives == 0)
+    {
+      _currentLives = MaxLives;
+      if (_score > _highScore) _highScore = _score;
+      _score = 0;
+    }
+
     _ship.Respawn();
   }
 
@@ -339,12 +349,28 @@ void Application::InitGUI()
     _guiShield.Init(index);
   }
 
-  _guiHeart.SetScaleFactor(0.5);
-  _guiShield.SetScaleFactor(0.5);
+  index = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipBigRole);
+  if (index != -1)
+  {
+    _guiLives.Init(index, true);
+  }
+
+  _guiHeart.SetScaleFactor(0.25);
+  _guiShield.SetScaleFactor(0.25);
+  _guiLives.SetScaleFactor(0.2);
 }
 
 void Application::DrawGUI()
 {
+  for (int i = 0; i < _currentLives; i++)
+  {
+    _guiLives.Draw(i * (_guiLives.ImageWrapper()->Width() * 0.2) + 10, (_guiLives.ImageWrapper()->Height() * 0.2) / 2);
+  }
+
+  _bitmapFont->SetTextColor(255, 255, 255, 255);
+  _bitmapFont->SetScale(1.0);
+  _bitmapFont->Printf(0, 32, BitmapFont::AlignLeft, "Record: %u", _highScore);
+
   _bitmapFont->SetTextColor(255, 255, 255, 255);
   _bitmapFont->SetScale(2.0);
   _bitmapFont->Printf(_screenSizeX / 2, 0, BitmapFont::AlignCenter, "%u", _score);
@@ -359,15 +385,31 @@ void Application::DrawGUI()
   }
 
   _bitmapFont->SetTextColor(r, g, 0, 255);
-  _bitmapFont->SetScale(2.0);
-  _bitmapFont->Printf(_screenSizeX - _guiHeart.ImageWrapper()->Width() + 10, 0, BitmapFont::AlignRight, (char*)_ship.HitPointsBar().data());
+  _bitmapFont->SetScale(1.0);
+  _bitmapFont->Printf(_screenSizeX - 25, 0, BitmapFont::AlignRight, (char*)_ship.HitPointsBar().data());
 
-  _guiHeart.Draw(_screenSizeX - _guiHeart.ImageWrapper()->Width() / 2, _bitmapFont->LetterWidth);
-  _guiShield.Draw(_screenSizeX - _guiShield.ImageWrapper()->Width() / 2, 48);
+  _guiHeart.Draw(_screenSizeX - 16, 8);
+  _guiShield.Draw(_screenSizeX - 16, 25);
 
   int a = 255 - (_ship.ShieldMaxPoints - _ship.ShieldPoints()) * _shieldColorAlphaDelta;
 
   _bitmapFont->SetTextColor(0, 255, 255, a);
-  _bitmapFont->SetScale(2.0);
-  _bitmapFont->Printf(_screenSizeX - _guiShield.ImageWrapper()->Width() + 10, 32, BitmapFont::AlignRight, (char*)_ship.ShieldPointsBar().data());
+  _bitmapFont->SetScale(1.0);
+  _bitmapFont->Printf(_screenSizeX - 25, 16, BitmapFont::AlignRight, (char*)_ship.ShieldPointsBar().data());
+
+  if (!_ship.Active())
+  {
+    _bitmapFont->SetTextColor(255, 255, 0, 255);
+    _bitmapFont->SetScale(4.0);
+    if (_currentLives > 0)
+    {
+      _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY / 2 - _bitmapFont->LetterWidth,
+                                               BitmapFont::AlignCenter, "PRESS ENTER TO RESPAWN");
+    }
+    else
+    {
+      _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY / 2 - _bitmapFont->LetterWidth,
+                                               BitmapFont::AlignCenter, "GAME OVER");
+    }
+  }
 }

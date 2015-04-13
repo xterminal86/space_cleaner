@@ -11,7 +11,7 @@ class Sprite
   public:
     Sprite();
     virtual ~Sprite();
-    int Init(int textureIndex);
+    int Init(int textureIndex, bool forceSkipCollider = false);
     void SetAngle(double angle);
     void MoveCollider(double newX, double newY);
     void Draw(int x, int y);

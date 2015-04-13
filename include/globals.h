@@ -43,7 +43,7 @@ namespace Math
 
 namespace GameMechanic
 {
-  static const int MaxAsteroids = 5;
+  static const int MaxAsteroids = 8;
   static const int AsteroidMaxBreakdownLevel = 2;
   static const int AsteroidBreakdownChildren = 4;
   static const double AsteroidBreakdownScaleFactor = 1.5;
