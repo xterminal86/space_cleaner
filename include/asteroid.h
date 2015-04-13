@@ -27,9 +27,13 @@ class Asteroid
     bool Active() { return _active; }
     int CurrentBreakdownLevel() { return _currentBreakdownLevel; }
 
+    static int Instances() { return _instances; }
+
   protected:
   private:
     Sprite _asteroidSprite;
+
+    static int _instances;
 
     // Comes from Application
     std::vector<std::unique_ptr<Asteroid>>* _mainAsteroidsCollectionReference;

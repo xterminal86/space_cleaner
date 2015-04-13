@@ -35,8 +35,9 @@ class Application
     const int _maxExplosions = 20;
     const int _backgroundStars = 100;
     const int _maxLives = 3;
-    const int _maxSpawnedAsteroids = 10;
+    const int _maxAsteroidInstances = 30;
     const int _spawnSpread = 100;
+    const int _fancyTextColorChangeSpeed = 5;
 
     const double _spawnTimeMeterLength = 20.0;
     const double _bigAsteroidExplosionScale = 1.5;
@@ -73,6 +74,8 @@ class Application
 
     Ship _ship;
 
+    SDL_Color _respawnColor;
+
     void LoadBackground();
     void DrawBackground();
     void InitAsteroids();
@@ -84,6 +87,7 @@ class Application
     void DrawGUI();
     void SpawnAsteroid(int x, int y);
     void CleanAsteroids();
+    void CalculateFancyTextColor();
 
     std::vector<std::unique_ptr<Asteroid>> _asteroids;
     std::vector<Star> _stars;

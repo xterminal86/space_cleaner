@@ -21,6 +21,11 @@ Application::Application()
   _currentSpawnRate = GameMechanic::StartingSpawnRateMs;
   _guiSpawnRateNumber = (double)GameMechanic::StartingSpawnRateMs / (double)_currentSpawnRate;
 
+  _respawnColor.r = 255;
+  _respawnColor.g = 0;
+  _respawnColor.b = 0;
+  _respawnColor.a = 255;
+
   _keyboardState = nullptr;
 
   _hitPointsColorDelta = 255 / _ship.ShipMaxHitPoints;
@@ -122,16 +127,20 @@ void Application::Start()
     {
       int index = Util::RandomNumber() % _spawnPoints.size();
 
-      SpawnAsteroid((int)_spawnPoints[index].X(), (int)_spawnPoints[index].Y());
-
-      _currentSpawnRate -= GameMechanic::SpawnRateDeltaMs;
-
-      if (_currentSpawnRate <= GameMechanic::MaxSpawnRateMs)
+      if (Asteroid::Instances() <= _maxAsteroidInstances)
       {
-        _currentSpawnRate = GameMechanic::MaxSpawnRateMs;
+        SpawnAsteroid((int)_spawnPoints[index].X(), (int)_spawnPoints[index].Y());
+
+        _currentSpawnRate -= GameMechanic::SpawnRateDeltaMs;
+
+        if (_currentSpawnRate <= GameMechanic::MaxSpawnRateMs)
+        {
+          _currentSpawnRate = GameMechanic::MaxSpawnRateMs;
+        }
+
+        _waveCounter++;
       }
 
-      _waveCounter++;
       _timePassed = 0;
     }
 
@@ -423,8 +432,33 @@ void Application::InitGUI()
   _guiLives.SetScaleFactor(0.2);
 }
 
+void Application::CalculateFancyTextColor()
+{
+  /*
+  if (_respawnColor.r >= 255)
+  {
+    _respawnColor.r = 255;
+    _respawnColor.b += _fancyTextColorChangeSpeed;
+  }
+
+  if (_respawnColor.b >= 255)
+  {
+    _respawnColor.b = 255;
+    _respawnColor.r -= _fancyTextColorChangeSpeed;
+  }
+
+  if (_respawnColor.r < 255)
+  {
+    _respawnColor.b -= _fancyTextColorChangeSpeed;
+    _respawnColor.r += _fancyTextColorChangeSpeed;
+  }
+  */
+}
+
 void Application::DrawGUI()
 {
+  CalculateFancyTextColor();
+
   _guiSpawnRateNumber = (double)GameMechanic::StartingSpawnRateMs / (double)_currentSpawnRate;
   _guiTimeToSpawnNumber = (double)_timePassed / (double)_currentSpawnRate;
 
@@ -481,7 +515,7 @@ void Application::DrawGUI()
   {
     if (_currentLives > 0)
     {
-      _bitmapFont->SetTextColor(255, 255, 0, 255);
+      _bitmapFont->SetTextColor(_respawnColor);
       _bitmapFont->SetScale(2.0);
       _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY - _bitmapFont->LetterWidth * 2,
                                                BitmapFont::AlignCenter, "Hit enter to respawn");

@@ -12,6 +12,8 @@ Asteroid::Asteroid(Vector2 pos, int breakdownLevel, std::vector<std::unique_ptr<
 
 void Asteroid::Init(Vector2 pos, int breakdownLevel, std::vector<std::unique_ptr<Asteroid>>* mainAsteroidsCollection)
 {
+  _instances++;
+
   int res = TextureManager::Get().FindTextureByRole(GlobalStrings::AsteroidRole);
   if (res != -1)
   {
@@ -43,6 +45,7 @@ void Asteroid::Init(Vector2 pos, int breakdownLevel, std::vector<std::unique_ptr
 
 Asteroid::~Asteroid()
 {
+  _instances--;
 }
 
 void Asteroid::Move(double x, double y)
