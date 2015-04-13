@@ -10,3 +10,5 @@
 9 assets/ship/energy_shield.png
 10 assets/gui/shield.png
 11 assets/gui/heart.png
+12 assets/bullets/fire_shot_small.png
+13 assets/bullets/fire_shot2.png

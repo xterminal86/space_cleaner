@@ -30,7 +30,7 @@ class Bullet
 
     Sprite& GetSprite() { return _bulletSprite; }
 
-    const int TrailLenght = 8;
+    const int TrailLenght = 20;
 
   protected:
   private:

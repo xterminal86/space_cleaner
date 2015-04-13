@@ -39,7 +39,8 @@ void Bullet::Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed)
   Vector2 tmp = dir;
   tmp.Negate();
 
-  _trail.SetUp(shotPoint, tmp, speed / 10, angle);
+  // Look for comments in ParticleEngine::SetLifeAndSpeed for the reason why speed is 0.0
+  _trail.SetUp(shotPoint, tmp, 0.0, angle);
 }
 
 void Bullet::Compute()
