@@ -17,14 +17,17 @@ Application::Application()
   _highScore = 0;
   _timePassed = 0;
   _waveCounter = 0;
+  _fancyColorPhase = 0;
+  _fancyColorCounter = 0;
+  _fancyColorDelta = 10;
   _currentLives = _maxLives;
   _currentSpawnRate = GameMechanic::StartingSpawnRateMs;
   _guiSpawnRateNumber = (double)GameMechanic::StartingSpawnRateMs / (double)_currentSpawnRate;
 
-  _respawnColor.r = 255;
-  _respawnColor.g = 0;
-  _respawnColor.b = 0;
-  _respawnColor.a = 255;
+  _fancyTextColor.r = 255;
+  _fancyTextColor.g = 0;
+  _fancyTextColor.b = 0;
+  _fancyTextColor.a = 255;
 
   _keyboardState = nullptr;
 
@@ -127,7 +130,7 @@ void Application::Start()
     {
       int index = Util::RandomNumber() % _spawnPoints.size();
 
-      if (Asteroid::Instances() <= _maxAsteroidInstances)
+      if (Asteroid::Instances() <= _maxAsteroidInstances && _ship.Active())
       {
         SpawnAsteroid((int)_spawnPoints[index].X(), (int)_spawnPoints[index].Y());
 
@@ -347,7 +350,7 @@ void Application::ProcessInput()
 
   if (_keyboardState[SDL_SCANCODE_RETURN] && !_ship.Active())
   {
-    if (_currentLives == 0)
+    if (_currentLives < 0)
     {
       _currentLives = _maxLives;
       if (_score > _highScore) _highScore = _score;
@@ -434,25 +437,38 @@ void Application::InitGUI()
 
 void Application::CalculateFancyTextColor()
 {
-  /*
-  if (_respawnColor.r >= 255)
+  _fancyColorCounter += _fancyColorDelta;
+
+  if (_fancyColorCounter <= 0)
   {
-    _respawnColor.r = 255;
-    _respawnColor.b += _fancyTextColorChangeSpeed;
+    _fancyColorCounter = 0;
+    _fancyColorPhase++;
+    _fancyColorDelta *= -1;
   }
 
-  if (_respawnColor.b >= 255)
+  if (_fancyColorCounter >= 255)
   {
-    _respawnColor.b = 255;
-    _respawnColor.r -= _fancyTextColorChangeSpeed;
+    _fancyColorCounter = 255;
+    _fancyColorPhase++;
+    _fancyColorDelta *= -1;
   }
 
-  if (_respawnColor.r < 255)
+  if (_fancyColorPhase > 5) _fancyColorPhase = 0;
+
+  if (_fancyColorPhase == 0 || _fancyColorPhase == 3)
   {
-    _respawnColor.b -= _fancyTextColorChangeSpeed;
-    _respawnColor.r += _fancyTextColorChangeSpeed;
+    _fancyTextColor.g = _fancyColorCounter;
   }
-  */
+
+  if (_fancyColorPhase == 1 || _fancyColorPhase == 4)
+  {
+    _fancyTextColor.r = _fancyColorCounter;
+  }
+
+  if (_fancyColorPhase == 2 || _fancyColorPhase == 5)
+  {
+    _fancyTextColor.b = _fancyColorCounter;
+  }
 }
 
 void Application::DrawGUI()
@@ -513,9 +529,9 @@ void Application::DrawGUI()
 
   if (!_ship.Active())
   {
-    if (_currentLives > 0)
+    if (_currentLives >= 0)
     {
-      _bitmapFont->SetTextColor(_respawnColor);
+      _bitmapFont->SetTextColor(_fancyTextColor);
       _bitmapFont->SetScale(2.0);
       _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY - _bitmapFont->LetterWidth * 2,
                                                BitmapFont::AlignCenter, "Hit enter to respawn");

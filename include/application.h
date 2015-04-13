@@ -46,6 +46,9 @@ class Application
     unsigned int _highScore;
     unsigned int _timePassed;
     unsigned int _currentSpawnRate;
+    int _fancyColorCounter;
+    unsigned int _fancyColorPhase;
+    int _fancyColorDelta;
 
     double _guiSpawnRateNumber;
     double _guiTimeToSpawnNumber;
@@ -74,7 +77,7 @@ class Application
 
     Ship _ship;
 
-    SDL_Color _respawnColor;
+    SDL_Color _fancyTextColor;
 
     void LoadBackground();
     void DrawBackground();
