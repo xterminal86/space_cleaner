@@ -21,6 +21,11 @@ Application::Application()
   _hitPointsColorDelta *= 2;
   _shipHitPointsHalf = _ship.ShipMaxHitPoints / 2;
   _shieldColorAlphaDelta = 128 / _ship.ShieldMaxPoints;
+
+  _screenSizeX = VideoSystem::Get().ScreenDimensions().x;
+  _screenSizeY = VideoSystem::Get().ScreenDimensions().y;
+
+  InitGUI();
 }
 
 Application::~Application()
@@ -318,10 +323,28 @@ void Application::ProcessInput()
   }
 }
 
+void Application::InitGUI()
+{
+  int index = TextureManager::Get().FindTextureByRole(GlobalStrings::GUIHeartRole);
+  if (index != -1)
+  {
+    _guiHeart.Init(index);
+  }
+
+  index = TextureManager::Get().FindTextureByRole(GlobalStrings::GUIShieldRole);
+  if (index != -1)
+  {
+    _guiShield.Init(index);
+  }
+
+  _guiHeart.SetScaleFactor(0.5);
+  _guiShield.SetScaleFactor(0.5);
+}
+
 void Application::DrawGUI()
 {
   _bitmapFont->SetTextColor(0, 255, 255, 255);
-  _bitmapFont->SetScale(2.0f);
+  _bitmapFont->SetScale(2.0);
   _bitmapFont->Printf(0, 0, BitmapFont::AlignLeft, "Score:%u", _score);
 
   int r = (_ship.ShipMaxHitPoints - _ship.HitPoints()) * _hitPointsColorDelta;
@@ -334,22 +357,19 @@ void Application::DrawGUI()
   }
 
   _bitmapFont->SetTextColor(r, g, 0, 255);
-  _bitmapFont->SetScale(2.0f);
-  _bitmapFont->Printf(VideoSystem::Get().ScreenDimensions().x, 0, BitmapFont::AlignRight, (char*)_ship.HitPointsBar().data());
+  _bitmapFont->SetScale(2.0);
+  _bitmapFont->Printf(_screenSizeX, 0, BitmapFont::AlignRight, (char*)_ship.HitPointsBar().data());
+
+  _guiHeart.Draw(_screenSizeX - (_ship.ShipMaxHitPoints * _bitmapFont->LetterWidth) - 20, _bitmapFont->LetterWidth);
+  _guiShield.Draw(_screenSizeX - (_ship.ShieldMaxPoints * _bitmapFont->LetterWidth) - 20, 48);
 
   int a = 255 - (_ship.ShieldMaxPoints - _ship.ShieldPoints()) * _shieldColorAlphaDelta;
 
   _bitmapFont->SetTextColor(0, 255, 255, a);
-  _bitmapFont->SetScale(2.0f);
-  _bitmapFont->Printf(VideoSystem::Get().ScreenDimensions().x, 16, BitmapFont::AlignRight, (char*)_ship.ShieldPointsBar().data());
-
-  /*
-  _bitmapFont->SetTextColor(0, 255, 255, 255);
-  _bitmapFont->SetScale(1.0f);
-  _bitmapFont->Printf(VideoSystem::Get().ScreenDimensions().x, 0, BitmapFont::AlignRight, "Energy: >>>>>>>>>>>>>>>>>>>>");
-  */
+  _bitmapFont->SetScale(2.0);
+  _bitmapFont->Printf(_screenSizeX, 32, BitmapFont::AlignRight, (char*)_ship.ShieldPointsBar().data());
 
   _bitmapFont->SetTextColor(255, 255, 0, 255);
   _bitmapFont->SetScale(2.0f);
-  _bitmapFont->Printf(VideoSystem::Get().ScreenDimensions().x / 2, 0, BitmapFont::AlignCenter, "*** SPACE CLEANER ***");
+  _bitmapFont->Printf(_screenSizeX / 2, 0, BitmapFont::AlignCenter, "*** SPACE CLEANER ***");
 }

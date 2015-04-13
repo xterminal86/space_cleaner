@@ -8,3 +8,5 @@
 7 default_particle
 8 font
 9 ship_shield
+10 gui_shield
+11 gui_heart

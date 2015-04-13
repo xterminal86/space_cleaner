@@ -25,6 +25,8 @@ namespace GlobalStrings
   static std::string DefaultParticleRole = "default_particle";
   static std::string FontRole = "font";
   static std::string ShipShieldRole = "ship_shield";
+  static std::string GUIShieldRole = "gui_shield";
+  static std::string GUIHeartRole = "gui_heart";
 
   static std::string ImagesFilename = "images.txt";
   static std::string LogFilename = "output_log.txt";

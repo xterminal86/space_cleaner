@@ -11,6 +11,7 @@ Sprite::Sprite()
   _scaleFactor = 1.0;
 
   _imageWrapper = nullptr;
+  _originalCollider = nullptr;
 
   _spriteColor = Colors::AsIs;
 
@@ -175,6 +176,8 @@ void Sprite::SetScaleFactor(double scaleFactor)
   _destRect.w = _imageWrapper->Width() * _scaleFactor;
   _destRect.h = _imageWrapper->Height() * _scaleFactor;
 
+  if (_originalCollider == nullptr) return;
+
   if (_convex)
   {
     for (int i = 0; i < _originalCollider->size(); i++)
@@ -205,6 +208,8 @@ void Sprite::SetScaleFactor(double scaleFactor)
 void Sprite::SetAngle(double angle)
 {
   _angle = angle;
+
+  if (_originalCollider == nullptr) return;
 
   if (_convex)
   {
@@ -244,6 +249,8 @@ void Sprite::SetAngle(double angle)
 // increment performs every frame. Therefore, three colliders.
 void Sprite::MoveCollider(double newX, double newY)
 {
+  if (_originalCollider == nullptr) return;
+
   if (_convex)
   {
     int csize = _rotatedCollider.size();

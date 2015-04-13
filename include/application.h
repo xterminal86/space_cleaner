@@ -40,6 +40,8 @@ class Application
     int _hitPointsColorDelta;
     int _shipHitPointsHalf;
     int _shieldColorAlphaDelta;
+    int _screenSizeX;
+    int _screenSizeY;
 
     bool _running;
     bool _shipHit;
@@ -47,6 +49,9 @@ class Application
 
     Sprite _backgroundStar;
     Sprite _background;
+
+    Sprite _guiHeart;
+    Sprite _guiShield;
 
     Ship _ship;
 
@@ -57,6 +62,7 @@ class Application
     void HandleCollisions();
     void ProcessExplosions();
     void ProcessInput();
+    void InitGUI();
     void DrawGUI();
 
     std::vector<std::unique_ptr<Asteroid>> _asteroids;

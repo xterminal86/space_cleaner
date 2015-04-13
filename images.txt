@@ -8,3 +8,5 @@
 7 assets/default_particle.png
 8 assets/fonts/font_fixed.png
 9 assets/ship/energy_shield.png
+10 assets/gui/shield.png
+11 assets/gui/heart.png
