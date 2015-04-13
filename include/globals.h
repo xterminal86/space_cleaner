@@ -34,6 +34,7 @@ namespace GlobalStrings
 
   static std::string ExplosionSpriteFilename = "assets/animations/explosion.png";
   static std::string ExplosionSpriteShipFilename = "assets/animations/explosion2.png";
+  static std::string SpawnAnimationFilename = "assets/animations/spawn.png";
 }
 
 namespace Math

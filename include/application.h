@@ -98,6 +98,8 @@ class Application
 
     AnimationsPool _asteroidExplosion;
     AnimationsPool _shipExplosion;
+    AnimationsPool _spawnAnimation;
+
     Explosion _shipDebris;
 
     Uint8* _keyboardState;

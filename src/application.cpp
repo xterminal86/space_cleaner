@@ -9,6 +9,7 @@ Application::Application()
 
   _asteroidExplosion.Init(GlobalStrings::ExplosionSpriteFilename, _maxExplosions, 25);
   _shipExplosion.Init(GlobalStrings::ExplosionSpriteShipFilename, 1, 25);
+  _spawnAnimation.Init(GlobalStrings::SpawnAnimationFilename, 1, 25);
 
   _shipHit = false;
   _fireTrigger = false;
@@ -215,6 +216,8 @@ void Application::SpawnAsteroid(int x, int y)
 
   Vector2 pos(posx, posy);
   _asteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(pos, 0, &_asteroids)));
+
+  _spawnAnimation.Play(posx, posy, 2.0);
 }
 
 void Application::CleanAsteroids()
@@ -334,6 +337,7 @@ void Application::ProcessExplosions()
 {
   _asteroidExplosion.Process();
   _shipExplosion.Process();
+  _spawnAnimation.Process();
   _shipDebris.Process();
 }
 
@@ -437,6 +441,8 @@ void Application::InitGUI()
 
 void Application::CalculateFancyTextColor()
 {
+  if (_ship.Active()) return;
+
   _fancyColorCounter += _fancyColorDelta;
 
   if (_fancyColorCounter <= 0)
