@@ -364,6 +364,7 @@ void Application::ProcessInput()
       _guiSpawnRateNumber = (double)GameMechanic::StartingSpawnRateMs / (double)_currentSpawnRate;
       _waveCounter = 0;
       _asteroids.clear();
+      _ship.Move(_screenSizeX / 2, _screenSizeY / 2);
     }
 
     _ship.Respawn();
