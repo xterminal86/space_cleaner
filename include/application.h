@@ -13,6 +13,7 @@
 #include "ship.h"
 #include "star.h"
 #include "asteroid.h"
+#include "powerup.h"
 #include "vector2pair.h"
 #include "util.h"
 
@@ -38,6 +39,7 @@ class Application
     const int _maxAsteroidInstances = 30;
     const int _spawnSpread = 100;
     const int _fancyTextColorChangeSpeed = 5;
+    const int _powerupsPoolSize = 10;
 
     const double _spawnTimeMeterLength = 20.0;
     const double _bigAsteroidExplosionScale = 1.5;
@@ -86,14 +88,19 @@ class Application
     void ProcessExplosions();
     void ProcessInput();
     void InitGUI();
+    void InitPowerups();
+    void ProcessPowerups();
     void DrawGUI();
     void SpawnAsteroid(int x, int y);
     void CleanAsteroids();
     void CalculateFancyTextColor();
+    void TryToSpawnAsteroid();
+    void TryToSpawnPowerup(int x, int y);
 
     std::vector<std::unique_ptr<Asteroid>> _asteroids;
     std::vector<Star> _stars;
     std::vector<Vector2> _spawnPoints;
+    std::vector<Powerup> _powerupsPool;
 
     AnimationsPool _asteroidExplosion;
     AnimationsPool _shipExplosion;

@@ -67,6 +67,14 @@ namespace GameMechanic
   // See Util::CreateRandomRotation.
   // TLDR: this value goes in denominator.
   static const int RandomRotationSpeedSpread = 10;
+
+  static const int PowerupLifetimeMs = 5000;
+}
+
+namespace Powerups
+{
+  static const int SHIELD_POWERUP = 0;
+  static const int HEALTH_POWERUP = 1;
 }
 
 namespace Colors

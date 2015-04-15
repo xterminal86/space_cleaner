@@ -44,6 +44,7 @@ Application::Application()
   _spawnPoints.push_back(Vector2(_screenSizeX - _spawnSpread, _screenSizeY - _spawnSpread));
   _spawnPoints.push_back(Vector2(_spawnSpread, _screenSizeY - _spawnSpread));
 
+  InitPowerups();
   InitGUI();
 }
 
@@ -114,8 +115,8 @@ void Application::Start()
     }
 
     ProcessCollisions();
-
     ProcessExplosions();
+    ProcessPowerups();
 
     DrawGUI();
 
@@ -125,26 +126,7 @@ void Application::Start()
 
     _timePassed += GameTime::Get().DeltaTimeMs();
 
-    if (_timePassed >= _currentSpawnRate)
-    {
-      int index = Util::RandomNumber() % _spawnPoints.size();
-
-      if (Asteroid::Instances() <= _maxAsteroidInstances && _ship.Active())
-      {
-        SpawnAsteroid((int)_spawnPoints[index].X(), (int)_spawnPoints[index].Y());
-
-        _currentSpawnRate -= GameMechanic::SpawnRateDeltaMs;
-
-        if (_currentSpawnRate <= GameMechanic::MaxSpawnRateMs)
-        {
-          _currentSpawnRate = GameMechanic::MaxSpawnRateMs;
-        }
-
-        _waveCounter++;
-      }
-
-      _timePassed = 0;
-    }
+    TryToSpawnAsteroid();
 
     CleanAsteroids();
   }
@@ -199,6 +181,47 @@ void Application::InitAsteroids()
   }
 }
 
+void Application::TryToSpawnPowerup(int x, int y)
+{
+  int chance = Util::RandomNumber() % 100;
+  if (chance >= 5) return;
+
+  int type = Util::RandomNumber() % 2;
+
+  for (auto& p : _powerupsPool)
+  {
+    if (!p.Active() && p.Type() == type)
+    {
+      p.Spawn(Vector2(x, y));
+      break;
+    }
+  }
+}
+
+void Application::TryToSpawnAsteroid()
+{
+  if (_timePassed >= _currentSpawnRate)
+  {
+    int index = Util::RandomNumber() % _spawnPoints.size();
+
+    if (Asteroid::Instances() <= _maxAsteroidInstances && _ship.Active())
+    {
+      SpawnAsteroid((int)_spawnPoints[index].X(), (int)_spawnPoints[index].Y());
+
+      _currentSpawnRate -= GameMechanic::SpawnRateDeltaMs;
+
+      if (_currentSpawnRate <= GameMechanic::MaxSpawnRateMs)
+      {
+        _currentSpawnRate = GameMechanic::MaxSpawnRateMs;
+      }
+
+      _waveCounter++;
+    }
+
+    _timePassed = 0;
+  }
+}
+
 void Application::SpawnAsteroid(int x, int y)
 {
   int dx = Util::RandomNumber() % _spawnSpread;
@@ -245,6 +268,10 @@ void Application::ProcessCollisions()
           {
             _asteroidExplosion.Play(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y(), _bigAsteroidExplosionScale / (_asteroids[i].get()->CurrentBreakdownLevel() + 1));
 
+            // Look for comments below in ship branch
+            TryToSpawnPowerup(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y());
+            _score += _asteroids[i].get()->CurrentBreakdownLevel();
+
             _asteroids[i].get()->ProcessCollision();
             //asteroid.get()->GetSprite().SetColor(Colors::Red);
             //_bitmapFont->SetTextColor(255, 255, 255, 255);
@@ -252,8 +279,6 @@ void Application::ProcessCollisions()
             //_bitmapFont->Printf(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y(), BitmapFont::AlignLeft, "Asteroid hit: %f", bullet.get()->Angle());
 
             bullet.get()->SetActive(false);
-
-            _score += _asteroids[i].get()->CurrentBreakdownLevel();
 
             break;
           }
@@ -277,7 +302,12 @@ void Application::ProcessCollisions()
                                      asteroid.get()->GetSprite().TranslatedCollider()))
            {
              _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
+
+             // Since Asteroid::ProcessCollision() involves push_back operation, and
+             // we have CleanupAsteroids method, that deletes inactive asteroids,
+             // it is better to do everything related to object's address beforehand.
              _ship.ProcessShieldCollision(asteroid.get());
+
              asteroid.get()->ProcessCollision();
              break;
            }
@@ -332,6 +362,30 @@ void Application::ProcessExplosions()
   _shipExplosion.Process();
   _spawnAnimation.Process();
   _shipDebris.Process();
+}
+
+void Application::ProcessPowerups()
+{
+  for (auto& powerup : _powerupsPool)
+  {
+    if (!powerup.Active()) continue;
+
+    powerup.Process();
+
+    if (_ship.Active() && Util::TestIntersection(_ship.GetSprite().GetCollisionInfo(), powerup.GetSprite().GetCollisionInfo()))
+    {
+      if (powerup.Type() == Powerups::HEALTH_POWERUP)
+      {
+        _ship.AddHitPoints(2);
+      }
+      else if (powerup.Type() == Powerups::SHIELD_POWERUP)
+      {
+        _ship.AddShieldPoints(2);
+      }
+
+      powerup.SetActive(false);
+    }
+  }
 }
 
 void Application::ProcessInput()
@@ -408,18 +462,39 @@ void Application::ProcessInput()
   }
 }
 
+void Application::InitPowerups()
+{
+  int poolSizeHalf = _powerupsPoolSize / 2;
+
+  for (int i = 0; i < _powerupsPoolSize; i++)
+  {
+    Powerup p;
+
+    if (i > poolSizeHalf - 1)
+    {
+      p.Create(Powerups::SHIELD_POWERUP);
+    }
+    else
+    {
+      p.Create(Powerups::HEALTH_POWERUP);
+    }
+
+    _powerupsPool.push_back(p);
+  }
+}
+
 void Application::InitGUI()
 {
   int index = TextureManager::Get().FindTextureByRole(GlobalStrings::GUIHeartRole);
   if (index != -1)
   {
-    _guiHeart.Init(index);
+    _guiHeart.Init(index, true);
   }
 
   index = TextureManager::Get().FindTextureByRole(GlobalStrings::GUIShieldRole);
   if (index != -1)
   {
-    _guiShield.Init(index);
+    _guiShield.Init(index, true);
   }
 
   index = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipBigRole);

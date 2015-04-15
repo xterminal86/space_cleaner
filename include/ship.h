@@ -40,7 +40,24 @@ class Ship
     double Angle() { return _angle; }
     int HitPoints() { return _hitPoints; }
     int ShieldPoints() { return _shieldPoints; }
+    void AddHitPoints(int value)
+    {
+      _hitPoints += value;
 
+      if (_hitPoints >= ShipMaxHitPoints)
+      {
+        _hitPoints = ShipMaxHitPoints;
+      }
+    }
+    void AddShieldPoints(int value)
+    {
+      _shieldPoints += value;
+
+      if (_shieldPoints >= ShieldMaxPoints)
+      {
+        _shieldPoints = ShieldMaxPoints;
+      }
+    }
     bool HasBulletsActive();
     std::vector<std::unique_ptr<Bullet>>& GetBullets() { return _bullets; }
 
