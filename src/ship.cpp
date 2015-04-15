@@ -266,7 +266,18 @@ void Ship::ProcessShieldCollision(Asteroid* collidedAsteroid)
 {
   _shieldHit = true;
   _shieldColor.a = 255;
-  _shieldPoints -= ((GameMechanic::AsteroidMaxBreakdownLevel + 1) - collidedAsteroid->CurrentBreakdownLevel());
+
+  // Damage done is equal to inverse asteroid breakdown level: big asteroid will have 0 breakdown level,
+  // so it does (GameMechanic::AsteroidMaxBreakdownLevel + 1) damage. +1 is to avoid zero damage from small asteroids.
+  // If we apply the same rules of damage to shield, we can get a situation
+  // where player has only 1 shield point remaining and hits big asteroid.
+  // In such case asteroid will break and shield will be destroyed, however if player has more than
+  // (GameMechanic::AsteroidMaxBreakdownLevel + 1) shield points, they will be reduced by that number, which is not
+  // very logical.
+
+  //_shieldPoints -= ((GameMechanic::AsteroidMaxBreakdownLevel + 1) - collidedAsteroid->CurrentBreakdownLevel());
+
+  _shieldPoints -= 1;
 
   if (_shieldPoints <= 0)
   {

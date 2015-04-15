@@ -55,7 +55,7 @@ class Ship
     Vector2& Position() { return _position; }
     Vector2& Direction() { return _localDirection; }
 
-    const int MaxBullets = 50;
+    const int MaxBullets = 5;
     const int EngineTrailParticles = 50;
     const int ShipMaxHitPoints = 20;
     const int ShieldMaxPoints = 20;

@@ -8,7 +8,7 @@ Bullet::Bullet()
     _bulletSprite.Init(res);
   }
 
-  _trail.Init(TrailLenght, 200, 210, 0.1, 1.0, _bulletSprite.ImageWrapper());
+  _trail.Init(TrailLenght, 100, 110, 0.1, 0.5, _bulletSprite.ImageWrapper());
   _trail.TurnOff();
 
   _position.ToZero();
@@ -62,7 +62,7 @@ void Bullet::Compute()
   _bulletSprite.MoveCollider(_position.X(), _position.Y());
 
   //Draw(true, true);
-  Draw(false, false);
+  //Draw(false, false);
 
   if (_position.X() < 0 || _position.X() > sx || _position.Y() < 0 || _position.Y() > sy)
   {
