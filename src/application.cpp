@@ -11,7 +11,6 @@ Application::Application()
   _shipExplosion.Init(GlobalStrings::ExplosionSpriteShipFilename, 1, 25);
   _spawnAnimation.Init(GlobalStrings::SpawnAnimationFilename, 1, 25);
 
-  _shipHit = false;
   _fireTrigger = false;
 
   _score = 0;
@@ -115,7 +114,6 @@ void Application::Start()
     }
 
     ProcessCollisions();
-    HandleCollisions();
 
     ProcessExplosions();
 
@@ -266,8 +264,6 @@ void Application::ProcessCollisions()
 
   if (_ship.Active())
   {
-    _shipHit = false;
-
     for (auto &asteroid : _asteroids)
     {
       if (asteroid.get()->Active())
@@ -281,8 +277,8 @@ void Application::ProcessCollisions()
                                      asteroid.get()->GetSprite().TranslatedCollider()))
            {
              _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
+             _ship.ProcessShieldCollision(asteroid.get());
              asteroid.get()->ProcessCollision();
-             _ship.ProcessShieldCollision();
              break;
            }
          }
@@ -293,8 +289,8 @@ void Application::ProcessCollisions()
                                      asteroid.get()->GetSprite().TriangulatedTranslatedCollider()))
            {
              _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
+              _ship.ProcessShieldCollision(asteroid.get());
              asteroid.get()->ProcessCollision();
-             _ship.ProcessShieldCollision();
              break;
            }
          }
@@ -305,9 +301,10 @@ void Application::ProcessCollisions()
           {
             _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
 
+            HandleShipCollision(asteroid.get());
+
             asteroid.get()->ProcessCollision();
 
-            _shipHit = true;
             break;
           }
         }
@@ -316,20 +313,16 @@ void Application::ProcessCollisions()
   }
 }
 
-void Application::HandleCollisions()
+void Application::HandleShipCollision(Asteroid* collidedAsteroid)
 {
-  if (_shipHit)
+  _ship.ProcessCollision(collidedAsteroid);
+  if (_ship.HitPoints() <= 0)
   {
-    _shipHit = false;
-    _ship.ProcessCollision();
-    if (_ship.HitPoints() <= 0)
-    {
-      _ship.SetSpeed(0.0);
-      _ship.SetActive(false);
-      _shipExplosion.Play(_ship.Position().X(), _ship.Position().Y(), 1.0);
-      _shipDebris.Play(_ship.Position());
-      _currentLives--;
-    }
+    _ship.SetSpeed(0.0);
+    _ship.SetActive(false);
+    _shipExplosion.Play(_ship.Position().X(), _ship.Position().Y(), 1.0);
+    _shipDebris.Play(_ship.Position());
+    _currentLives--;
   }
 }
 

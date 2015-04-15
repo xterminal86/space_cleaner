@@ -257,16 +257,16 @@ void Ship::ResetEnginePoint(Vector2 newEnginePoint)
   _enginePointTranslated.Set(newEnginePoint);
 }
 
-void Ship::ProcessCollision()
+void Ship::ProcessCollision(Asteroid* collidedAsteroid)
 {
-  _hitPoints -= 1;
+  _hitPoints -= ((GameMechanic::AsteroidMaxBreakdownLevel + 1) - collidedAsteroid->CurrentBreakdownLevel());
 }
 
-void Ship::ProcessShieldCollision()
+void Ship::ProcessShieldCollision(Asteroid* collidedAsteroid)
 {
   _shieldHit = true;
   _shieldColor.a = 255;
-  _shieldPoints -= 1;
+  _shieldPoints -= ((GameMechanic::AsteroidMaxBreakdownLevel + 1) - collidedAsteroid->CurrentBreakdownLevel());
 
   if (_shieldPoints <= 0)
   {

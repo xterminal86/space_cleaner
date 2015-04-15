@@ -65,7 +65,6 @@ class Application
     int _screenSizeY;
 
     bool _running;
-    bool _shipHit;
     bool _fireTrigger;
 
     Sprite _backgroundStar;
@@ -83,7 +82,7 @@ class Application
     void DrawBackground();
     void InitAsteroids();
     void ProcessCollisions();
-    void HandleCollisions();
+    void HandleShipCollision(Asteroid* collidedAsteroid);
     void ProcessExplosions();
     void ProcessInput();
     void InitGUI();

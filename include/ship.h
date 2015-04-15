@@ -1,6 +1,7 @@
 #ifndef SHIP_H
 #define SHIP_H
 
+#include "asteroid.h"
 #include "vector2.h"
 #include "sprite.h"
 #include "bullet.h"
@@ -19,8 +20,8 @@ class Ship
     void Move();
     void Draw(bool drawCollider = false);
     void ComputeBullets();
-    void ProcessCollision();
-    void ProcessShieldCollision();
+    void ProcessCollision(Asteroid* collidedAsteroid);
+    void ProcessShieldCollision(Asteroid* collidedAsteroid);
     void Rotate(double angle);
     void Fire();
     void Scale(double scaleFactor);
