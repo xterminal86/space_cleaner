@@ -355,13 +355,18 @@ void Application::HandleShipCollision(Asteroid* collidedAsteroid)
   _ship.ProcessCollision(collidedAsteroid);
   if (_ship.HitPoints() <= 0)
   {
-    //SoundSystem::Get().PlaySound(Sounds::SHIP_EXPLODE);
+    SoundSystem::Get().PlaySound(Sounds::SHIP_EXPLODE);
 
     _ship.SetSpeed(0.0);
     _ship.SetActive(false);
     _shipExplosion.Play(_ship.Position().X(), _ship.Position().Y(), 1.0);
     _shipDebris.Play(_ship.Position());
     _currentLives--;
+
+    if (_currentLives < 0)
+    {
+      SoundSystem::Get().PlaySound(Sounds::GAME_OVER);
+    }
   }
 }
 
@@ -383,15 +388,17 @@ void Application::ProcessPowerups()
 
     if (_ship.Active() && Util::TestIntersection(_ship.GetSprite().GetCollisionInfo(), powerup.GetSprite().GetCollisionInfo()))
     {
-      SoundSystem::Get().PlaySound(Sounds::POWERUP_PICKUP);
-
       if (powerup.Type() == Powerups::HEALTH_POWERUP)
       {
-        _ship.AddHitPoints(2);
+        SoundSystem::Get().PlaySound(Sounds::POWERUP_HEALTH);
+
+        _ship.AddHitPoints(_ship.ShipMaxHitPoints / 2);
       }
       else if (powerup.Type() == Powerups::SHIELD_POWERUP)
       {
-        _ship.AddShieldPoints(2);
+        SoundSystem::Get().PlaySound(Sounds::POWERUP_SHIELD);
+
+        _ship.AddShieldPoints(_ship.ShieldMaxPoints / 2);
       }
 
       powerup.SetActive(false);

@@ -87,11 +87,13 @@ namespace Colors
 
 namespace Sounds
 {
-  static int POWERUP_PICKUP = 0;
+  static int POWERUP_HEALTH = 0;
   static int SHIP_FIRE = 1;
   static int SHIELD_HIT = 2;
   static int SHIP_EXPLODE = 3;
   static int SHIP_HIT = 4;
+  static int POWERUP_SHIELD = 5;
+  static int GAME_OVER = 6;
 }
 
 #endif // GLOBALS_H_INCLUDED

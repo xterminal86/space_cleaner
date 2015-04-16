@@ -2,7 +2,6 @@
 
 SoundSystem::SoundSystem()
 {
-  //ctor
 }
 
 SoundSystem::~SoundSystem()
