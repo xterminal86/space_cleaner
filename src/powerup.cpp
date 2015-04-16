@@ -41,9 +41,32 @@ void Powerup::Create(int type)
   }
 }
 
+void Powerup::CheckBounds()
+{
+  if (_position.X() <= _sprite.ImageWrapper()->Width())
+  {
+    _position.Set(_position.X() + _sprite.ImageWrapper()->Width(), _position.Y());
+  }
+  if (_position.X() >= VideoSystem::Get().ScreenDimensions().x - _sprite.ImageWrapper()->Width())
+  {
+    _position.Set(_position.X() - _sprite.ImageWrapper()->Width(), _position.Y());
+  }
+  if (_position.Y() <= _sprite.ImageWrapper()->Height())
+  {
+    _position.Set(_position.X(), _position.Y() + _sprite.ImageWrapper()->Height());
+  }
+  if (_position.Y() >= VideoSystem::Get().ScreenDimensions().y - _sprite.ImageWrapper()->Height())
+  {
+    _position.Set(_position.X(), _position.Y() - _sprite.ImageWrapper()->Height());
+  }
+}
+
 void Powerup::Spawn(Vector2 pos)
 {
   _position = pos;
+
+  CheckBounds();
+
   _active = true;
   _timePassedMs = 0;
 }

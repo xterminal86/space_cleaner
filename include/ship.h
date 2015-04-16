@@ -72,7 +72,7 @@ class Ship
     Vector2& Position() { return _position; }
     Vector2& Direction() { return _localDirection; }
 
-    const int MaxBullets = 5;
+    const int MaxBullets = 20;
     const int EngineTrailParticles = 50;
     const int ShipMaxHitPoints = 20;
     const int ShieldMaxPoints = 20;
@@ -82,7 +82,7 @@ class Ship
     const double AccelerationSpeed = 0.005;
     const double DefaultParticleScale = 0.15;
     const double DefaultParticleScaleIncrement = 0.01;
-    const int DefaultShieldRadius = 60;
+    const int DefaultShieldRadius = 40;
     const int ShieldFadeSpeed = 5;
 
   protected:

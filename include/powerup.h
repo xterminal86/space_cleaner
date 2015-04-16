@@ -36,6 +36,8 @@ class Powerup
     bool _active;
 
     Sprite _sprite;
+
+    void CheckBounds();
 };
 
 #endif // POWERUP_H

@@ -64,8 +64,17 @@ void Asteroid::Move()
   double newX = _position.X() + _direction.X() * (_speed * GameTime::Get().DeltaTimeMs());
   double newY = _position.Y() + _direction.Y() * (_speed * GameTime::Get().DeltaTimeMs());
 
-  if (newX < 0 || newX > VideoSystem::Get().ScreenDimensions().x) _direction.Set(-_direction.X(), _direction.Y());
-  if (newY < 0 || newY > VideoSystem::Get().ScreenDimensions().y) _direction.Set(_direction.X(), -_direction.Y());
+  if (newX < 0 || newX > VideoSystem::Get().ScreenDimensions().x)
+  {
+    _direction.Set(-_direction.X(), _direction.Y());
+    newX = _position.X() + _direction.X() * (_speed * GameTime::Get().DeltaTimeMs());
+  }
+
+  if (newY < 0 || newY > VideoSystem::Get().ScreenDimensions().y)
+  {
+    _direction.Set(_direction.X(), -_direction.Y());
+    newY = _position.Y() + _direction.Y() * (_speed * GameTime::Get().DeltaTimeMs());
+  }
 
   _position.Set(newX, newY);
   _asteroidSprite.MoveCollider(newX, newY);

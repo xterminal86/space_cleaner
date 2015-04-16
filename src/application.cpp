@@ -183,8 +183,8 @@ void Application::InitAsteroids()
 
 void Application::TryToSpawnPowerup(int x, int y)
 {
-  int chance = Util::RandomNumber() % 100;
-  if (chance >= 5) return;
+  int chance = Util::RandomNumber() % 1000;
+  if (chance >= 20) return;
 
   int type = Util::RandomNumber() % 2;
 
