@@ -8,6 +8,7 @@
 #include "texture_manager.h"
 #include "input_manager.h"
 #include "bitmapfont.h"
+#include "sound_system.h"
 #include "animations_pool.h"
 #include "explosion.h"
 #include "ship.h"
@@ -30,6 +31,7 @@ class Application
     TextureManager* _textureManager = &TextureManager::Get();
     InputManager* _inputManager = &InputManager::Get();
     BitmapFont* _bitmapFont = &BitmapFont::Get();
+    SoundSystem* _soundSystem = &SoundSystem::Get();
 
     const int _screenWidth = 1280;
     const int _screenHeight = 600;

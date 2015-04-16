@@ -43,7 +43,7 @@
 			<Add library="SDL2main" />
 			<Add library="SDL2" />
 			<Add library="SDL2_image" />
-			<Add library="fmod_vc" />
+			<Add library="fmod" />
 			<Add directory="lib/SDL2-i686-w64-mingw32/lib" />
 			<Add directory="lib/SDL2_image-i686-w64-mingw32/lib" />
 			<Add directory="lib/FMOD/lib" />
@@ -65,6 +65,7 @@
 		<Unit filename="include/png_loader.h" />
 		<Unit filename="include/powerup.h" />
 		<Unit filename="include/ship.h" />
+		<Unit filename="include/sound_system.h" />
 		<Unit filename="include/sprite.h" />
 		<Unit filename="include/star.h" />
 		<Unit filename="include/texture_manager.h" />
@@ -87,6 +88,7 @@
 		<Unit filename="src/png_loader.cpp" />
 		<Unit filename="src/powerup.cpp" />
 		<Unit filename="src/ship.cpp" />
+		<Unit filename="src/sound_system.cpp" />
 		<Unit filename="src/sprite.cpp" />
 		<Unit filename="src/star.cpp" />
 		<Unit filename="src/texture_manager.cpp" />

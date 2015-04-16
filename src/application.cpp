@@ -6,6 +6,7 @@ Application::Application()
   _videoSystem->Init(_screenWidth, _screenHeight);
   _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename);
   _bitmapFont->Init();
+  _soundSystem->Init();
 
   _asteroidExplosion.Init(GlobalStrings::ExplosionSpriteFilename, _maxExplosions, 25);
   _shipExplosion.Init(GlobalStrings::ExplosionSpriteShipFilename, 1, 25);
