@@ -1,0 +1,5 @@
+0 assets/sound/powerup.wav
+1 assets/sound/ship_fire.wav
+2 assets/sound/shield_hit.wav
+3 assets/sound/ship_explode.wav
+4 assets/sound/ship_hit.wav

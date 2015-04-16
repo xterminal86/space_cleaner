@@ -35,6 +35,8 @@ namespace GlobalStrings
   static std::string ExplosionSpriteFilename = "assets/animations/explosion.png";
   static std::string ExplosionSpriteShipFilename = "assets/animations/explosion2.png";
   static std::string SpawnAnimationFilename = "assets/animations/spawn.png";
+
+  static std::string SoundsFilename = "sounds.txt";
 }
 
 namespace Math
@@ -81,6 +83,15 @@ namespace Colors
 {
   static SDL_Color AsIs = { 255, 255, 255, 255 };
   static SDL_Color Red = { 255, 0, 0, 255 };
+}
+
+namespace Sounds
+{
+  static int POWERUP_PICKUP = 0;
+  static int SHIP_FIRE = 1;
+  static int SHIELD_HIT = 2;
+  static int SHIP_EXPLODE = 3;
+  static int SHIP_HIT = 4;
 }
 
 #endif // GLOBALS_H_INCLUDED

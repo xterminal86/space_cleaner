@@ -296,40 +296,46 @@ void Application::ProcessCollisions()
       {
         if (_ship.ShieldActive())
         {
-         if (asteroid.get()->GetSprite().Convex())
-         {
-           if (Util::PolygonVsCircle(_ship.Position(),
-                                     _ship.DefaultShieldRadius,
-                                     asteroid.get()->GetSprite().TranslatedCollider()))
-           {
-             _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
+          if (asteroid.get()->GetSprite().Convex())
+          {
+            if (Util::PolygonVsCircle(_ship.Position(),
+                                      _ship.DefaultShieldRadius,
+                                      asteroid.get()->GetSprite().TranslatedCollider()))
+            {
+              SoundSystem::Get().PlaySound(Sounds::SHIELD_HIT);
 
-             // Since Asteroid::ProcessCollision() involves push_back operation, and
-             // we have CleanupAsteroids method, that deletes inactive asteroids,
-             // it is better to do everything related to object's address beforehand.
-             _ship.ProcessShieldCollision(asteroid.get());
+              _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
 
-             asteroid.get()->ProcessCollision();
-             break;
-           }
-         }
-         else
-         {
-           if (Util::PolygonVsCircle(_ship.Position(),
-                                     _ship.DefaultShieldRadius,
-                                     asteroid.get()->GetSprite().TriangulatedTranslatedCollider()))
-           {
-             _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
+              // Since Asteroid::ProcessCollision() involves push_back operation, and
+              // we have CleanupAsteroids method, that deletes inactive asteroids,
+              // it is better to do everything related to object's address beforehand.
               _ship.ProcessShieldCollision(asteroid.get());
-             asteroid.get()->ProcessCollision();
-             break;
-           }
-         }
+
+              asteroid.get()->ProcessCollision();
+              break;
+            }
+          }
+          else
+          {
+            if (Util::PolygonVsCircle(_ship.Position(),
+                                      _ship.DefaultShieldRadius,
+                                      asteroid.get()->GetSprite().TriangulatedTranslatedCollider()))
+            {
+              SoundSystem::Get().PlaySound(Sounds::SHIELD_HIT);
+
+              _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
+               _ship.ProcessShieldCollision(asteroid.get());
+              asteroid.get()->ProcessCollision();
+              break;
+            }
+          }
         }
         else
         {
           if (Util::TestIntersection(asteroid.get()->GetSprite().GetCollisionInfo(), _ship.GetSprite().GetCollisionInfo()))
           {
+            SoundSystem::Get().PlaySound(Sounds::SHIP_HIT);
+
             _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
 
             HandleShipCollision(asteroid.get());
@@ -349,6 +355,8 @@ void Application::HandleShipCollision(Asteroid* collidedAsteroid)
   _ship.ProcessCollision(collidedAsteroid);
   if (_ship.HitPoints() <= 0)
   {
+    //SoundSystem::Get().PlaySound(Sounds::SHIP_EXPLODE);
+
     _ship.SetSpeed(0.0);
     _ship.SetActive(false);
     _shipExplosion.Play(_ship.Position().X(), _ship.Position().Y(), 1.0);
@@ -375,6 +383,8 @@ void Application::ProcessPowerups()
 
     if (_ship.Active() && Util::TestIntersection(_ship.GetSprite().GetCollisionInfo(), powerup.GetSprite().GetCollisionInfo()))
     {
+      SoundSystem::Get().PlaySound(Sounds::POWERUP_PICKUP);
+
       if (powerup.Type() == Powerups::HEALTH_POWERUP)
       {
         _ship.AddHitPoints(2);
@@ -441,6 +451,8 @@ void Application::ProcessInput()
     {
       if (!_fireTrigger)
       {
+        SoundSystem::Get().PlaySound(Sounds::SHIP_FIRE);
+
         _fireTrigger = true;
         _ship.Fire();
       }
