@@ -4,22 +4,6 @@ int Asteroid::_instances = 0;
 
 MainState::MainState()
 {
-  //ctor
-}
-
-MainState::~MainState()
-{
-  //dtor
-}
-
-void MainState::Init()
-{
-  _logger->Init(GlobalStrings::LogFilename);
-  _videoSystem->Init(_screenWidth, _screenHeight);
-  _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename);
-  _bitmapFont->Init();
-  _soundSystem->Init();
-
   _asteroidExplosion.Init(GlobalStrings::ExplosionSpriteFilename, _maxExplosions, 25);
   _shipExplosion.Init(GlobalStrings::ExplosionSpriteShipFilename, 1, 25);
   _spawnAnimation.Init(GlobalStrings::SpawnAnimationFilename, 1, 25);
@@ -75,6 +59,16 @@ void MainState::Init()
     PNGLoader* imageRef = TextureManager::Get().GetTextureWrapper(res);
     _shipDebris.Init(imageRef, 10, 1500);
   }
+}
+
+MainState::~MainState()
+{
+  //dtor
+}
+
+void MainState::Init()
+{
+
 }
 
 void MainState::Cleanup()
@@ -178,8 +172,6 @@ void MainState::Draw(Application* game)
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   SDL_RenderClear(renderer);
 
-  _background.Draw(_backgroundX, _backgroundY);
-
   DrawBackground();
 
   _ship.ComputeBullets();
@@ -243,6 +235,8 @@ void MainState::LoadBackground()
 
 void MainState::DrawBackground()
 {
+  _background.Draw(_backgroundX, _backgroundY);
+
   for (auto& i : _stars)
   {
     i.Pulse();
@@ -643,14 +637,14 @@ void MainState::DrawGUI()
     {
       _bitmapFont->SetTextColor(_fancyTextColor);
       _bitmapFont->SetScale(2.0);
-      _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY - _bitmapFont->LetterWidth * 2,
+      _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
                                                BitmapFont::AlignCenter, "Hit enter to respawn");
     }
     else
     {
       _bitmapFont->SetTextColor(255, 255, 0, 255);
       _bitmapFont->SetScale(4.0);
-      _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY / 2 - _bitmapFont->LetterWidth * 4,
+      _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY / 2 - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
                                                BitmapFont::AlignCenter, "GAME OVER");
     }
   }

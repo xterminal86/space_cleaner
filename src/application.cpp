@@ -11,7 +11,7 @@
 //
 // TLDR: The key to understand the problem, that is described by these comments,
 // is to remember, that we pass .cpp files to the compiler.
-#include "mainstate.h"
+#include "introstate.h"
 
 Application::Application()
 {
@@ -25,7 +25,7 @@ void Application::Start()
 {
   _running = true;
 
-  ChangeState(&MainState::Get());
+  ChangeState(&IntroState::Get());
 
   while (_running)
   {

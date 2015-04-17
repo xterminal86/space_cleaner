@@ -42,8 +42,9 @@ void BitmapFont::SetTextColor(SDL_Color newColor)
   SetTextColor(newColor.r, newColor.g, newColor.b, newColor.a);
 }
 
-void BitmapFont::SetScale(float scale)
+void BitmapFont::SetScale(double scale)
 {
+  _scaleFactor = scale;
   _scaledLetterWidth = LetterWidth * scale;
   _lettersDistance = (int)(_scaledLetterWidth / 2);
 }

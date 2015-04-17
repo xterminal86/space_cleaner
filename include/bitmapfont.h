@@ -23,7 +23,8 @@ class BitmapFont
     void SetTextColor(SDL_Color newColor);
     void SetTextColor(unsigned int r, unsigned int g, unsigned int b, unsigned int a);
     void SetTextColor(unsigned int r, unsigned int g, unsigned int b);
-    void SetScale(float scale);
+    void SetScale(double scale);
+    double ScaleFactor() { return _scaleFactor; }
 
     static const int AlignCenter = 0;
     static const int AlignLeft = 1;
@@ -41,7 +42,8 @@ class BitmapFont
     SDL_Color _textColor;
 
     int _lettersDistance;
-    float _scaledLetterWidth;
+    double _scaledLetterWidth;
+    double _scaleFactor;
 };
 
 #endif // BITMAPFONT_H
