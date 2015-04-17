@@ -54,7 +54,7 @@ namespace GameMechanic
   static const double AsteroidMaxSpeed = 0.125;
   static const int StartingSpawnRateMs = 10000;
   static const int MaxSpawnRateMs = 1000;
-  static const int SpawnRateDeltaMs = 500;
+  static const int SpawnRateDeltaMs = 100;
 
   // For visual debug: determines length of direction vectors
   // Because they are normalized, we have to extend them in order to see.

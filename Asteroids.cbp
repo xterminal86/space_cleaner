@@ -57,10 +57,13 @@
 		<Unit filename="include/bullet.h" />
 		<Unit filename="include/collision_info.h" />
 		<Unit filename="include/explosion.h" />
+		<Unit filename="include/gamestate.h" />
 		<Unit filename="include/gametime.h" />
 		<Unit filename="include/globals.h" />
 		<Unit filename="include/input_manager.h" />
+		<Unit filename="include/introstate.h" />
 		<Unit filename="include/logger.h" />
+		<Unit filename="include/mainstate.h" />
 		<Unit filename="include/particle_engine.h" />
 		<Unit filename="include/png_loader.h" />
 		<Unit filename="include/powerup.h" />
@@ -82,8 +85,11 @@
 		<Unit filename="src/bullet.cpp" />
 		<Unit filename="src/collision_info.cpp" />
 		<Unit filename="src/explosion.cpp" />
+		<Unit filename="src/gamestate.cpp" />
 		<Unit filename="src/input_manager.cpp" />
+		<Unit filename="src/introstate.cpp" />
 		<Unit filename="src/logger.cpp" />
+		<Unit filename="src/mainstate.cpp" />
 		<Unit filename="src/particle_engine.cpp" />
 		<Unit filename="src/png_loader.cpp" />
 		<Unit filename="src/powerup.cpp" />

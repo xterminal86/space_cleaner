@@ -1,5 +1,18 @@
 #include "application.h"
 
+// If we move the following include to application.h, as we would like to intuitively,
+// we'll get cyclic dependencies due to incomplete Application class definition.
+// So we include all the interface of Application first and then include GameState definition,
+// which is included in mainstate.h
+//
+// So, in short, we would get error either on GameState::ChangeState due to incomplete
+// type of Application, or on Application::Start -> ChangeState(...) call
+// (compilation error info is strange - something about missing } bracket).
+//
+// TLDR: The key to understand the problem, that is described by these comments,
+// is to remember, that we pass .cpp files to the compiler.
+#include "mainstate.h"
+
 Application::Application()
 {
   _logger->Init(GlobalStrings::LogFilename);
@@ -57,6 +70,21 @@ Application::~Application()
   _asteroids.clear();
 }
 
+void Application::Start()
+{
+  _running = true;
+
+  ChangeState(&MainState::Get());
+
+  while (_running)
+  {
+    HandleEvents();
+    Update();
+    Draw();
+  }
+}
+
+/*
 void Application::Start()
 {
   _running = true;
@@ -132,6 +160,44 @@ void Application::Start()
 
     CleanAsteroids();
   }
+}
+*/
+
+void Application::ChangeState(GameState* newState)
+{
+	if ( !_states.empty() )
+  {
+		_states.back()->Cleanup();
+		_states.pop_back();
+	}
+
+	_states.push_back(newState);
+	_states.back()->Init();
+}
+
+void Application::PushState(GameState* newState)
+{
+	if ( !_states.empty() )
+  {
+		_states.back()->Pause();
+	}
+
+	_states.push_back(newState);
+	_states.back()->Init();
+}
+
+void Application::PopState()
+{
+	if ( !_states.empty() )
+  {
+		_states.back()->Cleanup();
+		_states.pop_back();
+	}
+
+	if ( !_states.empty() )
+  {
+		_states.back()->Resume();
+	}
 }
 
 // ==================== Private Methods =================== //
@@ -650,4 +716,19 @@ void Application::DrawGUI()
                                                BitmapFont::AlignCenter, "GAME OVER");
     }
   }
+}
+
+void Application::HandleEvents()
+{
+  _states.back()->HandleEvents(this);
+}
+
+void Application::Update()
+{
+  _states.back()->Update(this);
+}
+
+void Application::Draw()
+{
+  _states.back()->Draw(this);
 }

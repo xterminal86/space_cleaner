@@ -18,12 +18,18 @@
 #include "vector2pair.h"
 #include "util.h"
 
+class GameState;
+
 class Application
 {
   public:
     Application();
     virtual ~Application();
     void Start();
+    void ChangeState(GameState* newState);
+    void PushState(GameState* newState);
+    void PopState();
+    void SetRunningFlag(bool value) { _running = value; }
   protected:
   private:
     Logger* _logger = &Logger::Get();
@@ -100,10 +106,16 @@ class Application
     void TryToSpawnAsteroid();
     void TryToSpawnPowerup(int x, int y);
 
+    void HandleEvents();
+    void Update();
+    void Draw();
+
     std::vector<std::unique_ptr<Asteroid>> _asteroids;
     std::vector<Star> _stars;
     std::vector<Vector2> _spawnPoints;
     std::vector<Powerup> _powerupsPool;
+
+    std::vector<GameState*> _states;
 
     AnimationsPool _asteroidExplosion;
     AnimationsPool _shipExplosion;
