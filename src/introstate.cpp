@@ -20,16 +20,10 @@ IntroState::IntroState()
   _menuStrings.push_back("NEW GAME");
   _menuStrings.push_back("OPTIONS");
   _menuStrings.push_back("HOW TO PLAY");
-  _menuStrings.push_back("INSTRUCTIONS");
+  _menuStrings.push_back("HIGH SCORES");
   _menuStrings.push_back("EXIT");
 
   _menuIndex = 0;
-
-  _menuMap[0] = nullptr;
-  _menuMap[1] = nullptr;
-  _menuMap[2] = nullptr;
-  _menuMap[3] = nullptr;
-  _menuMap[4] = &IntroState::ExitGame;
 
   _keyPressed = false;
 
@@ -79,6 +73,8 @@ void IntroState::HandleEvents(Application* game)
 
   if (_keyboardState[SDL_SCANCODE_RETURN])
   {
+    _currentMenuSelection = _menuIndex;
+
     if (_menuIndex == 4)
     {
       game->SetRunningFlag(false);
@@ -110,6 +106,11 @@ void IntroState::HandleEvents(Application* game)
       if (_menuIndex < 0) _menuIndex = 0;
       _menuItemScaleFactor = _menuItemDefaultScale;
     }
+  }
+
+  if (_keyboardState[SDL_SCANCODE_ESCAPE] && _currentMenuSelection == 2)
+  {
+    _currentMenuSelection = 0;
   }
 
   if ( (!_keyboardState[SDL_SCANCODE_DOWN] && !_keyboardState[SDL_SCANCODE_UP]) )
@@ -145,29 +146,15 @@ void IntroState::Draw(Application* game)
 
   DrawBackground();
   DrawAsteroids();
-
-  _bitmapFont->SetTextColor(255, 255, 0, 255);
-  _bitmapFont->SetScale(8.0);
-  _bitmapFont->Printf(_screenSizeX / 2,
-                      100,
-                      BitmapFont::AlignCenter,
-                      "SPACE CLEANER");
-
   DrawMenu();
 
-  _bitmapFont->SetTextColor(255, 255, 255, 255);
-  _bitmapFont->SetScale(1.0);
-  _bitmapFont->Printf(_screenSizeX / 2,
-                      _screenSizeY - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
-                      BitmapFont::AlignCenter,
-                      "(c) 2015 by xterminal86");
+  /*
+  // Visual Debug: center of screen
 
-  _bitmapFont->SetTextColor(255, 255, 255, 255);
-  _bitmapFont->SetScale(1.0);
-  _bitmapFont->Printf(_screenSizeX,
-                      _screenSizeY - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
-                      BitmapFont::AlignRight,
-                      (char*)_version.data());
+  SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+  SDL_RenderDrawLine(renderer, _screenSizeX / 2, 0, _screenSizeX / 2, _screenSizeY);
+  SDL_RenderDrawLine(renderer, 0, _screenSizeY / 2, _screenSizeX, _screenSizeY / 2);
+  */
 
   SDL_RenderPresent(renderer);
 }
@@ -219,26 +206,56 @@ void IntroState::DrawAsteroids()
 
 void IntroState::DrawMenu()
 {
-  for (int i = 0; i < _menuStrings.size(); i++)
+  _bitmapFont->SetTextColor(255, 255, 0, 255);
+  _bitmapFont->SetScale(8.0);
+  _bitmapFont->Printf(_screenSizeX / 2,
+                      100,
+                      BitmapFont::AlignCenter,
+                      "SPACE CLEANER");
+
+  if (_currentMenuSelection == 2)
   {
-    if (_menuIndex == i)
-    {
-      _bitmapFont->SetScale(_menuItemScaleFactor);
-      _bitmapFont->SetTextColor(255, 0, 255, 255);
-    }
-    else
-    {
-      _bitmapFont->SetScale(_menuItemDefaultScale);
-      _bitmapFont->SetTextColor(255, 255, 255, 255);
-    }
-
-    _bitmapFont->Printf(_screenSizeX / 2,
-                        _screenSizeY / 2 + i * 30,
-                        BitmapFont::AlignCenter,
-                        (char*)_menuStrings[i].data());
+    _bitmapFont->SetTextColor(255, 255, 255, 255);
+    _bitmapFont->SetScale(1.0);
+    _bitmapFont->Print(_screenSizeX / 2,
+                       _screenSizeY / 2,
+                       BitmapFont::AlignCenter,
+                       (char*)GlobalStrings::HowToPlayString.data());
   }
-}
+  else
+  {
+    for (int i = 0; i < _menuStrings.size(); i++)
+    {
+      if (_menuIndex == i)
+      {
+        _bitmapFont->SetScale(_menuItemScaleFactor);
+        _bitmapFont->SetTextColor(255, 0, 255, 255);
+      }
+      else
+      {
+        _bitmapFont->SetScale(_menuItemDefaultScale);
+        _bitmapFont->SetTextColor(255, 255, 255, 255);
+      }
 
-void IntroState::ExitGame()
-{
+      _bitmapFont->Printf(_screenSizeX / 2,
+                          _screenSizeY / 2 + i * 30,
+                          BitmapFont::AlignCenter,
+                          (char*)_menuStrings[i].data());
+    }
+  }
+
+  _bitmapFont->SetTextColor(255, 255, 255, 255);
+  _bitmapFont->SetScale(1.0);
+  _bitmapFont->Printf(_screenSizeX / 2,
+                      _screenSizeY - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
+                      BitmapFont::AlignCenter,
+                      "(c) 2015 by xterminal86");
+
+  _bitmapFont->SetTextColor(255, 255, 255, 255);
+  _bitmapFont->SetScale(1.0);
+  _bitmapFont->Printf(_screenSizeX,
+                      _screenSizeY - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
+                      BitmapFont::AlignRight,
+                      (char*)_version.data());
+
 }

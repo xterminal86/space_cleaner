@@ -6,6 +6,15 @@ VideoSystem::VideoSystem()
   _initialized = false;
   _renderer = nullptr;
   _window = nullptr;
+
+  FILE* f = fopen("version", "r");
+  if (f != nullptr)
+  {
+    char buf[512];
+    fgets(buf, sizeof(buf), f);
+    _buildVersion = buf;
+  }
+  fclose(f);
 }
 
 VideoSystem::~VideoSystem()
@@ -30,7 +39,8 @@ int VideoSystem::Init(int w, int h)
 		  exit(1);
 	  }
 
-    _window = SDL_CreateWindow("Space Cleaner",
+    std::string name = "Space Cleaner " + _buildVersion;
+    _window = SDL_CreateWindow(name.data(),
                               SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                               w, h,
                               SDL_WINDOW_SHOWN);

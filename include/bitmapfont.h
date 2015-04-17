@@ -41,9 +41,16 @@ class BitmapFont
 
     SDL_Color _textColor;
 
+    SDL_Rect _src, _dst;
+
+    std::vector<std::string> _splittedString;
+
     int _lettersDistance;
     double _scaledLetterWidth;
     double _scaleFactor;
+
+    void SplitText(std::string& text);
+    void PrintString(std::string& strRef, int& anchor, int x, int y);
 };
 
 #endif // BITMAPFONT_H

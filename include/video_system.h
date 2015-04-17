@@ -23,6 +23,8 @@ class VideoSystem
     SDL_Window* _window;
     SDL_DisplayMode _displayMode;
 
+    std::string _buildVersion;
+
     VideoSystem();
     ~VideoSystem();
     VideoSystem(const VideoSystem&);

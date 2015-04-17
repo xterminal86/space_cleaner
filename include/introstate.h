@@ -38,7 +38,7 @@ class IntroState : public GameState
     const int _backgroundStars = 100;
     const int _screenWidth = 1280;
     const int _screenHeight = 600;
-    const int _asteroidsCount = 5;
+    const int _asteroidsCount = 10;
     const double _menuItemDefaultScale = 2.0;
     const double _menuItemMinimalScale = 1.5;
     const double _menuItemMaximumScale = 2.25;
@@ -64,11 +64,11 @@ class IntroState : public GameState
     std::string _version;
 
     std::vector<std::string> _menuStrings;
-    std::map<int, void(IntroState::*)()> _menuMap;
 
     bool _keyPressed;
 
     int _menuIndex;
+    int _currentMenuSelection;
 
     int _screenSizeX;
     int _screenSizeY;

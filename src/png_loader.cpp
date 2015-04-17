@@ -22,6 +22,7 @@ PNGLoader::PNGLoader(std::string filename)
   // "2" - anisotropic
 
   if (filename == "assets/fonts/font_fixed.png")
+  //if (filename == "assets/fonts/white_rabbit.png")
   {
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
   }

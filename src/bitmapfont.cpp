@@ -47,49 +47,25 @@ void BitmapFont::SetScale(double scale)
   _scaleFactor = scale;
   _scaledLetterWidth = LetterWidth * scale;
   _lettersDistance = (int)(_scaledLetterWidth / 2);
+  //_lettersDistance = (int)(_scaledLetterWidth / 1.5);
 }
 
 void BitmapFont::Print(int x, int y, int anchor, std::string text)
 {
-  size_t strLength = text.length();
-
-  SDL_Rect src, dst;
-
-  dst.x = x;
-  dst.y = y;
-  dst.w = (int)_scaledLetterWidth;
-  dst.h = (int)_scaledLetterWidth;
-
-  for (int i = 0; i < strLength; i++)
+  if (text.find('\n') != std::string::npos)
   {
-    unsigned int code = text[i];
-    code -= StartingCharacter;
+    SplitText(text);
 
-    int py = code / LettersInRow;
-    int px = code % LettersInRow;
-
-    src.x = px * LetterWidth;
-    src.y = py * LetterWidth;
-    src.w = LetterWidth;
-    src.h = LetterWidth;
-
-    switch (anchor)
+    int counter = 0;
+    for (auto& s : _splittedString)
     {
-      case AlignRight:
-        dst.x = x - (strLength - i)*_lettersDistance;
-        break;
-
-      case AlignCenter:
-        dst.x = (strLength % 2 == 0) ? x - (strLength / 2 - i)*_lettersDistance : (x - (strLength / 2 - i)*_lettersDistance) - _lettersDistance / 2;
-        break;
-
-      case AlignLeft:
-      default:
-        dst.x = x + i*_lettersDistance;
-        break;
+      PrintString(s, anchor, x, y + counter*(_lettersDistance + _lettersDistance / 2));
+      counter++;
     }
-
-    SDL_RenderCopy(VideoSystem::Get().Renderer(), _font->Texture(), &src, &dst);
+  }
+  else
+  {
+    PrintString(text, anchor, x, y);
   }
 }
 
@@ -105,4 +81,65 @@ void BitmapFont::Printf(int x, int y, int anchor, char* text, ...)
 	va_end(ap);
 
 	Print(x, y, anchor, buf);
+}
+
+// ==================== Private Methods =================== //
+
+void BitmapFont::SplitText(std::string& strRef)
+{
+  _splittedString.clear();
+
+  std::string tmp(strRef);
+
+  size_t res = tmp.find('\n');
+  while (res != std::string::npos)
+  {
+    _splittedString.push_back(tmp.substr(0, res));
+    tmp = tmp.substr(res + 1, tmp.size() - res);
+    res = tmp.find('\n');
+  }
+
+  _splittedString.push_back(tmp.substr(res + 1, tmp.size() - res));
+}
+
+void BitmapFont::PrintString(std::string& strRef, int& anchor, int x, int y)
+{
+  _dst.x = x;
+  _dst.y = y;
+  _dst.w = (int)_scaledLetterWidth;
+  _dst.h = (int)_scaledLetterWidth;
+
+  size_t strLength = strRef.length();
+  for (int i = 0; i < strLength; i++)
+  {
+    unsigned int code = strRef[i];
+
+    code -= StartingCharacter;
+
+    int py = code / LettersInRow;
+    int px = code % LettersInRow;
+
+    _src.x = px * LetterWidth;
+    _src.y = py * LetterWidth;
+    _src.w = LetterWidth;
+    _src.h = LetterWidth;
+
+    switch (anchor)
+    {
+      case AlignRight:
+        _dst.x = x - (strLength - i)*_lettersDistance;
+        break;
+
+      case AlignCenter:
+        _dst.x = (strLength % 2 == 0) ? x - (strLength / 2 - i)*_lettersDistance : ((x - (strLength / 2 - i)*_lettersDistance)) - _lettersDistance / 2;
+        break;
+
+      case AlignLeft:
+      default:
+        _dst.x = x + i*_lettersDistance;
+        break;
+    }
+
+    SDL_RenderCopy(VideoSystem::Get().Renderer(), _font->Texture(), &_src, &_dst);
+  }
 }

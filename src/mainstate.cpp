@@ -259,6 +259,9 @@ void MainState::TryToSpawnPowerup(int x, int y)
 
   int type = Util::RandomNumber() % 2;
 
+  if (!_ship.ShieldActive()) type = Powerups::SHIELD_POWERUP;
+  else if (_ship.HitPoints() < _ship.ShipMaxHitPoints) type = Powerups::HEALTH_POWERUP;
+
   for (auto& p : _powerupsPool)
   {
     if (!p.Active() && p.Type() == type)

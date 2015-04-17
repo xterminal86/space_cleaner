@@ -37,6 +37,11 @@ namespace GlobalStrings
   static std::string SpawnAnimationFilename = "assets/animations/spawn.png";
 
   static std::string SoundsFilename = "sounds.txt";
+
+  static std::string HowToPlayString = \
+  "Clean the \"Space\" key of your keyboard by shooting flying asteroids!\n\n\
+- Your shield will absorb any amount of damage.\n\
+- Damage to ship's hull depends on the size of the asteroid.";
 }
 
 namespace Math
