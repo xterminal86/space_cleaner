@@ -811,10 +811,11 @@
 1399750403 source:d:\nick\sources\c++\asteroids\src\video_system.cpp
 	"video_system.h"
 
-1429283846 source:h:\sources\c++\asteroids.git\main.cpp
+1429285775 source:h:\sources\c++\asteroids.git\main.cpp
 	"application.h"
 
-1429284656 h:\sources\c++\asteroids.git\include\application.h
+1429285963 h:\sources\c++\asteroids.git\include\application.h
+	"globals.h"
 	"globals.h"
 	"logger.h"
 	"gametime.h"
@@ -1183,7 +1184,7 @@
 1421682465 h:\sources\c++\asteroids.git\include\input_manager.h
 	"globals.h"
 
-1429284621 source:h:\sources\c++\asteroids.git\src\application.cpp
+1429286829 source:h:\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 	"mainstate.h"
 
@@ -1977,9 +1978,24 @@
 1429283038 h:\sources\c++\asteroids.git\include\introstate.h
 	"gamestate.h"
 
-1429284840 h:\sources\c++\asteroids.git\include\mainstate.h
+1429286538 h:\sources\c++\asteroids.git\include\mainstate.h
 	"gamestate.h"
+	"logger.h"
+	"gametime.h"
+	"video_system.h"
+	"texture_manager.h"
+	"input_manager.h"
+	"bitmapfont.h"
+	"sound_system.h"
+	"animations_pool.h"
+	"explosion.h"
+	"ship.h"
+	"star.h"
+	"asteroid.h"
+	"powerup.h"
+	"vector2pair.h"
+	"util.h"
 
-1429281752 source:h:\sources\c++\asteroids.git\src\mainstate.cpp
+1429286560 source:h:\sources\c++\asteroids.git\src\mainstate.cpp
 	"mainstate.h"
 

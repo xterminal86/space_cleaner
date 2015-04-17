@@ -2,6 +2,9 @@
 #define APPLICATION_H
 
 #include "globals.h"
+
+/*
+#include "globals.h"
 #include "logger.h"
 #include "gametime.h"
 #include "video_system.h"
@@ -17,6 +20,7 @@
 #include "powerup.h"
 #include "vector2pair.h"
 #include "util.h"
+*/
 
 class GameState;
 
@@ -32,6 +36,15 @@ class Application
     void SetRunningFlag(bool value) { _running = value; }
   protected:
   private:
+    bool _running;
+
+    std::vector<GameState*> _states;
+
+    void HandleEvents();
+    void Update();
+    void Draw();
+
+    /*
     Logger* _logger = &Logger::Get();
     VideoSystem* _videoSystem = &VideoSystem::Get();
     TextureManager* _textureManager = &TextureManager::Get();
@@ -124,6 +137,7 @@ class Application
     Explosion _shipDebris;
 
     Uint8* _keyboardState;
+    */
 };
 
 #endif // APPLICATION_H
