@@ -1,7 +1,11 @@
-0 assets/sound/health_powerup.wav
+0 assets/sound/health_powerup_quiet.wav
 1 assets/sound/ship_fire_quiet.wav
-2 assets/sound/shield_hit.wav
-3 assets/sound/ship_explode.wav
-4 assets/sound/ship_hit.wav
-5 assets/sound/shield_powerup.wav
+2 assets/sound/shield_hit_electric_quiet.wav
+3 assets/sound/ship_explode_quiet.wav
+4 assets/sound/ship_hit_quiet.wav
+5 assets/sound/shield_powerup_quiet.wav
 6 assets/sound/gameover.wav
+7 assets/sound/shield_hit_energy_quiet.wav
+8 assets/sound/asteroid_hit2_mono_q.wav
+9 assets/sound/asteroid_spawn_quiet.wav
+10 assets/sound/asteroid_hit_mono_q.wav

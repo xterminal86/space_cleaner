@@ -16,6 +16,7 @@ Application::Application()
 
   _score = 0;
   _highScore = 0;
+  _highWave = 0;
   _timePassed = 0;
   _waveCounter = 0;
   _fancyColorPhase = 0;
@@ -240,6 +241,8 @@ void Application::SpawnAsteroid(int x, int y)
   _asteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(pos, 0, &_asteroids)));
 
   _spawnAnimation.Play(posx, posy, 2.0);
+
+  SoundSystem::Get().PlaySound(Sounds::ASTEROID_SPAWN);
 }
 
 void Application::CleanAsteroids()
@@ -267,17 +270,23 @@ void Application::ProcessCollisions()
         {
           if (_asteroids[i].get()->Active() && Util::TestIntersection(_asteroids[i].get()->GetSprite().GetCollisionInfo(), bullet.get()->GetSprite().GetCollisionInfo()))
           {
+            if (_asteroids[i].get()->CurrentBreakdownLevel() > 1)
+            {
+              SoundSystem::Get().PlaySound(Sounds::ASTEROID_HIT_SMALL);
+            }
+            else
+            {
+              SoundSystem::Get().PlaySound(Sounds::ASTEROID_HIT_BIG);
+            }
+
             _asteroidExplosion.Play(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y(), _bigAsteroidExplosionScale / (_asteroids[i].get()->CurrentBreakdownLevel() + 1));
 
             // Look for comments below in ship branch
             TryToSpawnPowerup(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y());
-            _score += _asteroids[i].get()->CurrentBreakdownLevel();
 
             _asteroids[i].get()->ProcessCollision();
-            //asteroid.get()->GetSprite().SetColor(Colors::Red);
-            //_bitmapFont->SetTextColor(255, 255, 255, 255);
-            //_bitmapFont->SetScale(0.5f);
-            //_bitmapFont->Printf(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y(), BitmapFont::AlignLeft, "Asteroid hit: %f", bullet.get()->Angle());
+
+            _score += _asteroids[i].get()->CurrentBreakdownLevel();
 
             bullet.get()->SetActive(false);
 
@@ -302,7 +311,7 @@ void Application::ProcessCollisions()
                                       _ship.DefaultShieldRadius,
                                       asteroid.get()->GetSprite().TranslatedCollider()))
             {
-              SoundSystem::Get().PlaySound(Sounds::SHIELD_HIT);
+              SoundSystem::Get().PlaySound(Sounds::SHIELD_HIT_ENERGY);
 
               _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
 
@@ -321,7 +330,7 @@ void Application::ProcessCollisions()
                                       _ship.DefaultShieldRadius,
                                       asteroid.get()->GetSprite().TriangulatedTranslatedCollider()))
             {
-              SoundSystem::Get().PlaySound(Sounds::SHIELD_HIT);
+              SoundSystem::Get().PlaySound(Sounds::SHIELD_HIT_ENERGY);
 
               _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
                _ship.ProcessShieldCollision(asteroid.get());
@@ -423,6 +432,7 @@ void Application::ProcessInput()
     {
       _currentLives = _maxLives;
       if (_score > _highScore) _highScore = _score;
+      _highWave = _waveCounter;
       _score = 0;
       _timePassed = 0;
       _currentSpawnRate = GameMechanic::StartingSpawnRateMs;
@@ -587,7 +597,8 @@ void Application::DrawGUI()
 
   _bitmapFont->SetTextColor(255, 255, 255, 255);
   _bitmapFont->SetScale(1.0);
-  _bitmapFont->Printf(0, 32, BitmapFont::AlignLeft, "Record: %u", _highScore);
+  _bitmapFont->Printf(0, 32, BitmapFont::AlignLeft, "BEST SCORE: %u", _highScore);
+  _bitmapFont->Printf(0, 48, BitmapFont::AlignLeft, "(wave: %u)", _highWave);
 
   _bitmapFont->SetTextColor(255, 255, 255, 255);
   _bitmapFont->SetScale(2.0);

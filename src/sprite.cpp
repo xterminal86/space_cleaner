@@ -13,7 +13,10 @@ Sprite::Sprite()
   _imageWrapper = nullptr;
   _originalCollider = nullptr;
 
-  _spriteColor = Colors::AsIs;
+  _spriteColor.r = 255;
+  _spriteColor.g = 255;
+  _spriteColor.b = 255;
+  _spriteColor.a = 255;
 
   _triangulated = false;
 }

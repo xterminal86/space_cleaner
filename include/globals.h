@@ -79,21 +79,19 @@ namespace Powerups
   static const int HEALTH_POWERUP = 1;
 }
 
-namespace Colors
-{
-  static SDL_Color AsIs = { 255, 255, 255, 255 };
-  static SDL_Color Red = { 255, 0, 0, 255 };
-}
-
 namespace Sounds
 {
   static int POWERUP_HEALTH = 0;
   static int SHIP_FIRE = 1;
-  static int SHIELD_HIT = 2;
+  static int SHIELD_HIT_ELECTRIC = 2;
   static int SHIP_EXPLODE = 3;
   static int SHIP_HIT = 4;
   static int POWERUP_SHIELD = 5;
   static int GAME_OVER = 6;
+  static int SHIELD_HIT_ENERGY = 7;
+  static int ASTEROID_HIT_BIG = 8;
+  static int ASTEROID_SPAWN = 9;
+  static int ASTEROID_HIT_SMALL = 10;
 }
 
 #endif // GLOBALS_H_INCLUDED
