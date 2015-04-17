@@ -90,11 +90,6 @@ void IntroState::HandleEvents(Application* game)
     }
   }
 
-  if (_keyboardState[SDL_SCANCODE_ESCAPE])
-  {
-    game->SetRunningFlag(false);
-  }
-
   if (_keyboardState[SDL_SCANCODE_DOWN])
   {
     if (!_keyPressed)
@@ -150,7 +145,29 @@ void IntroState::Draw(Application* game)
 
   DrawBackground();
   DrawAsteroids();
+
+  _bitmapFont->SetTextColor(255, 255, 0, 255);
+  _bitmapFont->SetScale(8.0);
+  _bitmapFont->Printf(_screenSizeX / 2,
+                      100,
+                      BitmapFont::AlignCenter,
+                      "SPACE CLEANER");
+
   DrawMenu();
+
+  _bitmapFont->SetTextColor(255, 255, 255, 255);
+  _bitmapFont->SetScale(1.0);
+  _bitmapFont->Printf(_screenSizeX / 2,
+                      _screenSizeY - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
+                      BitmapFont::AlignCenter,
+                      "(c) 2015 by xterminal86");
+
+  _bitmapFont->SetTextColor(255, 255, 255, 255);
+  _bitmapFont->SetScale(1.0);
+  _bitmapFont->Printf(_screenSizeX,
+                      _screenSizeY - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
+                      BitmapFont::AlignRight,
+                      (char*)_version.data());
 
   SDL_RenderPresent(renderer);
 }
@@ -202,13 +219,6 @@ void IntroState::DrawAsteroids()
 
 void IntroState::DrawMenu()
 {
-  _bitmapFont->SetTextColor(255, 255, 0, 255);
-  _bitmapFont->SetScale(8.0);
-  _bitmapFont->Printf(_screenSizeX / 2,
-                      100,
-                      BitmapFont::AlignCenter,
-                      "SPACE CLEANER");
-
   for (int i = 0; i < _menuStrings.size(); i++)
   {
     if (_menuIndex == i)
@@ -227,20 +237,6 @@ void IntroState::DrawMenu()
                         BitmapFont::AlignCenter,
                         (char*)_menuStrings[i].data());
   }
-
-  _bitmapFont->SetTextColor(255, 255, 255, 255);
-  _bitmapFont->SetScale(1.0);
-  _bitmapFont->Printf(_screenSizeX / 2,
-                      _screenSizeY - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
-                      BitmapFont::AlignCenter,
-                      "(c) 2015 by xterminal86");
-
-  _bitmapFont->SetTextColor(255, 255, 255, 255);
-  _bitmapFont->SetScale(1.0);
-  _bitmapFont->Printf(_screenSizeX,
-                      _screenSizeY - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
-                      BitmapFont::AlignRight,
-                      (char*)_version.data());
 }
 
 void IntroState::ExitGame()

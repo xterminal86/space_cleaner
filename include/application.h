@@ -16,7 +16,7 @@ class Application
     void PopState();
     void SetRunningFlag(bool value) { _running = value; }
     std::string& BuildVersionString() { return _buildVersion; }
-
+    GameState* GetCurrentState() { return _states.back(); }
   protected:
   private:
     bool _running;

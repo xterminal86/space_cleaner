@@ -119,6 +119,7 @@ class MainState : public GameState
     void CalculateFancyTextColor();
     void TryToSpawnAsteroid();
     void TryToSpawnPowerup(int x, int y);
+    void RestartGame();
 
     void HandleEvents();
     void Update();

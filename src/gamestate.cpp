@@ -9,8 +9,3 @@ GameState::~GameState()
 {
   //dtor
 }
-
-void GameState::ChangeState(Application* game, GameState* newState)
-{
-  game->ChangeState(newState);
-}

@@ -68,7 +68,7 @@ MainState::~MainState()
 
 void MainState::Init(Application* game)
 {
-
+  RestartGame();
 }
 
 void MainState::Cleanup()
@@ -92,23 +92,17 @@ void MainState::HandleEvents(Application* game)
 
   if (_keyboardState[SDL_SCANCODE_ESCAPE])
   {
-    game->SetRunningFlag(false);
+    game->PopState();
   }
 
   if (_keyboardState[SDL_SCANCODE_RETURN] && !_ship.Active())
   {
     if (_currentLives < 0)
     {
-      _currentLives = _maxLives;
       if (_score > _highScore) _highScore = _score;
       _highWave = _waveCounter;
-      _score = 0;
-      _timePassed = 0;
-      _currentSpawnRate = GameMechanic::StartingSpawnRateMs;
-      _guiSpawnRateNumber = (double)GameMechanic::StartingSpawnRateMs / (double)_currentSpawnRate;
-      _waveCounter = 0;
-      _asteroids.clear();
-      _ship.Move(_screenSizeX / 2, _screenSizeY / 2);
+
+      RestartGame();
     }
 
     _ship.Respawn();
@@ -509,6 +503,18 @@ void MainState::InitPowerups()
 
     _powerupsPool.push_back(p);
   }
+}
+
+void MainState::RestartGame()
+{
+  _currentLives = _maxLives;
+  _score = 0;
+  _timePassed = 0;
+  _currentSpawnRate = GameMechanic::StartingSpawnRateMs;
+  _guiSpawnRateNumber = (double)GameMechanic::StartingSpawnRateMs / (double)_currentSpawnRate;
+  _waveCounter = 0;
+  _asteroids.clear();
+  _ship.Move(_screenSizeX / 2, _screenSizeY / 2);
 }
 
 void MainState::InitGUI()

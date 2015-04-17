@@ -16,8 +16,6 @@ public:
   virtual void Update(Application* game) = 0;
   virtual void Draw(Application* game) = 0;
 
-  void ChangeState(Application* game, GameState* state);
-
   protected:
     GameState();
     virtual ~GameState();
