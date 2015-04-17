@@ -15,9 +15,13 @@ class Application
     void PushState(GameState* newState);
     void PopState();
     void SetRunningFlag(bool value) { _running = value; }
+    std::string& BuildVersionString() { return _buildVersion; }
+
   protected:
   private:
     bool _running;
+
+    std::string _buildVersion;
 
     std::vector<GameState*> _states;
 

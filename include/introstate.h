@@ -19,7 +19,7 @@ class IntroState : public GameState
       return _instance;
     }
 
-    void Init() override;
+    void Init(Application* game) override;
     void Cleanup() override;
 
     void Pause() override;
@@ -39,6 +39,11 @@ class IntroState : public GameState
     const int _screenWidth = 1280;
     const int _screenHeight = 600;
     const int _asteroidsCount = 5;
+    const double _menuItemDefaultScale = 2.0;
+    const double _menuItemMinimalScale = 1.5;
+    const double _menuItemMaximumScale = 2.25;
+
+    double _menuItemScaleIncrement = 0.005;
 
     Logger* _logger = &Logger::Get();
     VideoSystem* _videoSystem = &VideoSystem::Get();
@@ -56,16 +61,28 @@ class IntroState : public GameState
     std::vector<Star> _stars;
     std::vector<Vector2> _spawnPoints;
 
+    std::string _version;
+
+    std::vector<std::string> _menuStrings;
+    std::map<int, void(IntroState::*)()> _menuMap;
+
+    bool _keyPressed;
+
+    int _menuIndex;
+
     int _screenSizeX;
     int _screenSizeY;
 
     int _backgroundX;
     int _backgroundY;
 
+    double _menuItemScaleFactor;
+
     void LoadBackground();
     void DrawBackground();
     void DrawAsteroids();
     void DrawMenu();
+    void ExitGame();
 };
 
 #endif // INTROSTATE_H

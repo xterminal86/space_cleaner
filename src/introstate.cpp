@@ -17,6 +17,22 @@ IntroState::IntroState()
   _spawnPoints.push_back(Vector2(_screenSizeX - _spawnSpread, _screenSizeY - _spawnSpread));
   _spawnPoints.push_back(Vector2(_spawnSpread, _screenSizeY - _spawnSpread));
 
+  _menuStrings.push_back("NEW GAME");
+  _menuStrings.push_back("OPTIONS");
+  _menuStrings.push_back("HOW TO PLAY");
+  _menuStrings.push_back("INSTRUCTIONS");
+  _menuStrings.push_back("EXIT");
+
+  _menuIndex = 0;
+
+  _menuMap[0] = nullptr;
+  _menuMap[1] = nullptr;
+  _menuMap[2] = nullptr;
+  _menuMap[3] = nullptr;
+  _menuMap[4] = &IntroState::ExitGame;
+
+  _keyPressed = false;
+
   LoadBackground();
 
   _backgroundX = _screenWidth / 2;
@@ -29,6 +45,8 @@ IntroState::IntroState()
 
     _asteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(_spawnPoints[index], breakdown, &_asteroids)));
   }
+
+  _menuItemScaleFactor = _menuItemDefaultScale;
 }
 
 IntroState::~IntroState()
@@ -36,8 +54,9 @@ IntroState::~IntroState()
   //dtor
 }
 
-void IntroState::Init()
+void IntroState::Init(Application* game)
 {
+  _version = game->BuildVersionString();
 }
 
 void IntroState::Cleanup()
@@ -60,12 +79,66 @@ void IntroState::HandleEvents(Application* game)
 
   if (_keyboardState[SDL_SCANCODE_RETURN])
   {
-    game->PushState(&MainState::Get());
+    if (_menuIndex == 4)
+    {
+      game->SetRunningFlag(false);
+    }
+
+    if (_menuIndex == 0)
+    {
+      game->PushState(&MainState::Get());
+    }
+  }
+
+  if (_keyboardState[SDL_SCANCODE_ESCAPE])
+  {
+    game->SetRunningFlag(false);
+  }
+
+  if (_keyboardState[SDL_SCANCODE_DOWN])
+  {
+    if (!_keyPressed)
+    {
+      _keyPressed = true;
+      _menuIndex++;
+      if (_menuIndex > _menuStrings.size() - 1) _menuIndex = _menuStrings.size() - 1;
+      _menuItemScaleFactor = _menuItemDefaultScale;
+    }
+  }
+
+  if (_keyboardState[SDL_SCANCODE_UP])
+  {
+    if (!_keyPressed)
+    {
+      _keyPressed = true;
+      _menuIndex--;
+      if (_menuIndex < 0) _menuIndex = 0;
+      _menuItemScaleFactor = _menuItemDefaultScale;
+    }
+  }
+
+  if ( (!_keyboardState[SDL_SCANCODE_DOWN] && !_keyboardState[SDL_SCANCODE_UP]) )
+  {
+    _keyPressed = false;
   }
 }
 
 void IntroState::Update(Application* game)
 {
+  _menuItemScaleFactor += (_menuItemScaleIncrement * GameTime::Get().DeltaTimeMs());
+
+  if (_menuItemScaleFactor < _menuItemMinimalScale)
+  {
+    _menuItemScaleFactor = _menuItemMinimalScale;
+    _menuItemScaleIncrement = -_menuItemScaleIncrement;
+  }
+
+  if (_menuItemScaleFactor > _menuItemMaximumScale)
+  {
+    _menuItemScaleFactor = _menuItemMaximumScale;
+    _menuItemScaleIncrement = -_menuItemScaleIncrement;
+  }
+
 }
 
 void IntroState::Draw(Application* game)
@@ -132,9 +205,28 @@ void IntroState::DrawMenu()
   _bitmapFont->SetTextColor(255, 255, 0, 255);
   _bitmapFont->SetScale(8.0);
   _bitmapFont->Printf(_screenSizeX / 2,
-                      _screenSizeY / 2 - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
+                      100,
                       BitmapFont::AlignCenter,
                       "SPACE CLEANER");
+
+  for (int i = 0; i < _menuStrings.size(); i++)
+  {
+    if (_menuIndex == i)
+    {
+      _bitmapFont->SetScale(_menuItemScaleFactor);
+      _bitmapFont->SetTextColor(255, 0, 255, 255);
+    }
+    else
+    {
+      _bitmapFont->SetScale(_menuItemDefaultScale);
+      _bitmapFont->SetTextColor(255, 255, 255, 255);
+    }
+
+    _bitmapFont->Printf(_screenSizeX / 2,
+                        _screenSizeY / 2 + i * 30,
+                        BitmapFont::AlignCenter,
+                        (char*)_menuStrings[i].data());
+  }
 
   _bitmapFont->SetTextColor(255, 255, 255, 255);
   _bitmapFont->SetScale(1.0);
@@ -143,4 +235,14 @@ void IntroState::DrawMenu()
                       BitmapFont::AlignCenter,
                       "(c) 2015 by xterminal86");
 
+  _bitmapFont->SetTextColor(255, 255, 255, 255);
+  _bitmapFont->SetScale(1.0);
+  _bitmapFont->Printf(_screenSizeX,
+                      _screenSizeY - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
+                      BitmapFont::AlignRight,
+                      (char*)_version.data());
+}
+
+void IntroState::ExitGame()
+{
 }

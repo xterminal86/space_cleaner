@@ -32,7 +32,7 @@ void Asteroid::Init(Vector2 pos, int breakdownLevel, std::vector<std::unique_ptr
 
   _angleIncrement = Util::CreateRandomRotation();
 
-  _speed = GameMechanic::AsteroidMaxSpeed / (double)(Util::RandomNumber() % GameMechanic::RandomSpeedSpread + 1);
+  _speed = GameMechanic::AsteroidMaxSpeed / (double)((Util::RandomNumber() % GameMechanic::RandomSpeedSpread) + 1);
 
   _asteroidSprite.MoveCollider(pos.X(), pos.Y());
 

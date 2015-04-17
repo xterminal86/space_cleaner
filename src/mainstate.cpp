@@ -66,7 +66,7 @@ MainState::~MainState()
   //dtor
 }
 
-void MainState::Init()
+void MainState::Init(Application* game)
 {
 
 }

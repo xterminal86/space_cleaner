@@ -15,6 +15,15 @@
 
 Application::Application()
 {
+  char buf[512];
+  FILE* f = fopen("version", "r");
+  if (f != nullptr)
+  {
+    fgets(buf, sizeof(buf), f);
+  }
+  fclose(f);
+
+  _buildVersion = buf;
 }
 
 Application::~Application()
@@ -48,7 +57,7 @@ void Application::ChangeState(GameState* newState)
 	}
 
 	_states.push_back(newState);
-	_states.back()->Init();
+	_states.back()->Init(this);
 }
 
 void Application::PushState(GameState* newState)
@@ -59,7 +68,7 @@ void Application::PushState(GameState* newState)
 	}
 
 	_states.push_back(newState);
-	_states.back()->Init();
+	_states.back()->Init(this);
 }
 
 void Application::PopState()

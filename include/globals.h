@@ -51,7 +51,7 @@ namespace GameMechanic
   static const int AsteroidBreakdownChildren = 4;
   static const double AsteroidBreakdownScaleFactor = 1.5;
   static const double AsteroidInitialScaleFactor = 0.5;
-  static const double AsteroidMaxSpeed = 0.125;
+  static const double AsteroidMaxSpeed = 0.25;
   static const int StartingSpawnRateMs = 10000;
   static const int MaxSpawnRateMs = 1000;
   static const int SpawnRateDeltaMs = 100;

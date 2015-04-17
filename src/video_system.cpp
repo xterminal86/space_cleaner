@@ -30,7 +30,7 @@ int VideoSystem::Init(int w, int h)
 		  exit(1);
 	  }
 
-    _window = SDL_CreateWindow("Space Cleaner 0.1 by xterminal86",
+    _window = SDL_CreateWindow("Space Cleaner",
                               SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                               w, h,
                               SDL_WINDOW_SHOWN);

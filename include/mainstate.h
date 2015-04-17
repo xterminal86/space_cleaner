@@ -28,7 +28,7 @@ class MainState : public GameState
       return _instance;
     }
 
-    void Init() override;
+    void Init(Application* game) override;
     void Cleanup() override;
 
     void Pause() override;

@@ -80,7 +80,7 @@ void BitmapFont::Print(int x, int y, int anchor, std::string text)
         break;
 
       case AlignCenter:
-        dst.x = x - (strLength / 2 - i)*_lettersDistance;
+        dst.x = (strLength % 2 == 0) ? x - (strLength / 2 - i)*_lettersDistance : (x - (strLength / 2 - i)*_lettersDistance) - _lettersDistance / 2;
         break;
 
       case AlignLeft:
