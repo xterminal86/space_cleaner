@@ -9,6 +9,8 @@ MainState::MainState()
   _spawnAnimation.Init(GlobalStrings::SpawnAnimationFilename, 1, 25);
 
   _fireTrigger = false;
+  _quitFlag = false;
+  _keyPressed = false;
 
   _score = 0;
   _highScore = 0;
@@ -92,7 +94,28 @@ void MainState::HandleEvents(Application* game)
 
   if (_keyboardState[SDL_SCANCODE_ESCAPE])
   {
+    if (!_keyPressed)
+    {
+      SoundSystem::Get().PlaySound(Sounds::MENU_SELECT);
+
+      _keyPressed = true;
+      _quitFlag = true;
+    }
+  }
+
+  if (_quitFlag && _keyboardState[SDL_SCANCODE_Y])
+  {
+    SoundSystem::Get().PlaySound(Sounds::MENU_SELECT);
+
+    _quitFlag = false;
     game->PopState();
+  }
+
+  if (_quitFlag && _keyboardState[SDL_SCANCODE_N])
+  {
+    SoundSystem::Get().PlaySound(Sounds::MENU_BACK);
+
+    _quitFlag = false;
   }
 
   if (_keyboardState[SDL_SCANCODE_RETURN] && !_ship.Active())
@@ -152,6 +175,11 @@ void MainState::HandleEvents(Application* game)
     {
       _ship.Accelerate(-_ship.AccelerationSpeed * GameTime::Get().DeltaTimeMs());
     }
+  }
+
+  if (!_keyboardState[SDL_SCANCODE_ESCAPE])
+  {
+    _keyPressed = false;
   }
 }
 
@@ -656,5 +684,13 @@ void MainState::DrawGUI()
       _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY / 2 - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
                                                BitmapFont::AlignCenter, "GAME OVER");
     }
+  }
+
+  if (_quitFlag)
+  {
+    _bitmapFont->SetTextColor(255, 255, 0, 255);
+    _bitmapFont->SetScale(2.0);
+    _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY / 2 - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
+                                               BitmapFont::AlignCenter, "Are you sure you want to exit this game?\n(Y/N)");
   }
 }

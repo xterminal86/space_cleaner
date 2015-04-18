@@ -79,6 +79,9 @@ class MainState : public GameState
 
     std::string _guiSpawnTimeString;
 
+    bool _quitFlag;
+    bool _keyPressed;
+
     int _currentLives;
     int _waveCounter;
 
