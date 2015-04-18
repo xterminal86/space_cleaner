@@ -31,6 +31,8 @@ class TextureManager
     int FindTextureByRole(std::string rolename);
   protected:
   private:
+    static TextureManager instance;
+
     bool _initialized;
 
     std::map<int, std::unique_ptr<PNGLoader>> _textures;

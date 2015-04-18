@@ -73,16 +73,23 @@ void IntroState::HandleEvents(Application* game)
 
   if (_keyboardState[SDL_SCANCODE_RETURN])
   {
-    _currentMenuSelection = _menuIndex;
-
-    if (_menuIndex == 4)
+    if (!_keyPressed)
     {
-      game->SetRunningFlag(false);
-    }
+      _keyPressed = true;
 
-    if (_menuIndex == 0)
-    {
-      game->PushState(&MainState::Get());
+      SoundSystem::Get().PlaySound(Sounds::MENU_SELECT);
+
+      _currentMenuSelection = _menuIndex;
+
+      if (_menuIndex == 4)
+      {
+        game->SetRunningFlag(false);
+      }
+
+      if (_menuIndex == 0)
+      {
+        game->PushState(&MainState::Get());
+      }
     }
   }
 
@@ -90,6 +97,8 @@ void IntroState::HandleEvents(Application* game)
   {
     if (!_keyPressed)
     {
+      SoundSystem::Get().PlaySound(Sounds::MENU_MOVE);
+
       _keyPressed = true;
       _menuIndex++;
       if (_menuIndex > _menuStrings.size() - 1) _menuIndex = _menuStrings.size() - 1;
@@ -101,6 +110,8 @@ void IntroState::HandleEvents(Application* game)
   {
     if (!_keyPressed)
     {
+      SoundSystem::Get().PlaySound(Sounds::MENU_MOVE);
+
       _keyPressed = true;
       _menuIndex--;
       if (_menuIndex < 0) _menuIndex = 0;
@@ -110,10 +121,15 @@ void IntroState::HandleEvents(Application* game)
 
   if (_keyboardState[SDL_SCANCODE_ESCAPE] && _currentMenuSelection == 2)
   {
-    _currentMenuSelection = 0;
+    if (!_keyPressed && _currentMenuSelection != 0)
+    {
+      _keyPressed = true;
+      SoundSystem::Get().PlaySound(Sounds::MENU_BACK);
+      _currentMenuSelection = 0;
+    }
   }
 
-  if ( (!_keyboardState[SDL_SCANCODE_DOWN] && !_keyboardState[SDL_SCANCODE_UP]) )
+  if ( (!_keyboardState[SDL_SCANCODE_DOWN] && !_keyboardState[SDL_SCANCODE_UP] && !_keyboardState[SDL_SCANCODE_RETURN] && !_keyboardState[SDL_SCANCODE_ESCAPE]) )
   {
     _keyPressed = false;
   }

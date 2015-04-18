@@ -39,9 +39,10 @@ namespace GlobalStrings
   static std::string SoundsFilename = "sounds.txt";
 
   static std::string HowToPlayString = \
-  "Clean the \"Space\" key of your keyboard by shooting flying asteroids!\n\n\
+  "Clean the space by shooting down flying asteroids!\n\n\
+- Move and turn using WASD, shoot by tapping SPACE ;-)\n\
 - Your shield will absorb any amount of damage.\n\
-- Damage to ship's hull depends on the size of the asteroid.";
+- Damage to ship's hull depends on the size of the incoming asteroid.";
 }
 
 namespace Math
@@ -97,6 +98,9 @@ namespace Sounds
   static int ASTEROID_HIT_BIG = 8;
   static int ASTEROID_SPAWN = 9;
   static int ASTEROID_HIT_SMALL = 10;
+  static int MENU_MOVE = 11;
+  static int MENU_SELECT = 12;
+  static int MENU_BACK = 13;
 }
 
 #endif // GLOBALS_H_INCLUDED

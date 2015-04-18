@@ -1233,7 +1233,7 @@
 1429302383 d:\nick\sources\c++\asteroids.git\include\application.h
 	"globals.h"
 
-1429312018 d:\nick\sources\c++\asteroids.git\include\globals.h
+1429351432 d:\nick\sources\c++\asteroids.git\include\globals.h
 	<string>
 	<map>
 	<memory>
@@ -1573,7 +1573,7 @@
 1429312686 d:\nick\sources\c++\asteroids.git\include\video_system.h
 	"globals.h"
 
-1428870701 d:\nick\sources\c++\asteroids.git\include\texture_manager.h
+1429350875 d:\nick\sources\c++\asteroids.git\include\texture_manager.h
 	"png_loader.h"
 
 1419624435 d:\nick\sources\c++\asteroids.git\include\png_loader.h
@@ -1991,7 +1991,7 @@
 1429301178 source:d:\nick\sources\c++\asteroids.git\src\gamestate.cpp
 	"gamestate.h"
 
-1429312093 source:d:\nick\sources\c++\asteroids.git\src\introstate.cpp
+1429351178 source:d:\nick\sources\c++\asteroids.git\src\introstate.cpp
 	"introstate.h"
 	"mainstate.h"
 
