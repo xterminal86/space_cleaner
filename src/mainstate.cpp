@@ -304,11 +304,16 @@ void MainState::TryToSpawnAsteroid()
   {
     int index = Util::RandomNumber() % _spawnPoints.size();
 
-    if ( (_asteroidInstances <= _maxAsteroidInstances) && _ship.Active())
+    if ( (_asteroidInstances < _maxAsteroidInstances) && _ship.Active())
     {
+      SpawnAsteroid((int)_spawnPoints[index].X(), (int)_spawnPoints[index].Y());
+
       _asteroidInstances++;
 
-      SpawnAsteroid((int)_spawnPoints[index].X(), (int)_spawnPoints[index].Y());
+      if (_asteroidInstances >= _maxAsteroidInstances)
+      {
+        _asteroidInstances = _maxAsteroidInstances;
+      }
 
       _currentSpawnRate -= GameMechanic::SpawnRateDeltaMs;
 
@@ -351,7 +356,7 @@ void MainState::CleanAsteroids()
   {
     if (!_asteroids[i].get()->Active())
     {
-      if (_asteroids[i].get()->CurrentBreakdownLevel() > GameMechanic::AsteroidMaxBreakdownLevel)
+      if (_asteroids[i].get()->CurrentBreakdownLevel() == 1)
       {
         _asteroidInstances--;
         if (_asteroidInstances <= 0) _asteroidInstances = 0;
@@ -629,7 +634,7 @@ void MainState::DrawGUI()
   _guiSpawnTimeString.clear();
   for (int i = 0; i < meter; i++)
   {
-    _guiSpawnTimeString.append("-");
+    _guiSpawnTimeString.append("=");
   }
 
   for (int i = 0; i < _currentLives; i++)
@@ -672,10 +677,10 @@ void MainState::DrawGUI()
   _bitmapFont->SetScale(1.0);
   _bitmapFont->Printf(_screenSizeX - 25, 32, BitmapFont::AlignRight, "Wave: %i", _waveCounter);
   _bitmapFont->Printf(_screenSizeX - _spawnTimeMeterLength * (_bitmapFont->LetterWidth / 2), 48, BitmapFont::AlignLeft, (char*)_guiSpawnTimeString.data());
-  _bitmapFont->SetScale(0.75);
-  _bitmapFont->Printf(_screenSizeX - 25, 64, BitmapFont::AlignRight, "(spawn rate: %.2f)", _guiSpawnRateNumber);
   _bitmapFont->SetScale(1.0);
-  _bitmapFont->Printf(_screenSizeX - 25, 80, BitmapFont::AlignRight, "%i/%i", _asteroidInstances, _maxAsteroidInstances);
+  _bitmapFont->Printf(_screenSizeX - 25, 64, BitmapFont::AlignRight, "Spawned: %i/%i", _asteroidInstances, _maxAsteroidInstances);
+  _bitmapFont->SetScale(0.75);
+  _bitmapFont->Printf(_screenSizeX - 25, 80, BitmapFont::AlignRight, "(spawn rate: %.2f)", _guiSpawnRateNumber);
 
   if (!_ship.Active())
   {
