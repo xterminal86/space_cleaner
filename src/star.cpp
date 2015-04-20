@@ -43,7 +43,7 @@ void Star::Init(PNGLoader* imageRef)
   _color = c;
   _scaleFactor = 0.15 / (double)(Util::RandomNumber() % 2 + 1);
   _alpha = 0;
-  _alphaIncrement = Util::RandomNumber() % 5 + 1;
+  _alphaIncrement = (Util::RandomNumber() % 50 + 1) / 100.0;
   //_alphaIncrement = 4.0 / (double)(Util::RandomNumber() % 10 + 1);
 
   _msPassed = 0;
@@ -74,7 +74,7 @@ void Star::Pulse()
   _dstRect.w = _imageRef->Width() * _scaleFactor;
   _dstRect.h = _imageRef->Height() * _scaleFactor;
 
-  _alpha += _alphaIncrement;
+  _alpha += _alphaIncrement * GameTime::Get().DeltaTimeMs();
 
   if (_alpha > 255)
   {
