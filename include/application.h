@@ -17,6 +17,8 @@ class Application
     void SetRunningFlag(bool value) { _running = value; }
     std::string& BuildVersionString() { return _buildVersion; }
     GameState* GetCurrentState() { return _states.back(); }
+    bool LoadHighScores();
+    void StoreHighScore(HighScore score);
   protected:
   private:
     bool _running;
@@ -24,6 +26,9 @@ class Application
     std::string _buildVersion;
 
     std::vector<GameState*> _states;
+    std::vector<HighScore> _highScores;
+
+    const unsigned int _highScoreMaxEntries = 10;
 
     void HandleEvents();
     void Update();

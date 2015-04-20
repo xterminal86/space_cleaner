@@ -56,7 +56,7 @@ class MainState : public GameState
     const int _screenHeight = 600;
     const int _maxExplosions = 20;
     const int _backgroundStars = 100;
-    const int _maxLives = 2;
+    const int _maxLives = 0;
     const int _maxAsteroidInstances = 10;
     const int _spawnSpread = 100;
     const int _fancyTextColorChangeSpeed = 5;
@@ -82,6 +82,7 @@ class MainState : public GameState
 
     bool _quitFlag;
     bool _keyPressed;
+    bool _scoreWritten;
 
     int _currentLives;
     int _waveCounter;

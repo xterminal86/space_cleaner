@@ -6,7 +6,7 @@ SoundSystem::SoundSystem()
 
 SoundSystem::~SoundSystem()
 {
-  //dtor
+  FMOD_System_Release(_soundSystem);
 }
 
 void SoundSystem::Init()

@@ -9,6 +9,7 @@ MainState::MainState()
   _fireTrigger = false;
   _quitFlag = false;
   _keyPressed = false;
+  _scoreWritten = false;
 
   _score = 0;
   _highScore = 0;
@@ -120,7 +121,10 @@ void MainState::HandleEvents(Application* game)
   {
     if (_currentLives < 0)
     {
-      if (_score > _highScore) _highScore = _score;
+      if (_score > _highScore)
+      {
+        _highScore = _score;
+      }
       _highWave = _waveCounter;
 
       RestartGame();
@@ -183,6 +187,14 @@ void MainState::HandleEvents(Application* game)
 
 void MainState::Update(Application* game)
 {
+  if (_currentLives < 0 && !_scoreWritten)
+  {
+    _scoreWritten = true;
+    HighScore score;
+    score.Score = _score;
+    score.Wave = _waveCounter;
+    game->StoreHighScore(score);
+  }
 }
 
 void MainState::Draw(Application* game)
@@ -549,6 +561,7 @@ void MainState::InitPowerups()
 
 void MainState::RestartGame()
 {
+  _scoreWritten = false;
   _currentLives = _maxLives;
   _score = 0;
   _timePassed = 0;
@@ -689,14 +702,18 @@ void MainState::DrawGUI()
       _bitmapFont->SetTextColor(_fancyTextColor);
       _bitmapFont->SetScale(2.0);
       _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
-                                               BitmapFont::AlignCenter, "Hit enter to respawn");
+                                               BitmapFont::AlignCenter, "Hit ENTER to respawn");
     }
     else
     {
       _bitmapFont->SetTextColor(255, 255, 0, 255);
       _bitmapFont->SetScale(4.0);
-      _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY / 2 - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
-                                               BitmapFont::AlignCenter, "GAME OVER");
+      _bitmapFont->Printf(_screenSizeX / 2, 100, BitmapFont::AlignCenter, "GAME OVER");
+
+      _bitmapFont->SetTextColor(_fancyTextColor);
+      _bitmapFont->SetScale(2.0);
+      _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
+                                            BitmapFont::AlignCenter, "Hit ENTER to start over");
     }
   }
 
@@ -705,6 +722,6 @@ void MainState::DrawGUI()
     _bitmapFont->SetTextColor(255, 255, 0, 255);
     _bitmapFont->SetScale(2.0);
     _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY / 2 - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
-                                               BitmapFont::AlignCenter, "Are you sure you want to exit this game?\n(Y/N)");
+                                          BitmapFont::AlignCenter, "Are you sure you want to exit this game?\n(Y/N)");
   }
 }

@@ -32,6 +32,8 @@ namespace GlobalStrings
   static std::string LogFilename = "output_log.txt";
   static std::string RelationFilename = "relation.txt";
 
+  static std::string HighScoresFilename = "highscores.dat";
+
   static std::string ExplosionSpriteFilename = "assets/animations/explosion.png";
   static std::string ExplosionSpriteShipFilename = "assets/animations/explosion2.png";
   static std::string SpawnAnimationFilename = "assets/animations/spawn.png";
@@ -102,5 +104,16 @@ namespace Sounds
   static int MENU_SELECT = 12;
   static int MENU_BACK = 13;
 }
+
+#ifndef HIGH_SCORE
+#define HIGH_SCORE
+
+struct HighScore
+{
+  unsigned int Score;
+  unsigned int Wave;
+};
+
+#endif // HIGH_SCORE
 
 #endif // GLOBALS_H_INCLUDED

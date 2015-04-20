@@ -84,6 +84,14 @@ void IntroState::HandleEvents(Application* game)
         _currentMenuSelection = _menuIndex;
       }
 
+      if (_menuIndex == 3)
+      {
+        HighScore score;
+        score.Score = Util::RandomNumber() % 1000;
+        score.Wave = Util::RandomNumber() % 50;
+        game->StoreHighScore(score);
+      }
+
       if (_menuIndex == 4)
       {
         _currentMenuSelection = _menuIndex;
