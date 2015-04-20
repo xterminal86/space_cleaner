@@ -1699,7 +1699,7 @@
 1424954447 source:h:\sources\c++\asteroids.git\src\vector2pair.cpp
 	"vector2pair.h"
 
-1428948975 d:\nick\sources\c++\asteroids.git\include\asteroid.h
+1429518619 d:\nick\sources\c++\asteroids.git\include\asteroid.h
 	"gametime.h"
 	"sprite.h"
 	"vector2.h"
@@ -1708,7 +1708,7 @@
 1428428656 d:\nick\sources\c++\asteroids.git\include\vector2pair.h
 	"vector2.h"
 
-1429518011 source:d:\nick\sources\c++\asteroids.git\src\asteroid.cpp
+1429518765 source:d:\nick\sources\c++\asteroids.git\src\asteroid.cpp
 	"asteroid.h"
 
 1425061146 source:d:\nick\sources\c++\asteroids.git\src\vector2pair.cpp
@@ -1995,7 +1995,7 @@
 	"introstate.h"
 	"mainstate.h"
 
-1429352388 d:\nick\sources\c++\asteroids.git\include\mainstate.h
+1429518870 d:\nick\sources\c++\asteroids.git\include\mainstate.h
 	"gamestate.h"
 	"logger.h"
 	"gametime.h"
@@ -2013,6 +2013,6 @@
 	"vector2pair.h"
 	"util.h"
 
-1429517817 source:d:\nick\sources\c++\asteroids.git\src\mainstate.cpp
+1429518171 source:d:\nick\sources\c++\asteroids.git\src\mainstate.cpp
 	"mainstate.h"
 

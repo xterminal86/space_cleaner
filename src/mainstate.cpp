@@ -1,7 +1,5 @@
 #include "mainstate.h"
 
-int Asteroid::_instances = 0;
-
 MainState::MainState()
 {
   _asteroidExplosion.Init(GlobalStrings::ExplosionSpriteFilename, _maxExplosions, 25);
@@ -306,8 +304,10 @@ void MainState::TryToSpawnAsteroid()
   {
     int index = Util::RandomNumber() % _spawnPoints.size();
 
-    if ( (Asteroid::Instances() <= _maxAsteroidInstances) && _ship.Active())
+    if ( (_asteroidInstances <= _maxAsteroidInstances) && _ship.Active())
     {
+      _asteroidInstances++;
+
       SpawnAsteroid((int)_spawnPoints[index].X(), (int)_spawnPoints[index].Y());
 
       _currentSpawnRate -= GameMechanic::SpawnRateDeltaMs;
@@ -353,6 +353,9 @@ void MainState::CleanAsteroids()
     {
       if (_asteroids[i].get()->CurrentBreakdownLevel() > GameMechanic::AsteroidMaxBreakdownLevel)
       {
+        _asteroidInstances--;
+        if (_asteroidInstances <= 0) _asteroidInstances = 0;
+
         _asteroids.erase(_asteroids.begin() + i);
       }
     }
@@ -548,6 +551,7 @@ void MainState::RestartGame()
   _guiSpawnRateNumber = (double)GameMechanic::StartingSpawnRateMs / (double)_currentSpawnRate;
   _waveCounter = 0;
   _asteroids.clear();
+  _asteroidInstances = 0;
   _ship.Move(_screenSizeX / 2, _screenSizeY / 2);
 }
 
@@ -671,7 +675,7 @@ void MainState::DrawGUI()
   _bitmapFont->SetScale(0.75);
   _bitmapFont->Printf(_screenSizeX - 25, 64, BitmapFont::AlignRight, "(spawn rate: %.2f)", _guiSpawnRateNumber);
   _bitmapFont->SetScale(1.0);
-  _bitmapFont->Printf(_screenSizeX - 25, 80, BitmapFont::AlignRight, "%i/%i", Asteroid::Instances(), _maxAsteroidInstances);
+  _bitmapFont->Printf(_screenSizeX - 25, 80, BitmapFont::AlignRight, "%i/%i", _asteroidInstances, _maxAsteroidInstances);
 
   if (!_ship.Active())
   {

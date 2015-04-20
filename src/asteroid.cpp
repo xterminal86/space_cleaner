@@ -12,8 +12,6 @@ Asteroid::Asteroid(Vector2 pos, int breakdownLevel, std::vector<std::unique_ptr<
 
 void Asteroid::Init(Vector2 pos, int breakdownLevel, std::vector<std::unique_ptr<Asteroid>>* mainAsteroidsCollection)
 {
-  if (breakdownLevel == 0) _instances++;
-
   int res = TextureManager::Get().FindTextureByRole(GlobalStrings::AsteroidRole);
   if (res != -1)
   {
@@ -140,13 +138,6 @@ void Asteroid::ProcessCollision()
   if (_currentBreakdownLevel < GameMechanic::AsteroidMaxBreakdownLevel)
   {
     _currentBreakdownLevel++;
-
-    if (_currentBreakdownLevel == 1)
-    {
-      _instances--;
-
-      if (_instances <= 0) _instances = 0;
-    }
 
     Breakdown();
 
