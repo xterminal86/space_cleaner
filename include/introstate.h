@@ -45,6 +45,8 @@ class IntroState : public GameState
 
     double _menuItemScaleIncrement = 0.005;
 
+    Application* _gameRef;
+
     Logger* _logger = &Logger::Get();
     VideoSystem* _videoSystem = &VideoSystem::Get();
     TextureManager* _textureManager = &TextureManager::Get();
@@ -60,8 +62,6 @@ class IntroState : public GameState
     std::vector<std::unique_ptr<Asteroid>> _asteroids;
     std::vector<Star> _stars;
     std::vector<Vector2> _spawnPoints;
-
-    std::string _version;
 
     std::vector<std::string> _menuStrings;
 
@@ -82,6 +82,7 @@ class IntroState : public GameState
     void DrawBackground();
     void DrawAsteroids();
     void DrawMenu();
+    void PrintMenuText();
     void ExitGame();
 };
 

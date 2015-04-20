@@ -30,6 +30,9 @@ void Powerup::Create(int type)
       spriteIndex = TextureManager::Get().FindTextureByRole(GlobalStrings::GUIShieldRole);
       break;
 
+    case Powerups::LIFE_POWERUP:
+      spriteIndex = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipBigRole);
+      break;
     default:
       break;
   }

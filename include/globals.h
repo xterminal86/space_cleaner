@@ -85,6 +85,7 @@ namespace Powerups
 {
   static const int SHIELD_POWERUP = 0;
   static const int HEALTH_POWERUP = 1;
+  static const int LIFE_POWERUP = 2;
 }
 
 namespace Sounds
@@ -103,6 +104,7 @@ namespace Sounds
   static int MENU_MOVE = 11;
   static int MENU_SELECT = 12;
   static int MENU_BACK = 13;
+  static int POWERUP_LIFE = 14;
 }
 
 #ifndef HIGH_SCORE

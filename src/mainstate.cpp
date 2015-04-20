@@ -292,13 +292,22 @@ void MainState::InitAsteroids()
 
 void MainState::TryToSpawnPowerup(int x, int y)
 {
-  int chance = Util::RandomNumber() % 1000;
-  if (chance >= 20) return;
+  int chance = Util::RandomNumber() % 2000 + 1;
+  if (chance > 100) return;
 
-  int type = Util::RandomNumber() % 2;
+  int type = Util::RandomNumber() % 3;
 
   if (!_ship.ShieldActive()) type = Powerups::SHIELD_POWERUP;
-  else if (_ship.HitPoints() < _ship.ShipMaxHitPoints) type = Powerups::HEALTH_POWERUP;
+  else if (_ship.HitPoints() < _ship.ShipMaxHitPoints / 2) type = Powerups::HEALTH_POWERUP;
+  else if (chance % 100 == 0) type = Powerups::LIFE_POWERUP;
+  else if (chance < 50)
+  {
+    type = Powerups::SHIELD_POWERUP;
+  }
+  else if (type > 50)
+  {
+    type = Powerups::HEALTH_POWERUP;
+  }
 
   for (auto& p : _powerupsPool)
   {
@@ -532,6 +541,14 @@ void MainState::ProcessPowerups()
 
         _ship.AddShieldPoints(_ship.ShieldMaxPoints / 2);
       }
+      else if (powerup.Type() == Powerups::LIFE_POWERUP)
+      {
+        SoundSystem::Get().PlaySound(Sounds::POWERUP_LIFE);
+
+        _currentLives++;
+
+        if (_currentLives > _maxLivesLimit) _currentLives = _maxLivesLimit;
+      }
 
       powerup.SetActive(false);
     }
@@ -546,13 +563,17 @@ void MainState::InitPowerups()
   {
     Powerup p;
 
-    if (i > poolSizeHalf - 1)
+    if (i % 8 == 0)
     {
-      p.Create(Powerups::SHIELD_POWERUP);
+      p.Create(Powerups::LIFE_POWERUP);
     }
-    else
+    else if (i % 2 == 0)
     {
       p.Create(Powerups::HEALTH_POWERUP);
+    }
+    else if (i % 2 != 0)
+    {
+      p.Create(Powerups::SHIELD_POWERUP);
     }
 
     _powerupsPool.push_back(p);

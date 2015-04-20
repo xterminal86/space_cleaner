@@ -56,11 +56,12 @@ class MainState : public GameState
     const int _screenHeight = 600;
     const int _maxExplosions = 20;
     const int _backgroundStars = 100;
-    const int _maxLives = 0;
+    const int _maxLives = 1;
+    const int _maxLivesLimit = 3;
     const int _maxAsteroidInstances = 10;
     const int _spawnSpread = 100;
     const int _fancyTextColorChangeSpeed = 5;
-    const int _powerupsPoolSize = 10;
+    const int _powerupsPoolSize = 16;
 
     const double _spawnTimeMeterLength = 20.0;
     const double _bigAsteroidExplosionScale = 1.5;

@@ -12,3 +12,4 @@
 11 assets/sound/menu_move_quiet.wav
 12 assets/sound/menu_select_quiet.wav
 13 assets/sound/menu_back_quiet.wav
+14 assets/sound/extra_life.wav

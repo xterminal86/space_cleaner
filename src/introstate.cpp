@@ -50,7 +50,7 @@ IntroState::~IntroState()
 
 void IntroState::Init(Application* game)
 {
-  _version = game->BuildVersionString();
+  _gameRef = game;
 }
 
 void IntroState::Cleanup()
@@ -79,28 +79,15 @@ void IntroState::HandleEvents(Application* game)
 
       SoundSystem::Get().PlaySound(Sounds::MENU_SELECT);
 
-      if (_menuIndex == 2)
-      {
-        _currentMenuSelection = _menuIndex;
-      }
+      _currentMenuSelection = _menuIndex;
 
-      if (_menuIndex == 3)
+      if (_currentMenuSelection == 4)
       {
-        HighScore score;
-        score.Score = Util::RandomNumber() % 1000;
-        score.Wave = Util::RandomNumber() % 50;
-        game->StoreHighScore(score);
-      }
-
-      if (_menuIndex == 4)
-      {
-        _currentMenuSelection = _menuIndex;
         game->SetRunningFlag(false);
       }
 
-      if (_menuIndex == 0)
+      if (_currentMenuSelection == 0)
       {
-        _currentMenuSelection = _menuIndex;
         game->PushState(&MainState::Get());
       }
     }
@@ -132,7 +119,7 @@ void IntroState::HandleEvents(Application* game)
     }
   }
 
-  if (_keyboardState[SDL_SCANCODE_ESCAPE] && _currentMenuSelection == 2)
+  if (_keyboardState[SDL_SCANCODE_ESCAPE])
   {
     if (!_keyPressed && _currentMenuSelection != 0)
     {
@@ -242,36 +229,7 @@ void IntroState::DrawMenu()
                       BitmapFont::AlignCenter,
                       "SPACE CLEANER");
 
-  if (_currentMenuSelection == 2)
-  {
-    _bitmapFont->SetTextColor(255, 255, 255, 255);
-    _bitmapFont->SetScale(1.0);
-    _bitmapFont->Print(_screenSizeX / 2,
-                       _screenSizeY / 2,
-                       BitmapFont::AlignCenter,
-                       (char*)GlobalStrings::HowToPlayString.data());
-  }
-  else
-  {
-    for (int i = 0; i < _menuStrings.size(); i++)
-    {
-      if (_menuIndex == i)
-      {
-        _bitmapFont->SetScale(_menuItemScaleFactor);
-        _bitmapFont->SetTextColor(255, 0, 255, 255);
-      }
-      else
-      {
-        _bitmapFont->SetScale(_menuItemDefaultScale);
-        _bitmapFont->SetTextColor(255, 255, 255, 255);
-      }
-
-      _bitmapFont->Printf(_screenSizeX / 2,
-                          _screenSizeY / 2 + i * 30,
-                          BitmapFont::AlignCenter,
-                          (char*)_menuStrings[i].data());
-    }
-  }
+  PrintMenuText();
 
   _bitmapFont->SetTextColor(255, 255, 255, 255);
   _bitmapFont->SetScale(1.0);
@@ -285,6 +243,54 @@ void IntroState::DrawMenu()
   _bitmapFont->Printf(_screenSizeX,
                       _screenSizeY - _bitmapFont->LetterWidth * _bitmapFont->ScaleFactor(),
                       BitmapFont::AlignRight,
-                      (char*)_version.data());
+                      (char*)_gameRef->BuildVersionString().data());
 
+}
+
+void IntroState::PrintMenuText()
+{
+  switch (_currentMenuSelection)
+  {
+  case 2:
+      _bitmapFont->SetTextColor(255, 255, 255, 255);
+      _bitmapFont->SetScale(1.0);
+      _bitmapFont->Print(_screenSizeX / 2,
+                         _screenSizeY / 2,
+                         BitmapFont::AlignCenter,
+                         (char*)GlobalStrings::HowToPlayString.data());
+      break;
+  case 3:
+      _bitmapFont->SetTextColor(255, 255, 255, 255);
+      _bitmapFont->SetScale(2.0);
+      _bitmapFont->Printf(_screenSizeX / 2 - 200, _screenSizeY / 2 - 70, BitmapFont::AlignLeft, "No.");
+      _bitmapFont->Printf(_screenSizeX / 2 - 100, _screenSizeY / 2 - 70, BitmapFont::AlignLeft, "Score");
+      _bitmapFont->Printf(_screenSizeX / 2 + 100, _screenSizeY / 2 - 70, BitmapFont::AlignLeft, "Wave");
+      for (int i = 0; i < _gameRef->HighScores().size(); i++)
+      {
+        _bitmapFont->Printf(_screenSizeX / 2 - 200, _screenSizeY / 2 + i*(_bitmapFont->LetterWidth * _bitmapFont->ScaleFactor()), BitmapFont::AlignLeft, "%i", i + 1);
+        _bitmapFont->Printf(_screenSizeX / 2 - 100, _screenSizeY / 2 + i*(_bitmapFont->LetterWidth * _bitmapFont->ScaleFactor()), BitmapFont::AlignLeft, "%i", _gameRef->HighScores().at(i).Score);
+        _bitmapFont->Printf(_screenSizeX / 2 + 100, _screenSizeY / 2 + i*(_bitmapFont->LetterWidth * _bitmapFont->ScaleFactor()), BitmapFont::AlignLeft, "%i", _gameRef->HighScores().at(i).Wave);
+      }
+      break;
+  default:
+      for (int i = 0; i < _menuStrings.size(); i++)
+      {
+        if (_menuIndex == i)
+        {
+          _bitmapFont->SetScale(_menuItemScaleFactor);
+          _bitmapFont->SetTextColor(255, 0, 255, 255);
+        }
+        else
+        {
+          _bitmapFont->SetScale(_menuItemDefaultScale);
+          _bitmapFont->SetTextColor(255, 255, 255, 255);
+        }
+
+        _bitmapFont->Printf(_screenSizeX / 2,
+                            _screenSizeY / 2 + i * 30,
+                            BitmapFont::AlignCenter,
+                            (char*)_menuStrings[i].data());
+      }
+      break;
+  }
 }
