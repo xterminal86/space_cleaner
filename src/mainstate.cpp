@@ -306,7 +306,7 @@ void MainState::TryToSpawnAsteroid()
   {
     int index = Util::RandomNumber() % _spawnPoints.size();
 
-    if (Asteroid::Instances() <= _maxAsteroidInstances && _ship.Active())
+    if ( (Asteroid::Instances() <= _maxAsteroidInstances) && _ship.Active())
     {
       SpawnAsteroid((int)_spawnPoints[index].X(), (int)_spawnPoints[index].Y());
 
@@ -351,7 +351,10 @@ void MainState::CleanAsteroids()
   {
     if (!_asteroids[i].get()->Active())
     {
-      _asteroids.erase(_asteroids.begin() + i);
+      if (_asteroids[i].get()->CurrentBreakdownLevel() > GameMechanic::AsteroidMaxBreakdownLevel)
+      {
+        _asteroids.erase(_asteroids.begin() + i);
+      }
     }
   }
 }
@@ -667,6 +670,8 @@ void MainState::DrawGUI()
   _bitmapFont->Printf(_screenSizeX - _spawnTimeMeterLength * (_bitmapFont->LetterWidth / 2), 48, BitmapFont::AlignLeft, (char*)_guiSpawnTimeString.data());
   _bitmapFont->SetScale(0.75);
   _bitmapFont->Printf(_screenSizeX - 25, 64, BitmapFont::AlignRight, "(spawn rate: %.2f)", _guiSpawnRateNumber);
+  _bitmapFont->SetScale(1.0);
+  _bitmapFont->Printf(_screenSizeX - 25, 80, BitmapFont::AlignRight, "%i/%i", Asteroid::Instances(), _maxAsteroidInstances);
 
   if (!_ship.Active())
   {

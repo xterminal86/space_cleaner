@@ -45,12 +45,6 @@ void Asteroid::Init(Vector2 pos, int breakdownLevel, std::vector<std::unique_ptr
 
 Asteroid::~Asteroid()
 {
-  if (_currentBreakdownLevel == 1)
-  {
-    _instances--;
-
-    if (_instances <= 0) _instances = 0;
-  }
 }
 
 void Asteroid::Move(double x, double y)
@@ -146,6 +140,13 @@ void Asteroid::ProcessCollision()
   if (_currentBreakdownLevel < GameMechanic::AsteroidMaxBreakdownLevel)
   {
     _currentBreakdownLevel++;
+
+    if (_currentBreakdownLevel == 1)
+    {
+      _instances--;
+
+      if (_instances <= 0) _instances = 0;
+    }
 
     Breakdown();
 
