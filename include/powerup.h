@@ -21,9 +21,9 @@ class Powerup
   private:
     Vector2 _position;
 
-    const double _defaultScaleFactor = 0.5;
+    const double _defaultScaleFactor = 0.4;
     const double _scaleIncrement = 0.001;
-    const double _minimalScaleFactor = 0.25;
+    const double _minimalScaleFactor = 0.15;
 
     double _scaleFactor;
     double _currentScaleIncrement;

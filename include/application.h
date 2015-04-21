@@ -19,11 +19,7 @@ class Application
     GameState* GetCurrentState() { return _states.back(); }
     bool LoadHighScores();
     void StoreHighScore(HighScore score);
-    std::vector<HighScore>& HighScores()
-    {
-      LoadHighScores();
-      return _highScores;
-    }
+    std::vector<HighScore>& HighScores() { return _highScores; }
   protected:
   private:
     bool _running;

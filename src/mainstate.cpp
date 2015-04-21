@@ -292,22 +292,17 @@ void MainState::InitAsteroids()
 
 void MainState::TryToSpawnPowerup(int x, int y)
 {
-  int chance = Util::RandomNumber() % 2000 + 1;
+  int chance = Util::RandomNumber() % 1500 + 1;
   if (chance > 100) return;
 
-  int type = Util::RandomNumber() % 3;
+  //int type = Util::RandomNumber() % 3;
+  int type = -1;
 
-  if (!_ship.ShieldActive()) type = Powerups::SHIELD_POWERUP;
-  else if (_ship.HitPoints() < _ship.ShipMaxHitPoints / 2) type = Powerups::HEALTH_POWERUP;
-  else if (chance % 100 == 0) type = Powerups::LIFE_POWERUP;
-  else if (chance < 50)
-  {
-    type = Powerups::SHIELD_POWERUP;
-  }
-  else if (type > 50)
-  {
-    type = Powerups::HEALTH_POWERUP;
-  }
+  if (_ship.ShieldPoints() < (_ship.ShieldMaxPoints / 2)) type = Powerups::SHIELD_POWERUP;
+  else if (_ship.HitPoints() < (_ship.ShipMaxHitPoints / 2)) type = Powerups::HEALTH_POWERUP;
+  else if (chance == 100) type = Powerups::LIFE_POWERUP;
+
+  if (type == -1) return;
 
   for (auto& p : _powerupsPool)
   {
