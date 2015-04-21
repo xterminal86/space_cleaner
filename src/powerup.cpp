@@ -72,6 +72,7 @@ void Powerup::Spawn(Vector2 pos)
 
   _active = true;
   _timePassedMs = 0;
+  _scaleFactor = _defaultScaleFactor;
 }
 
 void Powerup::Process()
@@ -86,9 +87,9 @@ void Powerup::Process()
     _currentScaleIncrement *= -1;
   }
 
-  if (_scaleFactor >= _defaultScaleFactor)
+  if (_scaleFactor >= _maximumScaleFactor)
   {
-    _scaleFactor = _defaultScaleFactor;
+    _scaleFactor = _maximumScaleFactor;
     _currentScaleIncrement *= -1;
   }
 

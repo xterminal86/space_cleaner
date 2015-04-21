@@ -1862,10 +1862,10 @@
 1428523116 source:d:\nick\sources\c++\asteroids.git\src\collision_info.cpp
 	"collision_info.h"
 
-1429561700 source:d:\nick\sources\c++\asteroids.git\src\powerup.cpp
+1429590245 source:d:\nick\sources\c++\asteroids.git\src\powerup.cpp
 	"powerup.h"
 
-1429589446 d:\nick\sources\c++\asteroids.git\include\powerup.h
+1429590207 d:\nick\sources\c++\asteroids.git\include\powerup.h
 	"sprite.h"
 	"gametime.h"
 
@@ -1995,7 +1995,7 @@
 	"introstate.h"
 	"mainstate.h"
 
-1429561772 d:\nick\sources\c++\asteroids.git\include\mainstate.h
+1429590471 d:\nick\sources\c++\asteroids.git\include\mainstate.h
 	"gamestate.h"
 	"logger.h"
 	"gametime.h"
@@ -2013,6 +2013,6 @@
 	"vector2pair.h"
 	"util.h"
 
-1429589570 source:d:\nick\sources\c++\asteroids.git\src\mainstate.cpp
+1429590414 source:d:\nick\sources\c++\asteroids.git\src\mainstate.cpp
 	"mainstate.h"
 

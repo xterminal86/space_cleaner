@@ -19,7 +19,7 @@ MainState::MainState()
   _fancyColorPhase = 0;
   _fancyColorCounter = 0;
   _fancyColorDelta = 10;
-  _currentLives = _maxLives;
+  _currentLives = _startingLives;
   _currentSpawnRate = GameMechanic::StartingSpawnRateMs;
   _guiSpawnRateNumber = (double)GameMechanic::StartingSpawnRateMs / (double)_currentSpawnRate;
 
@@ -295,7 +295,6 @@ void MainState::TryToSpawnPowerup(int x, int y)
   int chance = Util::RandomNumber() % 1500 + 1;
   if (chance > 100) return;
 
-  //int type = Util::RandomNumber() % 3;
   int type = -1;
 
   if (_ship.ShieldPoints() < (_ship.ShieldMaxPoints / 2)) type = Powerups::SHIELD_POWERUP;
@@ -578,7 +577,7 @@ void MainState::InitPowerups()
 void MainState::RestartGame()
 {
   _scoreWritten = false;
-  _currentLives = _maxLives;
+  _currentLives = _startingLives;
   _score = 0;
   _timePassed = 0;
   _currentSpawnRate = GameMechanic::StartingSpawnRateMs;

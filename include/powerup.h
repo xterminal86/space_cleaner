@@ -23,7 +23,8 @@ class Powerup
 
     const double _defaultScaleFactor = 0.4;
     const double _scaleIncrement = 0.001;
-    const double _minimalScaleFactor = 0.15;
+    const double _maximumScaleFactor = 0.5;
+    const double _minimalScaleFactor = 0.3;
 
     double _scaleFactor;
     double _currentScaleIncrement;
