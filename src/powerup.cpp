@@ -31,7 +31,7 @@ void Powerup::Create(int type)
       break;
 
     case Powerups::LIFE_POWERUP:
-      spriteIndex = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipBigRole);
+      spriteIndex = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipRole);
       break;
     default:
       break;

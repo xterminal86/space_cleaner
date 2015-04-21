@@ -52,7 +52,7 @@ MainState::MainState()
   _ship.Scale(0.5);
   _ship.Move(_screenSizeX / 2, _screenSizeY / 2);
 
-  int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipBigRole);
+  int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipRole);
   if (res != -1)
   {
     PNGLoader* imageRef = TextureManager::Get().GetTextureWrapper(res);
@@ -603,7 +603,7 @@ void MainState::InitGUI()
     _guiShield.Init(index, true);
   }
 
-  index = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipBigRole);
+  index = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipRole);
   if (index != -1)
   {
     _guiLives.Init(index, true);

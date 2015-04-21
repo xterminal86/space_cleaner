@@ -1,10 +1,9 @@
-0 assets/ship/ship_small.png
+0 assets/ship/ship2.png
 1 assets/bullets/shot_round.png
 2 assets/asteroids/asteroid2.png
 3 assets/star_transparent.png
 4 assets/background.png
 5 assets/bullets/fire_shot.png
-6 assets/ship/ship2.png
 7 assets/default_particle.png
 8 assets/fonts/font_fixed.png
 9 assets/ship/energy_shield.png

@@ -26,8 +26,7 @@ void Ship::Init(double posx, double posy)
   _originalDirection.Set(0.0, -1.0);
   _localDirection.Set(0.0, -1.0);
 
-  int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipBigRole);
-  //int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipRole);
+  int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipRole);
   if (res != -1)
   {
     _shipSprite.Init(res);

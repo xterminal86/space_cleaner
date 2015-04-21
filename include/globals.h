@@ -21,7 +21,6 @@ namespace GlobalStrings
   static std::string ShipRole = "ship";
   static std::string AsteroidRole = "asteroid";
   static std::string BulletLaserRole = "fire_shot";
-  static std::string ShipBigRole = "ship_big";
   static std::string DefaultParticleRole = "default_particle";
   static std::string FontRole = "font";
   static std::string ShipShieldRole = "ship_shield";
@@ -92,19 +91,18 @@ namespace Sounds
 {
   static int POWERUP_HEALTH = 0;
   static int SHIP_FIRE = 1;
-  static int SHIELD_HIT_ELECTRIC = 2;
-  static int SHIP_EXPLODE = 3;
-  static int SHIP_HIT = 4;
-  static int POWERUP_SHIELD = 5;
-  static int GAME_OVER = 6;
-  static int SHIELD_HIT_ENERGY = 7;
-  static int ASTEROID_HIT_BIG = 8;
-  static int ASTEROID_SPAWN = 9;
-  static int ASTEROID_HIT_SMALL = 10;
-  static int MENU_MOVE = 11;
-  static int MENU_SELECT = 12;
-  static int MENU_BACK = 13;
-  static int POWERUP_LIFE = 14;
+  static int SHIP_EXPLODE = 2;
+  static int SHIP_HIT = 3;
+  static int POWERUP_SHIELD = 4;
+  static int GAME_OVER = 5;
+  static int SHIELD_HIT_ENERGY = 6;
+  static int ASTEROID_HIT_BIG = 7;
+  static int ASTEROID_SPAWN = 8;
+  static int ASTEROID_HIT_SMALL = 9;
+  static int MENU_MOVE = 10;
+  static int MENU_SELECT = 11;
+  static int MENU_BACK = 12;
+  static int POWERUP_LIFE = 13;
 }
 
 #ifndef HIGH_SCORE
