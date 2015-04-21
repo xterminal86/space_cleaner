@@ -271,6 +271,7 @@ void IntroState::PrintMenuText()
       _bitmapFont->Printf(_screenSizeX / 2 - 200, _screenSizeY / 2 - 70, BitmapFont::AlignLeft, "No.");
       _bitmapFont->Printf(_screenSizeX / 2 - 100, _screenSizeY / 2 - 70, BitmapFont::AlignLeft, "Score");
       _bitmapFont->Printf(_screenSizeX / 2 + 100, _screenSizeY / 2 - 70, BitmapFont::AlignLeft, "Wave");
+      _bitmapFont->SetScale(1.0);
       for (int i = 0; i < _gameRef->HighScores().size(); i++)
       {
         _bitmapFont->Printf(_screenSizeX / 2 - 200, _screenSizeY / 2 + i*(_bitmapFont->LetterWidth * _bitmapFont->ScaleFactor()), BitmapFont::AlignLeft, "%i", i + 1);
