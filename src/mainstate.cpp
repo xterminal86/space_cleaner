@@ -12,8 +12,6 @@ MainState::MainState()
   _scoreWritten = false;
 
   _score = 0;
-  _highScore = 0;
-  _highWave = 0;
   _timePassed = 0;
   _waveCounter = 0;
   _fancyColorPhase = 0;
@@ -121,12 +119,6 @@ void MainState::HandleEvents(Application* game)
   {
     if (_currentLives < 0)
     {
-      if (_score > _highScore)
-      {
-        _highScore = _score;
-      }
-      _highWave = _waveCounter;
-
       RestartGame();
     }
 
@@ -669,11 +661,6 @@ void MainState::DrawGUI()
   {
     _guiLives.Draw(i * (_guiLives.ImageWrapper()->Width() * 0.2) + 10, (_guiLives.ImageWrapper()->Height() * 0.2) / 2);
   }
-
-  _bitmapFont->SetTextColor(255, 255, 255, 255);
-  _bitmapFont->SetScale(1.0);
-  _bitmapFont->Printf(0, 32, BitmapFont::AlignLeft, "BEST SCORE: %u", _highScore);
-  _bitmapFont->Printf(0, 48, BitmapFont::AlignLeft, "(wave: %u)", _highWave);
 
   _bitmapFont->SetTextColor(255, 255, 255, 255);
   _bitmapFont->SetScale(2.0);

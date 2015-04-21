@@ -20,9 +20,11 @@ class Application
     bool LoadHighScores();
     void StoreHighScore(HighScore score);
     std::vector<HighScore>& HighScores() { return _highScores; }
+    void SortHighScores();
   protected:
   private:
     bool _running;
+    bool _scoresSorted;
 
     std::string _buildVersion;
 

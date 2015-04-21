@@ -67,8 +67,6 @@ class MainState : public GameState
     const double _bigAsteroidExplosionScale = 1.5;
 
     unsigned int _score;
-    unsigned int _highScore;
-    unsigned int _highWave;
     unsigned int _timePassed;
     unsigned int _currentSpawnRate;
     int _fancyColorCounter;

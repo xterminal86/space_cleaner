@@ -96,6 +96,8 @@ void Application::PopState()
 
 bool Application::LoadHighScores()
 {
+  _scoresSorted = false;
+
   _highScores.clear();
 
   FILE* f = fopen((char*)GlobalStrings::HighScoresFilename.data(), "rb");
@@ -108,6 +110,7 @@ bool Application::LoadHighScores()
       fclose(f);
       return false;
     }
+
     rewind(f);
 
     while (1)
@@ -118,6 +121,7 @@ bool Application::LoadHighScores()
       _highScores.push_back(score);
     }
 
+    fclose(f);
     return true;
   }
 
@@ -159,6 +163,31 @@ void Application::StoreHighScore(HighScore score)
   }
 
   fclose(f);
+}
+
+void Application::SortHighScores()
+{
+  if (!_scoresSorted)
+  {
+    for (int i = 0; i < _highScores.size(); i++)
+    {
+      for (int j = 0; j < _highScores.size() - 1; j++)
+      {
+        if (_highScores[j + 1].Score > _highScores[j].Score)
+        {
+          int tmpScore = _highScores[j + 1].Score;
+          int tmpWave = _highScores[j + 1].Wave;
+          _highScores[j + 1].Score = _highScores[j].Score;
+          _highScores[j + 1].Wave = _highScores[j].Wave;
+
+          _highScores[j].Score = tmpScore;
+          _highScores[j].Wave = tmpWave;
+        }
+      }
+    }
+
+    _scoresSorted = true;
+  }
 }
 
 // ==================== Private Methods =================== //
