@@ -9,3 +9,4 @@
 9 ship_shield
 10 gui_shield
 11 gui_heart
+14 shot_lame

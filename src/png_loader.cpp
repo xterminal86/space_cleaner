@@ -11,7 +11,7 @@ PNGLoader::PNGLoader()
   Logger::Get().LogPrint("PNGLoader::ctor() 0x%zX\n", this);
 }
 
-PNGLoader::PNGLoader(std::string filename)
+PNGLoader::PNGLoader(std::string filename, int filterMode)
 {
   Logger::Get().LogPrint("PNGLoader::ctor(std::string) 0x%zX\n", this);
 
@@ -21,7 +21,12 @@ PNGLoader::PNGLoader(std::string filename)
   // "1" - linear
   // "2" - anisotropic
 
-  if (filename == "assets/fonts/font_fixed.png")
+  if (filterMode == 0) SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
+  else if (filterMode == 2) SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
+  else SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+
+  /*
+  if (filename == "assets/fonts/font_fixed.png" || filename == "assets/bullets/shot_lame.png")
   {
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
   }
@@ -29,6 +34,7 @@ PNGLoader::PNGLoader(std::string filename)
   {
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
   }
+  */
 
   _texture = nullptr;
   SDL_Surface* surface = IMG_Load(filename.c_str());

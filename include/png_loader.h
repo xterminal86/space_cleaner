@@ -16,7 +16,7 @@ class PNGLoader
   SDL_Texture* _texture;
 public:
   PNGLoader();
-  PNGLoader(std::string filename);
+  PNGLoader(std::string filename, int filterMode = 1);
   ~PNGLoader()
   {
     Logger::Get().LogPrint("----|[PNGLoader::dtor()]: 0x%zX (object) 0x%zX (texture)\n", this, _texture);

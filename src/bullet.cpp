@@ -2,11 +2,14 @@
 
 Bullet::Bullet()
 {
-  int res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletLaserRole);
+  //int res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletLaserRole);
+  int res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletLameRole);
   if (res != -1)
   {
     _bulletSprite.Init(res);
   }
+
+  _bulletSprite.SetScaleFactor(1.25);
 
   _trail.Init(TrailLenght, 100, 110, 0.1, 0.5, _bulletSprite.ImageWrapper());
   _trail.TurnOff();
@@ -45,7 +48,7 @@ void Bullet::Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed)
 
 void Bullet::Compute()
 {
-  _trail.Emit();
+  //_trail.Emit();
 
   if (!_active) return;
 
@@ -62,7 +65,7 @@ void Bullet::Compute()
   _bulletSprite.MoveCollider(_position.X(), _position.Y());
 
   //Draw(true, true);
-  //Draw(false, false);
+  Draw(false, false);
 
   if (_position.X() < 0 || _position.X() > sx || _position.Y() < 0 || _position.Y() > sy)
   {

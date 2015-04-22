@@ -19,12 +19,12 @@ int TextureManager::Init(std::string imagesFilename, std::string relationFilenam
     }
     Logger::Get().LogPrint("Loading images...\n");
     char buf[512];
-    int index = 0;
+    int index = 0, filterMode = 0;
     while (!feof(f))
     {
       std::string png;
-      fscanf(f, "%i %s", &index, buf);
-      _textures[index] = std::unique_ptr<PNGLoader>(new PNGLoader(buf));
+      fscanf(f, "%i %s %i", &index, buf, &filterMode);
+      _textures[index] = std::unique_ptr<PNGLoader>(new PNGLoader(buf, filterMode));
       Logger::Get().LogPrint("----|_textures[%i] (0x%zX) = %s\n", index, _textures[index].get(), buf);
       png = buf;
       LoadCollider(index, png);

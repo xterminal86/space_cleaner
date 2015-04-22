@@ -21,6 +21,7 @@ namespace GlobalStrings
   static std::string ShipRole = "ship";
   static std::string AsteroidRole = "asteroid";
   static std::string BulletLaserRole = "fire_shot";
+  static std::string BulletLameRole = "shot_lame";
   static std::string DefaultParticleRole = "default_particle";
   static std::string FontRole = "font";
   static std::string ShipShieldRole = "ship_shield";
@@ -103,6 +104,7 @@ namespace Sounds
   static int MENU_SELECT = 11;
   static int MENU_BACK = 12;
   static int POWERUP_LIFE = 13;
+  static int SHIP_FIRE_LAME = 14;
 }
 
 #ifndef HIGH_SCORE

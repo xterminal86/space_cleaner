@@ -12,3 +12,4 @@
 11 assets/sound/menu_select.wav
 12 assets/sound/menu_back.wav
 13 assets/sound/extra_life.wav
+14 assets/sound/ship_fire_lame.wav

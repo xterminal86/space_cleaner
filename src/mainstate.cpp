@@ -148,7 +148,7 @@ void MainState::HandleEvents(Application* game)
     {
       if (!_fireTrigger)
       {
-        SoundSystem::Get().PlaySound(Sounds::SHIP_FIRE);
+        SoundSystem::Get().PlaySound(Sounds::SHIP_FIRE_LAME);
 
         _fireTrigger = true;
         _ship.Fire();
