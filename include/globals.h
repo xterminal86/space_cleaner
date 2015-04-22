@@ -27,6 +27,7 @@ namespace GlobalStrings
   static std::string ShipShieldRole = "ship_shield";
   static std::string GUIShieldRole = "gui_shield";
   static std::string GUIHeartRole = "gui_heart";
+  static std::string GUIWeaponFrame = "gui_weapon_frame";
 
   static std::string ImagesFilename = "images.txt";
   static std::string LogFilename = "output_log.txt";

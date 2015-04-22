@@ -103,6 +103,7 @@ class MainState : public GameState
     Sprite _guiHeart;
     Sprite _guiShield;
     Sprite _guiLives;
+    Sprite _guiWeaponFrame;
 
     Ship _ship;
 

@@ -7,8 +7,9 @@
 7 assets/default_particle.png 0
 8 assets/fonts/font_fixed.png 0
 9 assets/ship/energy_shield.png 1
-10 assets/gui/shield.png 0
-11 assets/gui/heart.png 0
+10 assets/gui/shield.png 2
+11 assets/gui/heart.png 2
 12 assets/bullets/fire_shot_small.png 0
 13 assets/bullets/fire_shot2.png 0
 14 assets/bullets/shot_lame.png 0
+15 assets/gui/weapon_frame.png 0

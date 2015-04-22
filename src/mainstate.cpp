@@ -608,10 +608,16 @@ void MainState::InitGUI()
   {
     _guiLives.Init(index, true);
   }
+  index = TextureManager::Get().FindTextureByRole(GlobalStrings::GUIWeaponFrame);
+  if (index != -1)
+  {
+    _guiWeaponFrame.Init(index, true);
+  }
 
   _guiHeart.SetScaleFactor(0.25);
   _guiShield.SetScaleFactor(0.25);
   _guiLives.SetScaleFactor(0.2);
+  _guiWeaponFrame.SetScaleFactor(3.0);
 }
 
 void MainState::CalculateFancyTextColor()
@@ -690,6 +696,7 @@ void MainState::DrawGUI()
 
   _guiHeart.Draw(_screenSizeX - 16, 8);
   _guiShield.Draw(_screenSizeX - 16, 25);
+  _guiWeaponFrame.Draw(_guiWeaponFrame.ImageWrapper()->Width() + 20, _screenSizeY - _guiWeaponFrame.ImageWrapper()->Height() - 20);
 
   int a = 255 - (_ship.ShieldMaxPoints - _ship.ShieldPoints()) * _shieldColorAlphaDelta;
 

@@ -10,3 +10,4 @@
 10 gui_shield
 11 gui_heart
 14 shot_lame
+15 gui_weapon_frame
