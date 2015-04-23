@@ -13,6 +13,8 @@
 // is to remember, that we pass .cpp files to the compiler.
 #include "introstate.h"
 
+#include "mainstate.h"
+
 Application::Application()
 {
   char buf[512];
@@ -44,6 +46,7 @@ void Application::Start()
   _running = true;
 
   ChangeState(&IntroState::Get());
+  //PushState(&MainState::Get());
 
   while (_running)
   {

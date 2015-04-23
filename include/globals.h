@@ -28,6 +28,8 @@ namespace GlobalStrings
   static std::string GUIShieldRole = "gui_shield";
   static std::string GUIHeartRole = "gui_heart";
   static std::string GUIWeaponFrame = "gui_weapon_frame";
+  static std::string GUIBlackBack = "gui_black_back";
+  static std::string GUIDivider = "gui_divider";
 
   static std::string ImagesFilename = "images.txt";
   static std::string LogFilename = "output_log.txt";
@@ -106,6 +108,11 @@ namespace Sounds
   static int MENU_BACK = 12;
   static int POWERUP_LIFE = 13;
   static int SHIP_FIRE_LAME = 14;
+}
+
+namespace GUI
+{
+  const static int GUITopBackgroundHeight = 32;
 }
 
 #ifndef HIGH_SCORE

@@ -297,6 +297,56 @@ void Sprite::Draw(int x, int y)
   if (res != 0) Logger::Get().LogPrint("(warning) Render copy error!\nReason: %s\n", SDL_GetError());
 }
 
+void Sprite::Draw(int x, int y, int w, int h, bool tiled)
+{
+  if (_imageWrapper == nullptr)
+  {
+    Logger::Get().LogPrint("(warning) Sprite 0x%zX _imageWrapper is NULL, so drawing nothing\n", this);
+    return;
+  }
+
+  if (!tiled)
+  {
+    _destRect.x = x;
+    _destRect.y = y;
+    _destRect.w = w;
+    _destRect.h = h;
+
+    SDL_SetTextureColorMod(_imageWrapper->Texture(), _spriteColor.r, _spriteColor.g, _spriteColor.b);
+    SDL_SetTextureAlphaMod(_imageWrapper->Texture(), _spriteColor.a);
+
+    int res = SDL_RenderCopyEx(VideoSystem::Get().Renderer(), _imageWrapper->Texture(), &_sourceRect, &_destRect, _angle, nullptr, SDL_FLIP_NONE);
+    if (res != 0) Logger::Get().LogPrint("(warning) Render copy error!\nReason: %s\n", SDL_GetError());
+  }
+  else
+  {
+    int screenX = VideoSystem::Get().ScreenDimensions().x;
+
+    _destRect.w = _imageWrapper->Width();
+    _destRect.h = _imageWrapper->Height();
+
+    int fraction = 0;
+
+    if (w > h) fraction = w / _imageWrapper->Width();
+    else fraction = h / _imageWrapper->Height();
+
+    _destRect.x = x;
+    _destRect.y = y;
+
+    for (int i = 0; i < fraction; i++)
+    {
+      if (w > h) _destRect.x = x + i*_imageWrapper->Width();
+      else _destRect.y = y + i*_imageWrapper->Height();
+
+      SDL_SetTextureColorMod(_imageWrapper->Texture(), _spriteColor.r, _spriteColor.g, _spriteColor.b);
+      SDL_SetTextureAlphaMod(_imageWrapper->Texture(), _spriteColor.a);
+
+      int res = SDL_RenderCopyEx(VideoSystem::Get().Renderer(), _imageWrapper->Texture(), &_sourceRect, &_destRect, _angle, nullptr, SDL_FLIP_NONE);
+      if (res != 0) Logger::Get().LogPrint("(warning) Render copy error!\nReason: %s\n", SDL_GetError());
+    }
+  }
+}
+
 void Sprite::Draw(int x, int y, std::vector<SDL_Point>* colliderToDraw)
 {
   Draw(x, y);

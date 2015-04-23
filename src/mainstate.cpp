@@ -608,16 +608,29 @@ void MainState::InitGUI()
   {
     _guiLives.Init(index, true);
   }
+
   index = TextureManager::Get().FindTextureByRole(GlobalStrings::GUIWeaponFrame);
   if (index != -1)
   {
     _guiWeaponFrame.Init(index, true);
   }
 
+  index = TextureManager::Get().FindTextureByRole(GlobalStrings::GUIBlackBack);
+  if (index != -1)
+  {
+    _guiBlackBack.Init(index, true);
+  }
+
+  index = TextureManager::Get().FindTextureByRole(GlobalStrings::GUIDivider);
+  if (index != -1)
+  {
+    _guiDivider.Init(index, true);
+  }
+
   _guiHeart.SetScaleFactor(0.25);
   _guiShield.SetScaleFactor(0.25);
   _guiLives.SetScaleFactor(0.2);
-  _guiWeaponFrame.SetScaleFactor(3.0);
+  _guiWeaponFrame.SetScaleFactor(2.0);
 }
 
 void MainState::CalculateFancyTextColor()
@@ -665,6 +678,9 @@ void MainState::DrawGUI()
   _guiSpawnRateNumber = (double)GameMechanic::StartingSpawnRateMs / (double)_currentSpawnRate;
   _guiTimeToSpawnNumber = (double)_timePassed / (double)_currentSpawnRate;
 
+  _guiBlackBack.Draw(0, 0, _screenSizeX, GUI::GUITopBackgroundHeight);
+  _guiDivider.Draw(0, GUI::GUITopBackgroundHeight, _screenSizeX, _guiDivider.ImageWrapper()->Height(), true);
+
   int meter = (int)(_spawnTimeMeterLength * _guiTimeToSpawnNumber);
   _guiSpawnTimeString.clear();
   for (int i = 0; i < meter; i++)
@@ -678,8 +694,9 @@ void MainState::DrawGUI()
   }
 
   _bitmapFont->SetTextColor(255, 255, 255, 255);
-  _bitmapFont->SetScale(2.0);
-  _bitmapFont->Printf(_screenSizeX / 2, 0, BitmapFont::AlignCenter, "%u", _score);
+  _bitmapFont->SetScale(1.0);
+  _bitmapFont->Printf(_screenSizeX / 2, 0, BitmapFont::AlignCenter, "SCORE", _score);
+  _bitmapFont->Printf(_screenSizeX / 2, 16, BitmapFont::AlignCenter, "%u", _score);
 
   int r = (_ship.ShipMaxHitPoints - _ship.HitPoints()) * _hitPointsColorDelta;
   int g = 255;
@@ -696,7 +713,7 @@ void MainState::DrawGUI()
 
   _guiHeart.Draw(_screenSizeX - 16, 8);
   _guiShield.Draw(_screenSizeX - 16, 25);
-  _guiWeaponFrame.Draw(_guiWeaponFrame.ImageWrapper()->Width() + 20, _screenSizeY - _guiWeaponFrame.ImageWrapper()->Height() - 20);
+  _guiWeaponFrame.Draw(_screenSizeX - 230, _guiWeaponFrame.ImageWrapper()->Height());
 
   int a = 255 - (_ship.ShieldMaxPoints - _ship.ShieldPoints()) * _shieldColorAlphaDelta;
 
@@ -706,12 +723,12 @@ void MainState::DrawGUI()
 
   _bitmapFont->SetTextColor(255, 255, 255, 255);
   _bitmapFont->SetScale(1.0);
-  _bitmapFont->Printf(_screenSizeX - 25, 32, BitmapFont::AlignRight, "Wave: %i", _waveCounter);
-  _bitmapFont->Printf(_screenSizeX - _spawnTimeMeterLength * (_bitmapFont->LetterWidth / 2), 48, BitmapFont::AlignLeft, (char*)_guiSpawnTimeString.data());
-  _bitmapFont->SetScale(1.0);
-  _bitmapFont->Printf(_screenSizeX - 25, 64, BitmapFont::AlignRight, "Spawned: %i/%i", _asteroidInstances, _maxAsteroidInstances);
-  _bitmapFont->SetScale(0.75);
-  _bitmapFont->Printf(_screenSizeX - 25, 80, BitmapFont::AlignRight, "(spawn rate: %.2f)", _guiSpawnRateNumber);
+  _bitmapFont->Printf(92, 16, BitmapFont::AlignLeft, "[");
+  _bitmapFont->Printf(100, 18, BitmapFont::AlignLeft, (char*)_guiSpawnTimeString.data());
+  _bitmapFont->Printf(100 + (_spawnTimeMeterLength - 1) * 8, 16, BitmapFont::AlignLeft, "]");
+  _bitmapFont->Printf(180, 0, BitmapFont::AlignCenter, "WAVE %i", _waveCounter);
+  _bitmapFont->Printf(270, 0, BitmapFont::AlignLeft, "S: %i / %i", _asteroidInstances, _maxAsteroidInstances);
+  _bitmapFont->Printf(270, 16, BitmapFont::AlignLeft, "R: %.2f", _guiSpawnRateNumber);
 
   if (!_ship.Active())
   {

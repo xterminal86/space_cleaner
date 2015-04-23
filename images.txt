@@ -13,3 +13,5 @@
 13 assets/bullets/fire_shot2.png 0
 14 assets/bullets/shot_lame.png 0
 15 assets/gui/weapon_frame.png 0
+16 assets/gui/black.png 0
+17 assets/gui/divider.png 1

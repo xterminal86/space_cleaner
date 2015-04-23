@@ -15,6 +15,7 @@ class Sprite
     void SetAngle(double angle);
     void MoveCollider(double newX, double newY);
     void Draw(int x, int y);
+    void Draw(int x, int y, int w, int h, bool tiled = false);
     void Draw(int x, int y, std::vector<SDL_Point>* colliderToDraw);
     void Draw(int x, int y, std::vector<std::vector<SDL_Point>>* colliderToDraw);
 

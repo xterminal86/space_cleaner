@@ -11,3 +11,5 @@
 11 gui_heart
 14 shot_lame
 15 gui_weapon_frame
+16 gui_black_back
+17 gui_divider

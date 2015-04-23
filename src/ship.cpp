@@ -105,7 +105,7 @@ void Ship::Move()
   double newY = _position.Y() + _localDirection.Y() * _speed;
 
   if (newX < 0) newX = 0;
-  if (newY < 0) newY = 0;
+  if (newY < GUI::GUITopBackgroundHeight + 20) newY = GUI::GUITopBackgroundHeight + 20;
   if (newX > VideoSystem::Get().ScreenDimensions().x) newX = VideoSystem::Get().ScreenDimensions().x;
   if (newY > VideoSystem::Get().ScreenDimensions().y) newY = VideoSystem::Get().ScreenDimensions().y;
 
