@@ -1,5 +1,4 @@
 0 ship
-1 laser_shot
 2 asteroid
 3 background_star
 4 background
@@ -13,3 +12,4 @@
 15 gui_weapon_frame
 16 gui_black_back
 17 gui_divider
+18 gui_ship_outline

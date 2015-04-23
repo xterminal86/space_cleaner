@@ -30,6 +30,7 @@ namespace GlobalStrings
   static std::string GUIWeaponFrame = "gui_weapon_frame";
   static std::string GUIBlackBack = "gui_black_back";
   static std::string GUIDivider = "gui_divider";
+  static std::string GUIShipOutline = "gui_ship_outline";
 
   static std::string ImagesFilename = "images.txt";
   static std::string LogFilename = "output_log.txt";

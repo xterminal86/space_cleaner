@@ -627,9 +627,16 @@ void MainState::InitGUI()
     _guiDivider.Init(index, true);
   }
 
+  index = TextureManager::Get().FindTextureByRole(GlobalStrings::GUIShipOutline);
+  if (index != -1)
+  {
+    _guiExtraLifeOutline.Init(index, true);
+  }
+
   _guiHeart.SetScaleFactor(0.25);
   _guiShield.SetScaleFactor(0.25);
   _guiLives.SetScaleFactor(0.2);
+  _guiExtraLifeOutline.SetScaleFactor(0.2);
   _guiWeaponFrame.SetScaleFactor(2.0);
 }
 
@@ -686,6 +693,11 @@ void MainState::DrawGUI()
   for (int i = 0; i < meter; i++)
   {
     _guiSpawnTimeString.append("=");
+  }
+
+  for (int i = 0; i < _maxLivesLimit; i++)
+  {
+    _guiExtraLifeOutline.Draw(i * (_guiExtraLifeOutline.ImageWrapper()->Width() * 0.2) + 10, (_guiExtraLifeOutline.ImageWrapper()->Height() * 0.2) / 2);
   }
 
   for (int i = 0; i < _currentLives; i++)
