@@ -46,7 +46,7 @@ void Application::Start()
   _running = true;
 
   ChangeState(&IntroState::Get());
-  //PushState(&MainState::Get());
+  PushState(&MainState::Get());
 
   while (_running)
   {

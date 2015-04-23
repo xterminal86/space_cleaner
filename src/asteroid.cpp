@@ -38,6 +38,9 @@ void Asteroid::Init(Vector2 pos, int breakdownLevel, std::vector<std::unique_ptr
 
   _currentBreakdownLevel = breakdownLevel;
 
+  _hitPoints = ((GameMechanic::AsteroidMaxBreakdownLevel + 1) - _currentBreakdownLevel) * HitPointsScale;
+  _maxHitPoints = _hitPoints;
+
   _mainAsteroidsCollectionReference = mainAsteroidsCollection;
 }
 
@@ -133,20 +136,41 @@ void Asteroid::Compute()
   Move();
 }
 
-void Asteroid::ProcessCollision()
+void Asteroid::ProcessCollision(Bullet* bulletRef)
 {
-  if (_currentBreakdownLevel < GameMechanic::AsteroidMaxBreakdownLevel)
+  if (_currentBreakdownLevel >= GameMechanic::AsteroidMaxBreakdownLevel)
+  {
+    if (bulletRef != nullptr)
+    {
+      SoundSystem::Get().PlaySound(Sounds::ASTEROID_HIT_SMALL);
+    }
+
+    _currentBreakdownLevel++;
+    _active = false;
+    return;
+  }
+
+  if (bulletRef == nullptr)
   {
     _currentBreakdownLevel++;
-
-    Breakdown();
-
     _active = false;
+    Breakdown();
   }
   else
   {
-    _currentBreakdownLevel++;
-    _active = false;
+    AddDamage(bulletRef->Damage());
+
+    if (_hitPoints <= 0)
+    {
+      SoundSystem::Get().PlaySound(Sounds::ASTEROID_HIT_BIG);
+      _currentBreakdownLevel++;
+      _active = false;
+      Breakdown();
+    }
+    else
+    {
+      SoundSystem::Get().PlaySound(Sounds::ASTEROID_HIT);
+    }
   }
 }
 
@@ -155,5 +179,17 @@ void Asteroid::Breakdown()
   for (int i = 0; i < GameMechanic::AsteroidBreakdownChildren; i++)
   {
     _mainAsteroidsCollectionReference->push_back(std::unique_ptr<Asteroid>(new Asteroid(_position, _currentBreakdownLevel, _mainAsteroidsCollectionReference)));
+  }
+}
+
+void Asteroid::AddDamage(int value)
+{
+  _hitPoints += value;
+
+  if (_hitPoints > _maxHitPoints) _hitPoints = _maxHitPoints;
+
+  if (_hitPoints <= 0)
+  {
+    _hitPoints = 0;
   }
 }

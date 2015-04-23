@@ -8,6 +8,7 @@ void Ship::Init(double posx, double posy)
 {
   _active = true;
   _shieldHit = false;
+  _autoFire = false;
 
   _shieldColor.r = 255;
   _shieldColor.g = 255;
@@ -40,7 +41,7 @@ void Ship::Init(double posx, double posy)
 
   for (int i = 0; i < MaxBullets; i++)
   {
-    _bullets.push_back(std::unique_ptr<Bullet>(new Bullet()));
+    _bullets.push_back(std::unique_ptr<Bullet>(new Bullet(Bullets::BULLET_LAME)));
   }
 
   PNGLoader* image = nullptr;
@@ -145,23 +146,6 @@ void Ship::Draw(int x, int y, bool drawCollider)
       DrawShield();
     }
   }
-
-  MakeBars();
-}
-
-void Ship::MakeBars()
-{
-  _hitPointsBar.clear();
-  for (int i = 0; i < _hitPoints; i++)
-  {
-    _hitPointsBar.append(">");
-  }
-
-  _shieldPointsBar.clear();
-  for (int i = 0; i < _shieldPoints; i++)
-  {
-    _shieldPointsBar.append(">");
-  }
 }
 
 void Ship::Draw(bool drawCollider)
@@ -173,7 +157,7 @@ void Ship::ComputeBullets()
 {
   for (int i = 0; i < _bullets.size(); i++)
   {
-    _bullets[i].get()->Compute();
+    _bullets[i].get()->Compute(true);
   }
 }
 

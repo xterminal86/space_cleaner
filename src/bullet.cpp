@@ -1,15 +1,37 @@
 #include "bullet.h"
 
-Bullet::Bullet()
+Bullet::Bullet(int type)
 {
-  //int res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletLaserRole);
-  int res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletLameRole);
+  int res = -1;
+  switch(type)
+  {
+    case Bullets::BULLET_ONE_SHOT:
+      res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletOneShotRole);
+      _damage = -100;
+    break;
+
+    case Bullets::BULLET_ONE_SHOT_AUTO:
+      res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletOneShotAutoRole);
+      _damage = -100;
+    break;
+
+    case Bullets::BULLET_ROCKET:
+      res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletShotRocketRole);
+      _damage = -1;
+    break;
+
+    case Bullets::BULLET_LAME:
+    default:
+      res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletLameRole);
+      _damage = -1;
+    break;
+  }
+
   if (res != -1)
   {
     _bulletSprite.Init(res);
+    _bulletSprite.SetScaleFactor(1.25);
   }
-
-  _bulletSprite.SetScaleFactor(1.25);
 
   _trail.Init(TrailLenght, 100, 110, 0.1, 0.5, _bulletSprite.ImageWrapper());
   _trail.TurnOff();
@@ -19,6 +41,8 @@ Bullet::Bullet()
 
   _bulletSpeed = 0;
   _angle = 0.0;
+
+  _bulletType = type;
 
   _active = false;
 }
@@ -46,9 +70,12 @@ void Bullet::Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed)
   _trail.SetUp(shotPoint, tmp, 0.0, angle);
 }
 
-void Bullet::Compute()
+void Bullet::Compute(bool disableTrail)
 {
-  //_trail.Emit();
+  if (!disableTrail)
+  {
+    _trail.Emit();
+  }
 
   if (!_active) return;
 
@@ -64,13 +91,20 @@ void Bullet::Compute()
 
   _bulletSprite.MoveCollider(_position.X(), _position.Y());
 
-  //Draw(true, true);
-  Draw(false, false);
+  if (disableTrail)
+  {
+    //Draw(true, true);
+    Draw(false, false);
+  }
 
   if (_position.X() < 0 || _position.X() > sx || _position.Y() < 0 || _position.Y() > sy)
   {
     _active = false;
-    _trail.TurnOff();
+
+    if (!disableTrail)
+    {
+      _trail.TurnOff();
+    }
   }
 }
 

@@ -11,10 +11,10 @@
 class Bullet
 {
   public:
-    Bullet();
+    Bullet(int type);
     virtual ~Bullet();
 
-    void Compute();
+    void Compute(bool disableTrail = false);
     void Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed);
 
     double Angle() { return _angle; }
@@ -27,6 +27,9 @@ class Bullet
       _active = status;
       _trail.TurnOff();
     }
+
+    int Damage() { return _damage; }
+    void SetDamage(int value) { _damage = value; }
 
     Sprite& GetSprite() { return _bulletSprite; }
 
@@ -44,6 +47,9 @@ class Bullet
     double _angle;
 
     bool _active;
+
+    int _bulletType;
+    int _damage;
 
     void Draw(bool drawCollider, bool drawSxes);
     void DrawAxes();

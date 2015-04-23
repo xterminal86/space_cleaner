@@ -1,8 +1,10 @@
 #ifndef ASTEROID_H
 #define ASTEROID_H
 
+#include "bullet.h"
 #include "gametime.h"
 #include "sprite.h"
+#include "sound_system.h"
 #include "vector2.h"
 #include "util.h"
 
@@ -18,7 +20,9 @@ class Asteroid
     void Move();
     void Rotate(double angle);
     void Compute();
-    void ProcessCollision();
+    void ProcessCollision(Bullet* bulletRef);
+    int HitPoints() { return _hitPoints; }
+    void AddDamage(int value);
 
     Vector2& Position() { return _position; }
 
@@ -29,6 +33,8 @@ class Asteroid
 
   protected:
   private:
+    const unsigned int HitPointsScale = 2;
+
     Sprite _asteroidSprite;
 
     // Comes from Application
@@ -37,6 +43,8 @@ class Asteroid
     bool _active;
 
     int _currentBreakdownLevel;
+    int _hitPoints;
+    int _maxHitPoints;
 
     double _speed;
     double _angle;

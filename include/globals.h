@@ -20,8 +20,10 @@ namespace GlobalStrings
   static std::string BackgroundStarRole = "background_star";
   static std::string ShipRole = "ship";
   static std::string AsteroidRole = "asteroid";
-  static std::string BulletLaserRole = "fire_shot";
   static std::string BulletLameRole = "shot_lame";
+  static std::string BulletOneShotRole = "shot_one";
+  static std::string BulletOneShotAutoRole = "shot_one_auto";
+  static std::string BulletShotRocketRole = "shot_rocket";
   static std::string DefaultParticleRole = "default_particle";
   static std::string FontRole = "font";
   static std::string ShipShieldRole = "ship_shield";
@@ -109,11 +111,20 @@ namespace Sounds
   static int MENU_BACK = 12;
   static int POWERUP_LIFE = 13;
   static int SHIP_FIRE_LAME = 14;
+  static int ASTEROID_HIT = 15;
 }
 
 namespace GUI
 {
   const static int GUITopBackgroundHeight = 32;
+}
+
+namespace Bullets
+{
+  const static int BULLET_LAME = 0;
+  const static int BULLET_ONE_SHOT = 1;
+  const static int BULLET_ONE_SHOT_AUTO = 2;
+  const static int BULLET_ROCKET = 3;
 }
 
 #ifndef HIGH_SCORE

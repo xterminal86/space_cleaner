@@ -13,6 +13,7 @@ MainState::MainState()
 
   _score = 0;
   _timePassed = 0;
+  _autoFireTimePassed = 0;
   _waveCounter = 0;
   _fancyColorPhase = 0;
   _fancyColorCounter = 0;
@@ -146,12 +147,23 @@ void MainState::HandleEvents(Application* game)
 
     if (_keyboardState[SDL_SCANCODE_SPACE])
     {
-      if (!_fireTrigger)
+      if (_ship.AutoFire())
       {
-        SoundSystem::Get().PlaySound(Sounds::SHIP_FIRE_LAME);
+        if (_autoFireValid)
+        {
+          SoundSystem::Get().PlaySound(Sounds::SHIP_FIRE_LAME);
+          _ship.Fire();
+        }
+      }
+      else
+      {
+        if (!_fireTrigger)
+        {
+          SoundSystem::Get().PlaySound(Sounds::SHIP_FIRE_LAME);
 
-        _fireTrigger = true;
-        _ship.Fire();
+          _fireTrigger = true;
+          _ship.Fire();
+        }
       }
     }
 
@@ -179,6 +191,16 @@ void MainState::HandleEvents(Application* game)
 
 void MainState::Update(Application* game)
 {
+  _autoFireTimePassed += GameTime::Get().DeltaTimeMs();
+
+  _autoFireValid = (_autoFireTimePassed > _autoFireRateMs);
+  if (_autoFireValid)
+  {
+    _autoFireTimePassed = 0;
+  }
+
+  MakeBars();
+
   if (_currentLives < 0 && !_scoreWritten)
   {
     _scoreWritten = true;
@@ -405,21 +427,15 @@ void MainState::ProcessCollisions()
         {
           if (_asteroids[i].get()->Active() && Util::TestIntersection(_asteroids[i].get()->GetSprite().GetCollisionInfo(), bullet.get()->GetSprite().GetCollisionInfo()))
           {
-            if (_asteroids[i].get()->CurrentBreakdownLevel() > 1)
-            {
-              SoundSystem::Get().PlaySound(Sounds::ASTEROID_HIT_SMALL);
-            }
-            else
-            {
-              SoundSystem::Get().PlaySound(Sounds::ASTEROID_HIT_BIG);
-            }
-
-            _asteroidExplosion.Play(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y(), _bigAsteroidExplosionScale / (_asteroids[i].get()->CurrentBreakdownLevel() + 1));
-
             // Look for comments below in ship branch
             TryToSpawnPowerup(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y());
 
-            _asteroids[i].get()->ProcessCollision();
+            _asteroids[i].get()->ProcessCollision(bullet.get());
+
+            if (_asteroids[i].get()->HitPoints() <= 0)
+            {
+              _asteroidExplosion.Play(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y(), _bigAsteroidExplosionScale / (_asteroids[i].get()->CurrentBreakdownLevel() + 1));
+            }
 
             _score += _asteroids[i].get()->CurrentBreakdownLevel();
 
@@ -455,7 +471,7 @@ void MainState::ProcessCollisions()
               // it is better to do everything related to object's address beforehand.
               _ship.ProcessShieldCollision(asteroid.get());
 
-              asteroid.get()->ProcessCollision();
+              asteroid.get()->ProcessCollision(nullptr);
               break;
             }
           }
@@ -469,7 +485,7 @@ void MainState::ProcessCollisions()
 
               _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
                _ship.ProcessShieldCollision(asteroid.get());
-              asteroid.get()->ProcessCollision();
+              asteroid.get()->ProcessCollision(nullptr);
               break;
             }
           }
@@ -484,7 +500,7 @@ void MainState::ProcessCollisions()
 
             HandleShipCollision(asteroid.get());
 
-            asteroid.get()->ProcessCollision();
+            asteroid.get()->ProcessCollision(nullptr);
 
             break;
           }
@@ -686,6 +702,21 @@ void MainState::CalculateFancyTextColor()
   }
 }
 
+void MainState::MakeBars()
+{
+  _hitPointsBar.clear();
+  for (int i = 0; i < _ship.HitPoints(); i++)
+  {
+    _hitPointsBar.append(">");
+  }
+
+  _shieldPointsBar.clear();
+  for (int i = 0; i < _ship.ShieldPoints(); i++)
+  {
+    _shieldPointsBar.append(">");
+  }
+}
+
 void MainState::DrawGUI()
 {
   CalculateFancyTextColor();
@@ -729,7 +760,7 @@ void MainState::DrawGUI()
 
   _bitmapFont->SetTextColor(r, g, 0, 255);
   _bitmapFont->SetScale(1.0);
-  _bitmapFont->Printf(_screenSizeX - 25, 0, BitmapFont::AlignRight, (char*)_ship.HitPointsBar().data());
+  _bitmapFont->Printf(_screenSizeX - 25, 0, BitmapFont::AlignRight, (char*)_hitPointsBar.data());
 
   _guiHeart.Draw(_screenSizeX - 16, 8);
   _guiShield.Draw(_screenSizeX - 16, 25);
@@ -739,7 +770,7 @@ void MainState::DrawGUI()
 
   _bitmapFont->SetTextColor(0, 255, 255, a);
   _bitmapFont->SetScale(1.0);
-  _bitmapFont->Printf(_screenSizeX - 25, 16, BitmapFont::AlignRight, (char*)_ship.ShieldPointsBar().data());
+  _bitmapFont->Printf(_screenSizeX - 25, 16, BitmapFont::AlignRight, (char*)_shieldPointsBar.data());
 
   _bitmapFont->SetTextColor(255, 255, 255, 255);
   _bitmapFont->SetScale(1.0);

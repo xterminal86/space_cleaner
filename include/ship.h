@@ -37,6 +37,8 @@ class Ship
     }
     bool ShieldActive() { return _shieldPoints > 0; }
     bool Active() { return _active; }
+    void SetAutoFire(bool value) { _autoFire = value; }
+    bool AutoFire() { return _autoFire; }
     double Angle() { return _angle; }
     int HitPoints() { return _hitPoints; }
     int ShieldPoints() { return _shieldPoints; }
@@ -61,9 +63,6 @@ class Ship
     bool HasBulletsActive();
     std::vector<std::unique_ptr<Bullet>>& GetBullets() { return _bullets; }
 
-    std::string& HitPointsBar() { return _hitPointsBar; }
-    std::string& ShieldPointsBar() { return _shieldPointsBar; }
-
     double Speed() { return _speed; }
     void SetSpeed(double val) { _speed = val; }
 
@@ -72,7 +71,7 @@ class Ship
     Vector2& Position() { return _position; }
     Vector2& Direction() { return _localDirection; }
 
-    const int MaxBullets = 20;
+    const int MaxBullets = 50;
     const int EngineTrailParticles = 50;
     const int ShipMaxHitPoints = 20;
     const int ShieldMaxPoints = 20;
@@ -95,6 +94,7 @@ class Ship
 
     bool _active;
     bool _shieldHit;
+    bool _autoFire;
 
     double _angle;
     double _speed;
@@ -113,9 +113,6 @@ class Ship
     Vector2 _enginePointTranslated;
 
     std::vector<std::unique_ptr<Bullet>> _bullets;
-
-    std::string _hitPointsBar;
-    std::string _shieldPointsBar;
 
     void Draw(int x, int y, bool drawCollider = false);
     void ResetEnginePoint(Vector2 newEnginePoint);

@@ -62,6 +62,7 @@ class MainState : public GameState
     const int _spawnSpread = 100;
     const int _fancyTextColorChangeSpeed = 5;
     const int _powerupsPoolSize = 16;
+    const int _autoFireRateMs = 100;
 
     const double _spawnTimeMeterLength = 20.0;
     const double _bigAsteroidExplosionScale = 1.5;
@@ -69,6 +70,7 @@ class MainState : public GameState
     unsigned int _score;
     unsigned int _timePassed;
     unsigned int _currentSpawnRate;
+    unsigned int _autoFireTimePassed;
     int _fancyColorCounter;
     unsigned int _fancyColorPhase;
     int _fancyColorDelta;
@@ -78,10 +80,13 @@ class MainState : public GameState
     double _guiTimeToSpawnNumber;
 
     std::string _guiSpawnTimeString;
+    std::string _shieldPointsBar;
+    std::string _hitPointsBar;
 
     bool _quitFlag;
     bool _keyPressed;
     bool _scoreWritten;
+    bool _autoFireValid;
 
     int _currentLives;
     int _waveCounter;
@@ -121,6 +126,7 @@ class MainState : public GameState
     void InitGUI();
     void InitPowerups();
     void ProcessPowerups();
+    void MakeBars();
     void DrawGUI();
     void SpawnAsteroid(int x, int y);
     void CleanAsteroids();
