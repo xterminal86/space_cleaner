@@ -289,18 +289,26 @@ void MainState::TryToSpawnPowerup(int x, int y)
 
   int type = -1;
 
-  if (_ship.ShieldPoints() < (_ship.ShieldMaxPoints / 2))
+  switch (chance)
   {
-    if (_ship.HitPoints() < (_ship.ShipMaxHitPoints / 2))
+  case 100:
+    type = Powerups::LIFE_POWERUP;
+    break;
+
+  default:
+    if (_ship.ShieldPoints() < (_ship.ShieldMaxPoints / 2))
     {
-      type = Powerups::HEALTH_POWERUP;
+      if (_ship.HitPoints() < (_ship.ShipMaxHitPoints / 2))
+      {
+        type = Powerups::HEALTH_POWERUP;
+      }
+      else
+      {
+        type = Powerups::SHIELD_POWERUP;
+      }
     }
-    else
-    {
-      type = Powerups::SHIELD_POWERUP;
-    }
+    break;
   }
-  else if (chance == 100) type = Powerups::LIFE_POWERUP;
 
   if (type == -1) return;
 
