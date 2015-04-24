@@ -38,7 +38,6 @@ MainState::MainState()
   _spawnPoints.push_back(Vector2(_screenSizeX - _spawnSpread, _screenSizeY - _spawnSpread));
   _spawnPoints.push_back(Vector2(_spawnSpread, _screenSizeY - _spawnSpread));
 
-  InitPowerups();
   InitGUI();
   LoadBackground();
 
@@ -330,15 +329,7 @@ void MainState::TryToSpawnPowerup(int x, int y)
 
   if (type == -1) return;
 
-  for (auto& p : _powerupsPool)
-  {
-    if (!p.Active() && p.Type() == type)
-    {
-      AnimationsManager::Get().Play(AnimationsIds::SPAWN_SMALL, x, y, 2.0);
-      p.Spawn(Vector2(x, y));
-      break;
-    }
-  }
+  PowerupsManager::Get().SpawnPowerup(x, y, type);
 }
 
 void MainState::TryToSpawnAsteroid()
@@ -424,7 +415,7 @@ void MainState::ProcessCollisions()
           if (_asteroids[i].get()->Active() && Util::TestIntersection(_asteroids[i].get()->GetSprite().GetCollisionInfo(), bullet.get()->GetSprite().GetCollisionInfo()))
           {
             // Look for comments below in ship branch
-            TryToSpawnPowerup(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y());
+            //TryToSpawnPowerup(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y());
 
             _asteroids[i].get()->ProcessCollision(bullet.get());
 
@@ -540,11 +531,11 @@ void MainState::ProcessExplosions()
 
 void MainState::ProcessPowerups()
 {
-  for (auto& powerup : _powerupsPool)
+  PowerupsManager::Get().Process();
+
+  for (auto& powerup : PowerupsManager::Get().PowerupsPool())
   {
     if (!powerup.Active()) continue;
-
-    powerup.Process();
 
     if (_ship.Active() && Util::TestIntersection(_ship.GetSprite().GetCollisionInfo(), powerup.GetSprite().GetCollisionInfo()))
     {
@@ -571,31 +562,6 @@ void MainState::ProcessPowerups()
 
       powerup.SetActive(false);
     }
-  }
-}
-
-void MainState::InitPowerups()
-{
-  int poolSizeHalf = _powerupsPoolSize / 2;
-
-  for (int i = 0; i < _powerupsPoolSize; i++)
-  {
-    Powerup p;
-
-    if (i % 8 == 0)
-    {
-      p.Create(Powerups::LIFE_POWERUP);
-    }
-    else if (i % 2 == 0)
-    {
-      p.Create(Powerups::HEALTH_POWERUP);
-    }
-    else if (i % 2 != 0)
-    {
-      p.Create(Powerups::SHIELD_POWERUP);
-    }
-
-    _powerupsPool.push_back(p);
   }
 }
 

@@ -15,7 +15,7 @@
 #include "star.h"
 #include "asteroid.h"
 #include "animations_manager.h"
-#include "powerup.h"
+#include "powerups_manager.h"
 #include "vector2pair.h"
 #include "util.h"
 
@@ -38,6 +38,7 @@ class MainState : public GameState
     void Update(Application* game) override;
     void Draw(Application* game) override;
 
+    void TryToSpawnPowerup(int x, int y);
   protected:
     MainState();
     virtual ~MainState();
@@ -60,7 +61,6 @@ class MainState : public GameState
     const int _maxAsteroidInstances = 10;
     const int _spawnSpread = 100;
     const int _fancyTextColorChangeSpeed = 5;
-    const int _powerupsPoolSize = 16;
 
     unsigned int _score;
     unsigned int _timePassed;
@@ -119,7 +119,6 @@ class MainState : public GameState
     void HandleShipCollision(Asteroid* collidedAsteroid);
     void ProcessExplosions();
     void InitGUI();
-    void InitPowerups();
     void ProcessPowerups();
     void MakeBars();
     void DrawGUI();
@@ -127,7 +126,6 @@ class MainState : public GameState
     void CleanAsteroids();
     void CalculateFancyTextColor();
     void TryToSpawnAsteroid();
-    void TryToSpawnPowerup(int x, int y);
     void RestartGame();
 
     void HandleEvents();
@@ -137,7 +135,6 @@ class MainState : public GameState
     std::vector<std::unique_ptr<Asteroid>> _asteroids;
     std::vector<Star> _stars;
     std::vector<Vector2> _spawnPoints;
-    std::vector<Powerup> _powerupsPool;
 
     Explosion _shipDebris;
 };

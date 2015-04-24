@@ -1,4 +1,5 @@
 #include "asteroid.h"
+#include "mainstate.h"
 
 Asteroid::Asteroid(double posx, double posy, int breakdownLevel, std::vector<std::unique_ptr<Asteroid>>* mainAsteroidsCollection)
 {
@@ -150,6 +151,8 @@ void Asteroid::ProcessCollision(Bullet* bulletRef)
                                     _position.X(),
                                     _position.Y(),
                                     GameMechanic::BigAsteroidExplosionScale / (_currentBreakdownLevel + 1));
+
+      MainState::Get().TryToSpawnPowerup(_position.X(), _position.Y());
     }
 
     _currentBreakdownLevel++;
@@ -157,12 +160,14 @@ void Asteroid::ProcessCollision(Bullet* bulletRef)
     return;
   }
 
+  // Collision with ship
   if (bulletRef == nullptr)
   {
     _currentBreakdownLevel++;
     _active = false;
     Breakdown();
   }
+  // Collision with bullet
   else
   {
     AddDamage(bulletRef->Damage());
@@ -175,6 +180,8 @@ void Asteroid::ProcessCollision(Bullet* bulletRef)
                                     _position.X(),
                                     _position.Y(),
                                     GameMechanic::BigAsteroidExplosionScale / (_currentBreakdownLevel + 1));
+
+      MainState::Get().TryToSpawnPowerup(_position.X(), _position.Y());
 
       _currentBreakdownLevel++;
       _active = false;

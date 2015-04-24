@@ -16,7 +16,7 @@ class Powerup
     void Process();
     int Type() { return _type; }
     Sprite& GetSprite() { return _sprite; }
-
+    Vector2& Position() { return _position; }
   protected:
   private:
     Vector2 _position;

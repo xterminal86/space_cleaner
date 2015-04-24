@@ -817,7 +817,7 @@
 1429615646 h:\sources\c++\asteroids.git\include\application.h
 	"globals.h"
 
-1429884873 h:\sources\c++\asteroids.git\include\globals.h
+1429888931 h:\sources\c++\asteroids.git\include\globals.h
 	<string>
 	<map>
 	<memory>
@@ -1685,10 +1685,11 @@
 1429803974 source:h:\sources\c++\asteroids.git\src\bullet.cpp
 	"bullet.h"
 
-1429878914 source:h:\sources\c++\asteroids.git\src\asteroid.cpp
+1429887232 source:h:\sources\c++\asteroids.git\src\asteroid.cpp
 	"asteroid.h"
+	"mainstate.h"
 
-1429877735 h:\sources\c++\asteroids.git\include\asteroid.h
+1429886451 h:\sources\c++\asteroids.git\include\asteroid.h
 	"bullet.h"
 	"gametime.h"
 	"sprite.h"
@@ -1873,7 +1874,7 @@
 	"sprite.h"
 	"gametime.h"
 
-1429615646 h:\sources\c++\asteroids.git\include\powerup.h
+1429886897 h:\sources\c++\asteroids.git\include\powerup.h
 	"sprite.h"
 	"gametime.h"
 
@@ -1946,11 +1947,11 @@
 1429522604 h:\sources\c++\asteroids.git\include\gamestate.h
 	"application.h"
 
-1429877165 source:h:\sources\c++\asteroids.git\src\introstate.cpp
+1429885801 source:h:\sources\c++\asteroids.git\src\introstate.cpp
 	"introstate.h"
 	"mainstate.h"
 
-1429877194 h:\sources\c++\asteroids.git\include\introstate.h
+1429885811 h:\sources\c++\asteroids.git\include\introstate.h
 	"gamestate.h"
 	"sprite.h"
 	"star.h"
@@ -1959,8 +1960,9 @@
 	"sound_system.h"
 	"asteroid.h"
 	"animations_manager.h"
+	"powerups_manager.h"
 
-1429878415 h:\sources\c++\asteroids.git\include\mainstate.h
+1429887388 h:\sources\c++\asteroids.git\include\mainstate.h
 	"gamestate.h"
 	"logger.h"
 	"gametime.h"
@@ -1974,11 +1976,11 @@
 	"star.h"
 	"asteroid.h"
 	"animations_manager.h"
-	"powerup.h"
+	"powerups_manager.h"
 	"vector2pair.h"
 	"util.h"
 
-1429878376 source:h:\sources\c++\asteroids.git\src\mainstate.cpp
+1429887429 source:h:\sources\c++\asteroids.git\src\mainstate.cpp
 	"mainstate.h"
 
 1429560052 d:\nick\sources\c++\asteroids.git\include\introstate.h
@@ -2027,4 +2029,13 @@
 1429877126 h:\sources\c++\asteroids.git\include\animations_manager.h
 	"globals.h"
 	"animations_pool.h"
+
+1429888941 source:h:\sources\c++\asteroids.git\src\powerups_manager.cpp
+	"powerups_manager.h"
+
+1429888986 h:\sources\c++\asteroids.git\include\powerups_manager.h
+	"globals.h"
+	"powerup.h"
+	"animations_manager.h"
+	"sound_system.h"
 

@@ -14,3 +14,4 @@
 13 assets/sound/extra_life.wav
 14 assets/sound/ship_fire_lame.wav
 15 assets/sound/asteroid_hit.wav
+16 assets/sound/powerup_spawn.wav

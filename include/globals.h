@@ -117,6 +117,7 @@ namespace Sounds
   static int POWERUP_LIFE = 13;
   static int SHIP_FIRE_LAME = 14;
   static int ASTEROID_HIT = 15;
+  static int POWERUP_SPAWN = 16;
 }
 
 namespace GUI

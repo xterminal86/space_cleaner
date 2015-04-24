@@ -68,6 +68,7 @@
 		<Unit filename="include/particle_engine.h" />
 		<Unit filename="include/png_loader.h" />
 		<Unit filename="include/powerup.h" />
+		<Unit filename="include/powerups_manager.h" />
 		<Unit filename="include/ship.h" />
 		<Unit filename="include/sound_system.h" />
 		<Unit filename="include/sprite.h" />
@@ -95,6 +96,7 @@
 		<Unit filename="src/particle_engine.cpp" />
 		<Unit filename="src/png_loader.cpp" />
 		<Unit filename="src/powerup.cpp" />
+		<Unit filename="src/powerups_manager.cpp" />
 		<Unit filename="src/ship.cpp" />
 		<Unit filename="src/sound_system.cpp" />
 		<Unit filename="src/sprite.cpp" />
