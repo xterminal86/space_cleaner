@@ -39,6 +39,8 @@ class MainState : public GameState
     void Draw(Application* game) override;
 
     void TryToSpawnPowerup(int x, int y);
+    void AddScore(unsigned int value) { _score += value; }
+    void AddKills(int value) { _ship.AddKills(value); }
   protected:
     MainState();
     virtual ~MainState();
@@ -107,6 +109,7 @@ class MainState : public GameState
     Sprite _guiBlackBack;
     Sprite _guiDivider;
     Sprite _guiExtraLifeOutline;
+    Sprite _weaponPicture;
 
     Ship _ship;
 

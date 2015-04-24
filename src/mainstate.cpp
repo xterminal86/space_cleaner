@@ -414,12 +414,7 @@ void MainState::ProcessCollisions()
         {
           if (_asteroids[i].get()->Active() && Util::TestIntersection(_asteroids[i].get()->GetSprite().GetCollisionInfo(), bullet.get()->GetSprite().GetCollisionInfo()))
           {
-            // Look for comments below in ship branch
-            //TryToSpawnPowerup(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y());
-
             _asteroids[i].get()->ProcessCollision(bullet.get());
-
-            _score += _asteroids[i].get()->CurrentBreakdownLevel();
 
             bullet.get()->SetActive(false);
 
@@ -623,6 +618,12 @@ void MainState::InitGUI()
     _guiExtraLifeOutline.Init(index, true);
   }
 
+  index = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletLameRole);
+  if (index != -1)
+  {
+    _weaponPicture.Init(index, true);
+  }
+
   _guiHeart.SetScaleFactor(0.25);
   _guiShield.SetScaleFactor(0.25);
   _guiLives.SetScaleFactor(0.2);
@@ -731,6 +732,10 @@ void MainState::DrawGUI()
   _guiHeart.Draw(_screenSizeX - 16, 8);
   _guiShield.Draw(_screenSizeX - 16, 25);
   _guiWeaponFrame.Draw(_screenSizeX - 210, 16);
+  _weaponPicture.Draw(_screenSizeX - 210, 16);
+
+  _bitmapFont->SetTextColor(255, 255, 255, 255);
+  _bitmapFont->Printf(_screenSizeX - 240, 8, BitmapFont::AlignRight, "EXP: %i / %i", _ship.Kills(), GameMechanic::ExperienceMap[_ship.Level()]);
 
   int a = 255 - (_ship.ShieldMaxPoints - _ship.ShieldPoints()) * _shieldColorAlphaDelta;
 

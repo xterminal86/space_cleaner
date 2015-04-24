@@ -25,17 +25,6 @@ PNGLoader::PNGLoader(std::string filename, int filterMode)
   else if (filterMode == 2) SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
   else SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
-  /*
-  if (filename == "assets/fonts/font_fixed.png" || filename == "assets/bullets/shot_lame.png")
-  {
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
-  }
-  else
-  {
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
-  }
-  */
-
   _texture = nullptr;
   SDL_Surface* surface = IMG_Load(filename.c_str());
   if (surface == nullptr)

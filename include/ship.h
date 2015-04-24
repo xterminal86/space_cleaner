@@ -42,6 +42,27 @@ class Ship
     double Angle() { return _angle; }
     int HitPoints() { return _hitPoints; }
     int ShieldPoints() { return _shieldPoints; }
+    void SetWeaponType(int type) { _weaponType = type; }
+    int WeaponType() { return _weaponType; }
+    int Level() { return _level; }
+    void AddKills(int value)
+    {
+      _kills += value;
+
+      if (_kills <= 0) _kills = 0;
+
+      if ((_level + 1) >= GameMechanic::ExperienceMap.size())
+      {
+        return;
+      }
+
+      if (_kills >= GameMechanic::ExperienceMap[_level])
+      {
+        _kills = 0;
+        _level++;
+      }
+    }
+    int Kills() { return _kills; }
     void AddHitPoints(int value)
     {
       _hitPoints += value;
@@ -102,6 +123,9 @@ class Ship
 
     int _hitPoints;
     int _shieldPoints;
+    int _weaponType;
+    int _kills;
+    int _level;
 
     Vector2 _position;
 

@@ -90,6 +90,8 @@ namespace GameMechanic
   static const int AutoFireRateMs = 100;
 
   static const double BigAsteroidExplosionScale = 1.5;
+
+  static std::map<int, int> ExperienceMap = {{0, 20}, {1, 100}, {2, 200}};
 }
 
 namespace Powerups
@@ -102,7 +104,7 @@ namespace Powerups
 namespace Sounds
 {
   static int POWERUP_HEALTH = 0;
-  static int SHIP_FIRE = 1;
+  static int SHIP_FIRE_AUTO = 1;
   static int SHIP_EXPLODE = 2;
   static int SHIP_HIT = 3;
   static int POWERUP_SHIELD = 4;
@@ -118,12 +120,14 @@ namespace Sounds
   static int SHIP_FIRE_LAME = 14;
   static int ASTEROID_HIT = 15;
   static int POWERUP_SPAWN = 16;
+  static int SHIP_FIRE_SINGLE = 17;
 }
 
 namespace GUI
 {
   const static int GUITopBackgroundHeight = 32;
   static const double SpawnTimeMeterLength = 20.0;
+  static const double KillsMeterLength = 10.0;
 }
 
 namespace Bullets

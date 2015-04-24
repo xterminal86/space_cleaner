@@ -143,6 +143,9 @@ void Asteroid::ProcessCollision(Bullet* bulletRef)
   // Smallest asteroids are disabled regardless of their hitpoints
   if (_currentBreakdownLevel >= GameMechanic::AsteroidMaxBreakdownLevel)
   {
+    _currentBreakdownLevel++;
+    _active = false;
+
     if (bulletRef != nullptr)
     {
       SoundSystem::Get().PlaySound(Sounds::ASTEROID_HIT_SMALL);
@@ -153,10 +156,10 @@ void Asteroid::ProcessCollision(Bullet* bulletRef)
                                     GameMechanic::BigAsteroidExplosionScale / (_currentBreakdownLevel + 1));
 
       MainState::Get().TryToSpawnPowerup(_position.X(), _position.Y());
+      MainState::Get().AddScore(_currentBreakdownLevel);
+      MainState::Get().AddKills(1);
     }
 
-    _currentBreakdownLevel++;
-    _active = false;
     return;
   }
 
@@ -184,6 +187,10 @@ void Asteroid::ProcessCollision(Bullet* bulletRef)
       MainState::Get().TryToSpawnPowerup(_position.X(), _position.Y());
 
       _currentBreakdownLevel++;
+
+      MainState::Get().AddScore(_currentBreakdownLevel);
+      MainState::Get().AddKills(1);
+
       _active = false;
       Breakdown();
     }

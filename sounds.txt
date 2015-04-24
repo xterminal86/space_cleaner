@@ -1,5 +1,5 @@
 0 assets/sound/health_powerup.wav
-1 assets/sound/ship_fire.wav
+1 assets/sound/ship_fire_auto.wav
 2 assets/sound/ship_explode.wav
 3 assets/sound/ship_hit.wav
 4 assets/sound/shield_powerup.wav
@@ -15,3 +15,4 @@
 14 assets/sound/ship_fire_lame.wav
 15 assets/sound/asteroid_hit.wav
 16 assets/sound/powerup_spawn.wav
+17 assets/sound/ship_fire_single.wav

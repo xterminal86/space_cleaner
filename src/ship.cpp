@@ -39,9 +39,13 @@ void Ship::Init(double posx, double posy)
     _shieldSprite.Init(res);
   }
 
+  _kills = 0;
+  _level = 0;
+  _weaponType = Bullets::BULLET_LAME;
+
   for (int i = 0; i < MaxBullets; i++)
   {
-    _bullets.push_back(std::unique_ptr<Bullet>(new Bullet(Bullets::BULLET_LAME)));
+    _bullets.push_back(std::unique_ptr<Bullet>(new Bullet(_weaponType)));
   }
 
   PNGLoader* image = nullptr;
@@ -290,4 +294,7 @@ void Ship::Respawn()
   SetActive(true);
   _hitPoints = ShipMaxHitPoints;
   _shieldPoints = ShieldMaxPoints;
+  _kills = 0;
+  _level = 0;
+  _weaponType = Bullets::BULLET_LAME;
 }
