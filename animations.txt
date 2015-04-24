@@ -1,0 +1,4 @@
+0 assets/animations/explosion.png 20 25
+1 assets/animations/explosion2.png 1 25
+2 assets/animations/spawn.png 1 25
+3 assets/animations/spawn_big.png 1 25

@@ -5,6 +5,7 @@
 #include "gametime.h"
 #include "sprite.h"
 #include "sound_system.h"
+#include "animations_manager.h"
 #include "vector2.h"
 #include "util.h"
 

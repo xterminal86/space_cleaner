@@ -38,7 +38,8 @@ void Asteroid::Init(Vector2 pos, int breakdownLevel, std::vector<std::unique_ptr
 
   _currentBreakdownLevel = breakdownLevel;
 
-  _hitPoints = ((GameMechanic::AsteroidMaxBreakdownLevel + 1) - _currentBreakdownLevel) * HitPointsScale;
+  _hitPoints = (GameMechanic::AsteroidMaxBreakdownLevel - _currentBreakdownLevel) * (GameMechanic::AsteroidMaxBreakdownLevel + 1);
+  //_hitPoints *= HitPointsScale;
   _maxHitPoints = _hitPoints;
 
   _mainAsteroidsCollectionReference = mainAsteroidsCollection;
@@ -138,11 +139,17 @@ void Asteroid::Compute()
 
 void Asteroid::ProcessCollision(Bullet* bulletRef)
 {
+  // Smallest asteroids are disabled regardless of their hitpoints
   if (_currentBreakdownLevel >= GameMechanic::AsteroidMaxBreakdownLevel)
   {
     if (bulletRef != nullptr)
     {
       SoundSystem::Get().PlaySound(Sounds::ASTEROID_HIT_SMALL);
+
+      AnimationsManager::Get().Play(AnimationsIds::EXPLOSION_ASTEROID,
+                                    _position.X(),
+                                    _position.Y(),
+                                    GameMechanic::BigAsteroidExplosionScale / (_currentBreakdownLevel + 1));
     }
 
     _currentBreakdownLevel++;
@@ -163,6 +170,12 @@ void Asteroid::ProcessCollision(Bullet* bulletRef)
     if (_hitPoints <= 0)
     {
       SoundSystem::Get().PlaySound(Sounds::ASTEROID_HIT_BIG);
+
+      AnimationsManager::Get().Play(AnimationsIds::EXPLOSION_ASTEROID,
+                                    _position.X(),
+                                    _position.Y(),
+                                    GameMechanic::BigAsteroidExplosionScale / (_currentBreakdownLevel + 1));
+
       _currentBreakdownLevel++;
       _active = false;
       Breakdown();

@@ -9,6 +9,7 @@
 #include "bitmapfont.h"
 #include "sound_system.h"
 #include "asteroid.h"
+#include "animations_manager.h"
 
 class IntroState : public GameState
 {
@@ -53,6 +54,7 @@ class IntroState : public GameState
     InputManager* _inputManager = &InputManager::Get();
     BitmapFont* _bitmapFont = &BitmapFont::Get();
     SoundSystem* _soundSystem = &SoundSystem::Get();
+    AnimationsManager* _animationsManager = &AnimationsManager::Get();
 
     Uint8* _keyboardState;
 

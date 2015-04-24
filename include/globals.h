@@ -35,6 +35,7 @@ namespace GlobalStrings
   static std::string GUIShipOutline = "gui_ship_outline";
 
   static std::string ImagesFilename = "images.txt";
+  static std::string AnimationsFilename = "animations.txt";
   static std::string LogFilename = "output_log.txt";
   static std::string RelationFilename = "relation.txt";
 
@@ -85,6 +86,10 @@ namespace GameMechanic
   static const int RandomRotationSpeedSpread = 10;
 
   static const int PowerupLifetimeMs = 5000;
+
+  static const int AutoFireRateMs = 100;
+
+  static const double BigAsteroidExplosionScale = 1.5;
 }
 
 namespace Powerups
@@ -117,6 +122,7 @@ namespace Sounds
 namespace GUI
 {
   const static int GUITopBackgroundHeight = 32;
+  static const double SpawnTimeMeterLength = 20.0;
 }
 
 namespace Bullets
@@ -125,6 +131,14 @@ namespace Bullets
   const static int BULLET_ONE_SHOT = 1;
   const static int BULLET_ONE_SHOT_AUTO = 2;
   const static int BULLET_ROCKET = 3;
+}
+
+namespace AnimationsIds
+{
+  const static int EXPLOSION_ASTEROID = 0;
+  const static int EXPLOSION_SHIP = 1;
+  const static int SPAWN_SMALL = 2;
+  const static int SPAWN_BIG = 3;
 }
 
 #ifndef HIGH_SCORE

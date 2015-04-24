@@ -2,10 +2,6 @@
 
 MainState::MainState()
 {
-  _asteroidExplosion.Init(GlobalStrings::ExplosionSpriteFilename, _maxExplosions, 25);
-  _shipExplosion.Init(GlobalStrings::ExplosionSpriteShipFilename, 1, 25);
-  _spawnAnimation.Init(GlobalStrings::SpawnAnimationFilename, 1, 25);
-
   _fireTrigger = false;
   _quitFlag = false;
   _keyPressed = false;
@@ -193,7 +189,7 @@ void MainState::Update(Application* game)
 {
   _autoFireTimePassed += GameTime::Get().DeltaTimeMs();
 
-  _autoFireValid = (_autoFireTimePassed > _autoFireRateMs);
+  _autoFireValid = (_autoFireTimePassed > GameMechanic::AutoFireRateMs);
   if (_autoFireValid)
   {
     _autoFireTimePassed = 0;
@@ -338,6 +334,7 @@ void MainState::TryToSpawnPowerup(int x, int y)
   {
     if (!p.Active() && p.Type() == type)
     {
+      AnimationsManager::Get().Play(AnimationsIds::SPAWN_SMALL, x, y, 2.0);
       p.Spawn(Vector2(x, y));
       break;
     }
@@ -391,8 +388,7 @@ void MainState::SpawnAsteroid(int x, int y)
   Vector2 pos(posx, posy);
   _asteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(pos, 0, &_asteroids)));
 
-  _spawnAnimation.Play(posx, posy, 2.0);
-
+  AnimationsManager::Get().Play(AnimationsIds::SPAWN_BIG, posx, posy, 2.0);
   SoundSystem::Get().PlaySound(Sounds::ASTEROID_SPAWN);
 }
 
@@ -432,11 +428,6 @@ void MainState::ProcessCollisions()
 
             _asteroids[i].get()->ProcessCollision(bullet.get());
 
-            if (_asteroids[i].get()->HitPoints() <= 0)
-            {
-              _asteroidExplosion.Play(_asteroids[i].get()->Position().X(), _asteroids[i].get()->Position().Y(), _bigAsteroidExplosionScale / (_asteroids[i].get()->CurrentBreakdownLevel() + 1));
-            }
-
             _score += _asteroids[i].get()->CurrentBreakdownLevel();
 
             bullet.get()->SetActive(false);
@@ -464,7 +455,10 @@ void MainState::ProcessCollisions()
             {
               SoundSystem::Get().PlaySound(Sounds::SHIELD_HIT_ENERGY);
 
-              _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
+              AnimationsManager::Get().Play(AnimationsIds::EXPLOSION_ASTEROID,
+                                            asteroid.get()->Position().X(),
+                                            asteroid.get()->Position().Y(),
+                                            GameMechanic::BigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
 
               // Since Asteroid::ProcessCollision() involves push_back operation, and
               // we have CleanupAsteroids method, that deletes inactive asteroids,
@@ -483,8 +477,13 @@ void MainState::ProcessCollisions()
             {
               SoundSystem::Get().PlaySound(Sounds::SHIELD_HIT_ENERGY);
 
-              _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
-               _ship.ProcessShieldCollision(asteroid.get());
+              AnimationsManager::Get().Play(AnimationsIds::EXPLOSION_ASTEROID,
+                                            asteroid.get()->Position().X(),
+                                            asteroid.get()->Position().Y(),
+                                            GameMechanic::BigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
+
+              _ship.ProcessShieldCollision(asteroid.get());
+
               asteroid.get()->ProcessCollision(nullptr);
               break;
             }
@@ -496,7 +495,10 @@ void MainState::ProcessCollisions()
           {
             SoundSystem::Get().PlaySound(Sounds::SHIP_HIT);
 
-            _asteroidExplosion.Play(asteroid.get()->Position().X(), asteroid.get()->Position().Y(), _bigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
+            AnimationsManager::Get().Play(AnimationsIds::EXPLOSION_ASTEROID,
+                                          asteroid.get()->Position().X(),
+                                          asteroid.get()->Position().Y(),
+                                          GameMechanic::BigAsteroidExplosionScale / (asteroid.get()->CurrentBreakdownLevel() + 1));
 
             HandleShipCollision(asteroid.get());
 
@@ -519,7 +521,7 @@ void MainState::HandleShipCollision(Asteroid* collidedAsteroid)
 
     _ship.SetSpeed(0.0);
     _ship.SetActive(false);
-    _shipExplosion.Play(_ship.Position().X(), _ship.Position().Y(), 1.0);
+    AnimationsManager::Get().Play(AnimationsIds::EXPLOSION_SHIP, _ship.Position().X(), _ship.Position().Y(), 1.0);
     _shipDebris.Play(_ship.Position());
     _currentLives--;
 
@@ -532,9 +534,7 @@ void MainState::HandleShipCollision(Asteroid* collidedAsteroid)
 
 void MainState::ProcessExplosions()
 {
-  _asteroidExplosion.Process();
-  _shipExplosion.Process();
-  _spawnAnimation.Process();
+  AnimationsManager::Get().Process();
   _shipDebris.Process();
 }
 
@@ -661,7 +661,7 @@ void MainState::InitGUI()
   _guiShield.SetScaleFactor(0.25);
   _guiLives.SetScaleFactor(0.2);
   _guiExtraLifeOutline.SetScaleFactor(0.2);
-  _guiWeaponFrame.SetScaleFactor(2.0);
+  _guiWeaponFrame.SetScaleFactor(1.0);
 }
 
 void MainState::CalculateFancyTextColor()
@@ -727,7 +727,7 @@ void MainState::DrawGUI()
   _guiBlackBack.Draw(0, 0, _screenSizeX, GUI::GUITopBackgroundHeight);
   _guiDivider.Draw(0, GUI::GUITopBackgroundHeight, _screenSizeX, _guiDivider.ImageWrapper()->Height(), true);
 
-  int meter = (int)(_spawnTimeMeterLength * _guiTimeToSpawnNumber);
+  int meter = (int)(GUI::SpawnTimeMeterLength * _guiTimeToSpawnNumber);
   _guiSpawnTimeString.clear();
   for (int i = 0; i < meter; i++)
   {
@@ -764,7 +764,7 @@ void MainState::DrawGUI()
 
   _guiHeart.Draw(_screenSizeX - 16, 8);
   _guiShield.Draw(_screenSizeX - 16, 25);
-  _guiWeaponFrame.Draw(_screenSizeX - 230, _guiWeaponFrame.ImageWrapper()->Height());
+  _guiWeaponFrame.Draw(_screenSizeX - 210, 16);
 
   int a = 255 - (_ship.ShieldMaxPoints - _ship.ShieldPoints()) * _shieldColorAlphaDelta;
 
@@ -776,7 +776,7 @@ void MainState::DrawGUI()
   _bitmapFont->SetScale(1.0);
   _bitmapFont->Printf(92, 16, BitmapFont::AlignLeft, "[");
   _bitmapFont->Printf(100, 18, BitmapFont::AlignLeft, (char*)_guiSpawnTimeString.data());
-  _bitmapFont->Printf(100 + (_spawnTimeMeterLength - 1) * 8, 16, BitmapFont::AlignLeft, "]");
+  _bitmapFont->Printf(100 + (GUI::SpawnTimeMeterLength - 1) * 8, 16, BitmapFont::AlignLeft, "]");
   _bitmapFont->Printf(180, 0, BitmapFont::AlignCenter, "WAVE %i", _waveCounter);
   _bitmapFont->Printf(270, 0, BitmapFont::AlignLeft, "S: %i / %i", _asteroidInstances, _maxAsteroidInstances);
   _bitmapFont->Printf(270, 16, BitmapFont::AlignLeft, "R: %.2f", _guiSpawnRateNumber);

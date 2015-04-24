@@ -10,11 +10,11 @@
 #include "input_manager.h"
 #include "bitmapfont.h"
 #include "sound_system.h"
-#include "animations_pool.h"
 #include "explosion.h"
 #include "ship.h"
 #include "star.h"
 #include "asteroid.h"
+#include "animations_manager.h"
 #include "powerup.h"
 #include "vector2pair.h"
 #include "util.h"
@@ -54,7 +54,6 @@ class MainState : public GameState
 
     const int _screenWidth = 1280;
     const int _screenHeight = 600;
-    const int _maxExplosions = 20;
     const int _backgroundStars = 100;
     const int _startingLives = 0;
     const int _maxLivesLimit = 3;
@@ -62,10 +61,6 @@ class MainState : public GameState
     const int _spawnSpread = 100;
     const int _fancyTextColorChangeSpeed = 5;
     const int _powerupsPoolSize = 16;
-    const int _autoFireRateMs = 100;
-
-    const double _spawnTimeMeterLength = 20.0;
-    const double _bigAsteroidExplosionScale = 1.5;
 
     unsigned int _score;
     unsigned int _timePassed;
@@ -143,10 +138,6 @@ class MainState : public GameState
     std::vector<Star> _stars;
     std::vector<Vector2> _spawnPoints;
     std::vector<Powerup> _powerupsPool;
-
-    AnimationsPool _asteroidExplosion;
-    AnimationsPool _shipExplosion;
-    AnimationsPool _spawnAnimation;
 
     Explosion _shipDebris;
 };

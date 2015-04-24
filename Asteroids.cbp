@@ -50,6 +50,7 @@
 		</Linker>
 		<Unit filename="cb.bmp" />
 		<Unit filename="include/animation_sequence.h" />
+		<Unit filename="include/animations_manager.h" />
 		<Unit filename="include/animations_pool.h" />
 		<Unit filename="include/application.h" />
 		<Unit filename="include/asteroid.h" />
@@ -78,6 +79,7 @@
 		<Unit filename="include/video_system.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/animation_sequence.cpp" />
+		<Unit filename="src/animations_manager.cpp" />
 		<Unit filename="src/animations_pool.cpp" />
 		<Unit filename="src/application.cpp" />
 		<Unit filename="src/asteroid.cpp" />
