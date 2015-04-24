@@ -22,7 +22,7 @@ Bullet::Bullet(int type)
     case Bullets::BULLET_LAME:
     default:
       res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletLameRole);
-      _damage = -1;
+      _damage = 0;
       scaleFactor = 1.25;
     break;
   }

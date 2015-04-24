@@ -43,7 +43,10 @@ namespace GlobalStrings
   static std::string SoundsFilename = "sounds.txt";
 
   static std::string HowToPlayString = \
-  "Clean the space by shooting down flying asteroids!\n\n\
+  "CLEAN THE SPACE BY SHOOTING DOWN FLYING ASTEROIDS!\n\n\
+Your starting weapon is capable of destroying only small asteroids,\n\
+so you have to carefully use your shield to break down big ones.\n\
+You'll receive better weapon after shooting down enough asteroids.\n\n\
 - Move and turn using WASD, shoot by tapping SPACE ;-)\n\
 - Your shield will absorb any amount of damage.\n\
 - Damage to ship's hull depends on the size of the incoming asteroid.";
