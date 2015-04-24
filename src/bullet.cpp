@@ -2,38 +2,37 @@
 
 Bullet::Bullet(int type)
 {
+  double scaleFactor = 1.0;
   int res = -1;
   switch(type)
   {
     case Bullets::BULLET_ONE_SHOT:
       res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletOneShotRole);
       _damage = -100;
+      scaleFactor = 1.0;
     break;
 
     case Bullets::BULLET_ONE_SHOT_AUTO:
       res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletOneShotAutoRole);
       _damage = -100;
-    break;
-
-    case Bullets::BULLET_ROCKET:
-      res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletShotRocketRole);
-      _damage = -1;
+      scaleFactor = 0.5;
     break;
 
     case Bullets::BULLET_LAME:
     default:
       res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletLameRole);
       _damage = -1;
+      scaleFactor = 1.25;
     break;
   }
 
   if (res != -1)
   {
     _bulletSprite.Init(res);
-    _bulletSprite.SetScaleFactor(1.25);
+    _bulletSprite.SetScaleFactor(scaleFactor);
   }
 
-  _trail.Init(TrailLenght, 100, 110, 0.1, 0.5, _bulletSprite.ImageWrapper());
+  _trail.Init(TrailLenght, 100, 110, 0.1, _bulletSprite.ScaleFactor(), _bulletSprite.ImageWrapper());
   _trail.TurnOff();
 
   _position.ToZero();
@@ -70,9 +69,9 @@ void Bullet::Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed)
   _trail.SetUp(shotPoint, tmp, 0.0, angle);
 }
 
-void Bullet::Compute(bool disableTrail)
+void Bullet::Compute()
 {
-  if (!disableTrail)
+  if (_bulletType != Bullets::BULLET_LAME)
   {
     _trail.Emit();
   }
@@ -91,7 +90,7 @@ void Bullet::Compute(bool disableTrail)
 
   _bulletSprite.MoveCollider(_position.X(), _position.Y());
 
-  if (disableTrail)
+  if (_bulletType == Bullets::BULLET_LAME)
   {
     //Draw(true, true);
     Draw(false, false);
@@ -101,7 +100,7 @@ void Bullet::Compute(bool disableTrail)
   {
     _active = false;
 
-    if (!disableTrail)
+    if (_bulletType != Bullets::BULLET_LAME)
     {
       _trail.TurnOff();
     }

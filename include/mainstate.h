@@ -58,7 +58,7 @@ class MainState : public GameState
     const int _screenWidth = 1280;
     const int _screenHeight = 600;
     const int _backgroundStars = 100;
-    const int _startingLives = 0;
+    const int _startingLives = 1;
     const int _maxLivesLimit = 3;
     const int _maxAsteroidInstances = 10;
     const int _spawnSpread = 100;

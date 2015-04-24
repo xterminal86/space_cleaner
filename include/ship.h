@@ -42,26 +42,10 @@ class Ship
     double Angle() { return _angle; }
     int HitPoints() { return _hitPoints; }
     int ShieldPoints() { return _shieldPoints; }
-    void SetWeaponType(int type) { _weaponType = type; }
+    void ChangeWeaponType(int type);
     int WeaponType() { return _weaponType; }
     int Level() { return _level; }
-    void AddKills(int value)
-    {
-      _kills += value;
-
-      if (_kills <= 0) _kills = 0;
-
-      if ((_level + 1) >= GameMechanic::ExperienceMap.size())
-      {
-        return;
-      }
-
-      if (_kills >= GameMechanic::ExperienceMap[_level])
-      {
-        _kills = 0;
-        _level++;
-      }
-    }
+    void AddKills(int value);
     int Kills() { return _kills; }
     void AddHitPoints(int value)
     {
@@ -82,7 +66,7 @@ class Ship
       }
     }
     bool HasBulletsActive();
-    std::vector<std::unique_ptr<Bullet>>& GetBullets() { return _bullets; }
+    std::vector<std::unique_ptr<Bullet>>& GetBullets() { return _bullets[_weaponType]; }
 
     double Speed() { return _speed; }
     void SetSpeed(double val) { _speed = val; }
@@ -136,7 +120,7 @@ class Ship
     Vector2 _enginePointRotated;
     Vector2 _enginePointTranslated;
 
-    std::vector<std::unique_ptr<Bullet>> _bullets;
+    std::map<int, std::vector<std::unique_ptr<Bullet>>> _bullets;
 
     void Draw(int x, int y, bool drawCollider = false);
     void ResetEnginePoint(Vector2 newEnginePoint);

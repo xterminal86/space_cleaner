@@ -21,6 +21,7 @@ class Sprite
 
     void SetColor(SDL_Color c);
     void SetScaleFactor(double scaleFactor);
+    double ScaleFactor() { return _scaleFactor; }
 
     PNGLoader* ImageWrapper() { return _imageWrapper; }
     SDL_Rect* SourceRect() { return &_sourceRect; }

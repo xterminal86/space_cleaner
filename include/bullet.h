@@ -14,7 +14,7 @@ class Bullet
     Bullet(int type);
     virtual ~Bullet();
 
-    void Compute(bool disableTrail = false);
+    void Compute();
     void Fire(Vector2 shotPoint, Vector2 dir, double angle, double speed);
 
     double Angle() { return _angle; }

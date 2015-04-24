@@ -43,9 +43,12 @@ void Ship::Init(double posx, double posy)
   _level = 0;
   _weaponType = Bullets::BULLET_LAME;
 
-  for (int i = 0; i < MaxBullets; i++)
+  for (int i = 0; i < Bullets::BULLET_TOTAL_TYPES; i++)
   {
-    _bullets.push_back(std::unique_ptr<Bullet>(new Bullet(_weaponType)));
+    for (int j = 0; j < MaxBullets; j++)
+    {
+      _bullets[i].push_back(std::unique_ptr<Bullet>(new Bullet(i)));
+    }
   }
 
   PNGLoader* image = nullptr;
@@ -161,7 +164,10 @@ void Ship::ComputeBullets()
 {
   for (int i = 0; i < _bullets.size(); i++)
   {
-    _bullets[i].get()->Compute(true);
+    for (int j = 0; j < _bullets[i].size(); j++)
+    {
+      _bullets[i].at(j).get()->Compute();
+    }
   }
 }
 
@@ -213,12 +219,13 @@ void Ship::Accelerate(double dspeed)
 
 void Ship::Fire()
 {
-  for (int i = 0; i < _bullets.size(); i++)
+  for (int i = 0; i < _bullets[_weaponType].size(); i++)
   {
-    if (_bullets[i].get()->Active() == false)
+    if (_bullets[_weaponType].at(i).get()->Active() == false)
     {
       Vector2 shotPoint(_position.X(), _position.Y());
-      _bullets[i].get()->Fire(shotPoint, _localDirection, _angle, BulletSpeed);
+      _bullets[_weaponType].at(i).get()->Fire(shotPoint, _localDirection, _angle, BulletSpeed);
+      SoundSystem::Get().PlaySound(Sounds::ShotSoundsMap[_weaponType]);
       break;
     }
   }
@@ -226,7 +233,7 @@ void Ship::Fire()
 
 bool Ship::HasBulletsActive()
 {
-  for (auto &i : _bullets)
+  for (auto &i : _bullets[_weaponType])
   {
     if (i.get()->Active())
     {
@@ -296,5 +303,36 @@ void Ship::Respawn()
   _shieldPoints = ShieldMaxPoints;
   _kills = 0;
   _level = 0;
-  _weaponType = Bullets::BULLET_LAME;
+  ChangeWeaponType(Bullets::BULLET_LAME);
+}
+
+void Ship::AddKills(int value)
+{
+  if (_level == 2) return;
+
+  _kills += value;
+
+  if (_kills <= 0) _kills = 0;
+
+  if ((_level + 1) >= GameMechanic::ExperienceMap.size())
+  {
+    return;
+  }
+
+  if (_kills >= GameMechanic::ExperienceMap[_level])
+  {
+    _kills = 0;
+    _level++;
+
+    if (Bullets::LevelToWeaponsMap.count(_level) == 1)
+    {
+      ChangeWeaponType(Bullets::LevelToWeaponsMap[_level]);
+    }
+  }
+}
+
+void Ship::ChangeWeaponType(int type)
+{
+  _weaponType = type;
+  _autoFire = type == Bullets::BULLET_ONE_SHOT_AUTO;
 }

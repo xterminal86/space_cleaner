@@ -146,7 +146,6 @@ void MainState::HandleEvents(Application* game)
       {
         if (_autoFireValid)
         {
-          SoundSystem::Get().PlaySound(Sounds::SHIP_FIRE_LAME);
           _ship.Fire();
         }
       }
@@ -154,8 +153,6 @@ void MainState::HandleEvents(Application* game)
       {
         if (!_fireTrigger)
         {
-          SoundSystem::Get().PlaySound(Sounds::SHIP_FIRE_LAME);
-
           _fireTrigger = true;
           _ship.Fire();
         }
@@ -735,7 +732,16 @@ void MainState::DrawGUI()
   _weaponPicture.Draw(_screenSizeX - 210, 16);
 
   _bitmapFont->SetTextColor(255, 255, 255, 255);
-  _bitmapFont->Printf(_screenSizeX - 240, 8, BitmapFont::AlignRight, "EXP: %i / %i", _ship.Kills(), GameMechanic::ExperienceMap[_ship.Level()]);
+
+  if ((_ship.Level() + 1) == 3)
+  {
+    _bitmapFont->Print(_screenSizeX - 240, 8, BitmapFont::AlignRight, "MAX");
+  }
+  else
+  {
+    _bitmapFont->Printf(_screenSizeX - 240, 0, BitmapFont::AlignRight, "LEVEL %i", _ship.Level() + 1);
+    _bitmapFont->Printf(_screenSizeX - 240, 16, BitmapFont::AlignRight, "%i / %i", _ship.Kills(), GameMechanic::ExperienceMap[_ship.Level()]);
+  }
 
   int a = 255 - (_ship.ShieldMaxPoints - _ship.ShieldPoints()) * _shieldColorAlphaDelta;
 

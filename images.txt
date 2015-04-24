@@ -8,8 +8,8 @@
 9 assets/ship/energy_shield.png 1
 10 assets/gui/shield.png 2
 11 assets/gui/heart.png 2
-12 assets/bullets/fire_shot_small.png 0
-13 assets/bullets/fire_shot2.png 0
+12 assets/bullets/shot_single.png 0
+13 assets/bullets/shot_auto.png 0
 14 assets/bullets/shot_lame.png 0
 15 assets/gui/weapon_box.png 0
 16 assets/gui/black.png 0

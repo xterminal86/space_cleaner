@@ -23,7 +23,6 @@ namespace GlobalStrings
   static std::string BulletLameRole = "shot_lame";
   static std::string BulletOneShotRole = "shot_one";
   static std::string BulletOneShotAutoRole = "shot_one_auto";
-  static std::string BulletShotRocketRole = "shot_rocket";
   static std::string DefaultParticleRole = "default_particle";
   static std::string FontRole = "font";
   static std::string ShipShieldRole = "ship_shield";
@@ -77,11 +76,13 @@ namespace GameMechanic
 
   // In particular, determines the values below AsteroidMaxSpeed
   // The more - the less speed values can be.
+  //
   // TLDR: goes in denominator of asteroid random speed generation.
   static const int RandomSpeedSpread = 5;
 
   // Determines spread of rotation increment fraction. The more - the less increment value can possibly be.
   // See Util::CreateRandomRotation.
+  //
   // TLDR: this value goes in denominator.
   static const int RandomRotationSpeedSpread = 10;
 
@@ -91,7 +92,10 @@ namespace GameMechanic
 
   static const double BigAsteroidExplosionScale = 1.5;
 
-  static std::map<int, int> ExperienceMap = {{0, 20}, {1, 100}, {2, 200}};
+  static std::map<int, int> ExperienceMap =
+  {
+    {0, 50}, {1, 100}, {2, 200}
+  };
 }
 
 namespace Powerups
@@ -99,6 +103,21 @@ namespace Powerups
   static const int SHIELD_POWERUP = 0;
   static const int HEALTH_POWERUP = 1;
   static const int LIFE_POWERUP = 2;
+}
+
+namespace Bullets
+{
+  const static int BULLET_LAME = 0;
+  const static int BULLET_ONE_SHOT = 1;
+  const static int BULLET_ONE_SHOT_AUTO = 2;
+  const static int BULLET_TOTAL_TYPES = 3;
+
+  static std::map<int, int> LevelToWeaponsMap =
+  {
+    {0, BULLET_LAME},
+    {1, BULLET_ONE_SHOT},
+    {2, BULLET_ONE_SHOT_AUTO}
+  };
 }
 
 namespace Sounds
@@ -121,6 +140,13 @@ namespace Sounds
   static int ASTEROID_HIT = 15;
   static int POWERUP_SPAWN = 16;
   static int SHIP_FIRE_SINGLE = 17;
+
+  static std::map<int, int> ShotSoundsMap =
+  {
+    {Bullets::BULLET_LAME,          SHIP_FIRE_LAME},
+    {Bullets::BULLET_ONE_SHOT,      SHIP_FIRE_SINGLE},
+    {Bullets::BULLET_ONE_SHOT_AUTO, SHIP_FIRE_AUTO}
+  };
 }
 
 namespace GUI
@@ -128,14 +154,6 @@ namespace GUI
   const static int GUITopBackgroundHeight = 32;
   static const double SpawnTimeMeterLength = 20.0;
   static const double KillsMeterLength = 10.0;
-}
-
-namespace Bullets
-{
-  const static int BULLET_LAME = 0;
-  const static int BULLET_ONE_SHOT = 1;
-  const static int BULLET_ONE_SHOT_AUTO = 2;
-  const static int BULLET_ROCKET = 3;
 }
 
 namespace AnimationsIds
