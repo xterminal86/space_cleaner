@@ -72,6 +72,7 @@ class Ship
     void SetSpeed(double val) { _speed = val; }
 
     Sprite& GetSprite() { return _shipSprite; }
+    Sprite& CurrentWeaponImage() { return _currentWeaponImage; }
 
     Vector2& Position() { return _position; }
     Vector2& Direction() { return _localDirection; }
@@ -84,6 +85,7 @@ class Ship
     const double ShipMaxSpeed = 4.0;
     const double RotationSpeed = 0.1;
     const double AccelerationSpeed = 0.005;
+    const double DecelerationSpeed = 0.001;
     const double DefaultParticleScale = 0.15;
     const double DefaultParticleScaleIncrement = 0.01;
     const int DefaultShieldRadius = 40;
@@ -94,6 +96,7 @@ class Ship
     ParticleEngine _engineTrail;
     Sprite _shipSprite;
     Sprite _shieldSprite;
+    Sprite _currentWeaponImage;
 
     SDL_Color _shieldColor;
 

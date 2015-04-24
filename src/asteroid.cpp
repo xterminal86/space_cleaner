@@ -40,7 +40,8 @@ void Asteroid::Init(Vector2 pos, int breakdownLevel, std::vector<std::unique_ptr
   _currentBreakdownLevel = breakdownLevel;
 
   _hitPoints = (GameMechanic::AsteroidMaxBreakdownLevel - _currentBreakdownLevel) * (GameMechanic::AsteroidMaxBreakdownLevel + 1);
-  //_hitPoints *= HitPointsScale;
+  _hitPoints *= HitPointsScale;
+
   _maxHitPoints = _hitPoints;
 
   _mainAsteroidsCollectionReference = mainAsteroidsCollection;
@@ -196,6 +197,7 @@ void Asteroid::ProcessCollision(Bullet* bulletRef)
     }
     else
     {
+      AnimationsManager::Get().Play(AnimationsIds::BULLET_HIT, bulletRef->Position().X(), bulletRef->Position().Y());
       SoundSystem::Get().PlaySound(Sounds::ASTEROID_HIT);
     }
   }

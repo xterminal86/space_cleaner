@@ -118,6 +118,8 @@ void MainState::HandleEvents(Application* game)
       RestartGame();
     }
 
+    _currentSpawnRate = GameMechanic::StartingSpawnRateMs;
+    _timePassed = 0;
     _ship.Respawn();
   }
 
@@ -159,15 +161,15 @@ void MainState::HandleEvents(Application* game)
       }
     }
 
+    //if (_keyboardState[SDL_SCANCODE_S])
+    //{
+    //  _ship.Accelerate(-_ship.AccelerationSpeed * GameTime::Get().DeltaTimeMs());
+    //}
+
     if (!_keyboardState[SDL_SCANCODE_SPACE])
     {
       _fireTrigger = false;
     }
-
-//    if (keyboardState[SDL_SCANCODE_S])
-//    {
-//      _ship.Accelerate(-_accelerationSpeed);
-//    }
 
     if (!_keyboardState[SDL_SCANCODE_W] && _ship.Speed() > 0.0)
     {
@@ -298,7 +300,7 @@ void MainState::InitAsteroids()
 
 void MainState::TryToSpawnPowerup(int x, int y)
 {
-  int chance = Util::RandomNumber() % 1500 + 1;
+  int chance = Util::RandomNumber() % 1000 + 1;
   if (chance > 100) return;
 
   int type = -1;
@@ -615,12 +617,6 @@ void MainState::InitGUI()
     _guiExtraLifeOutline.Init(index, true);
   }
 
-  index = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletLameRole);
-  if (index != -1)
-  {
-    _weaponPicture.Init(index, true);
-  }
-
   _guiHeart.SetScaleFactor(0.25);
   _guiShield.SetScaleFactor(0.25);
   _guiLives.SetScaleFactor(0.2);
@@ -729,13 +725,16 @@ void MainState::DrawGUI()
   _guiHeart.Draw(_screenSizeX - 16, 8);
   _guiShield.Draw(_screenSizeX - 16, 25);
   _guiWeaponFrame.Draw(_screenSizeX - 210, 16);
-  _weaponPicture.Draw(_screenSizeX - 210, 16);
+  _ship.CurrentWeaponImage().Draw(_screenSizeX - 210, 16);
 
   _bitmapFont->SetTextColor(255, 255, 255, 255);
 
-  if ((_ship.Level() + 1) == 3)
+  if (_ship.Level() == (GameMechanic::ExperienceMap.size() - 1))
   {
     _bitmapFont->Print(_screenSizeX - 240, 8, BitmapFont::AlignRight, "MAX");
+
+    _bitmapFont->SetTextColor(255, 255, 0, 255);
+    _bitmapFont->Print(_screenSizeX - 210, 16, BitmapFont::AlignCenter, "auto");
   }
   else
   {

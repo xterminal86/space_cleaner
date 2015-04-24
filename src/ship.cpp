@@ -41,7 +41,6 @@ void Ship::Init(double posx, double posy)
 
   _kills = 0;
   _level = 0;
-  _weaponType = Bullets::BULLET_LAME;
 
   for (int i = 0; i < Bullets::BULLET_TOTAL_TYPES; i++)
   {
@@ -51,12 +50,20 @@ void Ship::Init(double posx, double posy)
     }
   }
 
+  ChangeWeaponType(Bullets::BULLET_LAME);
+
   PNGLoader* image = nullptr;
 
   int index = TextureManager::Get().FindTextureByRole(GlobalStrings::DefaultParticleRole);
   if (index != -1)
   {
     image = TextureManager::Get().GetTextureWrapper(index);
+  }
+
+  index = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletLameRole);
+  if (index != -1)
+  {
+    _currentWeaponImage.Init(index, true);
   }
 
   int engineY = _shipSprite.ImageWrapper()->Height() / 2;
@@ -308,7 +315,7 @@ void Ship::Respawn()
 
 void Ship::AddKills(int value)
 {
-  if (_level == 2) return;
+  if (_level == (GameMechanic::ExperienceMap.size() - 1)) return;
 
   _kills += value;
 
@@ -334,5 +341,11 @@ void Ship::AddKills(int value)
 void Ship::ChangeWeaponType(int type)
 {
   _weaponType = type;
-  _autoFire = type == Bullets::BULLET_ONE_SHOT_AUTO;
+  _autoFire = type == Bullets::BULLET_FIRE_AUTO;
+  int index = TextureManager::Get().FindTextureByRole(Bullets::BulletsToRolesMap[type]);
+  if (index != -1)
+  {
+    _currentWeaponImage.Init(index, true);
+  }
+
 }

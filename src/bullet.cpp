@@ -7,15 +7,16 @@ Bullet::Bullet(int type)
   switch(type)
   {
     case Bullets::BULLET_ONE_SHOT:
-      res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletOneShotRole);
-      _damage = -100;
+      res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletShotSingleRole);
+      _damage = -3;
       scaleFactor = 1.0;
     break;
 
-    case Bullets::BULLET_ONE_SHOT_AUTO:
-      res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletOneShotAutoRole);
+    case Bullets::BULLET_FIRE:
+    case Bullets::BULLET_FIRE_AUTO:
+      res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletShotFireRole);
       _damage = -100;
-      scaleFactor = 0.5;
+      scaleFactor = 1.0;
     break;
 
     case Bullets::BULLET_LAME:
@@ -32,7 +33,7 @@ Bullet::Bullet(int type)
     _bulletSprite.SetScaleFactor(scaleFactor);
   }
 
-  _trail.Init(TrailLenght, 100, 110, 0.1, _bulletSprite.ScaleFactor(), _bulletSprite.ImageWrapper());
+  _trail.Init(TrailLenght, 100, 110, 0.2, _bulletSprite.ScaleFactor(), _bulletSprite.ImageWrapper());
   _trail.TurnOff();
 
   _position.ToZero();

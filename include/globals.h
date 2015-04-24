@@ -21,8 +21,8 @@ namespace GlobalStrings
   static std::string ShipRole = "ship";
   static std::string AsteroidRole = "asteroid";
   static std::string BulletLameRole = "shot_lame";
-  static std::string BulletOneShotRole = "shot_one";
-  static std::string BulletOneShotAutoRole = "shot_one_auto";
+  static std::string BulletShotSingleRole = "shot_single";
+  static std::string BulletShotFireRole = "shot_fire";
   static std::string DefaultParticleRole = "default_particle";
   static std::string FontRole = "font";
   static std::string ShipShieldRole = "ship_shield";
@@ -39,10 +39,6 @@ namespace GlobalStrings
   static std::string RelationFilename = "relation.txt";
 
   static std::string HighScoresFilename = "highscores.dat";
-
-  static std::string ExplosionSpriteFilename = "assets/animations/explosion.png";
-  static std::string ExplosionSpriteShipFilename = "assets/animations/explosion2.png";
-  static std::string SpawnAnimationFilename = "assets/animations/spawn.png";
 
   static std::string SoundsFilename = "sounds.txt";
 
@@ -94,7 +90,8 @@ namespace GameMechanic
 
   static std::map<int, int> ExperienceMap =
   {
-    {0, 50}, {1, 100}, {2, 200}
+    {0, 10}, {1, 20}, {2, 40}, {3, 80}, {4, 120},
+    {5, 150}, {6, 200}
   };
 }
 
@@ -109,14 +106,24 @@ namespace Bullets
 {
   const static int BULLET_LAME = 0;
   const static int BULLET_ONE_SHOT = 1;
-  const static int BULLET_ONE_SHOT_AUTO = 2;
-  const static int BULLET_TOTAL_TYPES = 3;
+  const static int BULLET_FIRE = 2;
+  const static int BULLET_FIRE_AUTO = 3;
+  const static int BULLET_TOTAL_TYPES = 4;
 
   static std::map<int, int> LevelToWeaponsMap =
   {
     {0, BULLET_LAME},
-    {1, BULLET_ONE_SHOT},
-    {2, BULLET_ONE_SHOT_AUTO}
+    {2, BULLET_ONE_SHOT},
+    {4, BULLET_FIRE},
+    {6, BULLET_FIRE_AUTO}
+  };
+
+  static std::map<int, std::string> BulletsToRolesMap =
+  {
+    {BULLET_LAME, GlobalStrings::BulletLameRole},
+    {BULLET_ONE_SHOT, GlobalStrings::BulletShotSingleRole},
+    {BULLET_FIRE, GlobalStrings::BulletShotFireRole},
+    {BULLET_FIRE_AUTO, GlobalStrings::BulletShotFireRole}
   };
 }
 
@@ -145,7 +152,8 @@ namespace Sounds
   {
     {Bullets::BULLET_LAME,          SHIP_FIRE_LAME},
     {Bullets::BULLET_ONE_SHOT,      SHIP_FIRE_SINGLE},
-    {Bullets::BULLET_ONE_SHOT_AUTO, SHIP_FIRE_AUTO}
+    {Bullets::BULLET_FIRE,          SHIP_FIRE_AUTO},
+    {Bullets::BULLET_FIRE_AUTO,     SHIP_FIRE_AUTO}
   };
 }
 
@@ -162,6 +170,7 @@ namespace AnimationsIds
   const static int EXPLOSION_SHIP = 1;
   const static int SPAWN_SMALL = 2;
   const static int SPAWN_BIG = 3;
+  const static int BULLET_HIT = 4;
 }
 
 #ifndef HIGH_SCORE

@@ -15,4 +15,4 @@
 14 assets/sound/ship_fire_lame.wav
 15 assets/sound/asteroid_hit.wav
 16 assets/sound/powerup_spawn.wav
-17 assets/sound/ship_fire_single_eq.wav
+17 assets/sound/ship_fire_single.wav

@@ -109,7 +109,6 @@ class MainState : public GameState
     Sprite _guiBlackBack;
     Sprite _guiDivider;
     Sprite _guiExtraLifeOutline;
-    Sprite _weaponPicture;
 
     Ship _ship;
 

@@ -7,8 +7,8 @@
 9 ship_shield
 10 gui_shield
 11 gui_heart
-12 shot_one
-13 shot_one_auto
+12 shot_single
+13 shot_fire
 14 shot_lame
 15 gui_weapon_frame
 16 gui_black_back

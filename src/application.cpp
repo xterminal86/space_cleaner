@@ -28,13 +28,6 @@ Application::Application()
   _buildVersion = buf;
 
   LoadHighScores();
-
-  /*
-  for (auto& i : _highScores)
-  {
-    printf ("%i %i\n", i.Score, i.Wave);
-  }
-  */
 }
 
 Application::~Application()
@@ -46,7 +39,7 @@ void Application::Start()
   _running = true;
 
   ChangeState(&IntroState::Get());
-  PushState(&MainState::Get());
+  //PushState(&MainState::Get());
 
   while (_running)
   {
