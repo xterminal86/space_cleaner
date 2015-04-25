@@ -186,6 +186,14 @@ void MainState::HandleEvents(Application* game)
 void MainState::Update(Application* game)
 {
   _autoFireTimePassed += GameTime::Get().DeltaTimeMs();
+  _timePassed += GameTime::Get().DeltaTimeMs();
+
+  _shieldRechargeTimePassed += GameTime::Get().DeltaTimeMs();
+  if (_shieldRechargeTimePassed >= GameMechanic::ShieldRechargeMs)
+  {
+    _ship.AddShieldPoints(1);
+    _shieldRechargeTimePassed = 0;
+  }
 
   _autoFireValid = (_autoFireTimePassed > GameMechanic::AutoFireRateMs);
   if (_autoFireValid)
@@ -239,8 +247,6 @@ void MainState::Draw(Application* game)
   DrawGUI();
 
   SDL_RenderPresent(renderer);
-
-  _timePassed += GameTime::Get().DeltaTimeMs();
 
   TryToSpawnAsteroid();
 

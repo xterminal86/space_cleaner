@@ -45,11 +45,11 @@ namespace GlobalStrings
   static std::string HowToPlayString = \
   "CLEAN THE SPACE BY SHOOTING DOWN FLYING ASTEROIDS!\n\n\
 Your starting weapon is capable of destroying only small asteroids,\n\
-so you have to carefully use your shield to break down big ones.\n\
-You'll receive better weapon after shooting down enough asteroids.\n\n\
+so you have to carefully use your shield to break down big ones.\n\n\
 - Move and turn using WASD, shoot by tapping SPACE ;-)\n\
-- Your shield will absorb any amount of damage.\n\
-- Damage to ship's hull depends on the size of the incoming asteroid.";
+- Your shield will absorb any amount of damage\n\
+- Damage to ship's hull depends on the size of the incoming asteroid\n\
+- Shield recharges with time";
 }
 
 namespace Math
@@ -68,6 +68,7 @@ namespace GameMechanic
   static const int StartingSpawnRateMs = 10000;
   static const int MaxSpawnRateMs = 1000;
   static const int SpawnRateDeltaMs = 100;
+  static const int ShieldRechargeMs = 10000;
 
   // For visual debug: determines length of direction vectors
   // Because they are normalized, we have to extend them in order to see.
@@ -150,6 +151,7 @@ namespace Sounds
   static int ASTEROID_HIT = 15;
   static int POWERUP_SPAWN = 16;
   static int SHIP_FIRE_SINGLE = 17;
+  static int ASTEROID_HIT2 = 18;
 
   static std::map<int, int> ShotSoundsMap =
   {

@@ -66,6 +66,7 @@ class MainState : public GameState
 
     unsigned int _score;
     unsigned int _timePassed;
+    unsigned int _shieldRechargeTimePassed;
     unsigned int _currentSpawnRate;
     unsigned int _autoFireTimePassed;
     int _fancyColorCounter;

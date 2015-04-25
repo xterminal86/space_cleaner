@@ -28,7 +28,9 @@ class Bullet
       _trail.TurnOff();
     }
 
+    int BulletType() { return _bulletType; }
     int Damage() { return _damage; }
+
     void SetDamage(int value) { _damage = value; }
 
     Sprite& GetSprite() { return _bulletSprite; }

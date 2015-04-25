@@ -15,7 +15,7 @@ Bullet::Bullet(int type)
     case Bullets::BULLET_FIRE:
     case Bullets::BULLET_FIRE_AUTO:
       res = TextureManager::Get().FindTextureByRole(GlobalStrings::BulletShotFireRole);
-      _damage = -100;
+      _damage = -6;
       scaleFactor = 1.0;
     break;
 

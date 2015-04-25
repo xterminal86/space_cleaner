@@ -198,7 +198,7 @@ void Asteroid::ProcessCollision(Bullet* bulletRef)
     else
     {
       AnimationsManager::Get().Play(AnimationsIds::BULLET_HIT, bulletRef->Position().X(), bulletRef->Position().Y());
-      SoundSystem::Get().PlaySound(Sounds::ASTEROID_HIT);
+      SoundSystem::Get().PlaySound(bulletRef->BulletType() == Bullets::BULLET_LAME ? Sounds::ASTEROID_HIT : Sounds::ASTEROID_HIT2);
     }
   }
 }
