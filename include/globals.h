@@ -152,6 +152,7 @@ namespace Sounds
   static int POWERUP_SPAWN = 16;
   static int SHIP_FIRE_SINGLE = 17;
   static int ASTEROID_HIT2 = 18;
+  static int WEAPON_UPGRADE = 19;
 
   static std::map<int, int> ShotSoundsMap =
   {
@@ -176,6 +177,7 @@ namespace AnimationsIds
   const static int SPAWN_SMALL = 2;
   const static int SPAWN_BIG = 3;
   const static int BULLET_HIT = 4;
+  const static int BULLET_HIT2 = 5;
 }
 
 #ifndef HIGH_SCORE

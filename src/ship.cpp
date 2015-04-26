@@ -342,6 +342,12 @@ void Ship::ChangeWeaponType(int type)
 {
   _weaponType = type;
   _autoFire = type == Bullets::BULLET_FIRE_AUTO;
+
+  if (type != Bullets::BULLET_LAME)
+  {
+    SoundSystem::Get().PlaySound(Sounds::WEAPON_UPGRADE);
+  }
+
   int index = TextureManager::Get().FindTextureByRole(Bullets::BulletsToRolesMap[type]);
   if (index != -1)
   {

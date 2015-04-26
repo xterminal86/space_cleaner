@@ -3,3 +3,4 @@
 2 assets/animations/spawn.png 1 25
 3 assets/animations/spawn_big.png 1 25
 4 assets/animations/bullet_hit.png 20 25
+5 assets/animations/bullet_hit2.png 20 25
