@@ -15,6 +15,8 @@
 
 #include "mainstate.h"
 
+int Asteroid::_instances = 0;
+
 Application::Application()
 {
   char buf[512];

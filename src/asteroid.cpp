@@ -39,6 +39,11 @@ void Asteroid::Init(Vector2 pos, int breakdownLevel, std::vector<std::unique_ptr
 
   _currentBreakdownLevel = breakdownLevel;
 
+  if (_currentBreakdownLevel == 0)
+  {
+    _instances++;
+  }
+
   _hitPoints = (GameMechanic::AsteroidMaxBreakdownLevel - _currentBreakdownLevel) * (GameMechanic::AsteroidMaxBreakdownLevel + 1);
   _hitPoints *= HitPointsScale;
 
@@ -142,7 +147,7 @@ void Asteroid::Compute()
 void Asteroid::ProcessCollision(Bullet* bulletRef)
 {
   // Smallest asteroids are disabled regardless of their hitpoints
-  if (_currentBreakdownLevel >= GameMechanic::AsteroidMaxBreakdownLevel)
+  if (_currentBreakdownLevel == GameMechanic::AsteroidMaxBreakdownLevel)
   {
     _currentBreakdownLevel++;
     _active = false;
@@ -205,6 +210,8 @@ void Asteroid::ProcessCollision(Bullet* bulletRef)
 
 void Asteroid::Breakdown()
 {
+  if (_currentBreakdownLevel == 1) _instances--;
+
   for (int i = 0; i < GameMechanic::AsteroidBreakdownChildren; i++)
   {
     _mainAsteroidsCollectionReference->push_back(std::unique_ptr<Asteroid>(new Asteroid(_position, _currentBreakdownLevel, _mainAsteroidsCollectionReference)));

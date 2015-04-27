@@ -72,7 +72,6 @@ class MainState : public GameState
     int _fancyColorCounter;
     unsigned int _fancyColorPhase;
     int _fancyColorDelta;
-    int _asteroidInstances;
 
     double _guiSpawnRateNumber;
     double _guiTimeToSpawnNumber;

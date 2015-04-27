@@ -54,6 +54,8 @@ MainState::MainState()
     PNGLoader* imageRef = TextureManager::Get().GetTextureWrapper(res);
     _shipDebris.Init(imageRef, 10, 1500);
   }
+
+  Asteroid::ResetInstances();
 }
 
 MainState::~MainState()
@@ -343,16 +345,9 @@ void MainState::TryToSpawnAsteroid()
   {
     int index = Util::RandomNumber() % _spawnPoints.size();
 
-    if ( (_asteroidInstances < _maxAsteroidInstances) && _ship.Active())
+    if ( (Asteroid::Instances() < _maxAsteroidInstances) && _ship.Active())
     {
       SpawnAsteroid((int)_spawnPoints[index].X(), (int)_spawnPoints[index].Y());
-
-      _asteroidInstances++;
-
-      if (_asteroidInstances >= _maxAsteroidInstances)
-      {
-        _asteroidInstances = _maxAsteroidInstances;
-      }
 
       _currentSpawnRate -= GameMechanic::SpawnRateDeltaMs;
 
@@ -394,11 +389,8 @@ void MainState::CleanAsteroids()
   {
     if (!_asteroids[i].get()->Active())
     {
-      if (_asteroids[i].get()->CurrentBreakdownLevel() == 1)
+      if (_asteroids[i].get()->CurrentBreakdownLevel() == (GameMechanic::AsteroidMaxBreakdownLevel + 1))
       {
-        _asteroidInstances--;
-        if (_asteroidInstances <= 0) _asteroidInstances = 0;
-
         _asteroids.erase(_asteroids.begin() + i);
       }
     }
@@ -575,7 +567,7 @@ void MainState::RestartGame()
   _guiSpawnRateNumber = (double)GameMechanic::StartingSpawnRateMs / (double)_currentSpawnRate;
   _waveCounter = 0;
   _asteroids.clear();
-  _asteroidInstances = 0;
+  Asteroid::ResetInstances();
   _ship.Move(_screenSizeX / 2, _screenSizeY / 2);
 }
 
@@ -760,7 +752,7 @@ void MainState::DrawGUI()
   _bitmapFont->Printf(100, 18, BitmapFont::AlignLeft, (char*)_guiSpawnTimeString.data());
   _bitmapFont->Printf(100 + (GUI::SpawnTimeMeterLength - 1) * 8, 16, BitmapFont::AlignLeft, "]");
   _bitmapFont->Printf(180, 0, BitmapFont::AlignCenter, "WAVE %i", _waveCounter);
-  _bitmapFont->Printf(270, 0, BitmapFont::AlignLeft, "S: %i / %i", _asteroidInstances, _maxAsteroidInstances);
+  _bitmapFont->Printf(270, 0, BitmapFont::AlignLeft, "S: %i / %i", Asteroid::Instances(), _maxAsteroidInstances);
   _bitmapFont->Printf(270, 16, BitmapFont::AlignLeft, "R: %.2f", _guiSpawnRateNumber);
 
   if (!_ship.Active())

@@ -32,8 +32,12 @@ class Asteroid
     bool Active() { return _active; }
     int CurrentBreakdownLevel() { return _currentBreakdownLevel; }
 
+    static int Instances() { return _instances; }
+    static void ResetInstances() { _instances = 0; }
   protected:
   private:
+    static int _instances;
+
     const unsigned int HitPointsScale = 2;
 
     Sprite _asteroidSprite;
