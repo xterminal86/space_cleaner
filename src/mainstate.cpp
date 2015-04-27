@@ -316,7 +316,7 @@ void MainState::TryToSpawnPowerup(int x, int y)
   switch (chance)
   {
   case 100:
-    type = Powerups::LIFE_POWERUP;
+    type = _currentLives != _maxLivesLimit ? Powerups::LIFE_POWERUP : -1;
     break;
 
   default:
