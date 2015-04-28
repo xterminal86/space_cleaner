@@ -221,7 +221,7 @@ void Ship::Accelerate(double dspeed)
   }
 
   // Look for comments in ParticleEngine::SetLifeAndSpeed - it's important.
-  _engineTrail.SetLifeAndSpeed(_speed * 100, _speed * 100, _speed);
+  _engineTrail.SetLifeAndSpeed((int)_speed * 100, (int)_speed * 100, _speed);
 }
 
 void Ship::Fire()

@@ -291,21 +291,6 @@ void MainState::DrawBackground()
   }
 }
 
-void MainState::InitAsteroids()
-{
-  int screenx = VideoSystem::Get().ScreenDimensions().x;
-  int screeny = VideoSystem::Get().ScreenDimensions().y;
-
-  for (int i = 0; i < GameMechanic::MaxAsteroids; i++)
-  {
-    Vector2 pos;
-
-    Util::CreateRandomPosition(pos, screenx, screeny);
-
-    _asteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(pos, 0, &_asteroids)));
-  }
-}
-
 void MainState::TryToSpawnPowerup(int x, int y)
 {
   int chance = Util::RandomNumber() % 1000 + 1;

@@ -60,7 +60,7 @@ class MainState : public GameState
     const int _backgroundStars = 100;
     const int _startingLives = 0;
     const int _maxLivesLimit = 3;
-    const int _maxAsteroidInstances = 10;
+    const int _maxAsteroidInstances = 20;
     const int _spawnSpread = 100;
     const int _fancyTextColorChangeSpeed = 5;
 
@@ -116,7 +116,6 @@ class MainState : public GameState
 
     void LoadBackground();
     void DrawBackground();
-    void InitAsteroids();
     void ProcessCollisions();
     void HandleShipCollision(Asteroid* collidedAsteroid);
     void ProcessExplosions();

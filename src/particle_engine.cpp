@@ -118,7 +118,7 @@ void ParticleEngine::Emit()
     if (i.CurrentLifeTimeMs > i.MaxLifeTimeMs)
     {
       i.CurrentLifeTimeMs = 0;
-      int lt = Util::RandomNumber() % _particlesLifeTimeMsMax;
+      unsigned int lt = Util::RandomNumber() % (_particlesLifeTimeMsMax == 0 ? 1 : _particlesLifeTimeMsMax);
       if (lt == 0) lt = _particlesLifeTimeMsMin;
       i.MaxLifeTimeMs = lt;
       i.Position.Set(_position);
