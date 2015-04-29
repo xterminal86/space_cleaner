@@ -66,12 +66,12 @@ MainState::~MainState()
 void MainState::Init(Application* game)
 {
   RestartGame();
-  SoundSystem::Get().PlayMusic();
 }
 
 void MainState::Cleanup()
 {
   SoundSystem::Get().StopMusic();
+  SoundSystem::Get().StopAllSounds();
   _asteroids.clear();
 }
 
@@ -557,6 +557,7 @@ void MainState::RestartGame()
   _asteroids.clear();
   Asteroid::ResetInstances();
   _ship.Move(_screenSizeX / 2, _screenSizeY / 2);
+  SoundSystem::Get().PlayMusic();
 }
 
 void MainState::InitGUI()

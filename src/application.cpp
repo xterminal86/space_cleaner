@@ -52,6 +52,7 @@ void Application::Start()
     Draw();
 
     GameTime::Get().MeasureAfter();
+    SoundSystem::Get().Update();
   }
 }
 

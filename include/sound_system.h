@@ -6,11 +6,12 @@
 
 #include "util.h"
 #include "logger.h"
+#include "gametime.h"
 
 struct MusicData
 {
-  unsigned int LoopStartMs;
-  unsigned int LoopEndMs;
+  unsigned int LoopStart;
+  unsigned int LoopEnd;
   FMOD_SOUND* Music;
 };
 
@@ -26,10 +27,9 @@ class SoundSystem
     void PlaySound(int soundType);
     void PlayMusic(int musicIndex);
     void PlayMusic();
-    void StopMusic()
-    {
-      FMOD_Channel_Stop(_musicChannel);
-    }
+    void StopMusic();
+    void StopAllSounds();
+    void Update() { FMOD_System_Update(_soundSystem); }
   protected:
   private:
     SoundSystem();

@@ -1234,7 +1234,7 @@
 1429725333 d:\nick\sources\c++\asteroids.git\include\application.h
 	"globals.h"
 
-1430065209 d:\nick\sources\c++\asteroids.git\include\globals.h
+1430337104 d:\nick\sources\c++\asteroids.git\include\globals.h
 	<string>
 	<map>
 	<memory>
@@ -1627,7 +1627,7 @@
 1429904539 source:d:\nick\sources\c++\asteroids.git\src\png_loader.cpp
 	"png_loader.h"
 
-1430065338 source:d:\nick\sources\c++\asteroids.git\src\ship.cpp
+1430245460 source:d:\nick\sources\c++\asteroids.git\src\ship.cpp
 	"ship.h"
 
 1429904539 source:d:\nick\sources\c++\asteroids.git\src\sprite.cpp
@@ -1646,7 +1646,7 @@
 	"video_system.h"
 	"logger.h"
 
-1430159979 source:d:\nick\sources\c++\asteroids.git\src\application.cpp
+1430339187 source:d:\nick\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 	"introstate.h"
 	"mainstate.h"
@@ -1819,7 +1819,7 @@
 1427143809 source:d:\nick\sources\c++\asteroids.git\src\animations_pool.cpp
 	"animations_pool.h"
 
-1429130356 source:d:\nick\sources\c++\asteroids.git\src\particle_engine.cpp
+1430245460 source:d:\nick\sources\c++\asteroids.git\src\particle_engine.cpp
 	"particle_engine.h"
 
 1428940588 source:h:\sources\c++\asteroids.git\src\explosion.cpp
@@ -1919,10 +1919,12 @@
 1428622706 h:\sources\c++\asteroids.git\lib\fmod\inc\fmod_errors.h
 	"fmod.h"
 
-1429221136 d:\nick\sources\c++\asteroids.git\include\sound_system.h
+1430341034 d:\nick\sources\c++\asteroids.git\include\sound_system.h
 	<fmod.h>
 	<fmod_errors.h>
+	"util.h"
 	"logger.h"
+	"gametime.h"
 
 1429208427 d:\nick\sources\c++\asteroids.git\lib\fmod\inc\fmod.h
 	"fmod_common.h"
@@ -1944,7 +1946,7 @@
 1429208427 d:\nick\sources\c++\asteroids.git\lib\fmod\inc\fmod_errors.h
 	"fmod.h"
 
-1429553747 source:d:\nick\sources\c++\asteroids.git\src\sound_system.cpp
+1430341111 source:d:\nick\sources\c++\asteroids.git\src\sound_system.cpp
 	"sound_system.h"
 
 1429522604 source:h:\sources\c++\asteroids.git\src\gamestate.cpp
@@ -2010,7 +2012,7 @@
 	"introstate.h"
 	"mainstate.h"
 
-1430160157 d:\nick\sources\c++\asteroids.git\include\mainstate.h
+1430245460 d:\nick\sources\c++\asteroids.git\include\mainstate.h
 	"gamestate.h"
 	"logger.h"
 	"gametime.h"
@@ -2028,7 +2030,7 @@
 	"vector2pair.h"
 	"util.h"
 
-1430166759 source:d:\nick\sources\c++\asteroids.git\src\mainstate.cpp
+1430341239 source:d:\nick\sources\c++\asteroids.git\src\mainstate.cpp
 	"mainstate.h"
 
 1429877153 source:h:\sources\c++\asteroids.git\src\animations_manager.cpp

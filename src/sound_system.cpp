@@ -70,23 +70,21 @@ void SoundSystem::LoadSounds()
   }
 
   Logger::Get().LogPrint("Loading music list...\n");
+  index = 0;
   while (!feof(f))
   {
     MusicData entry;
-    fscanf(f, "%s %i %i", buf, &entry.LoopStartMs, &entry.LoopEndMs);
-
+    fscanf(f, "%s %i %i", buf, &entry.LoopStart, &entry.LoopEnd);
+    Logger::Get().LogPrint("----|Track %i - %s\n", index, buf);
     FMOD_System_CreateSound(_soundSystem, buf, FMOD_LOOP_NORMAL, nullptr, &entry.Music);
     FMOD_Sound_SetLoopCount(entry.Music, -1);
-    FMOD_Sound_SetLoopPoints(entry.Music, entry.LoopStartMs, FMOD_TIMEUNIT_PCM, entry.LoopEndMs, FMOD_TIMEUNIT_PCM);
+    FMOD_Sound_SetLoopPoints(entry.Music, entry.LoopStart, FMOD_TIMEUNIT_PCM, entry.LoopEnd, FMOD_TIMEUNIT_PCM);
     _musicList.push_back(entry);
+    index++;
   }
+  fclose(f);
 
-  /*
-  FMOD_System_CreateSound(_soundSystem, "assets/music/power_blade-3.mp3", FMOD_LOOP_NORMAL, nullptr, &_music);
-  FMOD_Sound_SetLoopPoints(_music, 10000, FMOD_TIMEUNIT_MS, 50000, FMOD_TIMEUNIT_MS);
-  FMOD_Sound_SetLoopCount(_music, -1);
-  FMOD_System_PlaySound(_soundSystem, _music, nullptr, false, nullptr);
-  */
+  Logger::Get().LogPrint("Music list loaded!\n");
 }
 
 void SoundSystem::PlaySound(int soundType)
@@ -111,8 +109,9 @@ void SoundSystem::PlayMusic(int musicIndex)
     FMOD_Channel_Stop(_musicChannel);
   }
 
-  FMOD_System_PlaySound(_soundSystem, _musicList[musicIndex].Music, nullptr, false, &_musicChannel);
+  FMOD_System_PlaySound(_soundSystem, _musicList[musicIndex].Music, nullptr, true, &_musicChannel);
   FMOD_Channel_SetVolume(_musicChannel, 0.5);
+  FMOD_Channel_SetPaused(_musicChannel, false);
 }
 
 void SoundSystem::PlayMusic()
@@ -121,5 +120,35 @@ void SoundSystem::PlayMusic()
   {
     int index = Util::RandomNumber() % _musicList.size();
     PlayMusic(index);
+  }
+}
+
+void SoundSystem::StopMusic()
+{
+  /*
+  double dt = 0.0;
+  float volume = 0.0f;
+  FMOD_Channel_GetVolume(_musicChannel, &volume);
+  while (dt < 1000.0)
+  {
+    dt += GameTime::Get().DeltaTimeMs();
+    FMOD_Channel_SetVolume(_musicChannel, volume);
+
+    volume -= 0.1f;
+
+    FMOD_System_Update(_soundSystem);
+
+    if (volume < 0.0f) break;
+  }
+  */
+
+  FMOD_Channel_Stop(_musicChannel);
+}
+
+void SoundSystem::StopAllSounds()
+{
+  for (int i = 0; i < _channelsMap.size(); i++)
+  {
+    FMOD_Channel_Stop(_channelsMap[i]);
   }
 }
