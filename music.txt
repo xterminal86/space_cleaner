@@ -1,0 +1,2 @@
+assets/music/power_blade-3.mp3 480000 2399999
+assets/music/metroid.mp3 0 2383301

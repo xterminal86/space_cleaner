@@ -2,6 +2,7 @@
 
 SoundSystem::SoundSystem()
 {
+  _musicChannel = nullptr;
 }
 
 SoundSystem::~SoundSystem()
@@ -45,7 +46,6 @@ void SoundSystem::LoadSounds()
   int index = 0;
   while (!feof(f))
   {
-    std::string str;
     fscanf(f, "%i %s", &index, buf);
 
     FMOD_SOUND* p;
@@ -61,6 +61,32 @@ void SoundSystem::LoadSounds()
     Logger::Get().LogPrint("----|_sounds[%i] (0x%zX) = %s\n", index, _sounds[index], buf);
   }
   fclose(f);
+
+  f = fopen(GlobalStrings::MusicListFilename.data(), "r");
+  if (f == nullptr)
+  {
+    Logger::Get().LogPrint("(warning) Could not open file %s!\n", GlobalStrings::MusicListFilename.data());
+    exit(1);
+  }
+
+  Logger::Get().LogPrint("Loading music list...\n");
+  while (!feof(f))
+  {
+    MusicData entry;
+    fscanf(f, "%s %i %i", buf, &entry.LoopStartMs, &entry.LoopEndMs);
+
+    FMOD_System_CreateSound(_soundSystem, buf, FMOD_LOOP_NORMAL, nullptr, &entry.Music);
+    FMOD_Sound_SetLoopCount(entry.Music, -1);
+    FMOD_Sound_SetLoopPoints(entry.Music, entry.LoopStartMs, FMOD_TIMEUNIT_PCM, entry.LoopEndMs, FMOD_TIMEUNIT_PCM);
+    _musicList.push_back(entry);
+  }
+
+  /*
+  FMOD_System_CreateSound(_soundSystem, "assets/music/power_blade-3.mp3", FMOD_LOOP_NORMAL, nullptr, &_music);
+  FMOD_Sound_SetLoopPoints(_music, 10000, FMOD_TIMEUNIT_MS, 50000, FMOD_TIMEUNIT_MS);
+  FMOD_Sound_SetLoopCount(_music, -1);
+  FMOD_System_PlaySound(_soundSystem, _music, nullptr, false, nullptr);
+  */
 }
 
 void SoundSystem::PlaySound(int soundType)
@@ -73,5 +99,27 @@ void SoundSystem::PlaySound(int soundType)
     }
 
     FMOD_System_PlaySound(_soundSystem, _soundsMap[soundType], nullptr, false, &_channelsMap[soundType]);
+  }
+}
+
+void SoundSystem::PlayMusic(int musicIndex)
+{
+  FMOD_BOOL playing = false;
+  FMOD_Channel_IsPlaying(_musicChannel, &playing);
+  if (playing)
+  {
+    FMOD_Channel_Stop(_musicChannel);
+  }
+
+  FMOD_System_PlaySound(_soundSystem, _musicList[musicIndex].Music, nullptr, false, &_musicChannel);
+  FMOD_Channel_SetVolume(_musicChannel, 0.5);
+}
+
+void SoundSystem::PlayMusic()
+{
+  if (!_musicList.empty())
+  {
+    int index = Util::RandomNumber() % _musicList.size();
+    PlayMusic(index);
   }
 }

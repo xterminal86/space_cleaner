@@ -4,7 +4,15 @@
 #include <fmod.h>
 #include <fmod_errors.h>
 
+#include "util.h"
 #include "logger.h"
+
+struct MusicData
+{
+  unsigned int LoopStartMs;
+  unsigned int LoopEndMs;
+  FMOD_SOUND* Music;
+};
 
 class SoundSystem
 {
@@ -16,6 +24,12 @@ class SoundSystem
     }
     void Init();
     void PlaySound(int soundType);
+    void PlayMusic(int musicIndex);
+    void PlayMusic();
+    void StopMusic()
+    {
+      FMOD_Channel_Stop(_musicChannel);
+    }
   protected:
   private:
     SoundSystem();
@@ -30,8 +44,13 @@ class SoundSystem
     std::map<int, FMOD_SOUND*> _soundsMap;
     std::map<int, FMOD_CHANNEL*> _channelsMap;
 
+    std::vector<MusicData> _musicList;
+    FMOD_CHANNEL* _musicChannel;
+
     std::vector<FMOD_SOUND*> _sounds;
     std::vector<FMOD_CHANNEL*> _channels;
+
+
 };
 
 #endif // SOUNDSYSTEM_H

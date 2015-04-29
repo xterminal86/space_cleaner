@@ -66,10 +66,12 @@ MainState::~MainState()
 void MainState::Init(Application* game)
 {
   RestartGame();
+  SoundSystem::Get().PlayMusic();
 }
 
 void MainState::Cleanup()
 {
+  SoundSystem::Get().StopMusic();
   _asteroids.clear();
 }
 
@@ -377,6 +379,7 @@ void MainState::CleanAsteroids()
       if (_asteroids[i].get()->CurrentBreakdownLevel() == (GameMechanic::AsteroidMaxBreakdownLevel + 1))
       {
         _asteroids.erase(_asteroids.begin() + i);
+        break;
       }
     }
   }

@@ -811,13 +811,13 @@
 1399750403 source:d:\nick\sources\c++\asteroids\src\video_system.cpp
 	"video_system.h"
 
-1429285775 source:h:\sources\c++\asteroids.git\main.cpp
+1430238806 source:h:\sources\c++\asteroids.git\main.cpp
 	"application.h"
 
 1429615646 h:\sources\c++\asteroids.git\include\application.h
 	"globals.h"
 
-1430208192 h:\sources\c++\asteroids.git\include\globals.h
+1430319396 h:\sources\c++\asteroids.git\include\globals.h
 	<string>
 	<map>
 	<memory>
@@ -1168,7 +1168,7 @@
 1421682465 h:\sources\c++\asteroids.git\include\input_manager.h
 	"globals.h"
 
-1430237618 source:h:\sources\c++\asteroids.git\src\application.cpp
+1430238839 source:h:\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 	"introstate.h"
 	"mainstate.h"
@@ -1886,12 +1886,13 @@
 1429616431 source:h:\sources\c++\asteroids.git\src\powerup.cpp
 	"powerup.h"
 
-1429615646 source:h:\sources\c++\asteroids.git\src\sound_system.cpp
+1430330091 source:h:\sources\c++\asteroids.git\src\sound_system.cpp
 	"sound_system.h"
 
-1429205591 h:\sources\c++\asteroids.git\include\sound_system.h
+1430330099 h:\sources\c++\asteroids.git\include\sound_system.h
 	<fmod.h>
 	<fmod_errors.h>
+	"util.h"
 	"logger.h"
 
 1428622706 h:\sources\c++\asteroids.git\lib\fmod\inc\fmod.h
@@ -1952,7 +1953,7 @@
 1429522604 h:\sources\c++\asteroids.git\include\gamestate.h
 	"application.h"
 
-1429885801 source:h:\sources\c++\asteroids.git\src\introstate.cpp
+1430320170 source:h:\sources\c++\asteroids.git\src\introstate.cpp
 	"introstate.h"
 	"mainstate.h"
 
@@ -1985,7 +1986,7 @@
 	"vector2pair.h"
 	"util.h"
 
-1430233610 source:h:\sources\c++\asteroids.git\src\mainstate.cpp
+1430330056 source:h:\sources\c++\asteroids.git\src\mainstate.cpp
 	"mainstate.h"
 
 1429904539 d:\nick\sources\c++\asteroids.git\include\introstate.h

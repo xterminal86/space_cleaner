@@ -41,6 +41,7 @@ namespace GlobalStrings
   static std::string HighScoresFilename = "highscores.dat";
 
   static std::string SoundsFilename = "sounds.txt";
+  static std::string MusicListFilename = "music.txt";
 
   static std::string HowToPlayString = \
   "CLEAN THE SPACE BY SHOOTING DOWN FLYING ASTEROIDS!\n\n\
