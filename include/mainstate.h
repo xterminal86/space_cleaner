@@ -41,11 +41,12 @@ class MainState : public GameState
     void TryToSpawnPowerup(int x, int y);
     void AddScore(unsigned int value) { _score += value; }
     void AddKills(int value) { _ship.AddKills(value); }
-  protected:
+  private:
     MainState();
     virtual ~MainState();
+    MainState(const MainState&);
+    MainState& operator= (const MainState&);
 
-  private:
     Logger* _logger = &Logger::Get();
     VideoSystem* _videoSystem = &VideoSystem::Get();
     TextureManager* _textureManager = &TextureManager::Get();

@@ -66,6 +66,8 @@ class Ship
       }
     }
     bool HasBulletsActive();
+    void StopBullets();
+    void ResetShieldVisual();
     std::vector<std::unique_ptr<Bullet>>& GetBullets() { return _bullets[_weaponType]; }
 
     double Speed() { return _speed; }

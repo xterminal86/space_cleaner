@@ -13,6 +13,7 @@ class AnimationsPool
     void Init(std::string spriteSheetName, int poolSize, int speedMs);
     void Play(int x, int y, double scale = 1.0);
     void Process();
+    void StopAll();
 
     int FrameWidth() { return _frameWidth; }
     int FrameHeight() { return _frameHeight; }

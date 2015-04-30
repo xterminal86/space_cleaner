@@ -72,7 +72,10 @@ void MainState::Cleanup()
 {
   SoundSystem::Get().StopMusic();
   SoundSystem::Get().StopAllSounds();
+  AnimationsManager::Get().StopAnimations();
   _asteroids.clear();
+  _ship.StopBullets();
+  _ship.ResetShieldVisual();
 }
 
 void MainState::Pause()
@@ -103,7 +106,6 @@ void MainState::HandleEvents(Application* game)
   if (_quitFlag && _keyboardState[SDL_SCANCODE_Y])
   {
     SoundSystem::Get().PlaySound(Sounds::MENU_SELECT);
-
     _quitFlag = false;
     game->PopState();
   }
@@ -557,6 +559,7 @@ void MainState::RestartGame()
   _asteroids.clear();
   Asteroid::ResetInstances();
   _ship.Move(_screenSizeX / 2, _screenSizeY / 2);
+  _ship.Respawn();
   SoundSystem::Get().PlayMusic();
 }
 

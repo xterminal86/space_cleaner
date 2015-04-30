@@ -17,6 +17,7 @@ class AnimationSequence
     void Draw();
 
     bool Active() { return _active; }
+    void SetActive(bool status) { _active = status; }
 
   protected:
   private:

@@ -31,11 +31,12 @@ class IntroState : public GameState
     void Update(Application* game) override;
     void Draw(Application* game) override;
 
-  protected:
+  private:
     IntroState();
     virtual ~IntroState();
+    IntroState(const IntroState&);
+    IntroState& operator= (const IntroState&);
 
-  private:
     const int _spawnSpread = 100;
     const int _backgroundStars = 100;
     const int _screenWidth = 1280;

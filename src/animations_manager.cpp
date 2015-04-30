@@ -43,3 +43,11 @@ void AnimationsManager::Process()
     _animations[i].get()->Process();
   }
 }
+
+void AnimationsManager::StopAnimations()
+{
+  for (int i = 0; i < _animations.size(); i++)
+  {
+    _animations[i].get()->StopAll();
+  }
+}

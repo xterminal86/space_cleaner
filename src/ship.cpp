@@ -355,3 +355,20 @@ void Ship::ChangeWeaponType(int type)
   }
 
 }
+
+void Ship::StopBullets()
+{
+  for (auto &i : _bullets[_weaponType])
+  {
+    if (i.get()->Active())
+    {
+      i.get()->SetActive(false);
+    }
+  }
+}
+
+void Ship::ResetShieldVisual()
+{
+  _shieldColor.a = 0;
+  _shieldHit = false;
+}

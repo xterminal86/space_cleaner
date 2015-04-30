@@ -54,3 +54,14 @@ void AnimationsPool::Process()
   }
 }
 
+void AnimationsPool::StopAll()
+{
+  for (int i = 0; i < _pool.size(); i++)
+  {
+    if (_pool[i].get()->Active())
+    {
+      _pool[i].get()->SetActive(false);
+    }
+  }
+}
+
