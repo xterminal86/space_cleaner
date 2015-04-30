@@ -1889,11 +1889,12 @@
 1430330091 source:h:\sources\c++\asteroids.git\src\sound_system.cpp
 	"sound_system.h"
 
-1430330099 h:\sources\c++\asteroids.git\include\sound_system.h
+1430381865 h:\sources\c++\asteroids.git\include\sound_system.h
 	<fmod.h>
 	<fmod_errors.h>
 	"util.h"
 	"logger.h"
+	"gametime.h"
 
 1428622706 h:\sources\c++\asteroids.git\lib\fmod\inc\fmod.h
 	"fmod_common.h"
