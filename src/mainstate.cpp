@@ -73,6 +73,7 @@ void MainState::Cleanup()
   SoundSystem::Get().StopMusic();
   SoundSystem::Get().StopAllSounds();
   AnimationsManager::Get().StopAnimations();
+  PowerupsManager::Get().DespawnPowerups();
   _asteroids.clear();
   _ship.StopBullets();
   _ship.ResetShieldVisual();

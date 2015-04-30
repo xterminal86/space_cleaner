@@ -56,3 +56,14 @@ void PowerupsManager::SpawnPowerup(int x, int y, int type)
     }
   }
 }
+
+void PowerupsManager::DespawnPowerups()
+{
+  for (auto& p : _powerupsPool)
+  {
+    if (p.Active())
+    {
+      p.SetActive(false);
+    }
+  }
+}

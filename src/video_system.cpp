@@ -27,7 +27,7 @@ VideoSystem::~VideoSystem()
   SDL_Quit();
 }
 
-int VideoSystem::Init(int w, int h)
+int VideoSystem::Init(int w, int h, bool fullscreen)
 {
   if (!_initialized)
   {
@@ -93,6 +93,14 @@ int VideoSystem::Init(int w, int h)
     Logger::Get().LogPrint("Video System is ready...\n");
     _initialized = true;
 
+    _fullscreen = fullscreen;
+
+    if (_fullscreen)
+    {
+      SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+      //SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN);
+    }
+
     for(int i = 0; i < SDL_GetNumVideoDisplays(); ++i)
     {
       int should_be_zero = SDL_GetCurrentDisplayMode(i, &_displayMode);
@@ -106,9 +114,6 @@ int VideoSystem::Init(int w, int h)
         Logger::Get().LogPrint("Display #%d: current display mode is %dx%dpx @ %dhz.\n", i, _displayMode.w, _displayMode.h, _displayMode.refresh_rate);
       }
     }
-
-    //SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-    //SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN);
   }
   else
   {

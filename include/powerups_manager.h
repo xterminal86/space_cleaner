@@ -17,6 +17,7 @@ class PowerupsManager
     void Init();
     void Process();
     void SpawnPowerup(int x, int y, int type);
+    void DespawnPowerups();
     std::vector<Powerup>& PowerupsPool() { return _powerupsPool; }
   protected:
   private:

@@ -1154,7 +1154,7 @@
 1418898844 h:\sources\c++\asteroids.git\include\logger.h
 	"globals.h"
 
-1429522604 h:\sources\c++\asteroids.git\include\video_system.h
+1430407999 h:\sources\c++\asteroids.git\include\video_system.h
 	"globals.h"
 
 1429522604 h:\sources\c++\asteroids.git\include\texture_manager.h
@@ -1215,7 +1215,7 @@
 1429706326 source:h:\sources\c++\asteroids.git\src\texture_manager.cpp
 	"texture_manager.h"
 
-1430405211 source:h:\sources\c++\asteroids.git\src\video_system.cpp
+1430407967 source:h:\sources\c++\asteroids.git\src\video_system.cpp
 	"video_system.h"
 	"logger.h"
 
@@ -1956,7 +1956,7 @@
 1430383586 h:\sources\c++\asteroids.git\include\gamestate.h
 	"application.h"
 
-1430383824 source:h:\sources\c++\asteroids.git\src\introstate.cpp
+1430408596 source:h:\sources\c++\asteroids.git\src\introstate.cpp
 	"introstate.h"
 	"mainstate.h"
 	"options_state.h"
@@ -1990,7 +1990,7 @@
 	"vector2pair.h"
 	"util.h"
 
-1430407041 source:h:\sources\c++\asteroids.git\src\mainstate.cpp
+1430407215 source:h:\sources\c++\asteroids.git\src\mainstate.cpp
 	"mainstate.h"
 
 1429904539 d:\nick\sources\c++\asteroids.git\include\introstate.h
@@ -2042,10 +2042,10 @@
 	"globals.h"
 	"animations_pool.h"
 
-1429888941 source:h:\sources\c++\asteroids.git\src\powerups_manager.cpp
+1430410638 source:h:\sources\c++\asteroids.git\src\powerups_manager.cpp
 	"powerups_manager.h"
 
-1429888986 h:\sources\c++\asteroids.git\include\powerups_manager.h
+1430410600 h:\sources\c++\asteroids.git\include\powerups_manager.h
 	"globals.h"
 	"powerup.h"
 	"animations_manager.h"

@@ -11,14 +11,23 @@ class VideoSystem
       static VideoSystem instance;
       return instance;
     }
-    int Init(int w, int h);
+    int Init(int w, int h, bool fullscreen = false);
     SDL_Renderer* Renderer() { return _renderer; }
     SDL_DisplayMode& DisplayMode() { return _displayMode; }
-    SDL_Point& ScreenDimensions() { return _screenDimensions; }
+    SDL_Point& ScreenDimensions()
+    {
+      if (_fullscreen)
+      {
+        _screenDimensions.x = _displayMode.w;
+        _screenDimensions.y = _displayMode.h;
+      }
+      return _screenDimensions;
+    }
   protected:
   private:
     SDL_Point _screenDimensions;
     bool _initialized;
+    bool _fullscreen;
     SDL_Renderer* _renderer;
     SDL_Window* _window;
     SDL_DisplayMode _displayMode;
