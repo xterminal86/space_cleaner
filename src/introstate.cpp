@@ -7,6 +7,7 @@ IntroState::IntroState()
   _logger->Init(GlobalStrings::LogFilename);
   _videoSystem->Init(_screenWidth, _screenHeight);
   _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename);
+  _config->Init();
   _animationsManager->Init();
   _powerupsManager->Init();
   _bitmapFont->Init();

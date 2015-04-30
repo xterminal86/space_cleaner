@@ -11,6 +11,7 @@
 #include "asteroid.h"
 #include "animations_manager.h"
 #include "powerups_manager.h"
+#include "config.h"
 
 class IntroState : public GameState
 {
@@ -53,6 +54,7 @@ class IntroState : public GameState
     Logger* _logger = &Logger::Get();
     VideoSystem* _videoSystem = &VideoSystem::Get();
     TextureManager* _textureManager = &TextureManager::Get();
+    Config* _config = &Config::Get();
     InputManager* _inputManager = &InputManager::Get();
     BitmapFont* _bitmapFont = &BitmapFont::Get();
     SoundSystem* _soundSystem = &SoundSystem::Get();

@@ -33,6 +33,8 @@ namespace GlobalStrings
   static std::string GUIDivider = "gui_divider";
   static std::string GUIShipOutline = "gui_ship_outline";
 
+  static std::string ConfigFilename = "config.txt";
+
   static std::string ImagesFilename = "images.txt";
   static std::string AnimationsFilename = "animations.txt";
   static std::string LogFilename = "output_log.txt";
@@ -96,6 +98,15 @@ namespace GameMechanic
   {
     {0, 10}, {1, 20}, {2, 40}, {3, 80}, {4, 120},
     {5, 150}, {6, 200}
+  };
+}
+
+namespace DefaultConfigValues
+{
+  static std::map<std::string, int> DefaultConfigPairs =
+  {
+    {"sound_volume", 100}, {"music_volume", 50}, {"screen_width", 1280},
+    {"screen_height", 1024}, {"fullscreen", 0}
   };
 }
 

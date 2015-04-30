@@ -3,6 +3,7 @@
 
 #include "gamestate.h"
 
+#include "config.h"
 #include "logger.h"
 #include "gametime.h"
 #include "video_system.h"
@@ -56,8 +57,6 @@ class MainState : public GameState
 
     Uint8* _keyboardState;
 
-    const int _screenWidth = 1280;
-    const int _screenHeight = 600;
     const int _backgroundStars = 100;
     const int _startingLives = 0;
     const int _maxLivesLimit = 3;

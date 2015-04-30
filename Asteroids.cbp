@@ -57,6 +57,7 @@
 		<Unit filename="include/bitmapfont.h" />
 		<Unit filename="include/bullet.h" />
 		<Unit filename="include/collision_info.h" />
+		<Unit filename="include/config.h" />
 		<Unit filename="include/explosion.h" />
 		<Unit filename="include/gamestate.h" />
 		<Unit filename="include/gametime.h" />
@@ -88,6 +89,7 @@
 		<Unit filename="src/bitmapfont.cpp" />
 		<Unit filename="src/bullet.cpp" />
 		<Unit filename="src/collision_info.cpp" />
+		<Unit filename="src/config.cpp" />
 		<Unit filename="src/explosion.cpp" />
 		<Unit filename="src/gamestate.cpp" />
 		<Unit filename="src/input_manager.cpp" />
