@@ -41,14 +41,14 @@ MainState::MainState()
   InitGUI();
   LoadBackground();
 
-  _backgroundX = Config::Get().GetValue("screen_width") / 2;
-  _backgroundY = Config::Get().GetValue("screen_height") / 2;
+  _backgroundX = VideoSystem::Get().ScreenDimensions().x / 2;
+  _backgroundY = VideoSystem::Get().ScreenDimensions().y / 2;
 
   Logger::Get().LogPrint("%i %i\n", _backgroundX, _backgroundY);
 
   _ship.Init(0, 0);
   _ship.Scale(0.5);
-  _ship.Move(Config::Get().GetValue("screen_width") / 2, Config::Get().GetValue("screen_height") / 2);
+  _ship.Move(VideoSystem::Get().ScreenDimensions().x / 2, VideoSystem::Get().ScreenDimensions().y / 2);
 
   int res = TextureManager::Get().FindTextureByRole(GlobalStrings::ShipRole);
   if (res != -1)

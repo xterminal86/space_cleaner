@@ -1,6 +1,7 @@
 #ifndef GLOBALS_H_INCLUDED
 #define GLOBALS_H_INCLUDED
 
+#include <fstream>
 #include <string>
 #include <map>
 #include <memory>

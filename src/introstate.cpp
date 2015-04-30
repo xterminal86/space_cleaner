@@ -5,9 +5,9 @@
 IntroState::IntroState()
 {
   _logger->Init(GlobalStrings::LogFilename);
-  _videoSystem->Init(_screenWidth, _screenHeight);
-  _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename);
   _config->Init();
+  _videoSystem->Init(_config->GetValue("screen_width"), _config->GetValue("screen_height"), _config->GetValue("fullscreen_flag"));
+  _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename);
   _animationsManager->Init();
   _powerupsManager->Init();
   _bitmapFont->Init();
@@ -33,8 +33,8 @@ IntroState::IntroState()
 
   LoadBackground();
 
-  _backgroundX = _screenWidth / 2;
-  _backgroundY = _screenHeight / 2;
+  _backgroundX = VideoSystem::Get().ScreenDimensions().x / 2;
+  _backgroundY = VideoSystem::Get().ScreenDimensions().y / 2;
 
   for (int i = 0; i < _asteroidsCount; i++)
   {

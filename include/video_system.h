@@ -11,23 +11,27 @@ class VideoSystem
       static VideoSystem instance;
       return instance;
     }
-    int Init(int w, int h, bool fullscreen = false);
+    int Init(int w, int h, int fullscreen = 0);
     SDL_Renderer* Renderer() { return _renderer; }
     SDL_DisplayMode& DisplayMode() { return _displayMode; }
     SDL_Point& ScreenDimensions()
     {
-      if (_fullscreen)
+      // If SDL_WINDOW_FULLSCREEN_DESKTOP is enabled,
+      // then window size in Init() is ignored (no video mode change is made)
+      // and application mimics fullscreen by stretching to the current desktop resolution (from SDL wiki)
+      if (_fullscreen != 0)
       {
         _screenDimensions.x = _displayMode.w;
         _screenDimensions.y = _displayMode.h;
       }
+
       return _screenDimensions;
     }
   protected:
   private:
     SDL_Point _screenDimensions;
     bool _initialized;
-    bool _fullscreen;
+    int _fullscreen;
     SDL_Renderer* _renderer;
     SDL_Window* _window;
     SDL_DisplayMode _displayMode;

@@ -12,10 +12,14 @@ Config::~Config()
 
 void Config::Init()
 {
-  FILE* f = fopen(GlobalStrings::ConfigFilename.data(), "r");
-  if (f == nullptr)
+  Logger::Get().LogPrint("Reading config...\n");
+
+  std::ifstream f(GlobalStrings::ConfigFilename);
+  if (!f.is_open())
   {
-    f = fopen(GlobalStrings::ConfigFilename.data(), "w");
+    std::ofstream f(GlobalStrings::ConfigFilename);
+
+    Logger::Get().LogPrint("(warning) Config could not be opened - assuming default values\n");
 
     _config["screen_width"] = DefaultConfigValues::DefaultConfigPairs["screen_width"];
     _config["screen_height"] = DefaultConfigValues::DefaultConfigPairs["screen_height"];
@@ -23,24 +27,31 @@ void Config::Init()
     _config["music_volume"] = DefaultConfigValues::DefaultConfigPairs["music_volume"];
     _config["fullscreen_flag"] = DefaultConfigValues::DefaultConfigPairs["fullscreen_flag"];
 
-    /*
     for (auto& item : _config)
     {
-      fprintf(f, "%s = %i\n", item.first.data(), item.second);
+      f << item.first.data() << " " << item.second << "\n";
     }
-    */
+
+    f.close();
   }
   else
   {
-    /*
-    while (!feof())
-    {
-      fscanf(f, "%s = %i",
-    }
-    */
+   std::string key;
+   int value = 0;
+   while (!f.eof())
+   {
+     f >> key;
+     f >> value;
+     _config[key] = value;
+   }
+
+   for (auto& i : _config)
+   {
+     Logger::Get().LogPrint("----| %s = %i\n", i.first.data(), i.second);
+   }
   }
 
-  fclose(f);
+  f.close();
 }
 
 int Config::GetValue(std::string key)
@@ -51,4 +62,17 @@ int Config::GetValue(std::string key)
   }
 
   return -1;
+}
+
+void Config::WriteConfig()
+{
+  std::ofstream f(GlobalStrings::ConfigFilename);
+  if (f.is_open())
+  {
+    for (auto& i : _config)
+    {
+      f << i.first.data() << " " << i.second;
+    }
+  }
+  f.close();
 }

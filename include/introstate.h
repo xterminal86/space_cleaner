@@ -40,8 +40,6 @@ class IntroState : public GameState
 
     const int _spawnSpread = 100;
     const int _backgroundStars = 100;
-    const int _screenWidth = 1280;
-    const int _screenHeight = 600;
     const int _asteroidsCount = 10;
     const double _menuItemDefaultScale = 2.0;
     const double _menuItemMinimalScale = 1.5;

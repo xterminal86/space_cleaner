@@ -4,6 +4,7 @@
 #include <fmod.h>
 #include <fmod_errors.h>
 
+#include "config.h"
 #include "util.h"
 #include "logger.h"
 #include "gametime.h"

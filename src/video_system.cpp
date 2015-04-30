@@ -27,7 +27,7 @@ VideoSystem::~VideoSystem()
   SDL_Quit();
 }
 
-int VideoSystem::Init(int w, int h, bool fullscreen)
+int VideoSystem::Init(int w, int h, int fullscreen)
 {
   if (!_initialized)
   {
@@ -95,7 +95,7 @@ int VideoSystem::Init(int w, int h, bool fullscreen)
 
     _fullscreen = fullscreen;
 
-    if (_fullscreen)
+    if (_fullscreen != 0)
     {
       SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
       //SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN);

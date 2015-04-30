@@ -2,6 +2,7 @@
 #define CONFIG_H
 
 #include "globals.h"
+#include "logger.h"
 
 class Config
 {
@@ -13,6 +14,7 @@ class Config
     }
     void Init();
     int GetValue(std::string key);
+    void WriteConfig();
   protected:
   private:
     Config();
