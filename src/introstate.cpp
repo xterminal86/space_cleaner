@@ -1,6 +1,5 @@
 #include "introstate.h"
 #include "mainstate.h"
-#include "options_state.h"
 
 IntroState::IntroState()
 {
@@ -91,7 +90,6 @@ void IntroState::HandleEvents(Application* game)
 
       if (_currentMenuSelection == 1)
       {
-        game->PushState(&OptionsState::Get());
       }
 
       if (_currentMenuSelection == 3)

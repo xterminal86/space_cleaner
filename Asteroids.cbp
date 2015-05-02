@@ -66,7 +66,6 @@
 		<Unit filename="include/introstate.h" />
 		<Unit filename="include/logger.h" />
 		<Unit filename="include/mainstate.h" />
-		<Unit filename="include/options_state.h" />
 		<Unit filename="include/particle_engine.h" />
 		<Unit filename="include/png_loader.h" />
 		<Unit filename="include/powerup.h" />
@@ -96,7 +95,6 @@
 		<Unit filename="src/introstate.cpp" />
 		<Unit filename="src/logger.cpp" />
 		<Unit filename="src/mainstate.cpp" />
-		<Unit filename="src/options_state.cpp" />
 		<Unit filename="src/particle_engine.cpp" />
 		<Unit filename="src/png_loader.cpp" />
 		<Unit filename="src/powerup.cpp" />
