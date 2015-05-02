@@ -95,12 +95,12 @@ int VideoSystem::Init(int w, int h, int fullscreen)
 
     _fullscreen = fullscreen;
 
-    if (_fullscreen != 0)
-    {
+    //if (_fullscreen != 0)
+    //{
       //SDL_SetWindowFullscreen(_window, 0);
       SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
       //SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN);
-    }
+    //}
 
     for(int i = 0; i < SDL_GetNumVideoDisplays(); ++i)
     {

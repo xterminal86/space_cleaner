@@ -79,7 +79,7 @@ void Config::WriteConfig()
   {
     for (auto& i : _config)
     {
-      f << i.first.data() << " " << i.second;
+      f << i.first.data() << " " << i.second << "\n";
     }
   }
   f.close();
