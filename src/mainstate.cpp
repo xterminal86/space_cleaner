@@ -563,7 +563,7 @@ void MainState::RestartGame()
   Asteroid::ResetInstances();
   _ship.Move(_screenSizeX / 2, _screenSizeY / 2);
   _ship.Respawn();
-  SoundSystem::Get().PlayMusic();
+  SoundSystem::Get().PlayGameMusic();
 }
 
 void MainState::InitGUI()

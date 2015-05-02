@@ -143,6 +143,11 @@ namespace Bullets
   };
 }
 
+namespace Music
+{
+  static int TITLE_MUSIC_ID = 0;
+}
+
 namespace Sounds
 {
   static int POWERUP_HEALTH = 0;

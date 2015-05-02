@@ -118,12 +118,20 @@ void SoundSystem::PlayMusic(int musicIndex)
   FMOD_Channel_SetPaused(_musicChannel, false);
 }
 
-void SoundSystem::PlayMusic()
+void SoundSystem::PlayGameMusic()
 {
   if (!_musicList.empty())
   {
     int index = Util::RandomNumber() % _musicList.size();
+    if (index == 0) index++;
     PlayMusic(index);
+  }
+}
+void SoundSystem::PlayTitleMusic()
+{
+  if (!_musicList.empty())
+  {
+    PlayMusic(Music::TITLE_MUSIC_ID);
   }
 }
 

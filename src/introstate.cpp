@@ -55,10 +55,13 @@ IntroState::~IntroState()
 void IntroState::Init(Application* game)
 {
   _gameRef = game;
+  SoundSystem::Get().PlayTitleMusic();
 }
 
 void IntroState::Cleanup()
 {
+  SoundSystem::Get().StopMusic();
+  SoundSystem::Get().StopAllSounds();
 }
 
 void IntroState::Pause()
@@ -67,6 +70,7 @@ void IntroState::Pause()
 
 void IntroState::Resume()
 {
+  SoundSystem::Get().PlayTitleMusic();
 }
 
 void IntroState::HandleEvents(Application* game)

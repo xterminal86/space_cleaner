@@ -27,7 +27,8 @@ class SoundSystem
     void Init();
     void PlaySound(int soundType);
     void PlayMusic(int musicIndex);
-    void PlayMusic();
+    void PlayTitleMusic();
+    void PlayGameMusic();
     void StopMusic();
     void StopAllSounds();
     void Update() { FMOD_System_Update(_soundSystem); }
