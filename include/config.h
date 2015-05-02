@@ -14,6 +14,7 @@ class Config
     }
     void Init();
     int GetValue(std::string key);
+    void SetValue(std::string key, int value);
     void WriteConfig();
   protected:
   private:

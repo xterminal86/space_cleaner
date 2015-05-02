@@ -64,6 +64,14 @@ int Config::GetValue(std::string key)
   return -1;
 }
 
+void Config::SetValue(std::string key, int value)
+{
+  if (_config.count(key) == 1)
+  {
+    _config[key] = value;
+  }
+}
+
 void Config::WriteConfig()
 {
   std::ofstream f(GlobalStrings::ConfigFilename);

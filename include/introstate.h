@@ -12,6 +12,7 @@
 #include "animations_manager.h"
 #include "powerups_manager.h"
 #include "config.h"
+#include "forms_manager.h"
 
 class IntroState : public GameState
 {
@@ -40,12 +41,7 @@ class IntroState : public GameState
 
     const int _spawnSpread = 100;
     const int _backgroundStars = 100;
-    const int _asteroidsCount = 10;
-    const double _menuItemDefaultScale = 2.0;
-    const double _menuItemMinimalScale = 1.5;
-    const double _menuItemMaximumScale = 2.25;
-
-    double _menuItemScaleIncrement = 0.005;
+    const int _asteroidsCount = 20;
 
     Application* _gameRef;
 
@@ -58,6 +54,7 @@ class IntroState : public GameState
     SoundSystem* _soundSystem = &SoundSystem::Get();
     AnimationsManager* _animationsManager = &AnimationsManager::Get();
     PowerupsManager* _powerupsManager = &PowerupsManager::Get();
+    FormsManager* _formsManager = &FormsManager::Get();
 
     Uint8* _keyboardState;
 
@@ -68,12 +65,7 @@ class IntroState : public GameState
     std::vector<Star> _stars;
     std::vector<Vector2> _spawnPoints;
 
-    std::vector<std::string> _menuStrings;
-
     bool _keyPressed;
-
-    int _menuIndex;
-    int _currentMenuSelection;
 
     int _screenSizeX;
     int _screenSizeY;
@@ -81,14 +73,9 @@ class IntroState : public GameState
     int _backgroundX;
     int _backgroundY;
 
-    double _menuItemScaleFactor;
-
     void LoadBackground();
     void DrawBackground();
     void DrawAsteroids();
-    void DrawMenu();
-    void PrintMenuText();
-    void ExitGame();
 };
 
 #endif // INTROSTATE_H

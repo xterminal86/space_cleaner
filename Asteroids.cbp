@@ -59,6 +59,12 @@
 		<Unit filename="include/collision_info.h" />
 		<Unit filename="include/config.h" />
 		<Unit filename="include/explosion.h" />
+		<Unit filename="include/form.h" />
+		<Unit filename="include/form_high_scores.h" />
+		<Unit filename="include/form_how_to_play.h" />
+		<Unit filename="include/form_main_title.h" />
+		<Unit filename="include/form_options.h" />
+		<Unit filename="include/forms_manager.h" />
 		<Unit filename="include/gamestate.h" />
 		<Unit filename="include/gametime.h" />
 		<Unit filename="include/globals.h" />
@@ -90,6 +96,12 @@
 		<Unit filename="src/collision_info.cpp" />
 		<Unit filename="src/config.cpp" />
 		<Unit filename="src/explosion.cpp" />
+		<Unit filename="src/form.cpp" />
+		<Unit filename="src/form_high_scores.cpp" />
+		<Unit filename="src/form_how_to_play.cpp" />
+		<Unit filename="src/form_main_title.cpp" />
+		<Unit filename="src/form_options.cpp" />
+		<Unit filename="src/forms_manager.cpp" />
 		<Unit filename="src/gamestate.cpp" />
 		<Unit filename="src/input_manager.cpp" />
 		<Unit filename="src/introstate.cpp" />

@@ -44,8 +44,6 @@ MainState::MainState()
   _backgroundX = VideoSystem::Get().ScreenDimensions().x / 2;
   _backgroundY = VideoSystem::Get().ScreenDimensions().y / 2;
 
-  Logger::Get().LogPrint("%i %i\n", _backgroundX, _backgroundY);
-
   _ship.Init(0, 0);
   _ship.Scale(0.5);
   _ship.Move(VideoSystem::Get().ScreenDimensions().x / 2, VideoSystem::Get().ScreenDimensions().y / 2);
@@ -503,6 +501,7 @@ void MainState::HandleShipCollision(Asteroid* collidedAsteroid)
 
     if (_currentLives < 0)
     {
+      SoundSystem::Get().StopMusic();
       SoundSystem::Get().PlaySound(Sounds::GAME_OVER);
     }
   }
@@ -763,7 +762,7 @@ void MainState::DrawGUI()
     {
       _bitmapFont->SetTextColor(255, 255, 0, 255);
       _bitmapFont->SetScale(4.0);
-      _bitmapFont->Printf(_screenSizeX / 2, 100, BitmapFont::AlignCenter, "GAME OVER");
+      _bitmapFont->Printf(_screenSizeX / 2, _screenSizeY / 2 - 200, BitmapFont::AlignCenter, "GAME OVER");
 
       _bitmapFont->SetTextColor(_fancyTextColor);
       _bitmapFont->SetScale(2.0);

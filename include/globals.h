@@ -2,6 +2,7 @@
 #define GLOBALS_H_INCLUDED
 
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <map>
 #include <memory>
@@ -120,11 +121,11 @@ namespace Powerups
 
 namespace Bullets
 {
-  const static int BULLET_LAME = 0;
-  const static int BULLET_ONE_SHOT = 1;
-  const static int BULLET_FIRE = 2;
-  const static int BULLET_FIRE_AUTO = 3;
-  const static int BULLET_TOTAL_TYPES = 4;
+  static const int BULLET_LAME = 0;
+  static const int BULLET_ONE_SHOT = 1;
+  static const int BULLET_FIRE = 2;
+  static const int BULLET_FIRE_AUTO = 3;
+  static const int BULLET_TOTAL_TYPES = 4;
 
   static std::map<int, int> LevelToWeaponsMap =
   {
@@ -145,31 +146,35 @@ namespace Bullets
 
 namespace Music
 {
+  static const int MaxMusicVolume = 100;
+
   static int TITLE_MUSIC_ID = 0;
 }
 
 namespace Sounds
 {
-  static int POWERUP_HEALTH = 0;
-  static int SHIP_FIRE_AUTO = 1;
-  static int SHIP_EXPLODE = 2;
-  static int SHIP_HIT = 3;
-  static int POWERUP_SHIELD = 4;
-  static int GAME_OVER = 5;
-  static int SHIELD_HIT_ENERGY = 6;
-  static int ASTEROID_HIT_BIG = 7;
-  static int ASTEROID_SPAWN = 8;
-  static int ASTEROID_HIT_SMALL = 9;
-  static int MENU_MOVE = 10;
-  static int MENU_SELECT = 11;
-  static int MENU_BACK = 12;
-  static int POWERUP_LIFE = 13;
-  static int SHIP_FIRE_LAME = 14;
-  static int ASTEROID_HIT = 15;
-  static int POWERUP_SPAWN = 16;
-  static int SHIP_FIRE_SINGLE = 17;
-  static int ASTEROID_HIT2 = 18;
-  static int WEAPON_UPGRADE = 19;
+  static const int MaxSoundVolume = 200;
+
+  static const int POWERUP_HEALTH = 0;
+  static const int SHIP_FIRE_AUTO = 1;
+  static const int SHIP_EXPLODE = 2;
+  static const int SHIP_HIT = 3;
+  static const int POWERUP_SHIELD = 4;
+  static const int GAME_OVER = 5;
+  static const int SHIELD_HIT_ENERGY = 6;
+  static const int ASTEROID_HIT_BIG = 7;
+  static const int ASTEROID_SPAWN = 8;
+  static const int ASTEROID_HIT_SMALL = 9;
+  static const int MENU_MOVE = 10;
+  static const int MENU_SELECT = 11;
+  static const int MENU_BACK = 12;
+  static const int POWERUP_LIFE = 13;
+  static const int SHIP_FIRE_LAME = 14;
+  static const int ASTEROID_HIT = 15;
+  static const int POWERUP_SPAWN = 16;
+  static const int SHIP_FIRE_SINGLE = 17;
+  static const int ASTEROID_HIT2 = 18;
+  static const int WEAPON_UPGRADE = 19;
 
   static std::map<int, int> ShotSoundsMap =
   {
@@ -182,19 +187,27 @@ namespace Sounds
 
 namespace GUI
 {
-  const static int GUITopBackgroundHeight = 32;
+  static const int GUITopBackgroundHeight = 32;
   static const double SpawnTimeMeterLength = 20.0;
   static const double KillsMeterLength = 10.0;
 }
 
 namespace AnimationsIds
 {
-  const static int EXPLOSION_ASTEROID = 0;
-  const static int EXPLOSION_SHIP = 1;
-  const static int SPAWN_SMALL = 2;
-  const static int SPAWN_BIG = 3;
-  const static int BULLET_HIT = 4;
-  const static int BULLET_HIT2 = 5;
+  static const int EXPLOSION_ASTEROID = 0;
+  static const int EXPLOSION_SHIP = 1;
+  static const int SPAWN_SMALL = 2;
+  static const int SPAWN_BIG = 3;
+  static const int BULLET_HIT = 4;
+  static const int BULLET_HIT2 = 5;
+}
+
+namespace Forms
+{
+  static const int MAIN_TITLE = 0;
+  static const int OPTIONS = 1;
+  static const int HOW_TO_PLAY = 2;
+  static const int HIGH_SCORES = 3;
 }
 
 #ifndef HIGH_SCORE

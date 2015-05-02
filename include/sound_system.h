@@ -27,6 +27,7 @@ class SoundSystem
     void Init();
     void PlaySound(int soundType);
     void PlayMusic(int musicIndex);
+    void SetMusicVolume(float volume) { FMOD_Channel_SetVolume(_musicChannel, volume); }
     void PlayTitleMusic();
     void PlayGameMusic();
     void StopMusic();
@@ -52,7 +53,8 @@ class SoundSystem
     std::vector<FMOD_SOUND*> _sounds;
     std::vector<FMOD_CHANNEL*> _channels;
 
-
+    float _maxSoundVolume;
+    float _maxMusicVolume;
 };
 
 #endif // SOUNDSYSTEM_H
