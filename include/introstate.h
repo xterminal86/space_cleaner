@@ -14,6 +14,7 @@
 #include "config.h"
 #include "forms_manager.h"
 
+// Title screen
 class IntroState : public GameState
 {
   public:
@@ -65,11 +66,14 @@ class IntroState : public GameState
     std::vector<Star> _stars;
     std::vector<Vector2> _spawnPoints;
 
+    // Used to get once-per-press key behaviour
     bool _keyPressed;
 
+    // Shortcuts for VideoSystem::Get().ScreenDimensions().x and y
     int _screenSizeX;
     int _screenSizeY;
 
+    // Size of background image
     int _backgroundX;
     int _backgroundY;
 

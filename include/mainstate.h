@@ -20,6 +20,7 @@
 #include "vector2pair.h"
 #include "util.h"
 
+// Main game state class
 class MainState : public GameState
 {
   public:
@@ -80,23 +81,36 @@ class MainState : public GameState
     std::string _shieldPointsBar;
     std::string _hitPointsBar;
 
+    // Checked to show quit dialog
     bool _quitFlag;
+    // Used to get once-per-press key behaviour
     bool _keyPressed;
+    // It is set after we write high score
     bool _scoreWritten;
+    // Flag to check if we can fire another shot on auto mode
     bool _autoFireValid;
 
+    // Number of extra lives
     int _currentLives;
+    // Number of asteroid spawns passed
     int _waveCounter;
 
+    // Decrement of hit points bar color
     int _hitPointsColorDelta;
+    // If hitpoints drop below this value, we can spawn a health powerup
     int _shipHitPointsHalf;
+    // Shield alpha decrement
     int _shieldColorAlphaDelta;
+
+    // Shortcuts for VideoSystem::Get().ScreenDimensions().x and y
     int _screenSizeX;
     int _screenSizeY;
 
+    // Size of the background image
     int _backgroundX;
     int _backgroundY;
 
+    // Set when we hit SPACE
     bool _fireTrigger;
 
     Sprite _backgroundStar;
@@ -106,12 +120,14 @@ class MainState : public GameState
     Sprite _guiShield;
     Sprite _guiLives;
     Sprite _guiWeaponFrame;
+    // Black padding at the top of the screen
     Sprite _guiBlackBack;
     Sprite _guiDivider;
     Sprite _guiExtraLifeOutline;
 
     Ship _ship;
 
+    // Text color that changes from red to violet (cycled)
     SDL_Color _fancyTextColor;
 
     void LoadBackground();

@@ -5,6 +5,7 @@
 #include "video_system.h"
 #include "logger.h"
 
+// Wrapper class for SDL_Texture
 class PNGLoader
 {
   unsigned int _textureFormat;

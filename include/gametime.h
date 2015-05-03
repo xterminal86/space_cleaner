@@ -3,6 +3,7 @@
 
 #include "globals.h"
 
+// Stores number of milliseconds passed during GameState::Draw() call
 class GameTime
 {
   public:

@@ -249,7 +249,7 @@ void Sprite::SetAngle(double angle)
 // In order to avoid "acceleration" of results, we always offset from some point when performing calculations.
 // I.e. first we take original collider, rotate it and remember the values of rotated points,
 // then we offset those points to somewhere we want.
-// Previously offset was taken from _originalCollider, thus incrementing the wrong position in the first place.
+// Previously, offset was taken from _originalCollider, thus incrementing the wrong position in the first place.
 // And if we would just replace _originalCollider with += of the _rotatedCollider, it would "fly away", since
 // increment performs every frame. Therefore, three colliders.
 void Sprite::MoveCollider(double newX, double newY)
@@ -492,8 +492,6 @@ bool Sprite::IsTriangleValid(std::vector<Vector2>& triangle, std::vector<SDL_Poi
 
     bool result = IsPointOutsideTriangle(triangle, p);
 
-    //Debug.Log(t + " " + v + " result: " + result);
-
     if (!result) return false;
   }
 
@@ -545,8 +543,6 @@ bool Sprite::IsPointOutsideTriangle(std::vector<Vector2>& triangle, Vector2 poin
       }
     }
   }
-
-  //Debug.Log(point + " " + leftCount + " " + rightCount);
 
   return (leftCount % 2 == 0 && rightCount % 2 == 0);
 }

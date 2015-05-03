@@ -4,6 +4,7 @@
 #include "globals.h"
 #include "vector2.h"
 
+// Helper class for determining collisions
 class CollisionInfo
 {
 public:

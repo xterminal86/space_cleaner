@@ -3,6 +3,7 @@
 
 #include "globals.h"
 
+// We drop all console output to the file
 class Logger
 {
   public:

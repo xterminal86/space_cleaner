@@ -10,6 +10,7 @@ Config::~Config()
   //dtor
 }
 
+// Init() method checks existence of config.dat and assumes default values if it doesn't exist
 void Config::Init()
 {
   Logger::Get().LogPrint("Reading config...\n");

@@ -3,6 +3,7 @@
 
 #include "globals.h"
 
+// Reads input
 class InputManager
 {
   public:

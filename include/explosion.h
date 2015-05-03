@@ -21,6 +21,8 @@ struct Fragment
   Vector2 Direction;
 };
 
+// Kind of a lame class, that supposed to provide scattering of ship's sprite fragments
+// Turned out to be not looking that good.
 class Explosion
 {
   public:

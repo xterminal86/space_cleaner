@@ -5,6 +5,10 @@
 
 class AnimationSequence;
 
+// Holds a vector of animation objects and processes them (draws them if active)
+//
+// Since we can have several numbers of the same animations on the screen (bullet hit, asteroid explosions),
+// we provide a vector, that holds given number (poolSize) of AnimationSequence object copies
 class AnimationsPool
 {
   public:

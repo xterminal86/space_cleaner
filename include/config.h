@@ -4,6 +4,7 @@
 #include "globals.h"
 #include "logger.h"
 
+// Singleton class of holding game config values
 class Config
 {
   public:

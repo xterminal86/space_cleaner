@@ -5,8 +5,10 @@
 #include "png_loader.h"
 #include "animations_pool.h"
 
+// Holds AnimationSequence list
 class AnimationsPool;
 
+// Draws sequence of sprites from _spriteSheetRef with speed specified by AnimationsPool
 class AnimationSequence
 {
   public:

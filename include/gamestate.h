@@ -3,6 +3,7 @@
 
 #include "application.h"
 
+// Base class for managing game states (title screen and game itself)
 class GameState
 {
 public:

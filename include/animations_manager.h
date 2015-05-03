@@ -4,6 +4,7 @@
 #include "globals.h"
 #include "animations_pool.h"
 
+// Provides methods for playing certain animation
 class AnimationsManager
 {
   public:

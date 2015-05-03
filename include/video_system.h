@@ -19,6 +19,8 @@ class VideoSystem
       // If SDL_WINDOW_FULLSCREEN_DESKTOP is enabled,
       // then window size in Init() is ignored (no video mode change is made)
       // and application mimics fullscreen by stretching to the current desktop resolution (from SDL wiki)
+      // Ignored for now.
+
       //if (_fullscreen != 0)
       //{
         _screenDimensions.x = _displayMode.w;

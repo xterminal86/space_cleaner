@@ -76,7 +76,7 @@ class Sprite
     std::vector<SDL_Point> _projectionAxes;
     std::vector<Vector2> _projectionAxesV2;
 
-    // Used up in triangulation method
+    // Gets used up in triangulation method
     std::vector<SDL_Point> _originalColliderCopy;
 
     std::vector<std::vector<SDL_Point>> _triangulatedCollider;

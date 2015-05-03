@@ -3,6 +3,8 @@
 
 #include "png_loader.h"
 
+// Loads and stores all sprites
+// Provides methods for searching them.
 class TextureManager
 {
   public:

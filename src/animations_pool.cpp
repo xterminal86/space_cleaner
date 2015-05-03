@@ -34,6 +34,7 @@ void AnimationsPool::Init(std::string spriteSheetName, int poolSize, int speedMs
   }
 }
 
+// If we have free animation object available, we play it
 void AnimationsPool::Play(int x, int y, double scale)
 {
   for (int i = 0; i < _pool.size(); i++)

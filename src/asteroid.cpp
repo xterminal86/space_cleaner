@@ -146,7 +146,7 @@ void Asteroid::Compute()
 
 void Asteroid::ProcessCollision(Bullet* bulletRef)
 {
-  // Smallest asteroids are disabled regardless of their hitpoints
+  // Smallest asteroids are "destroyed" regardless of their hitpoints
   if (_currentBreakdownLevel == GameMechanic::AsteroidMaxBreakdownLevel)
   {
     _currentBreakdownLevel++;

@@ -6,6 +6,7 @@
 #include "gametime.h"
 #include "util.h"
 
+// Blinking stars in the background are done using this class
 class Star
 {
 private:

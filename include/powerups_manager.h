@@ -6,6 +6,7 @@
 #include "animations_manager.h"
 #include "sound_system.h"
 
+// Holds all powerups and spawns them on demand
 class PowerupsManager
 {
   public:

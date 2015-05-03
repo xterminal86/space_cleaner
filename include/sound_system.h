@@ -16,6 +16,7 @@ struct MusicData
   FMOD_SOUND* Music;
 };
 
+// Wrapper class for FMOD with ability to play given sound and music
 class SoundSystem
 {
   public:

@@ -5,6 +5,7 @@
 #include "vector2pair.h"
 #include "collision_info.h"
 
+// Everyone's favourite :-)
 class Util
 {
   public:
@@ -39,6 +40,7 @@ class Util
       return proj;
     }
 
+    // Read comments in Util.cs in Unity TriangulationTest project for detailed explanation.
     static bool TestIntersection(CollisionInfo& firstSprite, CollisionInfo& secondSprite)
     {
       auto firstSpriteAxes = firstSprite.SatAxesV2Ref;
@@ -163,7 +165,6 @@ class Util
 
       if (t2divisor == 0)
       {
-        //Debug.Log(l1 + " " + l2 + " => d2xd2 = 0");
         return false;
       }
 
@@ -186,9 +187,6 @@ class Util
       }
 
       double t1 = t1dividend / t1divisor;
-
-      //Debug.Log ("t2 -> Dividend: " + t2dividend + " | Divisor: " + t2divisor + " = " + t2);
-      //Debug.Log ("t1 -> Dividend: " + t1dividend + " | Divisor: " + t1divisor + " = " + t1);
 
       if (testEndPoints)
       {

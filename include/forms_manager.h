@@ -6,6 +6,7 @@
 #include "application.h"
 #include "mainstate.h"
 
+// Holds all menu forms (read - menus and submenus)
 class FormsManager
 {
   public:

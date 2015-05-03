@@ -4,6 +4,7 @@
 #include "sprite.h"
 #include "gametime.h"
 
+// Class that holds visual representation of a powerup
 class Powerup
 {
   public:

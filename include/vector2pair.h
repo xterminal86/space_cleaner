@@ -3,6 +3,7 @@
 
 #include "vector2.h"
 
+// Helper class to hold collision related information
 class Vector2Pair
 {
   public:
@@ -38,7 +39,7 @@ class Vector2Pair
     {
       // Sometimes order of f.Min and f.Max might be reversed: e.g. right to left instead of left to right accordingly for X.
       // In such case we swap values.
-      // This is done to avoid writing another if case for the above situation.
+      // This is done to avoid writing another "if" case for the above situation.
 
       if (f.Min().X() > f.Max().X() || f.Min().Y() > f.Max().Y())
       {

@@ -560,6 +560,7 @@ void MainState::RestartGame()
   _waveCounter = 0;
   _asteroids.clear();
   Asteroid::ResetInstances();
+  PowerupsManager::Get().DespawnPowerups();
   _ship.Move(_screenSizeX / 2, _screenSizeY / 2);
   _ship.Respawn();
   SoundSystem::Get().PlayGameMusic();

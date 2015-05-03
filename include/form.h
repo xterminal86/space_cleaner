@@ -4,6 +4,7 @@
 #include "globals.h"
 #include "bitmapfont.h"
 
+// Base class for maintaining title screen menus and submenus
 class Form
 {
   public:
@@ -26,12 +27,16 @@ class Form
   private:
 };
 
+// Any menu item
 struct MenuItem
 {
   int Id = 0;
   std::string TextValue;
+  // Function to be called on ENTER key
   void (*SelectHandler)() = nullptr;
+  // Function to be called on LEFT key
   void (*LeftHandler)() = nullptr;
+  // Function to be called on RIGHT key
   void (*RightHandler)() = nullptr;
 };
 

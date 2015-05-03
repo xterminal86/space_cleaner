@@ -8,6 +8,8 @@ AnimationsManager::~AnimationsManager()
 {
 }
 
+// Loads all animations from file and constructs a vector of respective pool objects
+// based on the information if AnimationsFilename
 void AnimationsManager::Init()
 {
   FILE* f = fopen(GlobalStrings::AnimationsFilename.data(), "r");
