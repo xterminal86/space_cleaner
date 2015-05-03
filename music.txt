@@ -1,4 +1,5 @@
 assets/music/power_blade-1.mp3 694560 3676320
 assets/music/power_blade-3.mp3 421300 2097000
 assets/music/power_blade-4.mp3 480000 2400000
+assets/music/power_blade-7.mp3 962400 3266400
 assets/music/metroid.mp3 317740 2701000
