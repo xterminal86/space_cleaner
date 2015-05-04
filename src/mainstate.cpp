@@ -33,6 +33,11 @@ MainState::MainState()
   _screenSizeX = VideoSystem::Get().ScreenDimensions().x;
   _screenSizeY = VideoSystem::Get().ScreenDimensions().y;
 
+  double aspect = (double)_screenSizeX / (double)_screenSizeY;
+  if (aspect < 1.0) aspect = 1.0;
+
+  _maxAsteroidInstances = round((double)GameMechanic::AsteroidsMaxInstances * aspect);
+
   _spawnPoints.push_back(Vector2(_spawnSpread, _spawnSpread));
   _spawnPoints.push_back(Vector2(_screenSizeX - _spawnSpread, _spawnSpread));
   _spawnPoints.push_back(Vector2(_screenSizeX - _spawnSpread, _screenSizeY - _spawnSpread));

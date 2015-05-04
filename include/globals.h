@@ -73,6 +73,8 @@ namespace Math
 
 namespace GameMechanic
 {
+  // Maximum asteroids by default
+  static const int AsteroidsMaxInstances = 20;
   // Number of asteroid breakdowns after it has been hit
   static const int AsteroidMaxBreakdownLevel = 2;
   // Number of asteroids created after breakdown

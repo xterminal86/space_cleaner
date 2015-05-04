@@ -58,10 +58,10 @@ class MainState : public GameState
 
     Uint8* _keyboardState;
 
+    int _maxAsteroidInstances;
     const int _backgroundStars = 100;
     const int _startingLives = 0;
     const int _maxLivesLimit = 3;
-    const int _maxAsteroidInstances = 20;
     const int _spawnSpread = 100;
     const int _fancyTextColorChangeSpeed = 5;
 
