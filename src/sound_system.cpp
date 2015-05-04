@@ -3,6 +3,7 @@
 SoundSystem::SoundSystem()
 {
   _musicChannel = nullptr;
+  _lastPlayedMusicId = -1;
 }
 
 SoundSystem::~SoundSystem()
@@ -128,9 +129,22 @@ void SoundSystem::PlayGameMusic()
 {
   if (!_musicList.empty())
   {
-    int index = Util::RandomNumber() % _musicList.size();
-    if (index == 0) index++;
-    PlayMusic(index);
+    if (_lastPlayedMusicId == -1)
+    {
+      int index = Util::RandomNumber() % _musicList.size();
+      if (index == Music::TITLE_MUSIC_ID) index++;
+      _lastPlayedMusicId = index;
+    }
+    else
+    {
+      _lastPlayedMusicId++;
+      if (_lastPlayedMusicId > _musicList.size() - 1)
+      {
+        _lastPlayedMusicId = 1;
+      }
+    }
+
+    PlayMusic(_lastPlayedMusicId);
   }
 }
 void SoundSystem::PlayTitleMusic()

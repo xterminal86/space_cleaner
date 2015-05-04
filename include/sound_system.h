@@ -56,6 +56,8 @@ class SoundSystem
 
     float _maxSoundVolume;
     float _maxMusicVolume;
+
+    int _lastPlayedMusicId;
 };
 
 #endif // SOUNDSYSTEM_H
