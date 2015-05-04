@@ -34,6 +34,7 @@ void FormHighScores::HandleInput(Uint8* keyboardState)
 
 void FormHighScores::Open()
 {
+  FormsManager::Get().GetApplicationPointer()->LoadHighScores();
   FormsManager::Get().GetApplicationPointer()->SortHighScores();
 }
 
