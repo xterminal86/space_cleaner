@@ -109,6 +109,17 @@ void SoundSystem::PlaySound(int soundType)
   }
 }
 
+void SoundSystem::StopSound(int soundType)
+{
+  if (_soundsMap.count(soundType) == 1)
+  {
+    if (_channelsMap[soundType] != nullptr)
+    {
+      FMOD_Channel_Stop(_channelsMap[soundType]);
+    }
+  }
+}
+
 void SoundSystem::PlayMusic(int musicIndex)
 {
   FMOD_BOOL playing = false;

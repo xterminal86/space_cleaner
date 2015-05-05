@@ -556,6 +556,7 @@ void MainState::ProcessPowerups()
 
 void MainState::RestartGame()
 {
+  SoundSystem::Get().StopAllSounds();
   _scoreWritten = false;
   _currentLives = _startingLives;
   _score = 0;

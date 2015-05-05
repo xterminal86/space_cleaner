@@ -12,8 +12,6 @@ PowerupsManager::~PowerupsManager()
 
 void PowerupsManager::Init()
 {
-  int poolSizeHalf = _powerupsPoolSize / 2;
-
   for (int i = 0; i < _powerupsPoolSize; i++)
   {
     Powerup p;

@@ -27,6 +27,7 @@ class SoundSystem
     }
     void Init();
     void PlaySound(int soundType);
+    void StopSound(int soundType);
     void PlayMusic(int musicIndex);
     void SetMusicVolume(float volume) { FMOD_Channel_SetVolume(_musicChannel, volume); }
     void PlayTitleMusic();

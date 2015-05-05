@@ -320,8 +320,6 @@ void Sprite::Draw(int x, int y, int w, int h, bool tiled)
   }
   else
   {
-    int screenX = VideoSystem::Get().ScreenDimensions().x;
-
     _destRect.w = _imageWrapper->Width();
     _destRect.h = _imageWrapper->Height();
 
