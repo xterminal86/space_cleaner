@@ -81,6 +81,7 @@ void SoundSystem::LoadSounds()
     MusicData entry;
     fscanf(f, "%s %i %i", buf, &entry.LoopStart, &entry.LoopEnd);
     Logger::Get().LogPrint("----|Track %i - %s\n", index, buf);
+    entry.Filename = buf;
     FMOD_System_CreateSound(_soundSystem, buf, FMOD_LOOP_NORMAL, nullptr, &entry.Music);
     FMOD_Sound_SetLoopCount(entry.Music, -1);
     FMOD_Sound_SetLoopPoints(entry.Music, entry.LoopStart, FMOD_TIMEUNIT_PCM, entry.LoopEnd, FMOD_TIMEUNIT_PCM);
@@ -194,4 +195,17 @@ void SoundSystem::StopAllSounds()
   {
     FMOD_Channel_Stop(_channelsMap[i]);
   }
+}
+
+MusicData* SoundSystem::GetMusicEntry(int index)
+{
+  for (int i = 0; i < _musicList.size(); i++)
+  {
+    if (i == index)
+    {
+      return &_musicList[i];
+    }
+  }
+
+  return nullptr;
 }

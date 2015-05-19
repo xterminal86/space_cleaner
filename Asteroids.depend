@@ -1634,7 +1634,7 @@
 1430420806 source:d:\nick\sources\c++\asteroids.git\src\ship.cpp
 	"ship.h"
 
-1430662076 source:d:\nick\sources\c++\asteroids.git\src\sprite.cpp
+1430863398 source:d:\nick\sources\c++\asteroids.git\src\sprite.cpp
 	"sprite.h"
 
 1429725333 source:d:\nick\sources\c++\asteroids.git\src\texture_manager.cpp
@@ -1925,7 +1925,7 @@
 1428622706 h:\sources\c++\asteroids.git\lib\fmod\inc\fmod_errors.h
 	"fmod.h"
 
-1430772956 d:\nick\sources\c++\asteroids.git\include\sound_system.h
+1432071941 d:\nick\sources\c++\asteroids.git\include\sound_system.h
 	<fmod.h>
 	<fmod_errors.h>
 	"config.h"
@@ -1953,7 +1953,7 @@
 1429208427 d:\nick\sources\c++\asteroids.git\lib\fmod\inc\fmod_errors.h
 	"fmod.h"
 
-1430774188 source:d:\nick\sources\c++\asteroids.git\src\sound_system.cpp
+1432071943 source:d:\nick\sources\c++\asteroids.git\src\sound_system.cpp
 	"sound_system.h"
 
 1429522604 source:h:\sources\c++\asteroids.git\src\gamestate.cpp
@@ -2043,7 +2043,7 @@
 	"vector2pair.h"
 	"util.h"
 
-1430775364 source:d:\nick\sources\c++\asteroids.git\src\mainstate.cpp
+1430863398 source:d:\nick\sources\c++\asteroids.git\src\mainstate.cpp
 	"mainstate.h"
 
 1430810475 source:h:\sources\c++\asteroids.git\src\animations_manager.cpp
@@ -2075,7 +2075,7 @@
 	"animations_manager.h"
 	"sound_system.h"
 
-1430420806 source:d:\nick\sources\c++\asteroids.git\src\powerups_manager.cpp
+1430863398 source:d:\nick\sources\c++\asteroids.git\src\powerups_manager.cpp
 	"powerups_manager.h"
 
 1430383698 source:h:\sources\c++\asteroids.git\src\options_state.cpp
@@ -2140,17 +2140,17 @@
 	"form.h"
 	"video_system.h"
 
-1430608975 source:d:\nick\sources\c++\asteroids.git\src\form_high_scores.cpp
+1430779001 source:d:\nick\sources\c++\asteroids.git\src\form_high_scores.cpp
 	"form_high_scores.h"
 	"forms_manager.h"
 
 1430601511 d:\nick\sources\c++\asteroids.git\include\form_high_scores.h
 	"form.h"
 
-1430608747 source:d:\nick\sources\c++\asteroids.git\src\form_options.cpp
+1432073038 source:d:\nick\sources\c++\asteroids.git\src\form_options.cpp
 	"form_options.h"
 
-1430608578 d:\nick\sources\c++\asteroids.git\include\form_options.h
+1432073478 d:\nick\sources\c++\asteroids.git\include\form_options.h
 	"form.h"
 	"sound_system.h"
 

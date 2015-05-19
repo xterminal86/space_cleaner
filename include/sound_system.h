@@ -14,6 +14,7 @@ struct MusicData
   unsigned int LoopStart;
   unsigned int LoopEnd;
   FMOD_SOUND* Music;
+  std::string Filename;
 };
 
 // Wrapper class for FMOD with ability to play given sound and music
@@ -35,6 +36,8 @@ class SoundSystem
     void StopMusic();
     void StopAllSounds();
     void Update() { FMOD_System_Update(_soundSystem); }
+    MusicData* GetMusicEntry(int index);
+    int TotalMusic() { return _musicList.size(); }
   protected:
   private:
     SoundSystem();

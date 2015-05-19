@@ -4,6 +4,8 @@ int FormOptions::_musicVolume = 0;
 int FormOptions::_soundVolume = 0;
 float FormOptions::_musicVolumePercent = 0.0f;
 float FormOptions::_soundVolumePercent = 0.0f;
+int FormOptions::_currentMusicJukebox = 0;
+int FormOptions::_totalMusic = 0;
 
 FormOptions::FormOptions()
 {
@@ -34,6 +36,19 @@ FormOptions::FormOptions()
   sound.RightHandler = FormOptions::SoundRightHandler;
 
   _menuItems[1] = sound;
+
+  str.str("");
+  str << "Music test:\n" << SoundSystem::Get().GetMusicEntry(_currentMusicJukebox)->Filename;
+
+  _totalMusic = SoundSystem::Get().TotalMusic();
+
+  MenuItem jukebox;
+  jukebox.Id = 2;
+  jukebox.TextValue = str.str();
+  jukebox.LeftHandler = FormOptions::JukeboxLeftHandler;
+  jukebox.RightHandler = FormOptions::JukeboxRightHandler;
+
+  _menuItems[2] = jukebox;
 
   _autoPress = false;
 }
@@ -90,19 +105,42 @@ void FormOptions::HandleInput(Uint8* keyboardState)
     }
   }
 
-  if (keyboardState[SDL_SCANCODE_LEFT] && _autoPress)
+  if (_currentMenuSelection == _menuItems.size() - 1)
   {
-    if (_menuItems[_currentMenuSelection].LeftHandler != nullptr)
+    if (keyboardState[SDL_SCANCODE_LEFT] && !_keyPressed)
     {
-      _menuItems[_currentMenuSelection].LeftHandler();
+      _keyPressed = true;
+      if (_menuItems[_currentMenuSelection].LeftHandler != nullptr)
+      {
+        _menuItems[_currentMenuSelection].LeftHandler();
+      }
+    }
+
+    if (keyboardState[SDL_SCANCODE_RIGHT] && !_keyPressed)
+    {
+      _keyPressed = true;
+      if (_menuItems[_currentMenuSelection].RightHandler != nullptr)
+      {
+        _menuItems[_currentMenuSelection].RightHandler();
+      }
     }
   }
-
-  if (keyboardState[SDL_SCANCODE_RIGHT] && _autoPress)
+  else
   {
-    if (_menuItems[_currentMenuSelection].RightHandler != nullptr)
+    if (keyboardState[SDL_SCANCODE_LEFT] && _autoPress)
     {
-      _menuItems[_currentMenuSelection].RightHandler();
+      if (_menuItems[_currentMenuSelection].LeftHandler != nullptr)
+      {
+        _menuItems[_currentMenuSelection].LeftHandler();
+      }
+    }
+
+    if (keyboardState[SDL_SCANCODE_RIGHT] && _autoPress)
+    {
+      if (_menuItems[_currentMenuSelection].RightHandler != nullptr)
+      {
+        _menuItems[_currentMenuSelection].RightHandler();
+      }
     }
   }
 
@@ -117,7 +155,13 @@ void FormOptions::HandleInput(Uint8* keyboardState)
     }
   }
 
-  if (!keyboardState[SDL_SCANCODE_DOWN] && !keyboardState[SDL_SCANCODE_UP])
+  if (_currentMenuSelection == _menuItems.size() - 1 && keyboardState[SDL_SCANCODE_RETURN] && !_keyPressed)
+  {
+    _keyPressed = true;
+    SoundSystem::Get().PlayMusic(_currentMusicJukebox);
+  }
+
+  if (!keyboardState[SDL_SCANCODE_DOWN] && !keyboardState[SDL_SCANCODE_UP] && !keyboardState[SDL_SCANCODE_RETURN])
   {
     _keyPressed = false;
   }
@@ -125,6 +169,7 @@ void FormOptions::HandleInput(Uint8* keyboardState)
 
 void FormOptions::Open()
 {
+  _currentMenuSelection = 0;
 }
 
 void FormOptions::Close()
@@ -149,4 +194,9 @@ void FormOptions::UpdateTextValues()
   str << "Sound volume: " << (int)_soundVolumePercent;
 
   _menuItems[1].TextValue = str.str();
+
+  str.str("");
+  str << "Music test:\n" << SoundSystem::Get().GetMusicEntry(_currentMusicJukebox)->Filename;
+
+  _menuItems[2].TextValue = str.str();
 }

@@ -23,6 +23,8 @@ class FormOptions : public Form
 
     static int _musicVolume;
     static int _soundVolume;
+    static int _currentMusicJukebox;
+    static int _totalMusic;
 
     bool _autoPress;
 
@@ -66,6 +68,18 @@ class FormOptions : public Form
       if (_soundVolume > Sounds::MaxSoundVolume) _soundVolume = Sounds::MaxSoundVolume;
 
       Config::Get().SetValue("sound_volume", _soundVolume);
+    }
+
+    static void JukeboxRightHandler()
+    {
+      _currentMusicJukebox++;
+      if (_currentMusicJukebox == _totalMusic) _currentMusicJukebox = 0;
+    }
+
+    static void JukeboxLeftHandler()
+    {
+      _currentMusicJukebox--;
+      if (_currentMusicJukebox < 0) _currentMusicJukebox = _totalMusic - 1;
     }
 };
 
