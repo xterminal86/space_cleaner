@@ -811,10 +811,10 @@
 1399750403 source:d:\nick\sources\c++\asteroids\src\video_system.cpp
 	"video_system.h"
 
-1430238806 source:h:\sources\c++\asteroids.git\main.cpp
+1432124083 source:h:\sources\c++\asteroids.git\main.cpp
 	"application.h"
 
-1432110582 h:\sources\c++\asteroids.git\include\application.h
+1432124036 h:\sources\c++\asteroids.git\include\application.h
 	"globals.h"
 
 1432115508 h:\sources\c++\asteroids.git\include\globals.h
@@ -1170,7 +1170,7 @@
 1430810475 h:\sources\c++\asteroids.git\include\input_manager.h
 	"globals.h"
 
-1432110612 source:h:\sources\c++\asteroids.git\src\application.cpp
+1432124059 source:h:\sources\c++\asteroids.git\src\application.cpp
 	"application.h"
 	"introstate.h"
 	"mainstate.h"
@@ -1691,9 +1691,10 @@
 1430120491 source:h:\sources\c++\asteroids.git\src\bullet.cpp
 	"bullet.h"
 
-1432110703 source:h:\sources\c++\asteroids.git\src\asteroid.cpp
+1432124870 source:h:\sources\c++\asteroids.git\src\asteroid.cpp
 	"asteroid.h"
 	"mainstate.h"
+	"application.h"
 
 1430207346 h:\sources\c++\asteroids.git\include\asteroid.h
 	"bullet.h"
@@ -1888,8 +1889,9 @@
 	"sprite.h"
 	"gametime.h"
 
-1432115996 source:h:\sources\c++\asteroids.git\src\powerup.cpp
+1432123496 source:h:\sources\c++\asteroids.git\src\powerup.cpp
 	"powerup.h"
+	"powerups_manager.h"
 
 1432114746 source:h:\sources\c++\asteroids.git\src\sound_system.cpp
 	"sound_system.h"
@@ -1960,14 +1962,14 @@
 1432110376 source:h:\sources\c++\asteroids.git\src\gamestate.cpp
 	"gamestate.h"
 
-1432110626 h:\sources\c++\asteroids.git\include\gamestate.h
+1432124927 h:\sources\c++\asteroids.git\include\gamestate.h
 	"application.h"
 
 1432114632 source:h:\sources\c++\asteroids.git\src\introstate.cpp
 	"introstate.h"
 	"mainstate.h"
 
-1430810475 h:\sources\c++\asteroids.git\include\introstate.h
+1432124942 h:\sources\c++\asteroids.git\include\introstate.h
 	"gamestate.h"
 	"sprite.h"
 	"star.h"
@@ -1980,7 +1982,7 @@
 	"config.h"
 	"forms_manager.h"
 
-1430810475 h:\sources\c++\asteroids.git\include\mainstate.h
+1432124936 h:\sources\c++\asteroids.git\include\mainstate.h
 	"gamestate.h"
 	"config.h"
 	"logger.h"

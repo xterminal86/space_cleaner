@@ -19,6 +19,14 @@ int Asteroid::_instances = 0;
 
 Application::Application()
 {
+}
+
+Application::~Application()
+{
+}
+
+void Application::Init()
+{
   char buf[512];
   FILE* f = fopen("version", "r");
   if (f != nullptr)
@@ -30,10 +38,6 @@ Application::Application()
   _buildVersion = buf;
 
   LoadHighScores();
-}
-
-Application::~Application()
-{
 }
 
 void Application::Start()

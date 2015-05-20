@@ -1,5 +1,0 @@
-fullscreen_flag 1
-music_volume 70
-screen_height 1024
-screen_width 1280
-sound_volume 200

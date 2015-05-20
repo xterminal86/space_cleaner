@@ -2,8 +2,7 @@
 
 int main( int argc, char* args[])
 {
-  Application game;
-  game.Start();
-
+  Application::Get().Init();
+  Application::Get().Start();
 	return 0;
 }

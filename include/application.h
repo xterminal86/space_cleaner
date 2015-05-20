@@ -8,8 +8,12 @@ class GameState;
 class Application
 {
   public:
-    Application();
-    virtual ~Application();
+    static Application& Get()
+    {
+      static Application instance;
+      return instance;
+    }
+    void Init();
     void Start();
     void ChangeState(GameState* newState);
     void PushState(GameState* newState);
@@ -36,6 +40,11 @@ class Application
     void HandleEvents();
     void Update();
     void Draw();
+
+    Application();
+    virtual ~Application();
+    Application& operator=(const Application&);
+    Application(const Application&);
 };
 
 #endif // APPLICATION_H

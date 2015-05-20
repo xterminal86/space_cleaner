@@ -1,5 +1,6 @@
 #include "asteroid.h"
 #include "mainstate.h"
+#include "application.h"
 
 Asteroid::Asteroid(double posx, double posy, int breakdownLevel, std::vector<std::unique_ptr<Asteroid>>* mainAsteroidsCollection)
 {
@@ -78,7 +79,8 @@ void Asteroid::Move()
     newX = _position.X() + _direction.X() * (_speed * GameTime::Get().DeltaTimeMs());
   }
 
-  if (newY < GUI::GUITopBackgroundHeight + 20 || newY > VideoSystem::Get().ScreenDimensions().y)
+  int upperY = (Application::Get().GetCurrentState() == GameStatesIds::IntroState) ? 20 : GUI::GUITopBackgroundHeight + 20;
+  if (newY < upperY || newY > VideoSystem::Get().ScreenDimensions().y)
   {
     _direction.Set(_direction.X(), -_direction.Y());
     newY = _position.Y() + _direction.Y() * (_speed * GameTime::Get().DeltaTimeMs());
