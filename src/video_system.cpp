@@ -1,8 +1,11 @@
 #include "video_system.h"
 #include "logger.h"
+#include "config.h"
 
 VideoSystem::VideoSystem()
 {
+  _currentRenderDriverIndex = -1;
+
   _initialized = false;
   _renderer = nullptr;
   _window = nullptr;
@@ -54,22 +57,42 @@ int VideoSystem::Init(int w, int h, int fullscreen)
     _screenDimensions.x = w;
     _screenDimensions.y = h;
 
-    int numberOfRenderDrivers = SDL_GetNumRenderDrivers();
+    _renderDrivers = SDL_GetNumRenderDrivers();
+    Logger::Get().LogPrint("Total video drivers - %i\n", _renderDrivers);
     bool success = false;
-    for (int i = 0; i < numberOfRenderDrivers; i++)
+    int videoDriver = Config::Get().GetValue(ConfigStrings::VideoDriverString);
+    if (videoDriver != -1)
     {
       SDL_RendererInfo info;
-      SDL_GetRenderDriverInfo(i, &info);
-      Logger::Get().LogPrint("%i. driver: %s\n", i + 1, info.name);
-      Logger::Get().LogPrint("----| flags: %zu\n", info.flags);
-      Logger::Get().LogPrint("Trying to create renderer...\n");
-      _renderer = SDL_CreateRenderer(_window, i, info.flags);
-
+      SDL_GetRenderDriverInfo(videoDriver, &info);
+      _renderer = SDL_CreateRenderer(_window, videoDriver, info.flags);
       if (_renderer != nullptr)
       {
-        Logger::Get().LogPrint("*** SUCCESS *** Created renderer: \"%s\"\n", info.name);
         success = true;
-        break;
+        _currentRenderDriverIndex = videoDriver;
+      }
+    }
+    else
+    {
+      Logger::Get().LogPrint("(warning) Could not create renderer from config value - finding first possible...\n");
+
+      for (int i = 0; i < _renderDrivers; i++)
+      {
+        SDL_RendererInfo info;
+        SDL_GetRenderDriverInfo(i, &info);
+        Logger::Get().LogPrint("%i. driver: %s\n", i + 1, info.name);
+        Logger::Get().LogPrint("----| flags: %zu\n", info.flags);
+        Logger::Get().LogPrint("Trying to create renderer...\n");
+        _renderer = SDL_CreateRenderer(_window, i, info.flags);
+
+        if (_renderer != nullptr)
+        {
+          _currentRenderDriverIndex = i;
+          Logger::Get().LogPrint("*** SUCCESS *** Created renderer: \"%s\"\n", info.name);
+          success = true;
+          Config::Get().SetValue(ConfigStrings::VideoDriverString, _currentRenderDriverIndex);
+          break;
+        }
       }
     }
 

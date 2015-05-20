@@ -3,9 +3,13 @@
 
 IntroState::IntroState()
 {
+  _stateId = GameStatesIds::IntroState;
+
   _logger->Init(GlobalStrings::LogFilename);
   _config->Init();
-  _videoSystem->Init(_config->GetValue("screen_width"), _config->GetValue("screen_height"), _config->GetValue("fullscreen_flag"));
+  _videoSystem->Init(_config->GetValue(ConfigStrings::ScreenWidthString),
+                     _config->GetValue(ConfigStrings::ScreenHeightString),
+                     _config->GetValue(ConfigStrings::FullscreenString));
   _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename);
   _animationsManager->Init();
   _powerupsManager->Init();

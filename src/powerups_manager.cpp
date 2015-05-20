@@ -31,6 +31,8 @@ void PowerupsManager::Init()
 
     _powerupsPool.push_back(p);
   }
+
+  _currentActivePowerup = Powerups::NONE;
 }
 
 void PowerupsManager::Process()
@@ -45,8 +47,9 @@ void PowerupsManager::SpawnPowerup(int x, int y, int type)
 {
   for (auto& p : _powerupsPool)
   {
-    if (!p.Active() && p.Type() == type)
+    if (!p.Active() && (p.Type() == type) && (_currentActivePowerup == Powerups::NONE))
     {
+      _currentActivePowerup = type;
       p.Spawn(Vector2(x, y));
       AnimationsManager::Get().Play(AnimationsIds::SPAWN_SMALL, p.Position().X(), p.Position().Y(), 2.0);
       SoundSystem::Get().PlaySound(Sounds::POWERUP_SPAWN);
@@ -64,4 +67,6 @@ void PowerupsManager::DespawnPowerups()
       p.SetActive(false);
     }
   }
+
+  _currentActivePowerup = Powerups::NONE;
 }

@@ -38,6 +38,9 @@ struct MenuItem
   void (*LeftHandler)() = nullptr;
   // Function to be called on RIGHT key
   void (*RightHandler)() = nullptr;
+  // Repeated calls
+  void (*LeftHandlerAuto)() = nullptr;
+  void (*RightHandlerAuto)() = nullptr;
 };
 
 #endif // FORM_H

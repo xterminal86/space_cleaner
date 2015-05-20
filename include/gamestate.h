@@ -17,9 +17,13 @@ public:
   virtual void Update(Application* game) = 0;
   virtual void Draw(Application* game) = 0;
 
+  virtual int StateId() { return _stateId; }
+
   protected:
     GameState();
     virtual ~GameState();
+
+    int _stateId;
 };
 
 #endif // GAMESTATE_H

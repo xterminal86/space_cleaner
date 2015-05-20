@@ -2,6 +2,8 @@
 
 MainState::MainState()
 {
+  _stateId = GameStatesIds::MainState;
+
   _fireTrigger = false;
   _quitFlag = false;
   _keyPressed = false;
@@ -548,6 +550,8 @@ void MainState::ProcessPowerups()
 
         if (_currentLives > _maxLivesLimit) _currentLives = _maxLivesLimit;
       }
+
+      PowerupsManager::Get().ResetActivePowerupFlag();
 
       powerup.SetActive(false);
     }

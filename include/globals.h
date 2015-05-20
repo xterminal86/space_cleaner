@@ -16,6 +16,12 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+namespace GameStatesIds
+{
+  static const int IntroState = 0;
+  static const int MainState = 1;
+}
+
 namespace GlobalStrings
 {
   // Text keys for searching image in the image dictionary
@@ -128,6 +134,17 @@ namespace GameMechanic
   };
 }
 
+// Magic strings for config
+namespace ConfigStrings
+{
+  static const std::string SoundVolumeString = "sound_volume";
+  static const std::string MusicVolumeString = "music_volume";
+  static const std::string ScreenWidthString = "screen_width";
+  static const std::string ScreenHeightString = "screen_height";
+  static const std::string FullscreenString = "fullscreen";
+  static const std::string VideoDriverString = "video_driver";
+}
+
 // If config.dat wasn't found, we assume these default values
 // Game actually uses only music and sound volume values.
 // Others are ignored for now.
@@ -135,8 +152,9 @@ namespace DefaultConfigValues
 {
   static std::map<std::string, int> DefaultConfigPairs =
   {
-    {"sound_volume", 100}, {"music_volume", 50}, {"screen_width", 1280},
-    {"screen_height", 1024}, {"fullscreen", 0}
+    {ConfigStrings::SoundVolumeString, 100}, {ConfigStrings::MusicVolumeString, 50},
+    {ConfigStrings::ScreenWidthString, 1280}, {ConfigStrings::ScreenHeightString, 1024},
+    {ConfigStrings::FullscreenString, 0}, {ConfigStrings::VideoDriverString, -1}
   };
 }
 
@@ -146,6 +164,7 @@ namespace Powerups
   static const int SHIELD_POWERUP = 0;
   static const int HEALTH_POWERUP = 1;
   static const int LIFE_POWERUP = 2;
+  static const int NONE = -1;
 }
 
 // Bullets IDs

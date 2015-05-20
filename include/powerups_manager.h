@@ -20,9 +20,12 @@ class PowerupsManager
     void SpawnPowerup(int x, int y, int type);
     void DespawnPowerups();
     std::vector<Powerup>& PowerupsPool() { return _powerupsPool; }
+    void ResetActivePowerupFlag() { _currentActivePowerup = Powerups::NONE; }
   protected:
   private:
     const int _powerupsPoolSize = 16;
+
+    int _currentActivePowerup;
 
     PowerupsManager();
     virtual ~PowerupsManager();

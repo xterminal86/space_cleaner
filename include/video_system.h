@@ -29,14 +29,33 @@ class VideoSystem
 
       return _screenDimensions;
     }
+
+    SDL_RendererInfo& GetRenderDriverInfo(int index)
+    {
+      int safeIndex = index % _renderDrivers;
+      SDL_GetRenderDriverInfo(safeIndex, &_renderDriverInfo);
+      return _renderDriverInfo;
+    }
+
+    SDL_RendererInfo& GetCurrentRenderDriverInfo()
+    {
+      SDL_GetRenderDriverInfo(_currentRenderDriverIndex, &_renderDriverInfo);
+      return _renderDriverInfo;
+    }
+
+    int CurrentRenderDriverIndex() { return _currentRenderDriverIndex; }
+    int TotalVideoDrivers() { return _renderDrivers; }
   protected:
   private:
     SDL_Point _screenDimensions;
     bool _initialized;
     int _fullscreen;
+    int _renderDrivers;
+    int _currentRenderDriverIndex;
     SDL_Renderer* _renderer;
     SDL_Window* _window;
     SDL_DisplayMode _displayMode;
+    SDL_RendererInfo _renderDriverInfo;
 
     std::string _buildVersion;
 

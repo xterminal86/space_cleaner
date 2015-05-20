@@ -16,7 +16,7 @@ class Application
     void PopState();
     void SetRunningFlag(bool value) { _running = value; }
     std::string& BuildVersionString() { return _buildVersion; }
-    GameState* GetCurrentState() { return _states.back(); }
+    int GetCurrentState();
     bool LoadHighScores();
     void StoreHighScore(HighScore score);
     std::vector<HighScore>& HighScores() { return _highScores; }

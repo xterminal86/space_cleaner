@@ -22,11 +22,19 @@ void Config::Init()
 
     Logger::Get().LogPrint("(warning) Config could not be opened - assuming default values\n");
 
+    for (auto& i : DefaultConfigValues::DefaultConfigPairs)
+    {
+      _config[i.first.data()] = i.second;
+    }
+
+    /*
     _config["screen_width"] = DefaultConfigValues::DefaultConfigPairs["screen_width"];
     _config["screen_height"] = DefaultConfigValues::DefaultConfigPairs["screen_height"];
     _config["sound_volume"] = DefaultConfigValues::DefaultConfigPairs["sound_volume"];
     _config["music_volume"] = DefaultConfigValues::DefaultConfigPairs["music_volume"];
     _config["fullscreen_flag"] = DefaultConfigValues::DefaultConfigPairs["fullscreen_flag"];
+    _config["video_driver"] = DefaultConfigValues::DefaultConfigPairs["video_driver"];
+    */
 
     for (auto& item : _config)
     {

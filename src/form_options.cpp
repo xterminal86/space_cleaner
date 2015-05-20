@@ -6,11 +6,12 @@ float FormOptions::_musicVolumePercent = 0.0f;
 float FormOptions::_soundVolumePercent = 0.0f;
 int FormOptions::_currentMusicJukebox = 0;
 int FormOptions::_totalMusic = 0;
+int FormOptions::_currentVideoDriverIndex = 0;
 
 FormOptions::FormOptions()
 {
-  _musicVolume = Config::Get().GetValue("music_volume");
-  _soundVolume = Config::Get().GetValue("sound_volume");
+  _musicVolume = Config::Get().GetValue(ConfigStrings::MusicVolumeString);
+  _soundVolume = Config::Get().GetValue(ConfigStrings::SoundVolumeString);
 
   _musicVolumePercent = (float)_musicVolume * 100.0f / (float)Music::MaxMusicVolume;
   _soundVolumePercent = (float)_soundVolume * 100.0f / (float)Sounds::MaxSoundVolume;
@@ -21,10 +22,10 @@ FormOptions::FormOptions()
   MenuItem music;
   music.Id = 0;
   music.TextValue = str.str();
-  music.LeftHandler = FormOptions::MusicLeftHandler;
-  music.RightHandler = FormOptions::MusicRightHandler;
+  music.LeftHandlerAuto = FormOptions::MusicLeftHandler;
+  music.RightHandlerAuto = FormOptions::MusicRightHandler;
 
-  _menuItems[0] = music;
+  _menuItems[music.Id] = music;
 
   str.str("");
   str << "Sound volume: " << (int)_soundVolumePercent;
@@ -32,23 +33,37 @@ FormOptions::FormOptions()
   MenuItem sound;
   sound.Id = 1;
   sound.TextValue = str.str();
-  sound.LeftHandler = FormOptions::SoundLeftHandler;
-  sound.RightHandler = FormOptions::SoundRightHandler;
+  sound.LeftHandlerAuto = FormOptions::SoundLeftHandler;
+  sound.RightHandlerAuto = FormOptions::SoundRightHandler;
 
-  _menuItems[1] = sound;
+  _menuItems[sound.Id] = sound;
+
+  _currentVideoDriverIndex = VideoSystem::Get().CurrentRenderDriverIndex();
 
   str.str("");
-  str << "Music test:\n" << SoundSystem::Get().GetMusicEntry(_currentMusicJukebox)->Filename;
+  str << "Video driver: " << VideoSystem::Get().GetCurrentRenderDriverInfo().name;
+
+  MenuItem renderDriver;
+  renderDriver.Id = 2;
+  renderDriver.TextValue = str.str();
+  renderDriver.LeftHandler = FormOptions::VideoDriverLeftHandler;
+  renderDriver.RightHandler = FormOptions::VideoDriverRightHandler;
+
+  _menuItems[renderDriver.Id] = renderDriver;
 
   _totalMusic = SoundSystem::Get().TotalMusic();
 
+  str.str("");
+  str << "Music test: " << _currentMusicJukebox;
+
   MenuItem jukebox;
-  jukebox.Id = 2;
+  jukebox.Id = 3;
   jukebox.TextValue = str.str();
   jukebox.LeftHandler = FormOptions::JukeboxLeftHandler;
   jukebox.RightHandler = FormOptions::JukeboxRightHandler;
+  jukebox.SelectHandler = FormOptions::JukeboxSelectHandler;
 
-  _menuItems[2] = jukebox;
+  _menuItems[jukebox.Id] = jukebox;
 
   _autoPress = false;
 }
@@ -105,42 +120,37 @@ void FormOptions::HandleInput(Uint8* keyboardState)
     }
   }
 
-  if (_currentMenuSelection == _menuItems.size() - 1)
+  if (keyboardState[SDL_SCANCODE_LEFT] && !_keyPressed)
   {
-    if (keyboardState[SDL_SCANCODE_LEFT] && !_keyPressed)
+    _keyPressed = true;
+    if (_menuItems[_currentMenuSelection].LeftHandler != nullptr)
     {
-      _keyPressed = true;
-      if (_menuItems[_currentMenuSelection].LeftHandler != nullptr)
-      {
-        _menuItems[_currentMenuSelection].LeftHandler();
-      }
-    }
-
-    if (keyboardState[SDL_SCANCODE_RIGHT] && !_keyPressed)
-    {
-      _keyPressed = true;
-      if (_menuItems[_currentMenuSelection].RightHandler != nullptr)
-      {
-        _menuItems[_currentMenuSelection].RightHandler();
-      }
+      _menuItems[_currentMenuSelection].LeftHandler();
     }
   }
-  else
-  {
-    if (keyboardState[SDL_SCANCODE_LEFT] && _autoPress)
-    {
-      if (_menuItems[_currentMenuSelection].LeftHandler != nullptr)
-      {
-        _menuItems[_currentMenuSelection].LeftHandler();
-      }
-    }
 
-    if (keyboardState[SDL_SCANCODE_RIGHT] && _autoPress)
+  if (keyboardState[SDL_SCANCODE_RIGHT] && !_keyPressed)
+  {
+    _keyPressed = true;
+    if (_menuItems[_currentMenuSelection].RightHandler != nullptr)
     {
-      if (_menuItems[_currentMenuSelection].RightHandler != nullptr)
-      {
-        _menuItems[_currentMenuSelection].RightHandler();
-      }
+      _menuItems[_currentMenuSelection].RightHandler();
+    }
+  }
+
+  if (keyboardState[SDL_SCANCODE_LEFT] && _autoPress)
+  {
+    if (_menuItems[_currentMenuSelection].LeftHandlerAuto != nullptr)
+    {
+      _menuItems[_currentMenuSelection].LeftHandlerAuto();
+    }
+  }
+
+  if (keyboardState[SDL_SCANCODE_RIGHT] && _autoPress)
+  {
+    if (_menuItems[_currentMenuSelection].RightHandlerAuto != nullptr)
+    {
+      _menuItems[_currentMenuSelection].RightHandlerAuto();
     }
   }
 
@@ -155,13 +165,17 @@ void FormOptions::HandleInput(Uint8* keyboardState)
     }
   }
 
-  if (_currentMenuSelection == _menuItems.size() - 1 && keyboardState[SDL_SCANCODE_RETURN] && !_keyPressed)
+  if (keyboardState[SDL_SCANCODE_RETURN] && !_keyPressed)
   {
     _keyPressed = true;
-    SoundSystem::Get().PlayMusic(_currentMusicJukebox);
+    if (_menuItems[_currentMenuSelection].SelectHandler != nullptr)
+    {
+      _menuItems[_currentMenuSelection].SelectHandler();
+    }
   }
 
-  if (!keyboardState[SDL_SCANCODE_DOWN] && !keyboardState[SDL_SCANCODE_UP] && !keyboardState[SDL_SCANCODE_RETURN])
+  if (!keyboardState[SDL_SCANCODE_DOWN] && !keyboardState[SDL_SCANCODE_UP] && !keyboardState[SDL_SCANCODE_RETURN]
+   && !keyboardState[SDL_SCANCODE_LEFT] && !keyboardState[SDL_SCANCODE_RIGHT])
   {
     _keyPressed = false;
   }
@@ -179,8 +193,8 @@ void FormOptions::Close()
 
 void FormOptions::UpdateTextValues()
 {
-  int musicVolume = Config::Get().GetValue("music_volume");
-  int soundVolume = Config::Get().GetValue("sound_volume");
+  int musicVolume = Config::Get().GetValue(ConfigStrings::MusicVolumeString);
+  int soundVolume = Config::Get().GetValue(ConfigStrings::SoundVolumeString);
 
   _musicVolumePercent = (float)_musicVolume * 100.0f / (float)Music::MaxMusicVolume;
   _soundVolumePercent = (float)_soundVolume * 100.0f / (float)Sounds::MaxSoundVolume;
@@ -196,7 +210,12 @@ void FormOptions::UpdateTextValues()
   _menuItems[1].TextValue = str.str();
 
   str.str("");
-  str << "Music test:\n" << SoundSystem::Get().GetMusicEntry(_currentMusicJukebox)->Filename;
+  str << "Video driver: " << VideoSystem::Get().GetRenderDriverInfo(_currentVideoDriverIndex).name;
 
   _menuItems[2].TextValue = str.str();
+
+  str.str("");
+  str << "Music test: " << _currentMusicJukebox;
+
+  _menuItems[3].TextValue = str.str();
 }

@@ -25,6 +25,7 @@ class FormOptions : public Form
     static int _soundVolume;
     static int _currentMusicJukebox;
     static int _totalMusic;
+    static int _currentVideoDriverIndex;
 
     bool _autoPress;
 
@@ -39,7 +40,7 @@ class FormOptions : public Form
       _musicVolume--;
       if (_musicVolume < 0) _musicVolume = 0;
 
-      Config::Get().SetValue("music_volume", _musicVolume);
+      Config::Get().SetValue(ConfigStrings::MusicVolumeString, _musicVolume);
 
       SoundSystem::Get().SetMusicVolume((float)_musicVolume / 100.0f);
     }
@@ -49,7 +50,7 @@ class FormOptions : public Form
       _musicVolume++;
       if (_musicVolume > Music::MaxMusicVolume) _musicVolume = Music::MaxMusicVolume;
 
-      Config::Get().SetValue("music_volume", _musicVolume);
+      Config::Get().SetValue(ConfigStrings::MusicVolumeString, _musicVolume);
 
       SoundSystem::Get().SetMusicVolume((float)_musicVolume / 100.0f);
     }
@@ -59,7 +60,7 @@ class FormOptions : public Form
       _soundVolume--;
       if (_soundVolume < 0) _soundVolume = 0;
 
-      Config::Get().SetValue("sound_volume", _soundVolume);
+      Config::Get().SetValue(ConfigStrings::SoundVolumeString, _soundVolume);
     }
 
     static void SoundRightHandler()
@@ -67,7 +68,24 @@ class FormOptions : public Form
       _soundVolume++;
       if (_soundVolume > Sounds::MaxSoundVolume) _soundVolume = Sounds::MaxSoundVolume;
 
-      Config::Get().SetValue("sound_volume", _soundVolume);
+      Config::Get().SetValue(ConfigStrings::SoundVolumeString, _soundVolume);
+    }
+
+    static void VideoDriverLeftHandler()
+    {
+      _currentVideoDriverIndex--;
+      if (_currentVideoDriverIndex < 0) _currentVideoDriverIndex = 0;
+      Config::Get().SetValue(ConfigStrings::VideoDriverString, _currentVideoDriverIndex);
+    }
+
+    static void VideoDriverRightHandler()
+    {
+      _currentVideoDriverIndex++;
+      if (_currentVideoDriverIndex >= VideoSystem::Get().TotalVideoDrivers() - 1)
+      {
+        _currentVideoDriverIndex = VideoSystem::Get().TotalVideoDrivers() - 1;
+      }
+      Config::Get().SetValue(ConfigStrings::VideoDriverString, _currentVideoDriverIndex);
     }
 
     static void JukeboxRightHandler()
@@ -80,6 +98,11 @@ class FormOptions : public Form
     {
       _currentMusicJukebox--;
       if (_currentMusicJukebox < 0) _currentMusicJukebox = _totalMusic - 1;
+    }
+
+    static void JukeboxSelectHandler()
+    {
+      SoundSystem::Get().PlayMusic(_currentMusicJukebox);
     }
 };
 

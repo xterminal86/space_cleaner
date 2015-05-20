@@ -1,4 +1,5 @@
 #include "powerup.h"
+#include "powerups_manager.h"
 
 Powerup::Powerup()
 {
@@ -101,7 +102,9 @@ void Powerup::Process()
 
   if (_timePassedMs >= _lifeTimeMs)
   {
-    _active = false;
+    PowerupsManager::Get().ResetActivePowerupFlag();
+
+    SetActive(false);
   }
 
   _timePassedMs += GameTime::Get().DeltaTimeMs();

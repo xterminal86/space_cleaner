@@ -103,7 +103,7 @@ void SoundSystem::PlaySound(int soundType)
     }
 
     FMOD_System_PlaySound(_soundSystem, _soundsMap[soundType], nullptr, true, &_channelsMap[soundType]);
-    float volume = (float)Config::Get().GetValue("sound_volume") / 100.0f;
+    float volume = (float)Config::Get().GetValue(ConfigStrings::SoundVolumeString) / 100.0f;
     if (volume > _maxSoundVolume) volume = _maxSoundVolume;
     FMOD_Channel_SetVolume(_channelsMap[soundType], volume);
     FMOD_Channel_SetPaused(_channelsMap[soundType], false);
@@ -131,7 +131,7 @@ void SoundSystem::PlayMusic(int musicIndex)
   }
 
   FMOD_System_PlaySound(_soundSystem, _musicList[musicIndex].Music, nullptr, true, &_musicChannel);
-  float volume = (float)Config::Get().GetValue("music_volume") / 100.0f;
+  float volume = (float)Config::Get().GetValue(ConfigStrings::MusicVolumeString) / 100.0f;
   if (volume > _maxMusicVolume) volume = _maxMusicVolume;
   FMOD_Channel_SetVolume(_musicChannel, volume);
   FMOD_Channel_SetPaused(_musicChannel, false);

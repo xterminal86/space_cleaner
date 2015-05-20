@@ -189,6 +189,11 @@ void Application::SortHighScores()
   }
 }
 
+int Application::GetCurrentState()
+{
+  return _states.back()->StateId();
+}
+
 // ==================== Private Methods =================== //
 
 void Application::HandleEvents()

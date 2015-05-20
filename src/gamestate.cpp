@@ -2,7 +2,7 @@
 
 GameState::GameState()
 {
-  //ctor
+  _stateId = -1;
 }
 
 GameState::~GameState()
