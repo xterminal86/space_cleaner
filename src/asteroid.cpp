@@ -79,7 +79,7 @@ void Asteroid::Move()
     newX = _position.X() + _direction.X() * (_speed * GameTime::Get().DeltaTimeMs());
   }
 
-  int upperY = (Application::Get().GetCurrentState() == GameStatesIds::IntroState) ? 20 : GUI::GUITopBackgroundHeight + 20;
+  int upperY = (Application::Get().GetCurrentState() == GameStatesIds::IntroState) ? 0 : GUI::GUITopBackgroundHeight + 20;
   if (newY < upperY || newY > VideoSystem::Get().ScreenDimensions().y)
   {
     _direction.Set(_direction.X(), -_direction.Y());

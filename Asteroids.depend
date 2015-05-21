@@ -1234,10 +1234,10 @@
 1430159865 source:d:\nick\sources\c++\asteroids.git\main.cpp
 	"application.h"
 
-1429725333 d:\nick\sources\c++\asteroids.git\include\application.h
+1432153490 d:\nick\sources\c++\asteroids.git\include\application.h
 	"globals.h"
 
-1430775248 d:\nick\sources\c++\asteroids.git\include\globals.h
+1432153490 d:\nick\sources\c++\asteroids.git\include\globals.h
 	<fstream>
 	<sstream>
 	<string>
@@ -1576,7 +1576,7 @@
 1430660788 d:\nick\sources\c++\asteroids.git\include\logger.h
 	"globals.h"
 
-1430661956 d:\nick\sources\c++\asteroids.git\include\video_system.h
+1432153490 d:\nick\sources\c++\asteroids.git\include\video_system.h
 	"globals.h"
 
 1430661581 d:\nick\sources\c++\asteroids.git\include\texture_manager.h
@@ -2017,7 +2017,7 @@
 	"config.h"
 	"forms_manager.h"
 
-1430660614 d:\nick\sources\c++\asteroids.git\include\gamestate.h
+1432153490 d:\nick\sources\c++\asteroids.git\include\gamestate.h
 	"application.h"
 
 1429301178 source:d:\nick\sources\c++\asteroids.git\src\gamestate.cpp
@@ -2072,7 +2072,7 @@
 	"globals.h"
 	"animations_pool.h"
 
-1430661323 d:\nick\sources\c++\asteroids.git\include\powerups_manager.h
+1432153490 d:\nick\sources\c++\asteroids.git\include\powerups_manager.h
 	"globals.h"
 	"powerup.h"
 	"animations_manager.h"
@@ -2110,7 +2110,7 @@
 1430598733 source:d:\nick\sources\c++\asteroids.git\src\form.cpp
 	"form.h"
 
-1430660496 d:\nick\sources\c++\asteroids.git\include\form.h
+1432153490 d:\nick\sources\c++\asteroids.git\include\form.h
 	"globals.h"
 	"bitmapfont.h"
 
@@ -2153,7 +2153,7 @@
 1432073038 source:d:\nick\sources\c++\asteroids.git\src\form_options.cpp
 	"form_options.h"
 
-1432073478 d:\nick\sources\c++\asteroids.git\include\form_options.h
+1432153490 d:\nick\sources\c++\asteroids.git\include\form_options.h
 	"form.h"
 	"sound_system.h"
 

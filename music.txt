@@ -5,4 +5,4 @@ assets/music/power_blade-5.mp3 290300 3362300
 assets/music/power_blade-7.mp3 962400 3266400
 assets/music/power_blade-8.mp3 694272 1960512
 assets/music/metroid.mp3 320100 2704000
-assets/music/green_planet.mp3 231910 2537350
+assets/music/green_planet.mp3 231910 2536208
