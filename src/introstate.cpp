@@ -11,11 +11,16 @@ IntroState::IntroState()
                      _config->GetValue(ConfigStrings::ScreenHeightString),
                      _config->GetValue(ConfigStrings::FullscreenString));
   _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename);
-  _animationsManager->Init();
-  _powerupsManager->Init();
   _bitmapFont->Init();
+  DrawLoadingText("Initializing animations...");
+  _animationsManager->Init();
+  DrawLoadingText("Initializing powerups...");
+  _powerupsManager->Init();
+  DrawLoadingText("Initializing sound system...");
   _soundSystem->Init();
+  DrawLoadingText("Initializing forms manager...");
   _formsManager->Init();
+  DrawLoadingText("Preparing main title screen...");
 
   _screenSizeX = VideoSystem::Get().ScreenDimensions().x;
   _screenSizeY = VideoSystem::Get().ScreenDimensions().y;
@@ -179,4 +184,18 @@ void IntroState::DrawAsteroids()
     asteroid.get()->Compute();
     asteroid.get()->Draw(false, false);
   }
+}
+
+void IntroState::DrawLoadingText(std::string text)
+{
+  SDL_Renderer* renderer = VideoSystem::Get().Renderer();
+
+  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+  SDL_RenderClear(renderer);
+
+  _bitmapFont->SetScale(1.0);
+  _bitmapFont->SetTextColor(255, 255, 255);
+  _bitmapFont->Printf(_videoSystem->ScreenDimensions().x / 2, _videoSystem->ScreenDimensions().y / 2, _bitmapFont->AlignCenter, "%s", (char*)text.c_str());
+
+  SDL_RenderPresent(renderer);
 }

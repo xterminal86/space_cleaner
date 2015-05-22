@@ -80,6 +80,7 @@ class IntroState : public GameState
     void LoadBackground();
     void DrawBackground();
     void DrawAsteroids();
+    void DrawLoadingText(std::string text);
 };
 
 #endif // INTROSTATE_H
