@@ -13,7 +13,7 @@ class TextureManager
       static TextureManager instance;
       return instance;
     }
-    int Init(std::string imagesFilename, std::string relationFilename);
+    int Init(std::string imagesFilename, std::string relationFilename, bool fromDisk = true);
     SDL_Texture* GetSDLTexture(int index)
     {
       if (_textures.count(index)) return _textures[index]->Texture();
@@ -59,9 +59,10 @@ class TextureManager
     }
     TextureManager& operator=(const TextureManager&);
 
-    void LoadCollider(int textureIndex, std::string filename);
-    void BuildDatabase(std::string filename);
+    void LoadCollider(int textureIndex, std::string filename, bool fromDisk = true);
+    void BuildDatabase(std::string filename, bool fromDisk = true);
     void PrintColliderData(int textureIndex);
+    void LoadImages(std::string& filename, std::string& relationFilename, bool fromDisk = true);
 };
 
 #endif // TEXTUREMANAGER_H

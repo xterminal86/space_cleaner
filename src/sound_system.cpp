@@ -32,7 +32,7 @@ void SoundSystem::Init()
 
   Logger::Get().LogPrint("FMOD sound system initialized\n");
 
-  LoadSounds();
+  //LoadSounds();
 
   _maxMusicVolume = (float)Music::MaxMusicVolume / 100.0f;
   _maxSoundVolume = (float)Sounds::MaxSoundVolume / 100.0f;
@@ -40,44 +40,22 @@ void SoundSystem::Init()
 
 void SoundSystem::LoadSounds()
 {
-  FILE* f = fopen(GlobalStrings::SoundsFilename.data(), "r");
-  if (f == nullptr)
-  {
-    Logger::Get().LogPrint("!!! ERROR !!! Could not open file %s!\n", GlobalStrings::SoundsFilename.data());
-    exit(1);
-  }
-  Logger::Get().LogPrint("Loading sounds...\n");
-  char buf[512];
-  int index = 0;
-  while (!feof(f))
-  {
-    fscanf(f, "%i %s", &index, buf);
+  LoadSoundsFromMemory();
 
-    FMOD_SOUND* p;
-    FMOD_System_CreateSound(_soundSystem, buf, FMOD_DEFAULT, nullptr, &p);
-    _sounds.push_back(p);
+  Logger::Get().LogPrint("Loading music list...\n");
 
-    FMOD_CHANNEL* channel = nullptr;
-    _channels.push_back(channel);
-
-    _soundsMap[index] = _sounds[index];
-    _channelsMap[index] = _channels[index];
-
-    Logger::Get().LogPrint("----|_sounds[%i] (0x%zX) = %s\n", index, _sounds[index], buf);
-  }
-  fclose(f);
-
-  f = fopen(GlobalStrings::MusicListFilename.data(), "r");
+  FILE* f = fopen(GlobalStrings::MusicListFilename.data(), "r");
   if (f == nullptr)
   {
     Logger::Get().LogPrint("(warning) Could not open file %s!\n", GlobalStrings::MusicListFilename.data());
     exit(1);
   }
 
-  Logger::Get().LogPrint("Loading music list...\n");
-  index = 0;
+  int index = 0;
   while (!feof(f))
   {
+    char buf[512];
+
     MusicData entry;
     fscanf(f, "%s %i %i", buf, &entry.LoopStart, &entry.LoopEnd);
     Logger::Get().LogPrint("----|Track %i - %s\n", index, buf);
@@ -97,10 +75,9 @@ void SoundSystem::PlaySound(int soundType)
 {
   if (_soundsMap.count(soundType) == 1)
   {
-    if (_channelsMap[soundType] != nullptr)
-    {
-      FMOD_Channel_Stop(_channelsMap[soundType]);
-    }
+    if (_channelsMap[soundType] == nullptr) return;
+
+    FMOD_Channel_Stop(_channelsMap[soundType]);
 
     FMOD_System_PlaySound(_soundSystem, _soundsMap[soundType], nullptr, true, &_channelsMap[soundType]);
     float volume = (float)Config::Get().GetValue(ConfigStrings::SoundVolumeString) / 100.0f;
@@ -208,4 +185,90 @@ MusicData* SoundSystem::GetMusicEntry(int index)
   }
 
   return nullptr;
+}
+
+void SoundSystem::LoadSoundsFromMemory()
+{
+  std::string soundList;
+
+  auto fileBytes = Config::Get().GetFileFromMemory(GlobalStrings::SoundsFilename);
+  if (fileBytes != nullptr)
+  {
+    for (int i = 0; i < fileBytes->size(); i++)
+    {
+      soundList.push_back(fileBytes->at(i));
+    }
+  }
+
+  char buf[512];
+  int index = 0;
+
+  std::istringstream iss(soundList);
+  while (iss.getline(buf, 512))
+  {
+    char filename[256];
+    sscanf(buf, "%i %s", &index, filename);
+
+    auto res = Config::Get().GetFileFromMemory(filename);
+
+    if (res != nullptr)
+    {
+      FMOD_CREATESOUNDEXINFO soundInfo;
+      soundInfo.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
+      int fileSizeBytes = res->size();
+      //long fileSizeBytes = Config::Get().GetFileFromMemorySize(filename);
+      if (fileSizeBytes == -1) continue;
+      soundInfo.length = fileSizeBytes;
+      soundInfo.format = FMOD_SOUND_FORMAT_PCM16;
+      soundInfo.numchannels = 2;
+      soundInfo.defaultfrequency = 44100;
+
+      FMOD_SOUND* p;
+      FMOD_RESULT r = FMOD_System_CreateSound(_soundSystem, res->data(), FMOD_OPENMEMORY | FMOD_OPENRAW, &soundInfo, &p);
+
+      Logger::Get().LogPrint ("%i\n", r);
+
+      if (r == FMOD_OK)
+      {
+        _sounds.push_back(p);
+
+        FMOD_CHANNEL* channel = nullptr;
+        _channels.push_back(channel);
+
+        _soundsMap[index] = _sounds[index];
+        _channelsMap[index] = _channels[index];
+
+        Logger::Get().LogPrint("----|_sounds[%i] (0x%zX) = %s\n", index, _sounds[index], buf);
+      }
+    }
+  }
+
+  /*
+  FILE* f = fopen(GlobalStrings::SoundsFilename.data(), "r");
+  if (f == nullptr)
+  {
+    Logger::Get().LogPrint("!!! ERROR !!! Could not open file %s!\n", GlobalStrings::SoundsFilename.data());
+    exit(1);
+  }
+  Logger::Get().LogPrint("Loading sounds...\n");
+  char buf[512];
+  int index = 0;
+  while (!feof(f))
+  {
+    fscanf(f, "%i %s", &index, buf);
+
+    FMOD_SOUND* p;
+    FMOD_System_CreateSound(_soundSystem, buf, FMOD_DEFAULT, nullptr, &p);
+    _sounds.push_back(p);
+
+    FMOD_CHANNEL* channel = nullptr;
+    _channels.push_back(channel);
+
+    _soundsMap[index] = _sounds[index];
+    _channelsMap[index] = _channels[index];
+
+    Logger::Get().LogPrint("----|_sounds[%i] (0x%zX) = %s\n", index, _sounds[index], buf);
+  }
+  fclose(f);
+  */
 }

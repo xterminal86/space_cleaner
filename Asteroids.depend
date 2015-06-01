@@ -817,7 +817,7 @@
 1432124036 h:\sources\c++\asteroids.git\include\application.h
 	"globals.h"
 
-1432115508 h:\sources\c++\asteroids.git\include\globals.h
+1433163912 h:\sources\c++\asteroids.git\include\globals.h
 	<fstream>
 	<sstream>
 	<string>
@@ -1159,10 +1159,10 @@
 1432112714 h:\sources\c++\asteroids.git\include\video_system.h
 	"globals.h"
 
-1430810475 h:\sources\c++\asteroids.git\include\texture_manager.h
+1433177072 h:\sources\c++\asteroids.git\include\texture_manager.h
 	"png_loader.h"
 
-1430810475 h:\sources\c++\asteroids.git\include\png_loader.h
+1433176119 h:\sources\c++\asteroids.git\include\png_loader.h
 	"globals.h"
 	"video_system.h"
 	"logger.h"
@@ -1208,16 +1208,18 @@
 	"texture_manager.h"
 	"util.h"
 
-1429892263 source:h:\sources\c++\asteroids.git\src\png_loader.cpp
+1433177937 source:h:\sources\c++\asteroids.git\src\png_loader.cpp
 	"png_loader.h"
+	"config.h"
 
 1430810704 source:h:\sources\c++\asteroids.git\src\sprite.cpp
 	"sprite.h"
 
-1429706326 source:h:\sources\c++\asteroids.git\src\texture_manager.cpp
+1433179010 source:h:\sources\c++\asteroids.git\src\texture_manager.cpp
 	"texture_manager.h"
+	"config.h"
 
-1432114650 source:h:\sources\c++\asteroids.git\src\video_system.cpp
+1433173176 source:h:\sources\c++\asteroids.git\src\video_system.cpp
 	"video_system.h"
 	"logger.h"
 	"config.h"
@@ -1692,7 +1694,7 @@
 1430120491 source:h:\sources\c++\asteroids.git\src\bullet.cpp
 	"bullet.h"
 
-1432124870 source:h:\sources\c++\asteroids.git\src\asteroid.cpp
+1432285274 source:h:\sources\c++\asteroids.git\src\asteroid.cpp
 	"asteroid.h"
 	"mainstate.h"
 	"application.h"
@@ -1896,10 +1898,10 @@
 	"powerup.h"
 	"powerups_manager.h"
 
-1432114746 source:h:\sources\c++\asteroids.git\src\sound_system.cpp
+1433175506 source:h:\sources\c++\asteroids.git\src\sound_system.cpp
 	"sound_system.h"
 
-1432109236 h:\sources\c++\asteroids.git\include\sound_system.h
+1433168753 h:\sources\c++\asteroids.git\include\sound_system.h
 	<fmod.h>
 	<fmod_errors.h>
 	"config.h"
@@ -1968,11 +1970,11 @@
 1432124927 h:\sources\c++\asteroids.git\include\gamestate.h
 	"application.h"
 
-1432114632 source:h:\sources\c++\asteroids.git\src\introstate.cpp
+1433177005 source:h:\sources\c++\asteroids.git\src\introstate.cpp
 	"introstate.h"
 	"mainstate.h"
 
-1432124942 h:\sources\c++\asteroids.git\include\introstate.h
+1432546744 h:\sources\c++\asteroids.git\include\introstate.h
 	"gamestate.h"
 	"sprite.h"
 	"star.h"
@@ -2090,10 +2092,10 @@
 1430383663 h:\sources\c++\asteroids.git\include\options_state.h
 	"gamestate.h"
 
-1432114400 source:h:\sources\c++\asteroids.git\src\config.cpp
+1433174662 source:h:\sources\c++\asteroids.git\src\config.cpp
 	"config.h"
 
-1430810475 h:\sources\c++\asteroids.git\include\config.h
+1433174892 h:\sources\c++\asteroids.git\include\config.h
 	"globals.h"
 	"logger.h"
 

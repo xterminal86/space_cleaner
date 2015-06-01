@@ -17,7 +17,7 @@ class PNGLoader
   SDL_Texture* _texture;
 public:
   PNGLoader();
-  PNGLoader(std::string filename, int filterMode = 1);
+  PNGLoader(std::string filename, int filterMode = 1, bool fromDisk = true);
   ~PNGLoader()
   {
     Logger::Get().LogPrint("----|[PNGLoader::dtor()]: 0x%zX (object) 0x%zX (texture)\n", this, _texture);
@@ -28,6 +28,9 @@ public:
   int Width() const { return _textureWidth; }
   int Height() const { return _textureHeight; }
   SDL_Texture* Texture() const { return _texture; }
+
+  void LoadFromDisk(std::string& filename);
+  void LoadFromMemory(std::string& filename);
 };
 
 #endif

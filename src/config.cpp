@@ -13,10 +13,14 @@ Config::~Config()
 // Init() method checks existence of config.dat and assumes default values if it doesn't exist
 void Config::Init()
 {
+  Logger::Get().LogPrint("Loading game files...\n");
+
+  LoadGameArchive();
+
   Logger::Get().LogPrint("Reading config...\n");
 
-  std::ifstream f(GlobalStrings::ConfigFilename);
-  if (!f.is_open())
+  std::ifstream configFile(GlobalStrings::ConfigFilename);
+  if (!configFile.is_open())
   {
     std::ofstream f(GlobalStrings::ConfigFilename);
 
@@ -47,10 +51,10 @@ void Config::Init()
   {
    std::string key;
    int value = 0;
-   while (!f.eof())
+   while (!configFile.eof())
    {
-     f >> key;
-     f >> value;
+     configFile >> key;
+     configFile >> value;
      _config[key] = value;
    }
 
@@ -60,7 +64,7 @@ void Config::Init()
    }
   }
 
-  f.close();
+  configFile.close();
 }
 
 int Config::GetValue(std::string key)
@@ -92,4 +96,107 @@ void Config::WriteConfig()
     }
   }
   f.close();
+}
+
+std::vector<char>* Config::GetFileFromMemory(std::string& filename)
+{
+  GetFileFromMemory((char*)filename.data());
+}
+
+std::vector<char>* Config::GetFileFromMemory(char* filename)
+{
+  return (_gameData.find(filename) == _gameData.end()) ? nullptr : &_gameData[filename];
+}
+
+long Config::GetFileFromMemorySize(std::string& filename)
+{
+  GetFileFromMemorySize((char*)filename.data());
+}
+
+long Config::GetFileFromMemorySize(char* filename)
+{
+  return (_gameDataSizes.find(filename) == _gameDataSizes.end()) ? -1 : _gameDataSizes[filename];
+}
+
+// ==================== Private Methods =================== //
+
+void Config::LoadGameArchive()
+{
+  char _emptyBlock[512];
+  for (int i = 0; i < 512; i++)
+  {
+    _emptyBlock[i] = '\0';
+  }
+
+  FILE* f = fopen(GlobalStrings::GameDataArchive.data(), "rb");
+
+  if (f == nullptr)
+  {
+    Logger::Get().LogPrint("!!! ERROR !!! Could not found game data archive!\n");
+    exit(1);
+  }
+
+  int count = 0;
+  while (!feof(f))
+  {
+    if (count == 2)
+    {
+      Logger::Get().LogPrint("Game files loaded\n");
+      break;
+    }
+
+    char fileSize[12];
+
+    TarHeader header;
+    fread(&header, sizeof(TarHeader), 1, f);
+
+    for (int i = 0; i < sizeof(header.FileSizeBytesOctalBase); i++)
+    {
+      fileSize[i] = header.FileSizeBytesOctalBase[i];
+    }
+
+    long fileLengthBytes = strtol(fileSize, nullptr, 8);
+
+    // File binary data
+    if (fileLengthBytes != 0)
+    {
+      int blocks = (fileLengthBytes / sizeof(TarHeader)) + 1;
+      char* fileData = new char[blocks * sizeof(TarHeader)];
+      fread(fileData, blocks * sizeof(TarHeader), 1, f);
+      FillTempVector(fileData, blocks * sizeof(TarHeader));
+      _gameData[header.Filename] = _tmpVector;
+      _gameDataSizes[header.Filename] = fileLengthBytes;
+      delete fileData;
+    }
+
+    if (CompareBlocks(_emptyBlock, &header))
+    {
+      count++;
+    }
+  }
+
+  fclose(f);
+}
+
+void Config::FillTempVector(char* array, int size)
+{
+  _tmpVector.clear();
+  for (int i = 0; i < size; i++)
+  {
+    char byte = array[i];
+    _tmpVector.push_back(byte);
+  }
+}
+
+bool Config::CompareBlocks(void* block1, void* block2)
+{
+  char* b1 = (char*)block1;
+  char* b2 = (char*)block2;
+
+  for (int i = 0; i < 512; i++)
+  {
+    if (b1[i] != b2[i]) return false;
+  }
+
+  return true;
 }

@@ -10,7 +10,7 @@ IntroState::IntroState()
   _videoSystem->Init(_config->GetValue(ConfigStrings::ScreenWidthString),
                      _config->GetValue(ConfigStrings::ScreenHeightString),
                      _config->GetValue(ConfigStrings::FullscreenString));
-  _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename);
+  _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename, false);
   _bitmapFont->Init();
   DrawLoadingText("Initializing animations...");
   _animationsManager->Init();

@@ -56,6 +56,7 @@ namespace GlobalStrings
   static std::string RelationFilename = "relation.txt";
 
   static std::string HighScoresFilename = "highscores.dat";
+  static std::string GameDataArchive = "data.dat";
 
   // File with all sounds
   static std::string SoundsFilename = "sounds.txt";

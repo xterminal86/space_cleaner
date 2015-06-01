@@ -48,6 +48,7 @@ class SoundSystem
     FMOD_SYSTEM* _soundSystem;
 
     void LoadSounds();
+    void LoadSoundsFromMemory();
 
     std::map<int, FMOD_SOUND*> _soundsMap;
     std::map<int, FMOD_CHANNEL*> _channelsMap;
