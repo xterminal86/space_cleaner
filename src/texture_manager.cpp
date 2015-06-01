@@ -188,7 +188,6 @@ void TextureManager::LoadImages(std::string& imagesFilename, std::string& relati
     std::istringstream iss(asciiFile);
     while (iss.getline(buf, 512))
     {
-      //printf ("%s\n", buf);
       char filename[256];
       std::string png;
       sscanf(buf, "%i %s %i", &index, filename, &filterMode);
