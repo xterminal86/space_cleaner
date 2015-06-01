@@ -13,7 +13,7 @@ class AnimationsManager
       static AnimationsManager instance;
       return instance;
     }
-    void Init();
+    void Init(bool fromDisk = true);
     void Play(int id, int x, int y, double scale = 1.0);
     void Process();
     void StopAnimations();

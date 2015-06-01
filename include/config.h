@@ -19,6 +19,8 @@ class Config
     void WriteConfig();
     std::vector<char>* GetFileFromMemory(std::string& filename);
     std::vector<char>* GetFileFromMemory(char* filename);
+    std::string& ConvertFileToAscii(char* filename);
+    std::string& ConvertFileToAscii(std::string& filename);
     long GetFileFromMemorySize(char* filename);
     long GetFileFromMemorySize(std::string& filename);
   protected:
@@ -33,6 +35,8 @@ class Config
     bool CompareBlocks(void* block1, void* block2);
 
     std::vector<char> _tmpVector;
+
+    std::string _asciiFile;
 
     std::map<std::string, int> _config;
     std::map<std::string, std::vector<char>> _gameData;

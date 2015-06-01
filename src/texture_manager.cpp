@@ -60,19 +60,7 @@ void TextureManager::LoadCollider(int textureIndex, std::string filename, bool f
     char buf[512];
     int x = 0, y = 0;
 
-    std::string asciiFile;
-
-    auto fileBytes = Config::Get().GetFileFromMemory(filename);
-    if (fileBytes == nullptr)
-    {
-      Logger::Get().LogPrint("!!! ERROR !!! Could not open file %s!\n", filename.data());
-      return;
-    }
-
-    for (int i = 0; i < fileBytes->size(); i++)
-    {
-      asciiFile.push_back(fileBytes->at(i));
-    }
+    std::string asciiFile = Config::Get().ConvertFileToAscii(filename);
 
     std::istringstream iss(asciiFile);
     while (iss.getline(buf, 512))
@@ -121,19 +109,7 @@ void TextureManager::BuildDatabase(std::string filename, bool fromDisk)
     int index = 0;
     char buf[512];
 
-    std::string asciiFile;
-
-    auto fileBytes = Config::Get().GetFileFromMemory(filename);
-    if (fileBytes == nullptr)
-    {
-      Logger::Get().LogPrint("!!! ERROR !!! Could not open file %s!\n", filename.data());
-      return;
-    }
-
-    for (int i = 0; i < fileBytes->size(); i++)
-    {
-      asciiFile.push_back(fileBytes->at(i));
-    }
+    std::string asciiFile = Config::Get().ConvertFileToAscii(filename);
 
     std::istringstream iss(asciiFile);
     while (iss.getline(buf, 512))
@@ -204,22 +180,10 @@ void TextureManager::LoadImages(std::string& imagesFilename, std::string& relati
   }
   else
   {
-    std::string asciiFile;
-
     char buf[512];
     int index = 0, filterMode = 0;
 
-    auto fileBytes = Config::Get().GetFileFromMemory(imagesFilename);
-    if (fileBytes == nullptr)
-    {
-      Logger::Get().LogPrint("!!! ERROR !!! Could not open file %s!\n", imagesFilename.data());
-      return;
-    }
-
-    for (int i = 0; i < fileBytes->size(); i++)
-    {
-      asciiFile.push_back(fileBytes->at(i));
-    }
+    std::string asciiFile = Config::Get().ConvertFileToAscii(imagesFilename);
 
     std::istringstream iss(asciiFile);
     while (iss.getline(buf, 512))

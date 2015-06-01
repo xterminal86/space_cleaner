@@ -13,11 +13,11 @@ IntroState::IntroState()
   _textureManager->Init(GlobalStrings::ImagesFilename, GlobalStrings::RelationFilename, false);
   _bitmapFont->Init();
   DrawLoadingText("Initializing animations...");
-  _animationsManager->Init();
+  _animationsManager->Init(false);
   DrawLoadingText("Initializing powerups...");
   _powerupsManager->Init();
   DrawLoadingText("Initializing sound system...");
-  _soundSystem->Init();
+  _soundSystem->Init(false);
   DrawLoadingText("Initializing forms manager...");
   _formsManager->Init();
   DrawLoadingText("Preparing main title screen...");

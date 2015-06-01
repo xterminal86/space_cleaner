@@ -12,7 +12,7 @@ SoundSystem::~SoundSystem()
   FMOD_System_Release(_soundSystem);
 }
 
-void SoundSystem::Init()
+void SoundSystem::Init(bool fromDisk)
 {
   FMOD_RESULT result;
 
@@ -32,53 +32,17 @@ void SoundSystem::Init()
 
   Logger::Get().LogPrint("FMOD sound system initialized\n");
 
-  //LoadSounds();
+  LoadSounds(fromDisk);
 
   _maxMusicVolume = (float)Music::MaxMusicVolume / 100.0f;
   _maxSoundVolume = (float)Sounds::MaxSoundVolume / 100.0f;
-}
-
-void SoundSystem::LoadSounds()
-{
-  LoadSoundsFromMemory();
-
-  Logger::Get().LogPrint("Loading music list...\n");
-
-  FILE* f = fopen(GlobalStrings::MusicListFilename.data(), "r");
-  if (f == nullptr)
-  {
-    Logger::Get().LogPrint("(warning) Could not open file %s!\n", GlobalStrings::MusicListFilename.data());
-    exit(1);
-  }
-
-  int index = 0;
-  while (!feof(f))
-  {
-    char buf[512];
-
-    MusicData entry;
-    fscanf(f, "%s %i %i", buf, &entry.LoopStart, &entry.LoopEnd);
-    Logger::Get().LogPrint("----|Track %i - %s\n", index, buf);
-    entry.Filename = buf;
-    FMOD_System_CreateSound(_soundSystem, buf, FMOD_LOOP_NORMAL, nullptr, &entry.Music);
-    FMOD_Sound_SetLoopCount(entry.Music, -1);
-    FMOD_Sound_SetLoopPoints(entry.Music, entry.LoopStart, FMOD_TIMEUNIT_PCM, entry.LoopEnd, FMOD_TIMEUNIT_PCM);
-    _musicList.push_back(entry);
-    index++;
-  }
-  fclose(f);
-
-  Logger::Get().LogPrint("Music list loaded!\n");
 }
 
 void SoundSystem::PlaySound(int soundType)
 {
   if (_soundsMap.count(soundType) == 1)
   {
-    if (_channelsMap[soundType] == nullptr) return;
-
     FMOD_Channel_Stop(_channelsMap[soundType]);
-
     FMOD_System_PlaySound(_soundSystem, _soundsMap[soundType], nullptr, true, &_channelsMap[soundType]);
     float volume = (float)Config::Get().GetValue(ConfigStrings::SoundVolumeString) / 100.0f;
     if (volume > _maxSoundVolume) volume = _maxSoundVolume;
@@ -91,10 +55,7 @@ void SoundSystem::StopSound(int soundType)
 {
   if (_soundsMap.count(soundType) == 1)
   {
-    if (_channelsMap[soundType] != nullptr)
-    {
-      FMOD_Channel_Stop(_channelsMap[soundType]);
-    }
+    FMOD_Channel_Stop(_channelsMap[soundType]);
   }
 }
 
@@ -187,18 +148,56 @@ MusicData* SoundSystem::GetMusicEntry(int index)
   return nullptr;
 }
 
+// ==================== Private Methods =================== //
+
+void SoundSystem::LoadMusic()
+{
+  Logger::Get().LogPrint("Loading music list...\n");
+
+  FILE* f = fopen(GlobalStrings::MusicListFilename.data(), "r");
+  if (f == nullptr)
+  {
+    Logger::Get().LogPrint("(warning) Could not load music file %s\n", GlobalStrings::MusicListFilename.data());
+  }
+
+  int index = 0;
+  while (!feof(f))
+  {
+    char buf[512];
+
+    MusicData entry;
+    fscanf(f, "%s %i %i", buf, &entry.LoopStart, &entry.LoopEnd);
+    Logger::Get().LogPrint("----| Track %i - %s\n", index, buf);
+    entry.Filename = buf;
+    FMOD_System_CreateSound(_soundSystem, buf, FMOD_LOOP_NORMAL, nullptr, &entry.Music);
+    FMOD_Sound_SetLoopCount(entry.Music, -1);
+    FMOD_Sound_SetLoopPoints(entry.Music, entry.LoopStart, FMOD_TIMEUNIT_PCM, entry.LoopEnd, FMOD_TIMEUNIT_PCM);
+    _musicList.push_back(entry);
+    index++;
+  }
+
+  fclose(f);
+
+  Logger::Get().LogPrint("Music list loaded!\n");
+}
+
+void SoundSystem::LoadSounds(bool fromDisk)
+{
+  LoadMusic();
+
+  if (fromDisk)
+  {
+    LoadSoundsFromDisk();
+  }
+  else
+  {
+    LoadSoundsFromMemory();
+  }
+}
+
 void SoundSystem::LoadSoundsFromMemory()
 {
-  std::string soundList;
-
-  auto fileBytes = Config::Get().GetFileFromMemory(GlobalStrings::SoundsFilename);
-  if (fileBytes != nullptr)
-  {
-    for (int i = 0; i < fileBytes->size(); i++)
-    {
-      soundList.push_back(fileBytes->at(i));
-    }
-  }
+  std::string soundList = Config::Get().ConvertFileToAscii(GlobalStrings::SoundsFilename);
 
   char buf[512];
   int index = 0;
@@ -213,20 +212,15 @@ void SoundSystem::LoadSoundsFromMemory()
 
     if (res != nullptr)
     {
-      FMOD_CREATESOUNDEXINFO soundInfo;
+      // Local variables are not initialized, so we reset the struct
+      FMOD_CREATESOUNDEXINFO soundInfo = {};
       soundInfo.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
       int fileSizeBytes = res->size();
-      //long fileSizeBytes = Config::Get().GetFileFromMemorySize(filename);
       if (fileSizeBytes == -1) continue;
       soundInfo.length = fileSizeBytes;
-      soundInfo.format = FMOD_SOUND_FORMAT_PCM16;
-      soundInfo.numchannels = 2;
-      soundInfo.defaultfrequency = 44100;
 
       FMOD_SOUND* p;
-      FMOD_RESULT r = FMOD_System_CreateSound(_soundSystem, res->data(), FMOD_OPENMEMORY | FMOD_OPENRAW, &soundInfo, &p);
-
-      Logger::Get().LogPrint ("%i\n", r);
+      FMOD_RESULT r = FMOD_System_CreateSound(_soundSystem, res->data(), FMOD_OPENMEMORY | FMOD_CREATESTREAM, &soundInfo, &p);
 
       if (r == FMOD_OK)
       {
@@ -242,8 +236,10 @@ void SoundSystem::LoadSoundsFromMemory()
       }
     }
   }
+}
 
-  /*
+void SoundSystem::LoadSoundsFromDisk()
+{
   FILE* f = fopen(GlobalStrings::SoundsFilename.data(), "r");
   if (f == nullptr)
   {
@@ -270,5 +266,4 @@ void SoundSystem::LoadSoundsFromMemory()
     Logger::Get().LogPrint("----|_sounds[%i] (0x%zX) = %s\n", index, _sounds[index], buf);
   }
   fclose(f);
-  */
 }

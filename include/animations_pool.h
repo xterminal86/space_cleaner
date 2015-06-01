@@ -14,7 +14,7 @@ class AnimationsPool
   public:
     AnimationsPool();
     virtual ~AnimationsPool();
-    void Init(std::string spriteSheetName, int poolSize, int speedMs);
+    void Init(std::string spriteSheetName, int poolSize, int speedMs, bool fromDisk = true);
     void Play(int x, int y, double scale = 1.0);
     void Process();
     void StopAll();

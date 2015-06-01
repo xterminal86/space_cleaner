@@ -26,7 +26,7 @@ class SoundSystem
       static SoundSystem instance;
       return instance;
     }
-    void Init();
+    void Init(bool fromDisk = true);
     void PlaySound(int soundType);
     void StopSound(int soundType);
     void PlayMusic(int musicIndex);
@@ -47,8 +47,10 @@ class SoundSystem
 
     FMOD_SYSTEM* _soundSystem;
 
-    void LoadSounds();
+    void LoadMusic();
+    void LoadSounds(bool fromDisk);
     void LoadSoundsFromMemory();
+    void LoadSoundsFromDisk();
 
     std::map<int, FMOD_SOUND*> _soundsMap;
     std::map<int, FMOD_CHANNEL*> _channelsMap;

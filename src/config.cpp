@@ -108,6 +108,26 @@ std::vector<char>* Config::GetFileFromMemory(char* filename)
   return (_gameData.find(filename) == _gameData.end()) ? nullptr : &_gameData[filename];
 }
 
+std::string& Config::ConvertFileToAscii(std::string& filename)
+{
+  return ConvertFileToAscii((char*)filename.data());
+}
+
+std::string& Config::ConvertFileToAscii(char* filename)
+{
+  if (_gameData.find(filename) != _gameData.end())
+  {
+    _asciiFile.clear();
+    auto fileBytes = GetFileFromMemory(filename);
+    for (int i = 0; i < fileBytes->size(); i++)
+    {
+      _asciiFile.push_back(fileBytes->at(i));
+    }
+  }
+
+  return _asciiFile;
+}
+
 long Config::GetFileFromMemorySize(std::string& filename)
 {
   GetFileFromMemorySize((char*)filename.data());
