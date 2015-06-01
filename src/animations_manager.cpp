@@ -48,7 +48,7 @@ void AnimationsManager::Init(bool fromDisk)
       sscanf(buf, "%i %s %i %i", &id, spriteSheet, &poolSize, &ms);
       tmp = spriteSheet;
       _animations[id] = std::unique_ptr<AnimationsPool>(new AnimationsPool());
-      _animations[id].get()->Init(tmp, poolSize, ms);
+      _animations[id].get()->Init(tmp, poolSize, ms, fromDisk);
     }
   }
 }

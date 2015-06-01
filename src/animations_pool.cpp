@@ -16,7 +16,7 @@ void AnimationsPool::Init(std::string spriteSheetName, int poolSize, int speedMs
   _poolSize = poolSize;
   _speedMs = speedMs;
 
-  _spriteSheet = std::unique_ptr<PNGLoader>(new PNGLoader(spriteSheetName, fromDisk));
+  _spriteSheet = std::unique_ptr<PNGLoader>(new PNGLoader(spriteSheetName, 1, fromDisk));
 
   std::string fname = spriteSheetName;
   fname.replace(fname.end() - 3, fname.end(), "txt");
@@ -24,20 +24,16 @@ void AnimationsPool::Init(std::string spriteSheetName, int poolSize, int speedMs
   if (fromDisk)
   {
     FILE* f = fopen(fname.data(), "r");
-    while (!feof(f))
-    {
-      fscanf(f, "%i %i %i", &_framesInRow, &_framesInCol, &_totalFrames);
-    }
+    fscanf(f, "%i %i %i", &_framesInRow, &_framesInCol, &_totalFrames);
+    fclose(f);
   }
   else
   {
     char buf[512];
     std::string asciiFile = Config::Get().ConvertFileToAscii(fname);
     std::istringstream iss(asciiFile);
-    while (iss.getline(buf, 512))
-    {
-      sscanf(buf, "%i %i %i", &_framesInRow, &_framesInCol, &_totalFrames);
-    }
+    iss.getline(buf, 512);
+    sscanf(buf, "%i %i %i", &_framesInRow, &_framesInCol, &_totalFrames);
   }
 
   _frameWidth = _spriteSheet.get()->Width() / _framesInRow;
