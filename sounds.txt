@@ -18,3 +18,4 @@
 17 assets/sound/ship_fire_single.wav
 18 assets/sound/asteroid_hit2.wav
 19 assets/sound/weapon_upgrade.wav
+20 assets/sound/screenshot.wav

@@ -19,6 +19,19 @@ int Asteroid::_instances = 0;
 
 Application::Application()
 {
+  _screenShotPressed = false;
+
+  #if SDL_BYTEORDER == SDL_BIG_ENDIAN
+  _screenshotRMask = 0xff000000;
+  _screenshotGMask = 0x00ff0000;
+  _screenshotBMask = 0x0000ff00;
+  _screenshotAMask = 0x000000ff;
+  #else
+  _screenshotRMask = 0x000000ff;
+  _screenshotGMask = 0x0000ff00;
+  _screenshotBMask = 0x00ff0000;
+  _screenshotAMask = 0xff000000;
+  #endif
 }
 
 Application::~Application()
@@ -202,6 +215,45 @@ int Application::GetCurrentState()
 
 void Application::HandleEvents()
 {
+  SDL_PumpEvents();
+
+  Uint8* keyboardState = (Uint8*)SDL_GetKeyboardState(nullptr);
+
+  if (keyboardState[SDL_SCANCODE_F9] && !_screenShotPressed)
+  {
+    _screenShotPressed = true;
+
+    time_t now = time(nullptr);
+    tm* timeinfo = gmtime(&now);
+
+    std::ostringstream str;
+    str << "screenshot_" << timeinfo->tm_hour << timeinfo->tm_min << timeinfo->tm_sec << ".bmp";
+
+    std::string screenshotFilename = str.str();
+
+    //SDL_Surface *sshot = SDL_CreateRGBSurface(0,
+    //                                          VideoSystem::Get().ScreenDimensions().x,
+    //                                         VideoSystem::Get().ScreenDimensions().y,
+    //                                          32,
+    //                                          _screenshotRMask, _screenshotGMask, _screenshotBMask, _screenshotAMask);
+
+    SDL_Surface *sshot = SDL_CreateRGBSurface(0,
+                                              VideoSystem::Get().ScreenDimensions().x,
+                                              VideoSystem::Get().ScreenDimensions().y,
+                                              32, 0, 0, 0, 0);
+
+    SDL_RenderReadPixels(VideoSystem::Get().Renderer(), nullptr, SDL_PIXELFORMAT_ARGB8888, sshot->pixels, sshot->pitch);
+    SDL_SaveBMP(sshot, screenshotFilename.data());
+    SDL_FreeSurface(sshot);
+
+    SoundSystem::Get().PlaySound(Sounds::SCREENSHOT_SOUND);
+  }
+
+  if (!keyboardState[SDL_SCANCODE_F9])
+  {
+    _screenShotPressed = false;
+  }
+
   _states.back()->HandleEvents(this);
 }
 

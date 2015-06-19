@@ -29,6 +29,12 @@ class Application
   private:
     bool _running;
     bool _scoresSorted;
+    bool _screenShotPressed;
+
+    Uint32 _screenshotRMask;
+    Uint32 _screenshotGMask;
+    Uint32 _screenshotBMask;
+    Uint32 _screenshotAMask;
 
     std::string _buildVersion;
 

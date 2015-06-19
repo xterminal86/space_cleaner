@@ -11,8 +11,9 @@
 #include <typeindex>
 #include <chrono>
 #include <random>
+#include <cstdio>
+#include <ctime>
 
-#include <stdio.h>
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -227,6 +228,7 @@ namespace Sounds
   static const int SHIP_FIRE_SINGLE = 17;
   static const int ASTEROID_HIT2 = 18;
   static const int WEAPON_UPGRADE = 19;
+  static const int SCREENSHOT_SOUND = 20;
 
   // What bullets produce what sounds
   static std::map<int, int> ShotSoundsMap =
