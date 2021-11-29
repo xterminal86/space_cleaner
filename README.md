@@ -1,0 +1,1 @@
+C++ sucks for gamedev
